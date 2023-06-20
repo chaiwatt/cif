@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\Approver;
+use Illuminate\Http\Request;
+
+class SettingOrganizationApproverAssignmentController extends Controller
+{
+    /**
+     * แสดงหน้ารายการผู้อนุมัติสำหรับการมอบหมายงาน โดยใช้ ID ของผู้อนุมัติที่ระบุ
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
+    public function index($id)
+    {
+        $approver = Approver::find($id);
+        return view('dashboard.system.organization.approver.assignment.index', [
+            'approver' => $approver
+        ]);
+    }
+
+    /**
+     * แสดงหน้าสร้างการมอบหมายผู้ใช้งานให้กับผู้อนุมัติ โดยใช้ ID ของผู้อนุมัติที่ระบุ
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
+    public function create($id)
+    {
+        $approver = Approver::find($id);
+
+        $users = User::whereDoesntHave('approvers', function ($query) use ($id) {
+            $query->where('approver_id', $id);
+        })->paginate(20);
+        
+        return view('dashboard.system.organization.approver.assignment.create', [
+            'users' => $users,
+            'approver' => $approver
+        ]);
+    }
+
+    /**
+     * บันทึกการมอบหมายผู้ใช้งานให้กับผู้อนุมัติ
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $selectedUsers = $request->users;
+        $approverId = $request->approverId;
+
+        $approver = Approver::find($approverId);
+        $approver->users()->attach($selectedUsers);
+
+        return redirect()->to('setting/organization/approver/assignment/' . $approverId);
+    }
+
+    /**
+     * ลบการมอบหมายผู้ใช้งานจากผู้อนุมัติ
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $approverId
+     * @param int $userId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Request $request, $approverId, $userId)
+    {
+        $approver = Approver::findOrFail($approverId);
+        $user = User::findOrFail($userId);
+
+        $approver->users()->detach($user);
+
+        return redirect()->to('setting/organization/approver/assignment/' . $approverId);
+    }
+
+}
