@@ -57,7 +57,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($searchFileds as $searchFiled)
+                                                @foreach ($searchFields as $searchFiled)
                                                 <tr>
                                                     <td>
                                                         <div class="icheck-primary d-inline">
