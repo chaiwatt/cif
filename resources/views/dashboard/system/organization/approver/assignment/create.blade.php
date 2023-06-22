@@ -29,18 +29,18 @@
                             <h3 class="card-title">รายชื่อพนักงาน</h3>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" class="form-control float-right"
-                                        placeholder="ค้นหา">
+                                    <input type="text" name="search_query" id="search_query"
+                                        class="form-control float-right" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <form action="{{route('setting.organization.approver.assignment.store')}}" method="POST">
                                 @csrf
-                                <input name="approverId" value="{{$approver->id}}" type="text" hidden>
+                                <input name="approverId" id="approverId" value="{{$approver->id}}" type="text" hidden>
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12" id="table_container">
                                             <table class="table table-bordered table-striped dataTable dtr-inline">
                                                 <thead>
                                                     <tr>
@@ -93,11 +93,11 @@
 </div>
 @push('scripts')
 
-<script type="module" src="{{asset('assets/js/helper/dashboard/system/organization/employee.js?v=1')}}"></script>
+<script type="module" src="{{asset('assets/js/helper/dashboard/system/organization/approver.js?v=1')}}"></script>
 <script src="{{asset('assets/js/helper/helper.js?v=1')}}"></script>
 <script>
     window.params = {
-        searchRoute: '{{ route('setting.organization.employee.search') }}',
+        searchRoute: '{{ route('setting.organization.approver.assignment.search') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

@@ -25,15 +25,15 @@
                     <span class="brand-text font-weight-light">CIF HRM: {{Auth::user()->name}}
                         {{Auth::user()->lastname}} ({{Auth::user()->user_position->name}})</span>
                 </a>
-                <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
+                {{-- <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
                     data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button> --}}
 
 
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-bell"></i>
                             <span class="badge badge-warning navbar-badge">15</span>
@@ -58,8 +58,17 @@
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                         </div>
+                    </li> --}}
+                    <li>
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            class="btn btn-info ml-2">
+                            <i class="fas fa-sign-out-alt mr-1"></i>ออกจากระบบ
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
-
                 </ul>
             </div>
         </nav>

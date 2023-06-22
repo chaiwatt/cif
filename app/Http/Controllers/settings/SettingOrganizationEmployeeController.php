@@ -74,6 +74,9 @@ class SettingOrganizationEmployeeController extends Controller
         $workPermitExpireDate = !is_null($request->workPermitExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->workPermitExpireDate)->format('Y-m-d') : null;  // วันหมดอายุใบอนุญาตทำงาน   
         $bank = $request->bank;  // ธนาคาร
         $bankAccount = $request->bankAccount;  // เลขที่บัญชีธนาคาร
+        $passport = $request->passport ?? null;  // พาสพอร์ต
+        $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
+        $tax = $request->tax ?? null;  // เลขที่ผู้เสียภาษี
 
         $user = new User();
         $user->prefix_id = $prefix;  // กำหนดค่าคำนำหน้าชื่อให้กับคอลัมน์ prefix_id
@@ -99,6 +102,9 @@ class SettingOrganizationEmployeeController extends Controller
         $user->education_branch = $educationBranch;  // กำหนดค่าสาขาวิชาที่ศึกษาให้กับคอลัมน์ education_branch
         $user->email = $employeeNo . '@cif.com';  // กำหนดค่าอีเมลให้กับคอลัมน์ email (รหัสพนักงาน@cif.com)
         $user->password = bcrypt('11111111');  // กำหนดค่ารหัสผ่านให้กับคอลัมน์ password (เข้ารหัสแบบ bcrypt)
+        $user->passport = $passport;  
+        $user->work_permit = $workPermit;  
+        $user->tax = $tax;  
         $user->save();  // บันทึกข้อมูลในฐานข้อมูล
 
         return redirect()->route('setting.organization.employee.index', [
@@ -155,6 +161,9 @@ class SettingOrganizationEmployeeController extends Controller
         $workPermitExpireDate = !is_null($request->workPermitExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->workPermitExpireDate)->format('Y-m-d') : null;  // วันหมดอายุใบอนุญาตทำงาน   
         $bank = $request->bank;  // ธนาคาร
         $bankAccount = $request->bankAccount;  // เลขที่บัญชีธนาคาร
+        $passport = $request->passport ?? null;  // พาสพอร์ต
+        $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
+        $tax = $request->tax ?? null;  // เลขที่ผู้เสียภาษี
 
         $user = User::findOrFail($id);
 
@@ -178,7 +187,10 @@ class SettingOrganizationEmployeeController extends Controller
             'education_level' => $educationLevel,
             'education_branch' => $educationBranch,
             'bank' => $bank,
-            'bank_account' => $bankAccount
+            'bank_account' => $bankAccount,
+            'passport' => $passport,
+            'work_permit' => $workPermit,
+            'tax' => $tax
         ]);
 
         return redirect()->route('setting.organization.employee.index', [
@@ -197,7 +209,7 @@ class SettingOrganizationEmployeeController extends Controller
     public function search(Request $request)
     {
         $queryInput = $request->searchInput;
-                
+             
         $searchFields = SearchField::where('table','users')->where('status',1)->get();
 
         $query = User::query();
@@ -215,11 +227,8 @@ class SettingOrganizationEmployeeController extends Controller
             }
         }
 
-        $users = $query->with(['prefix','nationality','ethnicity','employee_type','user_position','user_position','company_department'])->get();
-       
-        return response()->json([
-            'users' => $users
-        ]);
+        $users = $query->paginate(20);
+        return view('dashboard.system.organization.employee.table-render.employee-table',['users' => $users])->render();
     }
 
     function validateFormData($request)

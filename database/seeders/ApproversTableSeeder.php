@@ -32,7 +32,7 @@ class ApproversTableSeeder extends Seeder
 
         $approver1 = Approver::find(1);
         $userID1 = 4;
-        $approver2 = Approver::find(1);
+        $approver2 = Approver::find(2);
         $userID2 = 4;
 
         $approver1->users()->attach($userID1);

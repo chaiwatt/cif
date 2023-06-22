@@ -1,4 +1,4 @@
-function searchUser(searchQuery,url) {
+function searchUser(searchQuery, url, approverId) {
     return new Promise((resolve, reject) => {
         $.ajax({
             url: url,
@@ -7,7 +7,8 @@ function searchUser(searchQuery,url) {
                 'X-CSRF-TOKEN': window.params.token
             },
             data: {
-                searchInput: searchQuery
+                searchInput: searchQuery,
+                approverId: approverId
             },
             success: function (data) {
                 resolve(data)

@@ -43,7 +43,7 @@ class ApiController extends Controller
     public function getUser()
     {
         $usersWithRoles = RoleUser::pluck('user_id');
-        $users = User::whereNotIn('id', $usersWithRoles)->where('nationality_id', 1)->get();
+        $users = User::whereNotIn('id', $usersWithRoles)->where('employee_type_id', 1)->with('company_department')->get();
         return response()->json($users);
     }
 

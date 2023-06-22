@@ -33,8 +33,8 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">ตั้งค่าระบบ</p>
-                    <a href="{{route('setting')}}" class="btn btn-primary">>>
-                        เข้าสู่ระบบงาน</a>
+                    <a href="{{route('setting')}}" class="btn btn-primary">
+                        <i class="fas fa-angle-double-right mr-2"></i>เข้าสู่ระบบงาน</a>
                 </div>
             </div>
         </div>

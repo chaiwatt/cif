@@ -6,7 +6,6 @@ $(document).on('click', '#un_assignment_role_button', function () {
         var users = response;
         renderOptions(users);
         showModal();
-        // renderGroups(response);
     }).catch(error => {
 
     });
@@ -21,9 +20,7 @@ $(document).on('click', '#un_assignment_role_button', function () {
 
         });
     });
-
 });
-
 
 function showModal() {
     $('#modal-users').modal('show');
@@ -36,7 +33,7 @@ function renderOptions(users) {
     users.forEach(user => {
         var option = $('<option></option>');
         option.attr('value', user.id);
-        option.text(user.name + ' ' + user.lastname);
+        option.text(user.name + ' ' + user.lastname + ' ('+user.company_department.name +')');
         selectElement.append(option);
     });
 

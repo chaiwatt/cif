@@ -41,7 +41,7 @@
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12" id="table_container">
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>

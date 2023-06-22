@@ -88,6 +88,7 @@ Route::middleware('auth')->group(function () {
                 Route::put('{id}', [SettingOrganizationEmployeeController::class, 'update'])->name('setting.organization.employee.update');
                 Route::delete('{id}', [SettingOrganizationEmployeeController::class, 'delete'])->name('setting.organization.employee.delete');
                 Route::post('search', [SettingOrganizationEmployeeController::class, 'search'])->name('setting.organization.employee.search');
+                
                 Route::group(['prefix' => 'import'], function () {
                     Route::get('index', [SettingOrganizationEmployeeImportController::class, 'index'])->name('setting.organization.employee.import.index');
                     Route::post('store', [SettingOrganizationEmployeeImportController::class, 'store'])->name('setting.organization.employee.import.store');
@@ -100,12 +101,13 @@ Route::middleware('auth')->group(function () {
                 Route::get('{id}', [SettingOrganizationApproverController::class, 'view'])->name('setting.organization.approver.view');
                 Route::put('{id}', [SettingOrganizationApproverController::class, 'update'])->name('setting.organization.approver.update');
                 Route::delete('{id}', [SettingOrganizationApproverController::class, 'delete'])->name('setting.organization.approver.delete');
-                Route::post('search', [SettingOrganizationApproverController::class, 'search'])->name('setting.organization.approver.search');
+                
                 Route::group(['prefix' => 'assignment'], function () {
                     Route::get('{id}', [SettingOrganizationApproverAssignmentController::class, 'index'])->name('setting.organization.approver.assignment.index');
                     Route::get('create/{id}', [SettingOrganizationApproverAssignmentController::class, 'create'])->name('setting.organization.approver.assignment.create');
                     Route::post('store', [SettingOrganizationApproverAssignmentController::class, 'store'])->name('setting.organization.approver.assignment.store');
                     Route::delete('approves/{approver_id}/users/{user_id}/delete', [SettingOrganizationApproverAssignmentController::class, 'delete'])->name('setting.organization.approver.assignment.delete');
+                    Route::post('search', [SettingOrganizationApproverAssignmentController::class, 'search'])->name('setting.organization.approver.assignment.search');
                     
                 });
             });
@@ -153,7 +155,11 @@ Route::middleware('auth')->group(function () {
         });
         Route::group(['prefix' => 'report'], function () {
             Route::group(['prefix' => 'user'], function () {
-                Route::get('', [SettingReportUserController::class, 'index'])->name('setting.report');
+                Route::get('', [SettingReportUserController::class, 'index'])->name('setting.report.user');
+                Route::post('export', [SettingReportUserController::class, 'export'])->name('setting.report.user.export');
+                Route::post('search', [SettingReportUserController::class, 'search'])->name('setting.report.user.search');
+                Route::post('report-field', [SettingReportUserController::class, 'getReportField'])->name('setting.report.user.report-field');
+                Route::post('update-report-field', [SettingReportUserController::class, 'updateReportField'])->name('setting.report.user.update-report-field');
             });
         });
     });

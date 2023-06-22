@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\SearchField;
+use App\Models\ReportField;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class SearchFieldsTableSeeder extends Seeder
+class ReportFieldsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -29,32 +29,35 @@ class SearchFieldsTableSeeder extends Seeder
                 if ($type === 'foreign') {
                     $columnName = substr($columnName, 0, -3);
                 }
-                
-                $check = SearchField::where('table','users')->where('field',$columnName)->first();
+                $check = ReportField::where('table','report_fields')->where('field',$columnName)->first();
                 if(!$check)
                 {
-                    SearchField::create([
-                    'table' => 'users',
-                    'field' => $columnName,
-                    'comment' => $columnComment,
-                    'type' => $type,
-                ]);
+                    ReportField::create([
+                        'table' => 'report_fields',
+                        'field' => $columnName,
+                        'comment' => $columnComment,
+                        'type' => $type,
+                    ]);
                 }
+                
            }
         } 
-        SearchField::where('table','users')->where('field','name')->first()->update([
+        ReportField::where('table','report_fields')->where('field','name')->first()->update([
             'status' => 1
         ]);
-        SearchField::where('table','users')->where('field','lastname')->first()->update([
+        ReportField::where('table','report_fields')->where('field','lastname')->first()->update([
             'status' => 1
         ]);
-        SearchField::where('table','users')->where('field','company_department')->first()->update([
+        ReportField::where('table','report_fields')->where('field','company_department')->first()->update([
             'status' => 1
         ]);
-        SearchField::where('table','users')->where('field','user_position')->first()->update([
+        ReportField::where('table','report_fields')->where('field','user_position')->first()->update([
             'status' => 1
         ]);
-        SearchField::where('table','users')->where('field','employee_no')->first()->update([
+        ReportField::where('table','report_fields')->where('field','employee_no')->first()->update([
+            'status' => 1
+        ]);
+        ReportField::where('table','report_fields')->where('field','employee_type')->first()->update([
             'status' => 1
         ]);
       

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\settings;
 
 use App\Models\User;
 use App\Models\Approver;
+use App\Models\SearchField;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
 use App\Models\CompanyDepartment;

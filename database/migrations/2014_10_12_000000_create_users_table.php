@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('prefix_id')->nullable()->comment('คำนำหน้าชื่อ');
-            $table->unsignedBigInteger('nationality_id')->nullable()->comment('สัญชาติ');
-            $table->unsignedBigInteger('ethnicity_id')->nullable()->comment('เชื้อชาติ');
-            $table->unsignedBigInteger('user_position_id')->nullable()->comment('ตำแหน่งงาน');
-            $table->unsignedBigInteger('employee_type_id')->nullable()->comment('ประเภทพนักงาน');
-            $table->unsignedBigInteger('company_department_id')->nullable()->comment('แผนกทำงาน');
             $table->string('employee_no',50)->nullable()->comment('รหัสพนักงาน');
+            $table->unsignedBigInteger('prefix_id')->nullable()->comment('คำนำหน้าชื่อ');
             $table->string('name',50)->comment('ชื่อ');
             $table->string('lastname',50)->nullable()->comment('นามสกุล');
+            $table->unsignedBigInteger('company_department_id')->nullable()->comment('แผนกทำงาน');
+            $table->unsignedBigInteger('user_position_id')->nullable()->comment('ตำแหน่งงาน');
+            $table->unsignedBigInteger('employee_type_id')->nullable()->comment('ประเภทพนักงาน');
+            $table->unsignedBigInteger('nationality_id')->nullable()->comment('สัญชาติ');
+            $table->unsignedBigInteger('ethnicity_id')->nullable()->comment('เชื้อชาติ');
             $table->string('address',250)->nullable()->comment('ที่อยู่');
             $table->char('phone',50)->nullable()->comment('เบอร์โทรศัพท์');
             $table->string('hid',13)->nullable()->comment('เลขที่บัตรประจำตัวประชาชน');
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('education_level')->nullable()->comment('ระดับการศึกษา');
             $table->string('education_branch')->nullable()->comment('สาขาวิชา');
             $table->string('bank')->nullable()->comment('บัญชีธนาคาร');
-            $table->string('bank_account')->nullable();
+            $table->string('bank_account')->nullable()->comment('เลขที่บัญชีธนาคาร');
             $table->char('is_admin',1)->default(0);
             $table->unsignedBigInteger('work_schedule_id')->nullable();
             $table->rememberToken();

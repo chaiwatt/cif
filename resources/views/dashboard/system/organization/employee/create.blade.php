@@ -225,6 +225,15 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            <div class="form-group">
+                                                <label>พาสพอร์ต</label>
+                                                <input type="text" name="passport" value="{{old('passport')}}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
                                             <label>วีซ่าหมดอายุ</label>
                                             <div class="input-group date" id="visa_expire_date"
                                                 data-target-input="nearest">
@@ -240,7 +249,16 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ใบอนุญาตหมดอายุ</label>
+                                            <div class="form-group">
+                                                <label>เลขที่ใบอนุญาตทำงาน</label>
+                                                <input type="text" name="work_permit" value="{{old('work_permit')}}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>ใบอนุญาตทำงานหมดอายุ</label>
                                             <div class="input-group date" id="work_permit_expire_date"
                                                 data-target-input="nearest">
                                                 <input type="text" name="workPermitExpireDate"
@@ -267,6 +285,13 @@
                                         <div class="form-group">
                                             <label>เลขที่บัญชี</label>
                                             <input type="text" name="bankAccount" value="{{old('bankAccount')}}"
+                                                class="form-control numericInputInt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>เลขที่ผู้เสียภาษี</label>
+                                            <input type="text" name="tax" value="{{old('tax')}}"
                                                 class="form-control numericInputInt">
                                         </div>
                                     </div>

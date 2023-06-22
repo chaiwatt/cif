@@ -36,11 +36,6 @@
                 </i>
                 เพิ่มพนักงาน
             </a>
-            {{-- <a class="btn btn-primary mb-2" href="{{route('setting.organization.employee.import.index')}}">
-                <i class="fas fa-folder mr-1">
-                </i>
-                นำเข้าจากไฟล์
-            </a> --}}
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -84,6 +79,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </div>
                             </div>

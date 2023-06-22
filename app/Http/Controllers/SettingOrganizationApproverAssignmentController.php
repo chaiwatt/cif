@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Approver;
+use App\Models\ApproverUser;
+use App\Models\SearchField;
 use Illuminate\Http\Request;
 
 class SettingOrganizationApproverAssignmentController extends Controller
@@ -34,7 +36,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
 
         $users = User::whereDoesntHave('approvers', function ($query) use ($id) {
             $query->where('approver_id', $id);
-        })->paginate(20);
+        })->paginate(50);
         
         return view('dashboard.system.organization.approver.assignment.create', [
             'users' => $users,
@@ -76,5 +78,44 @@ class SettingOrganizationApproverAssignmentController extends Controller
 
         return redirect()->to('setting/organization/approver/assignment/' . $approverId);
     }
+
+        /**
+     * ค้นหาพนักงงาน
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $queryInput = $request->searchInput;
+        $approverId = $request->approverId;
+        
+        $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
+
+        $query = User::query();
+
+        foreach ($searchFields as $field) {
+            $fieldName = $field['field'];
+            $fieldType = $field['type'];
+
+            if ($fieldType === 'foreign') {
+                $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
+                    $query->where('name', 'like', "%{$queryInput}%");
+                });
+            } else {
+                $query->orWhere($fieldName, 'like', "%{$queryInput}%");
+            }
+        }
+
+        $userIds = $query->pluck('id');
+        $approversUserIds = ApproverUser::where('approver_id', $approverId)->pluck('user_id');
+
+        $filteredUserIds = $userIds->diff($approversUserIds);
+
+        $users = User::whereIn('id', $filteredUserIds)->paginate(50);
+
+        return view('dashboard.system.organization.approver.assignment.table-render.employee-table', ['users' => $users])->render();
+    }
+
+
 
 }
