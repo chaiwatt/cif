@@ -61,20 +61,18 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label>อื่น ๆ <span
-                                            class="text-sm font-weight-normal font-style-normal">(รหัสพนักงาน, ชื่อ,
-                                            สกุล, ตำแหน่ง, สัญชาติ,
-                                            พาสพอร์ต,
-                                            เลขที่บัตรประชาชน)</span> </label>
+                                    <label>อื่น ๆ </label>
                                     <input type="text" name="search_string" id="search_string"
-                                        value="{{old('search_string')}}" class="form-control">
+                                        value="{{old('search_string')}}" class="form-control"
+                                        placeholder="รหัสพนักงาน,ชื่อ,สกุล,ตำแหน่ง,สัญชาติ,พาสพอร์ต,เลขที่บัตรประชาชน">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-end">
-                            {{-- <button class="btn btn-info mr-2">ค้นหา</button> --}}
+                            <button class="btn btn-info mr-2" id="search_employee"><i
+                                    class="fas fa-search mr-1"></i>ค้นหา</button>
                             <a class="btn btn-primary mr-2" id="export_employee"><i
                                     class="fas fa-file-excel mr-1"></i>ส่งออก
                                 Excel</a>
@@ -90,12 +88,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">รายชื่อพนักงาน</h3>
-                            <div class="card-tools">
+                            {{-- <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
                                         class="form-control float-right" placeholder="ค้นหา">
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
@@ -166,6 +164,7 @@
         exportRoute: '{{ route('setting.report.user.export') }}',
         getReportFieldRoute: '{{ route('setting.report.user.report-field') }}',
         updateReportFieldRoute: '{{ route('setting.report.user.update-report-field') }}',
+        reportSearchRoute: '{{ route('setting.report.user.report-search') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

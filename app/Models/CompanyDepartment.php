@@ -20,9 +20,20 @@ class CompanyDepartment extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
+    
     public function users()
     {
         return $this->belongsToMany(User::class, 'approver_users', 'approver_id', 'user_id');
+    }
+
+    public function users_belong()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function getUsersCountAttribute()
+    {
+        return $this->users_count ?? $this->users_count = $this->users_belong()->count();
     }
 
 }

@@ -58,5 +58,24 @@ function updateReportField(updateReportFields, url) {
     })
 }
 
+function reportSearch(data, url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: url,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': window.params.token
+            },
+            data: data,
+            success: function (data) {
+                resolve(data)
+            },
+            error: function (error) {
+                reject(error)
+            },
+        })
+    })
+}
 
-export { searchUser, getReportField, updateReportField }
+
+export { searchUser, getReportField, updateReportField, reportSearch }

@@ -160,6 +160,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('search', [SettingReportUserController::class, 'search'])->name('setting.report.user.search');
                 Route::post('report-field', [SettingReportUserController::class, 'getReportField'])->name('setting.report.user.report-field');
                 Route::post('update-report-field', [SettingReportUserController::class, 'updateReportField'])->name('setting.report.user.update-report-field');
+                Route::post('report-search', [SettingReportUserController::class, 'reportSearch'])->name('setting.report.user.report-search');
             });
         });
     });

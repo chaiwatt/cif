@@ -93,4 +93,41 @@ class SettingReportUserController extends Controller
         $reportFields = ReportField::where('table','report_fields')->get();
         return view('dashboard.report.user.table-render.report-field-table',['reportFields' => $reportFields])->render();
     }
+
+    public function reportSearch(Request $request)
+    {
+        $departmentIds = $request->selectedCompanyDepartment;
+        $employeeTypeIds = $request->selectedEmployeeType;
+        $queryInput = $request->searchString;
+
+        $employeesQuery = User::where(function ($query) use ($queryInput) {
+            $query->where('employee_no', 'like', '%' . $queryInput . '%')
+                ->orWhere('name', 'like', '%' . $queryInput . '%')
+                ->orWhere('lastname', 'like', '%' . $queryInput . '%')
+                ->orWhere('passport', 'like', '%' . $queryInput . '%')
+                ->orWhere('hid', 'like', '%' . $queryInput . '%')
+                ->orWhereHas('user_position', function ($query) use ($queryInput) {
+                    $query->where('name', 'like', '%' . $queryInput . '%');
+                })
+                ->orWhereHas('ethnicity', function ($query) use ($queryInput) {
+                    $query->where('name', 'like', '%' . $queryInput . '%');
+                })
+                ->orWhereHas('nationality', function ($query) use ($queryInput) {
+                    $query->where('name', 'like', '%' . $queryInput . '%');
+                });
+        });
+
+        if (!empty($employeeTypeIds) && !empty($departmentIds)) {
+            $employeesQuery = $employeesQuery->whereIn('employee_type_id', $employeeTypeIds)
+                ->whereIn('company_department_id', $departmentIds);
+        } elseif (!empty($employeeTypeIds)) {
+            $employeesQuery = $employeesQuery->whereIn('employee_type_id', $employeeTypeIds);
+        } elseif (!empty($departmentIds)) {
+            $employeesQuery = $employeesQuery->whereIn('company_department_id', $departmentIds);
+        }
+
+        $users = $employeesQuery->paginate(20);
+        return view('dashboard.report.user.table-render.employee-table',['users' => $users])->render();
+        // return response()->json($users);
+    }
 }

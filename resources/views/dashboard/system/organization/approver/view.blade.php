@@ -84,7 +84,7 @@
                                                 @foreach ($approvers as $item)
                                                 <option value="{{ $item->id }}" @if ($item->id
                                                     == $approver->approver_one_id) selected @endif>
-                                                    {{ $item->name }}
+                                                    {{ $item->name }} {{ $item->lastname }}
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -100,7 +100,7 @@
                                                 @foreach ($approvers as $item)
                                                 <option value="{{ $item->id }}" @if ($item->id
                                                     == $approver->approver_two_id) selected @endif>
-                                                    {{ $item->name }}
+                                                    {{ $item->name }} {{ $item->lastname }}
                                                 </option>
                                                 @endforeach
                                             </select>

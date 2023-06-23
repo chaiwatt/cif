@@ -48,28 +48,18 @@ $(document).on('click', '#export_employee', function (e) {
     });
 });
 
-$(document).on('keyup', 'input[name="search_query"]', function () {
-    var searchQuery = $(this).val();
-    var url = window.params.searchRoute
-    Report.searchUser(searchQuery, url).then(response => {
-        $('#table_container').html(response);
-    }).catch(error => {
+// $(document).on('keyup', 'input[name="search_query"]', function () {
+//     var searchQuery = $(this).val();
+//     var url = window.params.searchRoute
+//     Report.searchUser(searchQuery, url).then(response => {
+//         $('#table_container').html(response);
+//     }).catch(error => {
 
-    })
+//     })
 
-});
+// });
 
-$(document).on('click', '.pagination a', function (e) {
-    e.preventDefault();
-    var searchQuery = $('#search_query').val();
-    var page = $(this).attr('href').split('page=')[1];
-    var url = "/setting/report/user/search?page=" + page
-    Report.searchUser(searchQuery, url).then(response => {
-        $('#table_container').html(response);
-    }).catch(error => {
 
-    })
-});
 
 
 $(document).on('click', '#setting_report_field', function (e) {
@@ -99,6 +89,48 @@ $(document).on('click', '#bntUpdateReportField', function (e) {
 
     })
 });
+
+$(document).on('click', '#search_employee', function (e) {
+    e.preventDefault();
+    // Get all the checked checkboxes
+    var selectedCompanyDepartment = $('#companyDepartment').val();
+    var selectedEmployeeType = $('#employeeType').val();
+    var searchString = $('#search_string').val();
+    var url = window.params.reportSearchRoute
+    var data = {
+        selectedCompanyDepartment: selectedCompanyDepartment,
+        selectedEmployeeType: selectedEmployeeType,
+        searchString: searchString,
+    }
+    Report.reportSearch(data, url).then(response => {
+        $('#table_container').html(response);
+    }).catch(error => {
+
+    })
+});
+
+$(document).on('click', '.pagination a', function (e) {
+    e.preventDefault();
+    var selectedCompanyDepartment = $('#companyDepartment').val();
+    var selectedEmployeeType = $('#employeeType').val();
+    var searchString = $('#search_string').val();
+    var url = window.params.reportSearchRoute
+    var data = {
+        selectedCompanyDepartment: selectedCompanyDepartment,
+        selectedEmployeeType: selectedEmployeeType,
+        searchString: searchString,
+    }
+    var page = $(this).attr('href').split('page=')[1];
+    var url = "/setting/report/user/report-search?page=" + page
+    Report.reportSearch(data, url).then(response => {
+        $('#table_container').html(response);
+    }).catch(error => {
+
+    })
+});
+
+
+
 
 
 
