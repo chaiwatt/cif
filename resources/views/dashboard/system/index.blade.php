@@ -57,7 +57,7 @@
                 <div class="col-lg-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">แสดงจำนวนพนักงานในแผนก</h3>
+                            <h3 class="card-title">แผนกทำงาน</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -97,7 +97,7 @@
                 <div class="col-lg-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">แสดงบทบาทและการมอบหมาย</h3>
+                            <h3 class="card-title">บทบาทและการมอบหมาย</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">

@@ -48,20 +48,6 @@ $(document).on('click', '#export_employee', function (e) {
     });
 });
 
-// $(document).on('keyup', 'input[name="search_query"]', function () {
-//     var searchQuery = $(this).val();
-//     var url = window.params.searchRoute
-//     Report.searchUser(searchQuery, url).then(response => {
-//         $('#table_container').html(response);
-//     }).catch(error => {
-
-//     })
-
-// });
-
-
-
-
 $(document).on('click', '#setting_report_field', function (e) {
     e.preventDefault();
     var url = window.params.getReportFieldRoute

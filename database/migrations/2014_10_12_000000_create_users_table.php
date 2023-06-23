@@ -28,11 +28,11 @@ return new class extends Migration
             $table->char('phone',50)->nullable()->comment('เบอร์โทรศัพท์');
             $table->string('hid',13)->nullable()->comment('เลขที่บัตรประจำตัวประชาชน');
             $table->string('passport',20)->nullable()->comment('พาสพอร์ต');
-            $table->string('work_permit',20)->nullable()->comment('เอกสารอนุญาติทำงาน');
+            $table->string('work_permit',20)->nullable()->comment('เอกสารอนุญาตทำงาน');
             $table->date('start_work_date')->nullable()->comment('วันที่เริ่มทำงาน');
             $table->date('birth_date')->nullable()->comment('วันเดือนปี เกิด');
             $table->date('visa_expiry_date')->nullable()->comment('วันหมดอายุวีซ่า');
-            $table->date('permit_expiry_date')->nullable()->comment('วันหมดอายุใบอนุญาติทำงาน');
+            $table->date('permit_expiry_date')->nullable()->comment('วันหมดอายุใบอนุญาตทำงาน');
             $table->string('email',50)->unique()->comment('อีเมล');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

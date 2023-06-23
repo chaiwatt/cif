@@ -17,11 +17,15 @@ class GroupsTableSeeder extends Seeder
     {
         Group::create([
             'name' => 'ระบบลงเวลา',
-            'description' => 'ระบบลงเวลา',
+            'description' => 'รายละเอียดระบบลงเวลา',
         ]);
         Group::create([
             'name' => 'ระบบเงินเดือน',
-            'description' => 'ระบบเงินเดือน',
+            'description' => 'รายละเอียดระบบเงินเดือน',
+        ]);
+        Group::create([
+            'name' => 'ระบบฝึกอบรม',
+            'description' => 'รายละเอียดระบบฝึกอบรม',
         ]);
     }
 }
