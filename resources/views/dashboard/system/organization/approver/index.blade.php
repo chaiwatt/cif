@@ -45,6 +45,7 @@
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
+                                                    <th>#</th>
                                                     <th>การอนุมัติ</th>
                                                     <th>แผนก</th>
                                                     <th>ประเภทเอกสาร</th>
@@ -54,8 +55,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="approver_tbody">
-                                                @foreach ($approvers as $approver)
+                                                @foreach ($approvers as $key=> $approver)
                                                 <tr>
+                                                    <td>{{$key+1}}</td>
                                                     <td>{{$approver->name}}</td>
                                                     <td>{{$approver->company_department->name}}</td>
                                                     <td>{{$approver->document_type->name}}</td>

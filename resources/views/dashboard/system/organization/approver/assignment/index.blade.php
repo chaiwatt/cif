@@ -9,14 +9,6 @@
             <div class="row ">
                 <div class="col-sm-6">
                     <h1 class="m-0">รายการอนุมัติ: {{$approver->name}}</h1>
-                    {{-- <ul class="mt-3">
-                        <li class="mt-2">
-                            <span class="m-1" style="font-size: 1.2em">ผู้อนุมัติที่1 สมชาย</span>
-                        </li>
-                        <li class="mt-2">
-                            <span class="m-1" style="font-size: 1.2em">ผู้อนุมัติที่2 สมชาย</span>
-                        </li>
-                    </ul> --}}
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -49,6 +41,7 @@
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
+                                                    <th>#</th>
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>
@@ -56,16 +49,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="approver_tbody">
-                                                @foreach ($approver->users as $user)
+                                                @foreach ($approver->users as $key => $user)
                                                 <tr>
+                                                    <td>{{$key+1}}</td>
                                                     <td>{{$user->employee_no}}</td>
                                                     <td>{{$user->name}} {{$user->lastname}}</td>
                                                     <td>{{$user->company_department->name}}</td>
                                                     <td class="text-right">
-                                                        {{-- <a class="btn btn-danger btn-sm"
-                                                            href="{{ route('setting.organization.approver.assignment.delete', ['approver_id' => $approver->id, 'user_id' => $user->id])}}">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a> --}}
                                                         <form
                                                             action="{{ route('setting.organization.approver.assignment.delete', ['approver_id' => $approver->id, 'user_id' => $user->id]) }}"
                                                             method="POST">
@@ -79,7 +69,6 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-
                                     </div>
                                 </div>
                             </div>

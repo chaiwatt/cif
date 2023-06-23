@@ -73,7 +73,8 @@
                                         <tbody>
                                             @foreach ($companyDepartments as $index => $companyDepartment)
                                             <tr>
-                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $index + 1 + ($companyDepartments->perPage() *
+                                                    ($companyDepartments->currentPage() - 1))}}</td>
                                                 <td>{{ $companyDepartment->name }}</td>
                                                 <td class="text-center">{{ $companyDepartment->users->count() }}</td>
                                             </tr>

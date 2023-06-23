@@ -89,7 +89,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                 $this->successCount++;
             }
         }
-        // $users = [];
+
         if ($this->errorCount === 0) {
             // บันทึกแถวที่ถูกต้องลงในโมเดล
             $users = [];
@@ -119,7 +119,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                 $ethnicityId = Ethnicity::where('name', $ethnicityName)->value('id');
                 $positionId = UserPosition::where('name', $positionName)->value('id');
                 $employeeTypeId = EmployeeType::where('name', $employeeTypeName)->value('id');
-
+                $address = $row['address'] . ' ตำบล' . $row['tambol'] . ' อำเภอ' . $row['amphur'] . ' จังหวัด' . $row['province'] ;
                 $visaExpire = $row['visa_expire'] != '' ? Carbon::createFromTimestamp((($row['visa_expire'] - 25569) * 86400))->format('Y-m-d') : null;
                 $workPermittedExpire = $row['work_permitted_expire'] != '' ? Carbon::createFromTimestamp((($row['work_permitted_expire'] - 25569) * 86400))->format('Y-m-d') : null;
                 $startWorkDate = $row['start_work_date'] != '' ? Carbon::createFromTimestamp((($row['start_work_date'] - 25569) * 86400))->format('Y-m-d') : null;
@@ -136,7 +136,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                         'employee_no' => $employeeNo,
                         'name' => $row['name'],
                         'lastname' => $row['lastname'] ?? null,
-                        'address' => $row['address'] ?? null,
+                        'address' => $address,
                         'phone' => $row['phone'] ?? null,
                         'hid' => $row['hid'] ?? null,
                         'passport' => $row['passport'] ?? null,

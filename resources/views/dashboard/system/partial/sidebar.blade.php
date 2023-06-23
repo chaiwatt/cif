@@ -40,15 +40,17 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {{ request()->is('setting/access*') ? 'menu-open' : '' }}">
-                <a href="" class="nav-link {{ request()->is('setting/access*') ? 'active' : '' }}">
+            <li class="nav-item {{ request()->is('setting/access*', 'setting/assignment*') ? 'menu-open' : '' }}">
+                <a href=""
+                    class="nav-link {{ request()->is('setting/access*', 'setting/assignment*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-user-tag"></i>
                     <p>
                         การใช้งาน
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="{{ request()->is('setting/access*') ? '' : 'display: none;' }}">
+                <ul class="nav nav-treeview"
+                    style="{{ request()->is('setting/access*', 'setting/assignment*') ? '' : 'display: none;' }}">
                     <li class="nav-item">
                         <a href="{{route('setting.access.role.index')}}"
                             class="nav-link {{ request()->is('setting/access/role*') ? 'active' : '' }}">
