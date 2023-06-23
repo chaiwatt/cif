@@ -67,12 +67,14 @@ class SettingController extends Controller
         // แบ่งหน้าแสดงผลข้อมูลแผนกบริษัท
         $companyDepartments = CompanyDepartment::paginate(7);
 
+        $users = User::all();
         // ส่งข้อมูลไปยังหน้าแสดงผล
         return view('dashboard.system.index', [
             'companyDepartments' => $companyDepartments,
             'employeeDonutData' => $employeeDonutData,
             'roleDonutData' => $roleDonutData,
             'roles' => $roles,
+            'users' => $users
         ]);
     }
 
