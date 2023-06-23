@@ -7,87 +7,94 @@
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-                <a href="{{route('setting')}}" class="nav-link">
+                <a href="{{route('setting')}}" class="nav-link {{ request()->is('setting') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                         แดชบอร์ด
                     </p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="" class="nav-link">
+            <li class="nav-item nav-item {{ request()->is('setting/organization*') ? 'menu-open' : '' }}">
+                <a href="" class="nav-link {{ request()->is('setting/organization*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-sitemap"></i>
                     <p>
                         องค์กร
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
+                <ul class="nav nav-treeview"
+                    style="{{ request()->is('setting/organization*') ? '' : 'display: none;' }}">
                     <li class="nav-item">
-                        <a href="{{route('setting.organization.employee.index')}}" class="nav-link">
+                        <a href="{{route('setting.organization.employee.index')}}"
+                            class="nav-link {{ request()->is('setting/organization/employee*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>พนักงาน</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('setting.organization.approver.index')}}" class="nav-link">
+                        <a href="{{route('setting.organization.approver.index')}}"
+                            class="nav-link {{ request()->is('setting/organization/approver*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>การอนุมัติ</p>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="" class="nav-link">
+            <li class="nav-item {{ request()->is('setting/access*') ? 'menu-open' : '' }}">
+                <a href="" class="nav-link {{ request()->is('setting/access*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-user-tag"></i>
                     <p>
                         การใช้งาน
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
+                <ul class="nav nav-treeview" style="{{ request()->is('setting/access*') ? '' : 'display: none;' }}">
                     <li class="nav-item">
-                        <a href="{{route('setting.access.role.index')}}" class="nav-link">
+                        <a href="{{route('setting.access.role.index')}}"
+                            class="nav-link {{ request()->is('setting/access/role*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>สิทธิ์การใช้งาน</p>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="" class="nav-link">
+            <li class="nav-item {{ request()->is('setting/general*') ? 'menu-open' : '' }}">
+                <a href="" class="nav-link {{ request()->is('setting/general*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-cog"></i>
                     <p>
                         ทั่วไป
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
+                <ul class="nav nav-treeview" style="{{ request()->is('setting/general*') ? '' : 'display: none;' }}">
                     <li class="nav-item">
-                        <a href="{{route('setting.general.companydepartment.index')}}" class="nav-link">
+                        <a href="{{route('setting.general.companydepartment.index')}}"
+                            class="nav-link {{ request()->is('setting/general/companydepartment*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>แผนก</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('setting.general.searchfield.index')}}" class="nav-link">
+                        <a href="{{route('setting.general.searchfield.index')}}"
+                            class="nav-link {{ request()->is('setting/general/searchfield*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>ฟิลเตอร์ตาราง</p>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="" class="nav-link">
+            <li class="nav-item {{ request()->is('setting/report*') ? 'menu-open' : '' }}">
+                <a href="" class="nav-link {{ request()->is('setting/report*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-chart-pie"></i>
                     <p>
                         รายงาน
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
+                <ul class="nav nav-treeview" style="{{ request()->is('setting/report*') ? '' : 'display: none;' }}">
                     <li class="nav-item">
-                        <a href="{{route('setting.report.user')}}" class="nav-link">
+                        <a href="{{route('setting.report.user')}}"
+                            class="nav-link {{ request()->is('setting/report/user*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>ข้อมูลพนักงาน</p>
                         </a>
