@@ -5,12 +5,9 @@ namespace App\Exports;
 use App\Models\User;
 use App\Models\ReportField;
 use App\Models\SearchField;
-use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
 class EmployeeExport implements FromCollection, WithHeadings
 {
@@ -27,32 +24,37 @@ class EmployeeExport implements FromCollection, WithHeadings
         $this->employeeTypeIds = $employeeTypeIds;
         $this->searchQuery = $searchQuery;
         $reportFields = ReportField::where('status', 1)->get();
-        $this->selectedComments = $reportFields->pluck('comment')->toArray();
+        $excludedComments = ['อีเมล'];
+        $this->selectedComments = $reportFields
+                ->pluck('comment')
+                ->reject(function ($comment) use ($excludedComments) {
+                    return in_array($comment, $excludedComments);
+                })
+                ->toArray();
         $this->selectedFields = $reportFields->pluck('field')->toArray();
     }
     public function collection()
     {
-        // Retrieve the data you want to export and transform if needed
         $employeeTypeIds = $this->employeeTypeIds;
         $departmentIds = $this->companyDepartmentIds;
         $queryInput = $this->searchQuery;
-        $searchFields = SearchField::where('table', 'report_fields')->where('status', 1)->get();
-        $query = User::query();
-
-        foreach ($searchFields as $field) {
-            $fieldName = $field['field'];
-            $fieldType = $field['type'];
-
-            if ($fieldType === 'foreign') {
-                $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
-                    $query->where('name', 'like', "%{$queryInput}%");
-                });
-            } else {
-                $query->orWhere($fieldName, 'like', "%{$queryInput}%");
-            }
-        }
-
-        $employees = $query->get();
+ 
+        $employees = User::where(function ($query) use ($queryInput) {
+        $query->where('employee_no', 'like', '%' . $queryInput . '%')
+            ->orWhere('name', 'like', '%' . $queryInput . '%')
+            ->orWhere('lastname', 'like', '%' . $queryInput . '%')
+            ->orWhere('passport', 'like', '%' . $queryInput . '%')
+            ->orWhere('hid', 'like', '%' . $queryInput . '%')
+            ->orWhereHas('user_position', function ($query) use ($queryInput) {
+                $query->where('name', 'like', '%' . $queryInput . '%');
+            })
+            ->orWhereHas('ethnicity', function ($query) use ($queryInput) {
+                $query->where('name', 'like', '%' . $queryInput . '%');
+            })
+            ->orWhereHas('nationality', function ($query) use ($queryInput) {
+                $query->where('name', 'like', '%' . $queryInput . '%');
+            });
+        })->get();
 
         if (!empty($employeeTypeIds) && !empty($departmentIds)) {
             $employees = $employees->whereIn('employee_type_id', $employeeTypeIds)
@@ -72,49 +74,49 @@ class EmployeeExport implements FromCollection, WithHeadings
 
             foreach ($selectedFields as $field) {
                 if ($field === 'prefix') {
-                    $data['Prefix'] = (string) $employee->prefix->name;
+                    $data['Prefix'] = $employee->prefix->name;
                 } elseif ($field === 'nationality') {
-                    $data['Nationality'] = (string) $employee->nationality->name;
+                    $data['Nationality'] = $employee->nationality->name;
                 } elseif ($field === 'ethnicity') {
-                    $data['Ethnicity'] = (string) $employee->ethnicity->name;
+                    $data['Ethnicity'] = $employee->ethnicity->name;
                 } elseif ($field === 'user_position') {
-                    $data['UserPosition'] = (string) $employee->user_position->name;
+                    $data['UserPosition'] = $employee->user_position->name;
                 } elseif ($field === 'employee_type') {
-                    $data['EmployeeType'] = (string) $employee->employee_type->name;
+                    $data['EmployeeType'] = $employee->employee_type->name;
                 } elseif ($field === 'company_department') {
-                    $data['CompanyDepartment'] = (string) $employee->company_department->name;
+                    $data['CompanyDepartment'] = $employee->company_department->name;
                 } elseif ($field === 'employee_no') {
-                    $data['EmployeeNo'] = (string) $employee->employee_no;
+                    $data['EmployeeNo'] = "\t" . $employee->employee_no;
                 } elseif ($field === 'name') {
-                    $data['Name'] = (string) $employee->name;
+                    $data['Name'] = $employee->name;
                 } elseif ($field === 'lastname') {
-                    $data['Lastname'] = (string) $employee->lastname;
+                    $data['Lastname'] = $employee->lastname;
                 } elseif ($field === 'address') {
-                    $data['Address'] = (string) $employee->address;
+                    $data['Address'] = $employee->address;
                 } elseif ($field === 'phone') {
-                    $data['Phone'] = (string) $employee->phone;
+                    $data['Phone'] = "\t" . $employee->phone;
                 } elseif ($field === 'hid') {
-                    $data['Hid'] = (string) $employee->hid;
+                    $data['Hid'] = "\t" .$employee->hid;
                 } elseif ($field === 'passport') {
-                    $data['Passport'] = (string) $employee->passport;
+                    $data['Passport'] = $employee->passport;
                 } elseif ($field === 'work_permit') {
-                    $data['WorkPermit'] = (string) $employee->work_permit;
+                    $data['WorkPermit'] = "\t" . $employee->work_permit;
                 } elseif ($field === 'start_work_date') {
-                    $data['StartWorkDate'] = (string) $employee->StartWorkDate;
+                    $data['StartWorkDate'] = "\t" .$employee->start_work_date;
                 } elseif ($field === 'birth_date') {
-                    $data['BirthDate'] = (string) $employee->BirthDate;
+                    $data['BirthDate'] = "\t" .$employee->birth_date;
                 } elseif ($field === 'visa_expiry_date') {
-                    $data['VisaExpiryDate'] = (string) $employee->VisaExpiryDate;
+                    $data['VisaExpiryDate'] = "\t" .$employee->visa_expiry_date;
                 } elseif ($field === 'permit_expiry_date') {
-                    $data['PermitExpiryDate'] = (string) $employee->PermitExpiryDate;
+                    $data['PermitExpiryDate'] = "\t" .$employee->permit_expiry_date;
                 } elseif ($field === 'education_level') {
-                    $data['EducationLevel'] = (string) $employee->education_level;
+                    $data['EducationLevel'] = $employee->education_level;
                 } elseif ($field === 'education_branch') {
-                    $data['EducationBranch'] = (string) $employee->education_branch;
+                    $data['EducationBranch'] = $employee->education_branch;
                 } elseif ($field === 'bank') {
-                    $data['Bank'] = (string) $employee->bank;
+                    $data['Bank'] = $employee->bank;
                 } elseif ($field === 'bank_account') {
-                    $data['BankAccount'] = (string) $employee->bank_account;
+                    $data['BankAccount'] = "\t" . $employee->bank_account;
                 }
             }
 
@@ -129,5 +131,6 @@ class EmployeeExport implements FromCollection, WithHeadings
         // Define the headings for the Excel file
         return $this->selectedComments;
     }
+
 
 }

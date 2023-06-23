@@ -42,24 +42,6 @@ class ReportFieldsTableSeeder extends Seeder
                 
            }
         } 
-        ReportField::where('table','report_fields')->where('field','name')->first()->update([
-            'status' => 1
-        ]);
-        ReportField::where('table','report_fields')->where('field','lastname')->first()->update([
-            'status' => 1
-        ]);
-        ReportField::where('table','report_fields')->where('field','company_department')->first()->update([
-            'status' => 1
-        ]);
-        ReportField::where('table','report_fields')->where('field','user_position')->first()->update([
-            'status' => 1
-        ]);
-        ReportField::where('table','report_fields')->where('field','employee_no')->first()->update([
-            'status' => 1
-        ]);
-        ReportField::where('table','report_fields')->where('field','employee_type')->first()->update([
-            'status' => 1
-        ]);
       
     }
 }

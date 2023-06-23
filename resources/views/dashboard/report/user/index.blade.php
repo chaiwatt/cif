@@ -61,7 +61,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label>เพิ่มเติม</label>
+                                    <label>อื่น ๆ <span
+                                            class="text-sm font-weight-normal font-style-normal">(รหัสพนักงาน, ชื่อ,
+                                            สกุล, ตำแหน่ง, สัญชาติ,
+                                            พาสพอร์ต,
+                                            เลขที่บัตรประชาชน)</span> </label>
                                     <input type="text" name="search_string" id="search_string"
                                         value="{{old('search_string')}}" class="form-control">
                                 </div>

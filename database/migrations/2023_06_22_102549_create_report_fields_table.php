@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('field')->nullable();
             $table->string('type')->nullable();
             $table->string('comment')->nullable();
-            $table->char('status',1)->default(0);
+            $table->char('status',1)->default(1);
             $table->timestamps();
         });
     }
