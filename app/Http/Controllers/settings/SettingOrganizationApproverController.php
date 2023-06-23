@@ -53,6 +53,7 @@ class SettingOrganizationApproverController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = $this->validateFormData($request);
 
         if ($validator->fails()) {
@@ -156,9 +157,9 @@ class SettingOrganizationApproverController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'company_department' => 'required',
-            'document_type' => 'required',
-            'approver_one' => 'required'
+            'company_department.*' => 'required',
+            'document_type.*' => 'required',
+            'approver_one.*' => 'required'
         ]);
 
         return $validator;

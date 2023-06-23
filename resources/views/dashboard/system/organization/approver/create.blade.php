@@ -51,8 +51,8 @@
                                                 style="width: 100%;">
                                                 @foreach ($companyDepartments as $companyDepartment)
                                                 <option value="{{ $companyDepartment->id }}" {{
-                                                    old('company_department')==$companyDepartment->id ?
-                                                    'selected' : '' }}>
+                                                    in_array($companyDepartment->id, (array)
+                                                    old('company_department', [])) ? 'selected' : '' }}>
                                                     {{ $companyDepartment->name }}
                                                 </option>
                                                 @endforeach
@@ -67,7 +67,8 @@
                                                 style="width: 100%;">
                                                 @foreach ($documentTypes as $documentType)
                                                 <option value="{{ $documentType->id }}" {{ in_array($documentType->id,
-                                                    old('document_type', [])) ? 'selected' : '' }}>
+                                                    (array) old('document_type', [])) ?
+                                                    'selected' : '' }}>
                                                     {{ $documentType->name }}
                                                 </option>
                                                 @endforeach
@@ -81,10 +82,9 @@
                                                 class="form-control select2 @error('approver_one') is-invalid @enderror"
                                                 style="width: 100%;">
                                                 @foreach ($approvers as $approver)
-                                                <option value="{{ $approver->id }}" {{ old('approver_one')==$approver->
-                                                    id ?
-                                                    'selected' : '' }}>
-                                                    {{ $approver->name }} {{ $approver->lastname }}
+                                                <option value="{{ $approver['id'] }}" {{ in_array(old('approver_one'),
+                                                    [$approver['id']]) ? 'selected' : '' }}>
+                                                    {{ $approver['name'] }} {{ $approver['lastname'] }}
                                                 </option>
                                                 @endforeach
                                             </select>
