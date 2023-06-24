@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการการอนุมัติ</h1>
+                    <h1 class="m-0">รายการอนุมัติ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">รายการการอนุมัติ</li>
+                        <li class="breadcrumb-item active">รายการอนุมัติ</li>
                     </ol>
                 </div>
             </div>
@@ -30,13 +30,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการการอนุมัติ</h3>
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" class="form-control float-right"
-                                        placeholder="ค้นหา">
-                                </div>
-                            </div>
+                            <h3 class="card-title">รายการอนุมัติ</h3>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">

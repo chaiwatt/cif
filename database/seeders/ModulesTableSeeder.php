@@ -16,26 +16,32 @@ class ModulesTableSeeder extends Seeder
     public function run()
     {
         Module::create([
+            'code' => 'SHIFT',
             'name' => 'กะการทำงาน',
             'icon' => 'fa-clock'
         ]);
         Module::create([
+            'code' => 'WORK-SCHEDULE',
             'name' => 'ตารางทำงาน',
             'icon' => 'fa-calendar-alt'
         ]);
         Module::create([
+            'code' => 'EXTRA-EARN',
             'name' => 'การได้เงินเพิ่ม',
             'icon' => 'fa-arrow-up'
         ]);
         Module::create([
+            'code' => 'DEDUCTION',
             'name' => 'การหักเงิน',
             'icon' => 'fa-arrow-down'
         ]);
         Module::create([
+            'code' => 'SARALY-MODULE-ONE',
             'name' => 'โมดูลเงินเดือน1',
             'icon' => 'fa-wallet'
         ]);
         Module::create([
+            'code' => 'SARALY-MODULE-TWO',
             'name' => 'โมดูลเงินเดือน2',
             'icon' => 'fa-wallet'
         ]);

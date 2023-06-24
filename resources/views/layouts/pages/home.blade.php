@@ -20,9 +20,9 @@
 
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
-                <a href="../../index3.html" class="navbar-brand">
+                <a href="{{route('home')}}" class="navbar-brand">
 
-                    <span class="brand-text font-weight-light">CIF HRM: {{Auth::user()->name}}
+                    <span class="brand-text font-weight-light">ผู้ใช้: {{Auth::user()->name}}
                         {{Auth::user()->lastname}} ({{Auth::user()->user_position->name}})</span>
                 </a>
                 {{-- <button class="navbar-toggler order-1" type="button" data-toggle="collapse"

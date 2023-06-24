@@ -17,11 +17,11 @@ class ModuleGroupsTableSeeder extends Seeder
     public function run()
     {
         // Retrieve groups and modules
-        $group1 = Group::find(1);
-        $module1 = Module::find(1);
-        $module2 = Module::find(2);
-        $module3 = Module::find(3);
-        $module4 = Module::find(4);
+        $group1 = Group::where('code','TIME-RECORD')->first();
+        $module1 = Module::where('code','SHIFT')->first();
+        $module2 = Module::where('code','WORK-SCHEDULE')->first();
+        $module3 = Module::where('code','EXTRA-EARN')->first();
+        $module4 = Module::where('code','DEDUCTION')->first();
 
         // Assign modules to group
         $group1->modules()->attach([$module1->id, $module2->id,$module3->id, $module4->id]);

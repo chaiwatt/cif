@@ -20,10 +20,10 @@
     <div class="content">
         <div class="container-fluid">
             @if($errors->any())
-            <div class="alert alert-danger">
-                <p>เกิดข้อผิดพลาดการนำเข้า</p>
-                <p>จำนวน: {{ $errors->first('error_count') }} รายการ</p>
-                {{$errors}}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                เกิดข้อผิดพลาดการนำเข้า โปรดตรวจสอบไฟล์นำเข้าให้ถูกต้อง
+                {{-- <p>จำนวน: {{ $errors->first('error_count') }} รายการ</p>
                 <ul>
                     @foreach ($errors->get('error_rows') as $index => $errorRow)
                     @php
@@ -35,7 +35,7 @@
                         @endforeach
                     </li>
                     @endforeach
-                </ul>
+                </ul> --}}
             </div>
             @endif
             <div class="row">

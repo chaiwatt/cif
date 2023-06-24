@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('setting.organization.approver.index')}}">รายการการอนุมัติ</a></li>
+                                href="{{route('setting.organization.approver.index')}}">รายการอนุมัติ</a></li>
                         <li class="breadcrumb-item active">เพิ่มรายการอนุมัติ</li>
                     </ol>
                 </div>

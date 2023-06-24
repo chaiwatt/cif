@@ -18,6 +18,7 @@ use App\Models\CompanyDepartment;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\WorkScheduleAssignment;
 use Illuminate\Notifications\Notifiable;
+use App\Models\WorkScheduleAssignmentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -270,6 +271,17 @@ class User extends Authenticatable
     public function approvers()
     {
         return $this->belongsToMany(Approver::class, 'approver_users', 'user_id', 'approver_id');
+    }
+
+    /**
+     * ความสัมพันธ์กับโมเดล WorkScheduleAssignmentUser (ผู้ใช้งานที่ได้รับการกำหนดตารางเวลางาน)
+     * ผ่านการเชื่อมโยงกับโมเดล WorkScheduleAssignmentUser (ผู้ใช้งานที่ได้รับการกำหนดตารางเวลางาน)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function workScheduleAssignmentUsers()
+    {
+        return $this->hasMany(WorkScheduleAssignmentUser::class);
     }
 
 }

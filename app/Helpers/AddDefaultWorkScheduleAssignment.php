@@ -4,15 +4,14 @@ namespace App\Helpers;
 
 use Carbon\Carbon;
 use App\Models\Shift;
-use App\Models\WorkSchedule;
+
 use App\Models\WorkScheduleAssignment;
 
 class AddDefaultWorkScheduleAssignment
 {
-    public function addDefaultWorkScheduleAssignment(Shift $shift,WorkSchedule $workSchedule)
+    public function addDefaultWorkScheduleAssignment(Shift $shift)
     {
         $shiftId = $shift->id;
-        $workScheduleId = $workSchedule->id;
         $year = 2023;
         $month = 7;
         $days = $this->getAllDaysInMonth($year, $month);
@@ -20,7 +19,6 @@ class AddDefaultWorkScheduleAssignment
         if (!WorkScheduleAssignment::where('month', $month)->where('year', $year)->exists()) {
             foreach ($days as $day) {
                 WorkScheduleAssignment::create([
-                    'work_schedule_id' => $workScheduleId,
                     'week_day' => $day['dayOfWeek'],
                     'day' => $day['day'],
                     'month' => $month,

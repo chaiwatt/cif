@@ -8,11 +8,12 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\Jobs\ShiftController;
 use App\Http\Controllers\Settings\SettingController;
-use App\Http\Controllers\Jobs\WorkScheduleController;
 use App\Http\Controllers\Settings\SettingAccessRoleController;
 use App\Http\Controllers\settings\SettingReportUserController;
 use App\Http\Controllers\Jobs\JobsShiftYearlyHolidayController;
+use App\Http\Controllers\jobs\WorkScheduleAssignmentController;
 use App\Http\Controllers\Jobs\JobsShiftTimeattendanceController;
+use App\Http\Controllers\jobs\JobsScheduleWorkScheduleController;
 use App\Http\Controllers\Settings\SettingAssignmentRoleController;
 use App\Http\Controllers\Settings\SettingAssignmentGroupController;
 use App\Http\Controllers\Settings\SettingAssignmentModuleController;
@@ -49,7 +50,9 @@ Route::group(['prefix' => 'shift'], function () {
     Route::delete('{id}', [ShiftController::class, 'delete'])->name('shifts.delete');
 });
 Route::group(['prefix' => 'work_schedule'], function () {
-    Route::get('', [WorkScheduleController::class, 'index'])->name('work_schedule.index');
+    Route::get('', [WorkScheduleAssignmentController::class, 'index'])->name('work_schedule.index');
+    Route::get('create', [WorkScheduleAssignmentController::class, 'create'])->name('work_schedule.create');
+    Route::get('assign', [WorkScheduleAssignmentController::class, 'assign'])->name('work_schedule.assign');
 });
 
 Route::middleware('auth')->group(function () {
@@ -74,6 +77,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('{id}', [JobsShiftYearlyHolidayController::class, 'view'])->name('jobs.shift.yearlyholiday.view');
                 Route::put('{id}', [JobsShiftYearlyHolidayController::class, 'update'])->name('jobs.shift.yearlyholiday.update');
                 Route::delete('{id}', [JobsShiftYearlyHolidayController::class, 'delete'])->name('jobs.shift.yearlyholiday.delete');
+            });
+        });
+        Route::group(['prefix' => 'schedule-work'], function () {
+            Route::group(['prefix' => 'schedule'], function () {
+                Route::get('', [JobsScheduleWorkScheduleController::class, 'index'])->name('jobs.schedule-work.schedule');
             });
         });
     });

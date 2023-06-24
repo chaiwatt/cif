@@ -28,10 +28,10 @@ class AccessGroupService
         }
     }
 
-    public function hasPermission(Collection $updatedRoleGroupCollection, $workingModule, $workingJob,$action)
+    public function hasPermission(Collection $updatedRoleGroupCollection, $module, $workingJob,$action)
     {
-        $workingModule = $updatedRoleGroupCollection->where('module_name', $workingModule->name);
-        $permission = $workingModule[0]->jobs->where('job_name', $workingJob->name)->first()->permissions;
+        $workingModule = $updatedRoleGroupCollection->where('module_name', $module->name);
+        $permission = $workingModule->first()->jobs->where('job_name', $workingJob->name)->first()->permissions;
 
         foreach ($permission as $key => $value) {
             $permission->$key = self::convertStringToBoolean($value);

@@ -15,7 +15,8 @@
         <div class="col-lg-6">
             <div class="card  card-success card-outline">
                 <div class="card-header">
-                    <h5 class="card-title m-0">{{ $group->name }}</h5>
+                    <h5 class="card-title m-0"><i class="fas {{ $group->icon }} mr-2 text-gray"></i>{{ $group->name
+                        }}</h5>
                 </div>
                 <div class="card-body">
                     <p class="card-text">{{ $group->description }}</p>
@@ -27,9 +28,9 @@
         @endforeach
         @can('is_admin')
         <div class="col-lg-6">
-            <div class="card  card-success card-outline">
+            <div class="card  card-info card-outline">
                 <div class="card-header">
-                    <h5 class="card-title m-0">ตั้งค่าระบบ</h5>
+                    <h5 class="card-title m-0"><i class="fas fa-cog mr-2 text-gray"></i>ตั้งค่าระบบ</h5>
                 </div>
                 <div class="card-body">
                     <p class="card-text">ตั้งค่าระบบ</p>

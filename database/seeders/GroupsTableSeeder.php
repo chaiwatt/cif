@@ -16,16 +16,22 @@ class GroupsTableSeeder extends Seeder
     public function run()
     {
         Group::create([
-            'name' => 'ระบบลงเวลา',
-            'description' => 'รายละเอียดระบบลงเวลา',
+            'code' => 'TIME-RECORD',
+            'name' => 'ระบบบันทึกเวลา',
+            'description' => 'รายละเอียดระบบบันทึกเวลา',
+            'icon' => 'fa-clock',
         ]);
         Group::create([
+            'code' => 'SARALY-MANAGEMENT',
             'name' => 'ระบบเงินเดือน',
             'description' => 'รายละเอียดระบบเงินเดือน',
+            'icon' => 'fa-wallet',
         ]);
         Group::create([
+            'code' => 'TRAINING',
             'name' => 'ระบบฝึกอบรม',
             'description' => 'รายละเอียดระบบฝึกอบรม',
+            'icon' => 'fa-user',
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\ShiftAgreement;
+use App\Models\WorkScheduleAssignment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -169,6 +170,17 @@ class Shift extends Model
         $formattedMinutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);
 
         return $formattedHours . '.' . $formattedMinutes;
+    }
+
+    /**
+     * ความสัมพันธ์กับโมเดล WorkScheduleAssignment (การกำหนดตารางเวลางาน)
+     * ผ่านการเชื่อมโยงกับโมเดล WorkScheduleAssignment (การกำหนดตารางเวลางาน)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function workScheduleAssignments()
+    {
+        return $this->hasMany(WorkScheduleAssignment::class);
     }
 
 }

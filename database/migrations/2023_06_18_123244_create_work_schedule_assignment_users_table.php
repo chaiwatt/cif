@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('work_schedule_assignment_id', 'wsa_user_assignment_foreign')->references('id')->on('work_schedule_assignments')->onDelete('cascade');
             $table->foreign('user_id', 'wsa_user_user_foreign')->references('id')->on('users')->onDelete('cascade');
-            $table->date('time_in')->nullable();
-            $table->date('time_out')->nullable();
+            $table->time('time_in')->nullable();
+            $table->time('time_out')->nullable();
             $table->timestamps();
         });
     }

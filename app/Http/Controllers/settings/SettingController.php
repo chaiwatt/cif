@@ -21,14 +21,14 @@ class SettingController extends Controller
         // ดึงข้อมูลแผนกของบริษัททั้งหมด
         $companyDepartments = CompanyDepartment::all();
 
-        $colors = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
+        $colors = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#3c8dbc','#00c0ef','#f39c12','#f56954','#f56954','#39CCCC','#605ca8','#D81B60','#2ab7ca','#f6abb6','#011f4b','#851e3e'];
 
         // สร้างข้อมูลสำหรับแสดงกราฟดวงกลมจำนวนพนักงานในแต่ละแผนก
         $employeeDatapackages = [];
         foreach ($companyDepartments as $index => $companyDepartment) {
             $employeeDatapackages[] = [
                 'label' => $companyDepartment->name,
-                'value' => $companyDepartment->users->count(),
+                'value' => $companyDepartment->users_belong->count(),
                 'color' => $colors[$index % count($colors)],
             ];
         }

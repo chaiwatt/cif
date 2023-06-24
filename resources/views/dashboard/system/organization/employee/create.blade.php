@@ -24,11 +24,6 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">รายละเอียดข้อมูลพนักงาน</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
                         </div>
                         <div class="card-body">
                             <form action="{{route('setting.organization.employee.store')}}" method="POST">
