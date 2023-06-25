@@ -33,8 +33,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>เดือนตารางทำงาน</th>
-                                        <th>ปีตารางทำงาน</th>
+                                        <th>ตารางทำงาน</th>
+                                        <th>เดือน</th>
+                                        <th>ปี</th>
                                         <th>การมอบหมาย</th>
                                         <th class="text-right">เพิ่มเติม</th>
                                     </tr>
@@ -43,6 +44,7 @@
                                     @foreach ($months as $key=> $month)
                                     <tr>
                                         <td>{{$key + 1}}</td>
+                                        <td>{{$workSchedule->name}}</td>
                                         <td>{{$month->name}}</td>
                                         <td>{{$workSchedule->year}}</td>
                                         <td><span class="badge bg-danger">ยังไม่ได้มอบหมาย ถ้าเป็นเดือนก่อนหน้า

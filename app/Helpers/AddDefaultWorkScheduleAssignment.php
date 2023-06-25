@@ -15,7 +15,7 @@ class AddDefaultWorkScheduleAssignment
         for ($month = 1; $month <= 12; $month++) {
             $days = $this->getAllDaysInMonth($year, $month);
             
-            if (!WorkScheduleAssignment::where('month_id', $month)->where('year', $year)->exists()) {
+            if (!WorkScheduleAssignment::where('work_schedule_id', $workSchedule->id)->where('month_id', $month)->where('year', $year)->exists()) {
                 foreach ($days as $day) {
                     WorkScheduleAssignment::create([
                         'work_schedule_id' => $workSchedule->id,

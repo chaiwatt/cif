@@ -14,6 +14,7 @@ class WorkScheduleAssignment extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'work_schedule_id',
         'week_day',
         'day',
         'month_id',

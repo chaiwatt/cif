@@ -58,34 +58,6 @@ class JobsScheduleWorkScheduleController extends Controller
         ]);
     }
 
-    public function month($id)
-    {
-        $action = 'update';
-        $groupUrl = session('groupUrl');
-
-        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
-        $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
-        $permission = $roleGroupCollection['permission'];
-        $viewRoute = $roleGroupCollection['viewRoute'];
-        $workSchedule = WorkSchedule::findOrFail($id);
-        $year = $workSchedule->year;
-        $uniqueMonths = $workSchedule->assignments()
-            ->where('year', $year)
-            ->distinct('month_id')
-            ->pluck('month_id');
-
-        $months = Month::whereIn('id', $uniqueMonths)->get();   
-
-        return view('jobs.schedulework.schedule.month', [
-            'groupUrl' => $groupUrl,
-            'modules' => $updatedRoleGroupCollection,
-            'permission' => $permission,
-            'months' => $months,
-            'workSchedule' => $workSchedule,
-            'viewRoute' => $viewRoute
-        ]);
-    }
-
     public function store(Request $request)
     {
         $validator = $this->validateFormData($request);
@@ -93,7 +65,7 @@ class JobsScheduleWorkScheduleController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+       
         $workSchedule = new WorkSchedule();
         $workSchedule->name = $request->name;
         $workSchedule->description = $request->description;
