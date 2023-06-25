@@ -76,6 +76,7 @@ class JobsScheduleWorkScheduleController extends Controller
         return redirect()->route('jobs.schedulework.schedule');
     }
 
+
     function validateFormData($request)
     {
         $validator = Validator::make($request->all(), [

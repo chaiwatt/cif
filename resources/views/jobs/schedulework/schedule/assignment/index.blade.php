@@ -35,8 +35,9 @@
                                         <th>#</th>
                                         <th>ตารางทำงาน</th>
                                         <th>เดือน</th>
-                                        <th>ปี</th>
-                                        <th>การมอบหมาย</th>
+                                        {{-- <th>ปี</th> --}}
+                                        <th>การมอบหมายกะทำงาน</th>
+                                        <th>เพิ่มผู้ใช้</th>
                                         <th class="text-right">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
@@ -45,19 +46,24 @@
                                     <tr>
                                         <td>{{$key + 1}}</td>
                                         <td>{{$workSchedule->name}}</td>
-                                        <td>{{$month->name}}</td>
-                                        <td>{{$workSchedule->year}}</td>
-                                        <td><span class="badge bg-danger">ยังไม่ได้มอบหมาย ถ้าเป็นเดือนก่อนหน้า
-                                                แต่ไม่ได้มอบหมายใช้คำว่า หมดเวลามอบหมาย</span></td>
+                                        <td>{{$month->name}} {{$workSchedule->year}}</td>
+                                        {{-- <td>{{$workSchedule->year}}</td> --}}
+                                        <td><span class="badge bg-success">มอบหมายแล้ว</span></td>
+                                        <td><span class="badge bg-danger">ยังไม่ได้เพิ่ม</span></td>
                                         <td class="text-right">
 
                                             @if ($permission->update)
                                             <a class="btn btn-success btn-sm">
                                                 <i class="fas fa-users"></i>
                                             </a>
-                                            <a class="btn btn-primary btn-sm" href="">
+                                            {{-- <a class="btn btn-primary btn-sm"
+                                                href="{{route('jobs.schedulework.schedule.assignment.create')}}">
                                                 <i class="fas fa-link"></i>
                                                 </i>
+                                            </a> --}}
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('jobs.schedulework.schedule.assignment.create', ['workScheduleId' => $workSchedule->id, 'year' => $workSchedule->year, 'month' => $month->id]) }}">
+                                                <i class="fas fa-link"></i>
                                             </a>
                                             @endif
                                         </td>

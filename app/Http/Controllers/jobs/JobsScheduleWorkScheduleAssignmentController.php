@@ -19,7 +19,7 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
         $this->addDefaultWorkScheduleAssignment = $addDefaultWorkScheduleAssignment;
     }
-    public function index($id)
+    public function view($id)
     {
         $action = 'update';
         $groupUrl = session('groupUrl');
@@ -44,6 +44,28 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
             'months' => $months,
             'workSchedule' => $workSchedule,
             'viewRoute' => $viewRoute
+        ]);
+    }
+    public function create($scheduleId,$year,$monthId)
+    {
+        $action = 'create';
+        $groupUrl = session('groupUrl');
+
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+        $permission = $roleGroupCollection['permission'];
+        $viewRoute = $roleGroupCollection['viewRoute'];
+        $month = Month::find($monthId);
+        $workSchedule = WorkSchedule::find($scheduleId);
+
+        return view('jobs.schedulework.schedule.assignment.create', [
+            'groupUrl' => $groupUrl,
+            'modules' => $updatedRoleGroupCollection,
+            'permission' => $permission,
+            'viewRoute' => $viewRoute,
+            'month' => $month,
+            'workSchedule' => $workSchedule,
+            'year' => $year
         ]);
     }
 }
