@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Month;
 use App\Models\Shift;
+use App\Models\WorkSchedule;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\WorkScheduleAssignmentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +16,7 @@ class WorkScheduleAssignment extends Model
     protected $fillable = [
         'week_day',
         'day',
-        'month',
+        'month_id',
         'year',
         'shift_id',
     ];
@@ -50,6 +52,26 @@ class WorkScheduleAssignment extends Model
     public function workScheduleAssignmentUsers()
     {
         return $this->hasMany(WorkScheduleAssignmentUser::class);
+    }
+
+    /**
+     * ความสัมพันธ์กับโมเดล WorkSchedule (ตารางทำงาน)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function work_schedule()
+    {
+        return $this->belongsTo(WorkSchedule::class);
+    }
+
+    /**
+     * ความสัมพันธ์กับโมเดล Month (เดือน)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
     }
 
 }

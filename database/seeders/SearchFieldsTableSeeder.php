@@ -34,11 +34,11 @@ class SearchFieldsTableSeeder extends Seeder
                 if(!$check)
                 {
                     SearchField::create([
-                    'table' => 'users',
-                    'field' => $columnName,
-                    'comment' => $columnComment,
-                    'type' => $type,
-                ]);
+                        'table' => 'users',
+                        'field' => $columnName,
+                        'comment' => $columnComment,
+                        'type' => $type,
+                    ]);
                 }
            }
         } 

@@ -22,6 +22,7 @@ use App\Http\Controllers\settings\SettingOrganizationApproverController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeController;
 use App\Http\Controllers\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
+use App\Http\Controllers\jobs\JobsScheduleWorkScheduleAssignmentController;
 use App\Http\Controllers\Settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
 
@@ -79,9 +80,15 @@ Route::middleware('auth')->group(function () {
                 Route::delete('{id}', [JobsShiftYearlyHolidayController::class, 'delete'])->name('jobs.shift.yearlyholiday.delete');
             });
         });
-        Route::group(['prefix' => 'schedule-work'], function () {
+        Route::group(['prefix' => 'schedulework'], function () {
             Route::group(['prefix' => 'schedule'], function () {
-                Route::get('', [JobsScheduleWorkScheduleController::class, 'index'])->name('jobs.schedule-work.schedule');
+                Route::get('', [JobsScheduleWorkScheduleController::class, 'index'])->name('jobs.schedulework.schedule');
+                Route::get('create', [JobsScheduleWorkScheduleController::class, 'create'])->name('jobs.schedulework.schedule.create');
+                Route::post('store', [JobsScheduleWorkScheduleController::class, 'store'])->name('jobs.schedulework.schedule.store');
+                Route::group(['prefix' => 'assignment'], function () {
+                    Route::get('{id}', [JobsScheduleWorkScheduleAssignmentController::class, 'index'])->name('jobs.schedulework.schedule.assignment');
+                    Route::get('create', [JobsScheduleWorkScheduleAssignmentController::class, 'create'])->name('jobs.schedulework.schedule.assignment.create');
+                });
             });
         });
     });

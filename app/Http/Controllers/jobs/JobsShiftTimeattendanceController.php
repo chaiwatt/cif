@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\Shift;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\AccessGroupService;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultShiftDependency;
 use App\Services\UpdatedRoleGroupCollectionService;
@@ -14,14 +13,10 @@ use App\Services\UpdatedRoleGroupCollectionService;
 class JobsShiftTimeattendanceController extends Controller
 {
     private $updatedRoleGroupCollectionService;
-    private $accessGroupService;
 
-    public function __construct(
-        UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService,
-        AccessGroupService $accessGroupService
-    ) {
+    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService) 
+    {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
-        $this->accessGroupService = $accessGroupService;
     }
 
     /**
@@ -34,8 +29,7 @@ class JobsShiftTimeattendanceController extends Controller
         $action = 'show';
         $groupUrl = session('groupUrl');
 
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
@@ -62,8 +56,7 @@ class JobsShiftTimeattendanceController extends Controller
         $action = 'create';
         $groupUrl = session('groupUrl');
 
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
         // ส่งข้อมูลไปยังหน้าแสดงผลสร้างหลักสูตรใหม่
@@ -141,8 +134,7 @@ class JobsShiftTimeattendanceController extends Controller
         $action = 'update';
         $groupUrl = session('groupUrl');
 
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
         // ดึงข้อมูล Shift ตาม ID ที่ระบุ
@@ -242,8 +234,7 @@ class JobsShiftTimeattendanceController extends Controller
     public function delete($id)
     {
         $action = 'delete';
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
 
         // ค้นหาและลบกะการทำงานตาม ID ที่ระบุ
         $shift = Shift::findOrFail($id);

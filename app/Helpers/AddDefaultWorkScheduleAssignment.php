@@ -5,30 +5,29 @@ namespace App\Helpers;
 use Carbon\Carbon;
 use App\Models\Shift;
 
+use App\Models\WorkSchedule;
 use App\Models\WorkScheduleAssignment;
 
 class AddDefaultWorkScheduleAssignment
 {
-    public function addDefaultWorkScheduleAssignment(Shift $shift)
+    public function addDefaultWorkScheduleAssignment(WorkSchedule $workSchedule,$year)
     {
-        $shiftId = $shift->id;
-        $year = 2023;
-        $month = 7;
-        $days = $this->getAllDaysInMonth($year, $month);
-        // You can loop through the $days array and access the 'day' and 'dayOfWeek' values for each day
-        if (!WorkScheduleAssignment::where('month', $month)->where('year', $year)->exists()) {
-            foreach ($days as $day) {
-                WorkScheduleAssignment::create([
-                    'week_day' => $day['dayOfWeek'],
-                    'day' => $day['day'],
-                    'month' => $month,
-                    'year' => $year,
-                    'shift_id' => $shiftId,
-                ]);
+        for ($month = 1; $month <= 12; $month++) {
+            $days = $this->getAllDaysInMonth($year, $month);
+            
+            if (!WorkScheduleAssignment::where('month_id', $month)->where('year', $year)->exists()) {
+                foreach ($days as $day) {
+                    WorkScheduleAssignment::create([
+                        'work_schedule_id' => $workSchedule->id,
+                        'week_day' => $day['dayOfWeek'],
+                        'day' => $day['day'],
+                        'month_id' => $month,
+                        'year' => $year,
+                        'shift_id' => Null,
+                    ]);
+                }
             }
         }
-
-
     }
     function getAllDaysInMonth($year, $month)
     {

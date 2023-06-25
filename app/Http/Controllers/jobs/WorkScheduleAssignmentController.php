@@ -4,6 +4,7 @@ namespace App\Http\Controllers\jobs;
 
 use App\Models\User;
 use App\Models\Shift;
+use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\WorkScheduleAssignment;
@@ -12,13 +13,13 @@ use App\Helpers\AddDefaultWorkScheduleAssignment;
 
 class WorkScheduleAssignmentController extends Controller
 {
-    public function create()
-    {
-        $shift = Shift::findOrFail(1);
-        $addDefaultWorkScheduleAssignment = new AddDefaultWorkScheduleAssignment();
-        $addDefaultWorkScheduleAssignment->addDefaultWorkScheduleAssignment($shift);
-        return ('created');
-    }
+    // public function create()
+    // {
+    //     $workSchedule = WorkSchedule::findOrFail(1); 
+    //     $addDefaultWorkScheduleAssignment = new AddDefaultWorkScheduleAssignment();
+    //     $addDefaultWorkScheduleAssignment->addDefaultWorkScheduleAssignment($workSchedule);
+    //     return ('created');
+    // }
     public function assign()
     {
         $user = User::find(4); 
@@ -57,7 +58,7 @@ class WorkScheduleAssignmentController extends Controller
             $query->where('shift_id', $shiftId)
                 ->where('week_day', $weekDay)
                 ->where('day', $day)
-                ->where('month', $month)
+                ->where('month_id', $month)
                 ->where('year', $year);
         })->where('user_id', $userId)->first();
 
@@ -68,7 +69,7 @@ class WorkScheduleAssignmentController extends Controller
     {
         $workScheduleAssignmentUsers = WorkScheduleAssignmentUser::whereHas('workScheduleAssignment', function ($query) use ($shiftId, $month, $year) {
             $query->where('shift_id', $shiftId)
-                ->where('month', $month)
+                ->where('month_id', $month)
                 ->where('year', $year);
         })->where('user_id', $userId)->get();
 
@@ -80,7 +81,7 @@ class WorkScheduleAssignmentController extends Controller
         $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($shiftId, $month, $year) {
             $query->whereHas('workScheduleAssignment', function ($query) use ($shiftId, $month, $year) {
                 $query->where('shift_id', $shiftId)
-                    ->where('month', $month)
+                    ->where('month_id', $month)
                     ->where('year', $year);
             });
         })->get();

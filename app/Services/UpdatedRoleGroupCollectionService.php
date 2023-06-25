@@ -19,13 +19,14 @@ class UpdatedRoleGroupCollectionService
     public function getUpdatedRoleGroupCollection($action)
     {
         $user = auth()->user();
-
+        
         $filterRoute = $this->filterRoute(Route::currentRouteName());
         $job = Job::where('route', $filterRoute)->first();
 
         $groupId = $job->group_module_job->group_id;
         $moduleId = $job->group_module_job->module_id;
         $viewName = $job->view;
+        $viewRoute = $job->route;
 
         $group = Group::findOrFail($groupId);
         $module = Module::findOrFail($moduleId);
@@ -39,13 +40,14 @@ class UpdatedRoleGroupCollectionService
             'updatedRoleGroupCollection' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'viewName' => $viewName,
+            'viewRoute' => $viewRoute,
         ];
     }
 
     public function filterRoute($route)
     {
-        $parts = explode(".", $route);
-        return $parts[0] . "." . $parts[1] . "." . $parts[2];
+        $parts = explode('.', $route);
+        return implode('.', array_slice($parts, 0, 3));
     }
 
     public function getRoleGroupJson($user, $group)

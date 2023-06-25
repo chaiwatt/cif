@@ -29,7 +29,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(ProvincesTableSeeder::class);
         // $this->call(AmphursTableSeeder::class);
         // $this->call(TambolsTableSeeder::class);
-        
+        $this->call(MonthsTableSeeder::class);
+        $this->call(WorkSchedulesTableSeeder::class);
         $this->call(DocumentTyesTableSeeder::class);
         $this->call(YearlyHolidaysTableSeeder::class);
         $this->call(SearchFieldsTableSeeder::class);
@@ -45,7 +46,7 @@ class DatabaseSeeder extends Seeder
         $this->call(JobsTableSeeder::class);
         // $this->call(JobModulesTableSeeder::class);
         $this->call(ShifsTableSeeder::class);
-        // $this->call(WorkSchedulesTableSeeder::class); 
+        
         
         $this->call(GroupModuleJobsTableSeeder::class); 
         $this->call(ApproversTableSeeder::class); 

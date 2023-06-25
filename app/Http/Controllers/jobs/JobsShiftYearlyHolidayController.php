@@ -13,14 +13,10 @@ use App\Services\UpdatedRoleGroupCollectionService;
 class JobsShiftYearlyHolidayController extends Controller
 {
     private $updatedRoleGroupCollectionService;
-    private $accessGroupService;
 
-    public function __construct(
-        UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService,
-        AccessGroupService $accessGroupService
-    ) {
+    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService) 
+    {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
-        $this->accessGroupService = $accessGroupService;
     }
     
      public function index()
@@ -28,8 +24,7 @@ class JobsShiftYearlyHolidayController extends Controller
         $action = 'show';
         $groupUrl = session('groupUrl');
 
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
@@ -53,8 +48,7 @@ class JobsShiftYearlyHolidayController extends Controller
         $action = 'create';
         $groupUrl = session('groupUrl');
 
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
         return view('jobs.shift.yearlyholiday.create', [
@@ -87,8 +81,7 @@ class JobsShiftYearlyHolidayController extends Controller
     {
         $action = 'update';
         $groupUrl = session('groupUrl');
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
         $yearlyHoliday = YearlyHoliday::findOrFail($id);
@@ -98,7 +91,8 @@ class JobsShiftYearlyHolidayController extends Controller
             'yearlyHoliday' => $yearlyHoliday
         ]);
     }
-public function update(Request $request, $id)
+
+    public function update(Request $request, $id)
     {
         $validator = $this->validateFormData($request);
 
@@ -123,8 +117,7 @@ public function update(Request $request, $id)
         $action = 'delete';
         $this->getUpdatedRoleGroupCollection($action);
 
-        $updatedRoleGroupCollectionService = app(UpdatedRoleGroupCollectionService::class);
-        $roleGroupCollection = $updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
 
         $yearlyHoliday = YearlyHoliday::findOrFail($id);
         $yearlyHoliday->delete();

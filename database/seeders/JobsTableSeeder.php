@@ -30,8 +30,8 @@ class JobsTableSeeder extends Seeder
         Job::create([
             'code' => 'WORK-SCHEDULE',
             'name' => 'ตารางทำงาน',
-            'route' => 'jobs.schedule-work.schedule',
-            'view' => 'jobs.schedule-work.schedule.index',
+            'route' => 'jobs.schedulework.schedule',
+            'view' => 'jobs.schedulework.schedule.index',
         ]);
         Job::create([
             'code' => 'EXTRA-EARN-AGREEMENT',
