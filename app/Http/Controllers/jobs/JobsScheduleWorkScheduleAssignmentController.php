@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\jobs;
 
 use App\Models\Month;
+use App\Models\Shift;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -57,6 +58,7 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
         $viewRoute = $roleGroupCollection['viewRoute'];
         $month = Month::find($monthId);
         $workSchedule = WorkSchedule::find($scheduleId);
+        $shifts = Shift::all();
 
         return view('jobs.schedulework.schedule.assignment.create', [
             'groupUrl' => $groupUrl,
@@ -65,7 +67,8 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
             'viewRoute' => $viewRoute,
             'month' => $month,
             'workSchedule' => $workSchedule,
-            'year' => $year
+            'year' => $year,
+            'shifts' => $shifts
         ]);
     }
 }

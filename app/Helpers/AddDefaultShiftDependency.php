@@ -3,12 +3,13 @@
 namespace App\Helpers;
 
 use App\Models\Shift;
+use App\Models\ShiftColor;
 use App\Models\ShiftAgreement;
 
 class AddDefaultShiftDependency
 {
     // สร้างค่าเริ่มต้นของโมเดลอื่น ๆ ที่สัมพันธ์กันกับโมเดล Shift
-    public function addDependencies(Shift $shift)
+    public function addDependencies(Shift $shift,ShiftColor $shiftColor)
     {
         $shiftId = $shift->id;
         $shiftName = $shift->name;
@@ -24,7 +25,8 @@ class AddDefaultShiftDependency
             'record_end' => '00:00:00',
             'break_start' => '00:00:00',
             'break_end' => '00:00:00',
-            'common_code' => $shiftCode
+            'common_code' => $shiftCode,
+            'color' => $shiftColor->holiday
         ]);
         Shift::create([
             'name' => $shiftName .'(วันหยุดตามนักขัตฤกษ์)',
@@ -35,7 +37,8 @@ class AddDefaultShiftDependency
             'record_end' => '00:00:00',
             'break_start' => '00:00:00',
             'break_end' => '00:00:00',
-            'common_code' => $shiftCode
+            'common_code' => $shiftCode,
+            'color' => $shiftColor->public_holiday
         ]);
         ShiftAgreement::create([
             'shift_id' => $shiftId,

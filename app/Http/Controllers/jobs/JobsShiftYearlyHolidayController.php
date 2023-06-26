@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Jobs;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\YearlyHoliday;
+use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use App\Services\AccessGroupService;
 use Illuminate\Support\Facades\Validator;
@@ -13,10 +14,12 @@ use App\Services\UpdatedRoleGroupCollectionService;
 class JobsShiftYearlyHolidayController extends Controller
 {
     private $updatedRoleGroupCollectionService;
+    private $activityLogger;
 
-    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService) 
+    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService,ActivityLogger $activityLogger) 
     {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
+        $this->activityLogger = $activityLogger;
     }
     
      public function index()
@@ -72,6 +75,8 @@ class JobsShiftYearlyHolidayController extends Controller
         $yearHoliday->holiday_date = $holidayDate; 
         $yearHoliday->save();
 
+        $this->activityLogger->log('เพิ่ม', $yearHoliday);
+
         return redirect()->route('jobs.shift.yearlyholiday', [
             'message' => 'นำเข้าข้อมูลเรียบร้อยแล้ว'
         ]);
@@ -104,6 +109,9 @@ class JobsShiftYearlyHolidayController extends Controller
         $holidayDate = Carbon::createFromFormat('m/d/Y', $request->HolidayDate)->format('Y-m-d');  
 
         $yearHoliday = YearlyHoliday::findOrFail($id);
+
+        $this->activityLogger->log('อัปเดต', $yearHoliday);
+
         $yearHoliday->update([
             'name' => $holiday,
             'holiday_date' => $holidayDate
@@ -120,6 +128,9 @@ class JobsShiftYearlyHolidayController extends Controller
         $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
 
         $yearlyHoliday = YearlyHoliday::findOrFail($id);
+
+        $this->activityLogger->log('ลบ', $yearlyHoliday);
+        
         $yearlyHoliday->delete();
 
         return response()->json(['message' => 'วันหยุดประจำปีได้ถูกลบออกเรียบร้อยแล้ว']);

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\settings;
 
-use App\Http\Controllers\Controller;
 use App\Models\SearchField;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
+use App\Http\Controllers\Controller;
 
 class SettingGeneralSearchFieldUserController extends Controller
 {

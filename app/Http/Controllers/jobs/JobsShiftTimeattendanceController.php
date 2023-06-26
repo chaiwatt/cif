@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Jobs;
 
 use Carbon\Carbon;
 use App\Models\Shift;
+use App\Models\ShiftColor;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultShiftDependency;
@@ -13,10 +15,12 @@ use App\Services\UpdatedRoleGroupCollectionService;
 class JobsShiftTimeattendanceController extends Controller
 {
     private $updatedRoleGroupCollectionService;
+    private $activityLogger;
 
-    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService) 
+    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService,ActivityLogger $activityLogger) 
     {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
+        $this->activityLogger = $activityLogger;
     }
 
     /**
@@ -99,6 +103,7 @@ class JobsShiftTimeattendanceController extends Controller
         $multiply = $request->multiply;
 
         // สร้างและบันทึกข้อมูล Shift ใหม่
+        $randomShiftColor = ShiftColor::inRandomOrder()->first();
         $shift = new Shift();
         $shift->name = $shiftname;
         $shift->description = $description;
@@ -114,11 +119,14 @@ class JobsShiftTimeattendanceController extends Controller
         $shift->multiply = $multiply;
         $shift->base_shift = 1;
         $shift->common_code = $code;
+        $shift->color = $randomShiftColor->regular;
         $shift->save();
+
+        $this->activityLogger->log('เพิ่ม', $shift);
 
         // เพิ่มความสัมพันธ์กับข้อมูลอื่นๆ
         $dependencyAdder = new AddDefaultShiftDependency();
-        $dependencyAdder->addDependencies($shift);
+        $dependencyAdder->addDependencies($shift,$randomShiftColor);
 
         return redirect()->route('jobs.shift.timeattendance');
     }
@@ -177,6 +185,9 @@ class JobsShiftTimeattendanceController extends Controller
 
         // อัปเดตข้อมูล Shift ตาม ID ที่ระบุ
         $shift = Shift::findOrFail($id);
+
+        $this->activityLogger->log('อัปเดต', $shift);
+
         $shift->update([
             'name' => $shiftname,
             'description' => $description,
@@ -218,9 +229,13 @@ class JobsShiftTimeattendanceController extends Controller
 
         $duplicateShift->save();
 
+        $this->activityLogger->log('สำเนา', $duplicateShift);
+
+        $shiftColor = ShiftColor::where('regular',$shift->color)->first();
+
         // เพิ่มความสัมพันธ์กับข้อมูลอื่นๆ
         $dependencyAdder = new AddDefaultShiftDependency();
-        $dependencyAdder->addDependencies($duplicateShift);
+        $dependencyAdder->addDependencies($duplicateShift,$shiftColor);
 
         return redirect()->route('jobs.shift.timeattendance');
     }
@@ -238,6 +253,7 @@ class JobsShiftTimeattendanceController extends Controller
 
         // ค้นหาและลบกะการทำงานตาม ID ที่ระบุ
         $shift = Shift::findOrFail($id);
+        $this->activityLogger->log('ลบ', $shift);
         Shift::where('common_code',$shift->common_code)->delete();
 
         return response()->json(['message' => 'กะการทำงานได้ถูกลบออกเรียบร้อยแล้ว']);

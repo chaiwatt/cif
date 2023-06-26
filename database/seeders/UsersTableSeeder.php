@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
             'employee_type_id' => 1,
             'company_department_id' => 1,
             'employee_no' => 6944,
+            'username' => 6944,
             'name' => 'ชัยวัฒน์',
             'lastname' => 'ทวีจันทร์',
             'phone' => '0654867617',
@@ -33,7 +34,7 @@ class UsersTableSeeder extends Seeder
             'visa_expiry_date' => Null,
             'permit_expiry_date' => Null,
             'work_schedule_id' => 1,
-            'email' => 'user1@gmail.com',
+            'email' => '6944@gmail.com',
             'password' => bcrypt('11111111')
         ]);
         User::create([
@@ -44,7 +45,8 @@ class UsersTableSeeder extends Seeder
             'user_position_id' => 1,
             'employee_type_id' => 1,
             'company_department_id' => 2,
-            'employee_no' => 6947,
+            'employee_no' => 6945,
+            'username' => 6945,
             'name' => 'ธัญพร',
             'lastname' => 'สุวรรณโชติ',
             'phone' => '0654867618',
@@ -53,7 +55,7 @@ class UsersTableSeeder extends Seeder
             'visa_expiry_date' => Null,
             'permit_expiry_date' => Null,
             'work_schedule_id' => 1,
-            'email' => 'user2@gmail.com',
+            'email' => '6945@gmail.com',
             'password' => bcrypt('11111111')
         ]);
         User::create([
@@ -64,7 +66,8 @@ class UsersTableSeeder extends Seeder
             'user_position_id' => 1,
             'employee_type_id' => 1,
             'company_department_id' => 1,
-            'employee_no' => 6948,
+            'employee_no' => 6946,
+            'username' => 6946,
             'name' => 'ปรียาวดี',
             'lastname' => 'เกษมทรัพย์',
             'phone' => '0654867618',
@@ -73,7 +76,7 @@ class UsersTableSeeder extends Seeder
             'visa_expiry_date' => Null,
             'permit_expiry_date' => Null,
             'work_schedule_id' => 1,
-            'email' => 'user3@gmail.com',
+            'email' => '6946@gmail.com',
             'password' => bcrypt('11111111')
         ]);
         User::create([
@@ -83,7 +86,8 @@ class UsersTableSeeder extends Seeder
             'user_position_id' => 5,
             'employee_type_id' => 2,
             'company_department_id' => 3,
-            'employee_no' => 5519,
+            'employee_no' => 6947,
+            'username' => 6947,
             'name' => 'วีรภพ',
             'lastname' => 'แสงอุไร',
             'phone' => Null,
@@ -92,7 +96,7 @@ class UsersTableSeeder extends Seeder
             'visa_expiry_date' => Carbon::createFromFormat('m/d/Y', '08/15/2023')->format('Y-m-d'),
             'permit_expiry_date' => Carbon::createFromFormat('m/d/Y', '08/15/2023')->format('Y-m-d'),
             'work_schedule_id' => 1,
-            'email' => 'user4@gmail.com',
+            'email' => '6947@gmail.com',
             'password' => bcrypt('11111111')
         ]);
     }

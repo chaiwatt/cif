@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
@@ -59,6 +60,7 @@ Route::group(['prefix' => 'work_schedule'], function () {
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/group/{id}', [GroupController::class, 'index'])->name('group.index');
+    Route::get('/log', [LogController::class, 'index'])->name('log');
     Route::group(['prefix' => 'jobs'], function () {
         Route::group(['prefix' => 'shift'], function () {
             Route::group(['prefix' => 'timeattendance'], function () {

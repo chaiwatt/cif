@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Shift;
+use App\Models\ShiftColor;
 use Illuminate\Database\Seeder;
 use App\Helpers\AddDefaultShiftDependency;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -46,6 +47,7 @@ class ShifsTableSeeder extends Seeder
 
         // สร้างกะ
         foreach ($defaultShifts as $shiftData) {
+            $randomShiftColor = ShiftColor::inRandomOrder()->first();
             // สร้างอินสแตนซ์ของคลาส Shift ใหม่
             $shift = new Shift();
 
@@ -59,13 +61,14 @@ class ShifsTableSeeder extends Seeder
             $shift->break_start = $shiftData['break_start'];
             $shift->break_end = $shiftData['break_end'];
             $shift->base_shift = 1;
+            $shift->color = $randomShiftColor->regular;
             $shift->common_code = $shiftData['code'];
             // บันทึกกะทำงาน
             $shift->save();
 
             // สร้างค่าเริ่มต้นของโมเดลอื่น ๆ ที่สัมพันธ์กันกับโมเดล Shift โดยเรียกใช้คลาส AddDefaultShiftDependency
             $dependencyAdder = new AddDefaultShiftDependency();
-            $dependencyAdder->addDependencies($shift);
+            $dependencyAdder->addDependencies($shift,$randomShiftColor);
         }
 
     }

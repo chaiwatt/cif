@@ -4,12 +4,19 @@ namespace App\Http\Controllers\Settings;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class SettingGeneralCompanyDepartmentController extends Controller
 {
+    private $activityLogger;
+
+    public function __construct(ActivityLogger $activityLogger)
+    {
+        $this->activityLogger = $activityLogger;
+    }
     /**
      * แสดงรายการแผนกของบริษัททั้งหมด
      *
@@ -82,6 +89,8 @@ class SettingGeneralCompanyDepartmentController extends Controller
         $companyDepartment->description = $description;
         $companyDepartment->save();
 
+        $this->activityLogger->log('เพิ่ม', $companyDepartment);
+
         // ส่ง redirect ไปยังหน้าแสดงรายการแผนกพร้อมกับข้อความแจ้งเตือน
         return redirect()->route('setting.general.companydepartment.index', [
             'message' => 'นำเข้าข้อมูลเรียบร้อยแล้ว'
@@ -107,6 +116,8 @@ class SettingGeneralCompanyDepartmentController extends Controller
 
         // ค้นหาแผนกที่ต้องการอัปเดตโดยใช้รหัสแผนก
         $companyDepartment = CompanyDepartment::findOrFail($id);
+
+        $this->activityLogger->log('อัปเดต', $companyDepartment);
 
         // อัปเดตข้อมูลแผนกด้วยข้อมูลที่ผ่านการตรวจสอบแล้ว
         $companyDepartment->update($validator->validated());
@@ -135,6 +146,7 @@ class SettingGeneralCompanyDepartmentController extends Controller
             return response()->json(['error' => 'แผนกนี้ถูกใช้งานอยู่ในปัจจุบันและไม่สามารถลบได้'], 422);
         }
 
+        $this->activityLogger->log('ลบ', $companyDepartment);
         // Perform the deletion
         $companyDepartment->delete();
 

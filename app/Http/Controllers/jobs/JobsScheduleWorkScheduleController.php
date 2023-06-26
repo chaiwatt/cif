@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Month;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
@@ -15,11 +16,13 @@ class JobsScheduleWorkScheduleController extends Controller
 {
     private $updatedRoleGroupCollectionService;
     private $addDefaultWorkScheduleAssignment;
+    private $activityLogger;
 
-    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService, AddDefaultWorkScheduleAssignment $addDefaultWorkScheduleAssignment) 
+    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService, AddDefaultWorkScheduleAssignment $addDefaultWorkScheduleAssignment,ActivityLogger $activityLogger) 
     {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
         $this->addDefaultWorkScheduleAssignment = $addDefaultWorkScheduleAssignment;
+        $this->activityLogger = $activityLogger;
     }
     
     public function index()
@@ -71,6 +74,8 @@ class JobsScheduleWorkScheduleController extends Controller
         $workSchedule->description = $request->description;
         $workSchedule->year = $request->year;
         $workSchedule->save();
+
+        $this->activityLogger->log('เพิ่ม', $workSchedule);
                 
         $this->addDefaultWorkScheduleAssignment->addDefaultWorkScheduleAssignment($workSchedule,$request->year);
         return redirect()->route('jobs.schedulework.schedule');

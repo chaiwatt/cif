@@ -29,6 +29,7 @@ return new class extends Migration
             $table->float('multiply')->default(1);
             $table->char('base_shift')->nullable();
             $table->char('common_code')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }

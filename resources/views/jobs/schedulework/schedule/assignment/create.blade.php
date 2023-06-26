@@ -45,7 +45,15 @@
                                             <div class="card-body">
                                                 <!-- the events -->
                                                 <div id="external-events">
-                                                    <div class="external-event bg-success" data-id="1">กะทำงานปกติ
+                                                    @foreach ($shifts as $key => $shift)
+                                                    <div class="external-event font-weight-normal"
+                                                        style="background-color: {{$shift->color}};color:#ffffff"
+                                                        data-id="{{$shift->id}}">{{$shift->name}}</div>
+                                                    @if (($key + 1) % 3 === 0 && $key !== count($shifts) - 1)
+                                                    <hr>
+                                                    @endif
+                                                    @endforeach
+                                                    {{-- <div class="external-event bg-success" data-id="1">กะทำงานปกติ
                                                         08.00-17.00</div>
                                                     <div class="external-event bg-warning" data-id="2">กะทำงานปกติ
                                                         08.00-17.00 (วันหยุดประจำสัปดาห์)</div>
@@ -60,7 +68,7 @@
                                                     </div>
                                                     <div class="external-event bg-info" data-id="6">กะทำงานปกติ
                                                         07.00-16.00 (วันหยุดนักขัตฤกษ์)
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -254,8 +262,8 @@
         console.log(eventList);
 
 
-        var month = 7; // Specify the month (1-12)
-        var year = 2023; // Specify the year
+        // var month = 7; // Specify the month (1-12)
+        // var year = 2023; // Specify the year
 
         var daysInMonthArray = getAllDaysInMonth(month, year);
         var missingEvents = [];

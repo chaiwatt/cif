@@ -57,6 +57,7 @@ class User extends Authenticatable
         'bank',
         'bank_account',
         'is_admin',
+        'work_permit'
     ];
 
     /**

@@ -11,6 +11,7 @@ use App\Models\SearchField;
 use App\Models\EmployeeType;
 use App\Models\UserPosition;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 use Illuminate\Validation\Rule;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,12 @@ use Illuminate\Support\Facades\Validator;
 
 class SettingOrganizationEmployeeController extends Controller
 {
+    private $activityLogger;
+
+    public function __construct(ActivityLogger $activityLogger)
+    {
+        $this->activityLogger = $activityLogger;
+    }
     public function index()
     {
         $users = User::paginate(20);
@@ -76,7 +83,7 @@ class SettingOrganizationEmployeeController extends Controller
         $bankAccount = $request->bankAccount;  // เลขที่บัญชีธนาคาร
         $passport = $request->passport ?? null;  // พาสพอร์ต
         $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
-        $tax = $request->tax ?? null;  // เลขที่ผู้เสียภาษี
+        $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
 
         $user = new User();
         $user->prefix_id = $prefix;  // กำหนดค่าคำนำหน้าชื่อให้กับคอลัมน์ prefix_id
@@ -106,6 +113,8 @@ class SettingOrganizationEmployeeController extends Controller
         $user->work_permit = $workPermit;  
         $user->tax = $tax;  
         $user->save();  // บันทึกข้อมูลในฐานข้อมูล
+
+        $this->activityLogger->log('เพิ่ม', $user);
 
         return redirect()->route('setting.organization.employee.index', [
             'message' => 'นำเข้าข้อมูลเรียบร้อยแล้ว'
@@ -163,9 +172,11 @@ class SettingOrganizationEmployeeController extends Controller
         $bankAccount = $request->bankAccount;  // เลขที่บัญชีธนาคาร
         $passport = $request->passport ?? null;  // พาสพอร์ต
         $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
-        $tax = $request->tax ?? null;  // เลขที่ผู้เสียภาษี
+        $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
 
         $user = User::findOrFail($id);
+
+        $this->activityLogger->log('อัปเดต', $user);
 
         $user->update([
             'prefix_id' => $prefix,
@@ -200,6 +211,8 @@ class SettingOrganizationEmployeeController extends Controller
     public function delete($id)
     {
         $user = User::findOrFail($id);
+
+        $this->activityLogger->log('ลบ', $user);
 
         $user->delete();
 
@@ -264,6 +277,8 @@ class SettingOrganizationEmployeeController extends Controller
                     Rule::exists(CompanyDepartment::class, 'id')
                 ],
                 'startWorkDate' => 'required|date',
+                'visaExpireDate' => 'nullable|date|after_or_equal:today', // Add validation for visaExpireDate
+                'workPermitExpireDate' => 'nullable|date|after_or_equal:today',
             ]);
         return $validator;
     }

@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(ProvincesTableSeeder::class);
         // $this->call(AmphursTableSeeder::class);
         // $this->call(TambolsTableSeeder::class);
+        $this->call(ShiftColorsTableSeeder::class);
         $this->call(MonthsTableSeeder::class);
         $this->call(WorkSchedulesTableSeeder::class);
         $this->call(DocumentTyesTableSeeder::class);

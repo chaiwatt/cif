@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Jobs;
 
 use App\Models\Shift;
+use App\Models\ShiftColor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -42,6 +43,7 @@ class ShiftController extends Controller
         }
 
         // ประมวลผลข้อมูลคำขอเพื่อสร้าง Shift ใหม่
+        $randomShiftColor = ShiftColor::inRandomOrder()->first();
         $shift = new Shift();
         $shift->name = $request->name;
         $shift->code = $request->code;
@@ -51,13 +53,14 @@ class ShiftController extends Controller
         $shift->record_end = $request->record_end;
         $shift->break_start = $request->break_start;
         $shift->break_end = $request->break_end;
+        $shift->color = $randomShiftColor->regular;
         $shift->duration = $request->duration ?? 8;
         $shift->multiply = $request->multiply ?? 1;
         $shift->save();
 
         // สร้างค่าเริ่มต้นของโมเดลอื่น ๆ ที่สัมพันธ์กันกับโมเดล Shift โดยเรียกใช้คลาส AddDefaultShiftDependency
         $dependencyAdder = new AddDefaultShiftDependency();
-        $dependencyAdder->addDependencies($shift);
+        $dependencyAdder->addDependencies($shift,$randomShiftColor);
 
         // ส่งข้อมูลกลับหรือเปลี่ยนเส้นทางไปยังหน้าสำเร็จ
         return response()->json(['message' => 'สร้าง Shift เรียบร้อยแล้ว']);

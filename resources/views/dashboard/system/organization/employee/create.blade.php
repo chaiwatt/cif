@@ -145,7 +145,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="form-group">
-                                                <label>สาขา</label>
+                                                <label>สาขาวิชา</label>
                                                 <input type="text" name="educationBranch"
                                                     value="{{old('educationBranch')}}" class="form-control">
                                             </div>
@@ -229,11 +229,12 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>วีซ่าหมดอายุ</label>
+                                            <label>วันหมดอายุวีซ่า</label>
                                             <div class="input-group date" id="visa_expire_date"
                                                 data-target-input="nearest">
                                                 <input name="visaExpireDate" value="{{old('visaExpireDate')}}"
-                                                    type="text" class="form-control datetimepicker-input"
+                                                    type="text"
+                                                    class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
                                                     data-target="#visa_expire_date">
                                                 <div class="input-group-append" data-target="#visa_expire_date"
                                                     data-toggle="datetimepicker">
@@ -253,12 +254,12 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ใบอนุญาตทำงานหมดอายุ</label>
+                                            <label>วันหมดอายุใบอนุญาตทำงาน</label>
                                             <div class="input-group date" id="work_permit_expire_date"
                                                 data-target-input="nearest">
                                                 <input type="text" name="workPermitExpireDate"
                                                     value="{{old('workPermitExpireDate')}}"
-                                                    class="form-control datetimepicker-input"
+                                                    class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
                                                     data-target="#work_permit_expire_date">
                                                 <div class="input-group-append" data-target="#work_permit_expire_date"
                                                     data-toggle="datetimepicker">
@@ -285,7 +286,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>เลขที่ผู้เสียภาษี</label>
+                                            <label>เลขประจำตัวผู้เสียภาษีอากร</label>
                                             <input type="text" name="tax" value="{{old('tax')}}"
                                                 class="form-control numericInputInt">
                                         </div>

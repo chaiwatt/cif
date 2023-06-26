@@ -7,12 +7,19 @@ use App\Models\Approver;
 use App\Models\SearchField;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class SettingOrganizationApproverController extends Controller
 {
+    private $activityLogger;
+
+    public function __construct(ActivityLogger $activityLogger)
+    {
+        $this->activityLogger = $activityLogger;
+    }
     /**
      * แสดงรายการผู้อนุมัติทั้งหมด
      *
@@ -74,6 +81,8 @@ class SettingOrganizationApproverController extends Controller
         $approver->approver_two_id = $approverTwoId;
         $approver->save();
 
+        $this->activityLogger->log('เพิ่ม', $approver);
+
         return redirect()->route('setting.organization.approver.index')->with([
             'message' => 'นำเข้าข้อมูลเรียบร้อยแล้ว'
         ]);
@@ -122,6 +131,9 @@ class SettingOrganizationApproverController extends Controller
         $documentType = $request->document_type;
 
         $approver = Approver::findOrFail($id);
+
+        $this->activityLogger->log('อัปเดต', $approver);
+
         $approver->update([
             'name' => $approveName,
             'document_type_id' => $documentType,
@@ -142,6 +154,7 @@ class SettingOrganizationApproverController extends Controller
     public function delete($id)
     {
         $approver = Approver::findOrFail($id);
+        $this->activityLogger->log('ลบ', $approver);
         $approver->delete();
 
         return response()->json(['message' => 'การอนุมัติได้ถูกลบออกเรียบร้อยแล้ว']);

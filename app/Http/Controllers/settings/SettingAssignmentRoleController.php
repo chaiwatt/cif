@@ -6,10 +6,17 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 
 class SettingAssignmentRoleController extends Controller
 {
+    private $activityLogger;
+
+    public function __construct(ActivityLogger $activityLogger)
+    {
+        $this->activityLogger = $activityLogger;
+    }
     /**
      * บันทึกการมอบหมายบทบาทให้กับผู้ใช้งาน
      *
@@ -46,6 +53,9 @@ class SettingAssignmentRoleController extends Controller
     {
         $user = User::find($userId);
         $role = Role::find($roleId);
+
+        $this->activityLogger->log('ลบ', $role);
+
         $user->roles()->detach($role);
 
         // ส่งกลับไปยังหน้าก่อนหน้านี้

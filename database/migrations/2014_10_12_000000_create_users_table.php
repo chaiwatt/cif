@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_no',50)->nullable()->comment('รหัสพนักงาน');
+            $table->string('employee_no',50)->unique()->comment('รหัสพนักงาน');
+            $table->string('username')->nullable()->unique()->comment('ชื่อผู้ใช้');
             $table->unsignedBigInteger('prefix_id')->nullable()->comment('คำนำหน้าชื่อ');
             $table->string('name',50)->comment('ชื่อ');
             $table->string('lastname',50)->nullable()->comment('นามสกุล');

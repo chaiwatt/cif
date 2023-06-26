@@ -155,7 +155,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="form-group">
-                                                <label>สาขา</label>
+                                                <label>สาขาวิชา</label>
                                                 <input type="text" name="educationBranch"
                                                     value="{{old('educationBranch') ?? $user->education_branch}}"
                                                     class="form-control">
@@ -228,12 +228,22 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>วีซ่าหมดอายุ</label>
+                                            <div class="form-group">
+                                                <label>พาสพอร์ต</label>
+                                                <input type="text" name="passport"
+                                                    value="{{old('passport') ?? $user->passport}}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>วันหมดอายุวีซ่า</label>
                                             <div class="input-group date" id="visa_expire_date"
                                                 data-target-input="nearest">
                                                 <input name="visaExpireDate"
                                                     value="{{old('visaExpireDate') ?? $user->visa_expiry_date}}"
-                                                    type="text" class="form-control datetimepicker-input"
+                                                    type="text"
+                                                    class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
                                                     data-target="#visa_expire_date">
                                                 <div class="input-group-append" data-target="#visa_expire_date"
                                                     data-toggle="datetimepicker">
@@ -244,12 +254,22 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ใบอนุญาตหมดอายุ</label>
+                                            <div class="form-group">
+                                                <label>เลขที่ใบอนุญาตทำงาน</label>
+                                                <input type="text" name="work_permit"
+                                                    value="{{old('work_permit') ?? $user->work_permit}}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>วันหมดอายุใบอนุญาตทำงาน</label>
                                             <div class="input-group date" id="work_permit_expire_date"
                                                 data-target-input="nearest">
                                                 <input type="text" name="workPermitExpireDate"
                                                     value="{{old('workPermitExpireDate') ?? $user->permit_expiry_date}}"
-                                                    class="form-control datetimepicker-input"
+                                                    class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
                                                     data-target="#work_permit_expire_date">
                                                 <div class="input-group-append" data-target="#work_permit_expire_date"
                                                     data-toggle="datetimepicker">
@@ -270,6 +290,13 @@
                                             <label>เลขที่บัญชี</label>
                                             <input type="text" name="bankAccount"
                                                 value="{{old('bankAccount') ?? $user->bank_account}}"
+                                                class="form-control numericInputInt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>เลขประจำตัวผู้เสียภาษีอากร</label>
+                                            <input type="text" name="tax" value="{{old('tax') ?? $user->tax}}"
                                                 class="form-control numericInputInt">
                                         </div>
                                     </div>

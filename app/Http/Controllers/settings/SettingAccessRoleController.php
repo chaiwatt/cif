@@ -4,11 +4,18 @@ namespace App\Http\Controllers\Settings;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class SettingAccessRoleController extends Controller
 {
+    private $activityLogger;
+
+    public function __construct(ActivityLogger $activityLogger)
+    {
+        $this->activityLogger = $activityLogger;
+    }
     /**
      * แสดงหน้าสำหรับแสดงรายการบทบาททั้งหมด
      *
@@ -60,6 +67,8 @@ class SettingAccessRoleController extends Controller
         $role->name = $name;
         $role->save();
 
+        $this->activityLogger->log('เพิ่ม', $role);
+
         // เปลี่ยนเส้นทางไปยังหน้ารายการบทบาทพร้อมกับข้อความสำเร็จ
         return redirect()->route('setting.access.role.index')->with('message', 'นำเข้าข้อมูลเรียบร้อยแล้ว');
     }
@@ -100,6 +109,8 @@ class SettingAccessRoleController extends Controller
         // ค้นหาบทบาทที่ต้องการอัปเดตโดยใช้รหัสบทบาท
         $role = Role::findOrFail($id);
 
+        $this->activityLogger->log('อัปเดต', $role);
+
         // อัปเดตข้อมูลบทบาท
         $role->update($validator->validated());
 
@@ -123,8 +134,10 @@ class SettingAccessRoleController extends Controller
             return response()->json(['error' => 'Role นี้ถูกใช้งานอยู่ในปัจจุบันและไม่สามารถลบได้'], 422);
         }
 
+        $this->activityLogger->log('ลบ', $role);
         // ลบบทบาท
         $role->delete();
+    
 
         // ส่งคำตอบเป็น JSON แสดงว่าลบบทบาทเรียบร้อยแล้ว
         return response()->json(['message' => 'Role ได้ถูกลบออกเรียบร้อยแล้ว']);
