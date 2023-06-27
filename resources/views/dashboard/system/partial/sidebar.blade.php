@@ -101,6 +101,20 @@
                             <p>ข้อมูลพนักงาน</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('setting.report.expiration')}}"
+                            class="nav-link {{ request()->is('setting/report/expiration*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>วีซ่า/ใบอนุญาต</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('setting.report.log')}}"
+                            class="nav-link {{ request()->is('setting/report/log*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>ประวัติใช้งาน (Log)</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">

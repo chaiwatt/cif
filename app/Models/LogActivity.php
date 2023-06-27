@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LogActivity extends Model
 {
@@ -14,4 +15,14 @@ class LogActivity extends Model
         'model',
         'model_id',
     ];
+
+    /**
+     * ความสัมพันธ์กับโมเดล User (ตารางผู้ใช้งาน)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

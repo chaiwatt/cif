@@ -61,14 +61,6 @@
                                                 class="form-control @error('eng_name') is-invalid @enderror">
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>รหัสแผนก</label>
-                                            <input type="text" name="code"
-                                                value="{{old('code') ?? $companyDepartment->code}}"
-                                                class="form-control">
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">

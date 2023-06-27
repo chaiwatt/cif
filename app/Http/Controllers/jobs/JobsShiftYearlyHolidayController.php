@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\YearlyHoliday;
 use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
-use App\Services\AccessGroupService;
 use Illuminate\Support\Facades\Validator;
 use App\Services\UpdatedRoleGroupCollectionService;
 
@@ -22,7 +21,12 @@ class JobsShiftYearlyHolidayController extends Controller
         $this->activityLogger = $activityLogger;
     }
     
-     public function index()
+    /**
+     * แสดงหน้าสำหรับการดูข้อมูล
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function index()
     {
         $action = 'show';
         $groupUrl = session('groupUrl');
@@ -46,6 +50,11 @@ class JobsShiftYearlyHolidayController extends Controller
         ]);
     }
 
+    /**
+     * แสดงฟอร์มสร้างรายการใหม่
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function create()
     {
         $action = 'create';
@@ -60,6 +69,12 @@ class JobsShiftYearlyHolidayController extends Controller
         ]);
     }
 
+    /**
+     * บันทึกรายการที่สร้างเข้าสู่ฐานข้อมูล
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $validator = $this->validateFormData($request);
@@ -82,6 +97,12 @@ class JobsShiftYearlyHolidayController extends Controller
         ]);
     }
 
+    /**
+     * แสดงรายละเอียดของรายการที่เลือก
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\View\View
+     */
     public function view($id)
     {
         $action = 'update';
@@ -97,6 +118,13 @@ class JobsShiftYearlyHolidayController extends Controller
         ]);
     }
 
+    /**
+     * อัปเดตรายการที่เลือกในฐานข้อมูล
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         $validator = $this->validateFormData($request);
@@ -120,6 +148,12 @@ class JobsShiftYearlyHolidayController extends Controller
         return redirect()->route('jobs.shift.yearlyholiday');
     }
 
+    /**
+     * ลบรายการที่เลือกออกจากฐานข้อมูล
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete($id)
     {
         $action = 'delete';
@@ -135,7 +169,13 @@ class JobsShiftYearlyHolidayController extends Controller
 
         return response()->json(['message' => 'วันหยุดประจำปีได้ถูกลบออกเรียบร้อยแล้ว']);
     }
-    
+
+    /**
+     * ตรวจสอบข้อมูลแบบฟอร์ม
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Validation\Validator
+     */
     function validateFormData($request)
     {
         $validator = Validator::make($request->all(), [
@@ -144,4 +184,5 @@ class JobsShiftYearlyHolidayController extends Controller
             ]);
         return $validator;
     }
+
 }

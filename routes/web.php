@@ -9,6 +9,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\Jobs\ShiftController;
 use App\Http\Controllers\Settings\SettingController;
+use App\Http\Controllers\settings\SettingReportLogController;
 use App\Http\Controllers\Settings\SettingAccessRoleController;
 use App\Http\Controllers\settings\SettingReportUserController;
 use App\Http\Controllers\Jobs\JobsShiftYearlyHolidayController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\jobs\JobsScheduleWorkScheduleController;
 use App\Http\Controllers\Settings\SettingAssignmentRoleController;
 use App\Http\Controllers\Settings\SettingAssignmentGroupController;
 use App\Http\Controllers\Settings\SettingAssignmentModuleController;
+use App\Http\Controllers\settings\SettingReportExpirationController;
 use App\Http\Controllers\Settings\SettingGeneralSearchFieldController;
 use App\Http\Controllers\settings\SettingOrganizationApproverController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeController;
@@ -60,7 +62,6 @@ Route::group(['prefix' => 'work_schedule'], function () {
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/group/{id}', [GroupController::class, 'index'])->name('group.index');
-    Route::get('/log', [LogController::class, 'index'])->name('log');
     Route::group(['prefix' => 'jobs'], function () {
         Route::group(['prefix' => 'shift'], function () {
             Route::group(['prefix' => 'timeattendance'], function () {
@@ -179,6 +180,15 @@ Route::middleware('auth')->group(function () {
                 Route::post('update-report-field', [SettingReportUserController::class, 'updateReportField'])->name('setting.report.user.update-report-field');
                 Route::post('report-search', [SettingReportUserController::class, 'reportSearch'])->name('setting.report.user.report-search');
             });
+            Route::group(['prefix' => 'log'], function () {
+                Route::get('', [SettingReportLogController::class, 'index'])->name('setting.report.log');
+                Route::post('search', [SettingReportLogController::class, 'search'])->name('setting.report.log.search');
+            });
+            Route::group(['prefix' => 'expiration'], function () {
+                Route::get('', [SettingReportExpirationController::class, 'index'])->name('setting.report.expiration');
+                Route::post('search', [SettingReportExpirationController::class, 'search'])->name('setting.report.expiration.search');
+            });
+            
         });
     });
 
