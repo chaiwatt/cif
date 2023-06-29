@@ -11,7 +11,10 @@ class YearlyHoliday extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'holiday_date'
+        'holiday_date',
+        'day',
+        'month',
+        'year'
     ];
     /**
      * ส่วนประเภทเรียก Attribute สำหรับวันหยุด

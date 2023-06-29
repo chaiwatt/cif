@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
                 Route::group(['prefix' => 'assignment'], function () {
                     Route::get('view/{id}', [JobsScheduleWorkScheduleAssignmentController::class, 'view'])->name('jobs.schedulework.schedule.assignment');
                     Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [JobsScheduleWorkScheduleAssignmentController::class, 'create'])->name('jobs.schedulework.schedule.assignment.create');
+                    Route::post('store-calendar', [JobsScheduleWorkScheduleAssignmentController::class, 'storeCalendar'])->name('jobs.schedulework.schedule.assignment.store-calendar');
                 });
             });
         });

@@ -88,6 +88,9 @@ class JobsShiftYearlyHolidayController extends Controller
         $yearHoliday = new YearlyHoliday();
         $yearHoliday->name = $holiday; 
         $yearHoliday->holiday_date = $holidayDate; 
+        $yearHoliday->day = intval(Carbon::createFromFormat('Y-m-d', $holidayDate)->day);
+        $yearHoliday->month = intval(Carbon::createFromFormat('Y-m-d', $holidayDate)->month);
+        $yearHoliday->year = intval(Carbon::createFromFormat('Y-m-d', $holidayDate)->year);
         $yearHoliday->save();
 
         $this->activityLogger->log('เพิ่ม', $yearHoliday);
@@ -142,7 +145,10 @@ class JobsShiftYearlyHolidayController extends Controller
 
         $yearHoliday->update([
             'name' => $holiday,
-            'holiday_date' => $holidayDate
+            'holiday_date' => $holidayDate,
+            'day' => intval(Carbon::createFromFormat('Y-m-d', $holidayDate)->day),
+            'month' => intval(Carbon::createFromFormat('Y-m-d', $holidayDate)->month),
+            'year' => intval(Carbon::createFromFormat('Y-m-d', $holidayDate)->year)
         ]);
 
         return redirect()->route('jobs.shift.yearlyholiday');

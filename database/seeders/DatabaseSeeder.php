@@ -48,7 +48,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(JobModulesTableSeeder::class);
         $this->call(ShifsTableSeeder::class);
         
-        
         $this->call(GroupModuleJobsTableSeeder::class); 
         $this->call(ApproversTableSeeder::class); 
         

@@ -25,5 +25,5 @@ $(document).on('click', '#search_expiration', function (e) {
     }).catch(error => {
 
     })
-    console.log('ok');
+    
 });
