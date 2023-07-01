@@ -5,25 +5,8 @@ import * as EventCalendar from './api/calendar-api.js'
     var workScheduleId = segments[segments.length - 5];
     var year = segments[segments.length - 3];
     var month = segments[segments.length - 1];
-
     var dateRange = getFirstAndLastDayOfMonth(month, year);
-
-    
-    
-    function ini_events(ele) {
-        ele.each(function () {
-            var eventObject = {
-                title: $.trim($(this).text()) // use the element's text as the event title
-            }
-            $(this).data('eventObject', eventObject)
-
-            $(this).draggable({
-                zIndex: 1070,
-                revert: true, // will cause the event to go back to its
-                revertDuration: 0  //  original position after the drag
-            })
-        })
-    }
+    checkIfExpired(year, month);
 
     ini_events($('#external-events div.external-event'))
 
@@ -71,7 +54,6 @@ import * as EventCalendar from './api/calendar-api.js'
 
     calendar.render();
 
-
     function getFirstAndLastDayOfMonth(month, year) {
         var firstDay = moment([year, month - 1]).startOf('month').format('YYYY-MM-DD');
         var lastDay = moment([year, month - 1]).endOf('month').add(1, 'day').format('YYYY-MM-DD');
@@ -86,7 +68,7 @@ import * as EventCalendar from './api/calendar-api.js'
         e.preventDefault();
 
         var events = calendar.getEvents();
-        var eventList = [];
+        var daySchedules = [];
         var allEvents = []
         events.forEach(function (event) {
             var eventId = event.id;
@@ -106,7 +88,7 @@ import * as EventCalendar from './api/calendar-api.js'
                 var currentDate = new Date(event.start);
                 currentDate.setDate(currentDate.getDate() + 1); // Exclude the start date
                 while (currentDate <= event.end) {
-                    eventList.push({
+                    daySchedules.push({
                         'eventId': eventId,
                         'eventName': eventName,
                         'eventDate': currentDate.toISOString().substring(0, 10)
@@ -121,7 +103,7 @@ import * as EventCalendar from './api/calendar-api.js'
                     'longEvent': true
                 });
             } else {
-                eventList.push({
+                daySchedules.push({
                     'eventId': eventId,
                     'eventName': eventName,
                     'eventDate': startDate
@@ -136,14 +118,11 @@ import * as EventCalendar from './api/calendar-api.js'
             }
         });
 
-        console.log(allEvents);
-        console.log(eventList);
-
         var daysInMonthArray = getAllDaysInMonth(month, year);
         var missingEvents = [];
 
         daysInMonthArray.forEach(function (date) {
-            var hasEvent = eventList.some(function (event) {
+            var hasEvent = daySchedules.some(function (event) {
                 return event.eventDate === date;
             });
 
@@ -151,8 +130,6 @@ import * as EventCalendar from './api/calendar-api.js'
                 missingEvents.push(date);
             }
         });
-
-        console.log('Missing Events:', missingEvents);
 
         if (missingEvents.length > 0)
         {
@@ -167,12 +144,12 @@ import * as EventCalendar from './api/calendar-api.js'
         var url = window.params.addCalendarRoute
         var data = {
             'allEvents': allEvents,
+            'daySchedules': daySchedules,
             'month': month,
             'year': year,
             'workScheduleId': workScheduleId,
         }
         EventCalendar.addCalendar(data, url).then(response => {
-            console.log(response);
             url = window.params.url + '/jobs/schedulework/schedule/assignment/view/' + response.workScheduleId
             window.location.href = url; // Redirect to the generated URL
         }).catch(error => {
@@ -189,10 +166,35 @@ import * as EventCalendar from './api/calendar-api.js'
             var dateString = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
             daysArray.push(dateString);
         }
-
         return daysArray;
 }
+    function checkIfExpired(year, month) {
+        // Get the current year and month using Moment.js
+        var currentDate = moment();
+        var currentYear = currentDate.year();
+        var currentMonth = currentDate.month() + 1; // Note: Month is zero-indexed in Moment.js
 
+        // Compare the year and month with the current year and month
+        if (year < currentYear || (year === currentYear && month < currentMonth)) {
+            $('#get_updated_event_wrapper').hide();
+            $('#expire_message').text('(หมดเวลา)');
+        }
+    }
+
+    function ini_events(ele) {
+        ele.each(function () {
+            var eventObject = {
+                title: $.trim($(this).text()) // use the element's text as the event title
+            }
+            $(this).data('eventObject', eventObject)
+
+            $(this).draggable({
+                zIndex: 1070,
+                revert: true, // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            })
+        })
+    }
 
 
 

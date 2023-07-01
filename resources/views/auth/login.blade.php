@@ -1,4 +1,4 @@
-@extends('layouts.pages.auth')
+@extends('layouts.auth')
 @section('content')
 
 <body class="hold-transition login-page">

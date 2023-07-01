@@ -28,7 +28,7 @@ class SettingGeneralCompanyDepartmentController extends Controller
         $companyDepartments = CompanyDepartment::all();
 
         // ส่งข้อมูลแผนกไปยังวิวเพื่อแสดงผล
-        return view('dashboard.general.companydepartment.index', [
+        return view('setting.general.companydepartment.index', [
             'companyDepartments' => $companyDepartments
         ]);
     }
@@ -41,7 +41,7 @@ class SettingGeneralCompanyDepartmentController extends Controller
     public function create()
     {
         // ส่งวิวสำหรับสร้างแผนกใหม่
-        return view('dashboard.general.companydepartment.create');
+        return view('setting.general.companydepartment.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class SettingGeneralCompanyDepartmentController extends Controller
         $companyDepartment = CompanyDepartment::findOrFail($id);
 
         // ส่งข้อมูลแผนกไปยังวิวเพื่อแสดงผล
-        return view('dashboard.general.companydepartment.view', [
+        return view('setting.general.companydepartment.view', [
             'companyDepartment' => $companyDepartment
         ]);
     }
@@ -80,13 +80,13 @@ class SettingGeneralCompanyDepartmentController extends Controller
         // ดึงข้อมูลจากแบบฟอร์ม
         $name = $request->name;
         $code = $request->code ?? null;
-        $description = $request->description ?? null;
+        $eng_name = $request->eng_name ?? null;
 
         // สร้างแผนกใหม่
         $companyDepartment = new CompanyDepartment();
         $companyDepartment->name = $name;
         $companyDepartment->code = $code;
-        $companyDepartment->description = $description;
+        $companyDepartment->eng_name = $eng_name;
         $companyDepartment->save();
 
         $this->activityLogger->log('เพิ่ม', $companyDepartment);

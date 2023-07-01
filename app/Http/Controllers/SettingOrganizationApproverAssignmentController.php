@@ -19,7 +19,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
     public function index($id)
     {
         $approver = Approver::find($id);
-        return view('dashboard.system.organization.approver.assignment.index', [
+        return view('setting.organization.approver.assignment.index', [
             'approver' => $approver
         ]);
     }
@@ -38,7 +38,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
             $query->where('approver_id', $id);
         })->paginate(50);
         
-        return view('dashboard.system.organization.approver.assignment.create', [
+        return view('setting.organization.approver.assignment.create', [
             'users' => $users,
             'approver' => $approver
         ]);
@@ -86,8 +86,8 @@ class SettingOrganizationApproverAssignmentController extends Controller
      */
     public function search(Request $request)
     {
-        $queryInput = $request->searchInput;
-        $approverId = $request->approverId;
+        $queryInput = $request->data['searchInput'];
+        $approverId = $request->data['approverId'];
         
         $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
 
@@ -113,7 +113,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
 
         $users = User::whereIn('id', $filteredUserIds)->paginate(50);
 
-        return view('dashboard.system.organization.approver.assignment.table-render.employee-table', ['users' => $users])->render();
+        return view('setting.organization.approver.assignment.table-render.employee-table', ['users' => $users])->render();
     }
 
 

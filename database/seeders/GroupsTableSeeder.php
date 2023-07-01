@@ -20,18 +20,21 @@ class GroupsTableSeeder extends Seeder
             'name' => 'ระบบบันทึกเวลา',
             'description' => 'รายละเอียดระบบบันทึกเวลา',
             'icon' => 'fa-clock',
+            'dashboard' => 'groups.dashboard.time-recording-system'
         ]);
         Group::create([
             'code' => 'SARALY-MANAGEMENT',
             'name' => 'ระบบเงินเดือน',
             'description' => 'รายละเอียดระบบเงินเดือน',
             'icon' => 'fa-wallet',
+            'dashboard' => 'groups.dashboard.salary-system'
         ]);
         Group::create([
             'code' => 'TRAINING',
             'name' => 'ระบบฝึกอบรม',
             'description' => 'รายละเอียดระบบฝึกอบรม',
             'icon' => 'fa-user',
+            'dashboard' => 'groups.dashboard.training-system'
         ]);
     }
 }

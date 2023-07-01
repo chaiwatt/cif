@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name')->comment('ชื่อกลุ่มทำงาน');
             $table->string('description')->nullable()->comment('คำอธิบายกลุ่มทำงาน');
             $table->string('icon')->nullable()->comment('ไอคอนกลุ่มทำงาน');
+            $table->string('dashboard')->nullable()->comment('แดชบอร์ด');
             $table->timestamps();
         });
     }

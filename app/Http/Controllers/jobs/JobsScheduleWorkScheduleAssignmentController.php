@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\WorkScheduleEvent;
 use App\Http\Controllers\Controller;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
+use App\Models\WorkScheduleAssignment;
 use App\Models\YearlyHoliday;
 use App\Services\UpdatedRoleGroupCollectionService;
 
@@ -41,7 +42,9 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
 
         $months = Month::whereIn('id', $uniqueMonths)->get();   
 
-        return view('jobs.schedulework.schedule.assignment.index', [
+        $workSchedule = WorkSchedule::find($id);
+
+        return view('groups.time-recording-system.schedulework.schedule.assignment.index', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
@@ -66,6 +69,7 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
 
         $events = WorkScheduleEvent::where('month_id', $month->id)
             ->where('year', $year)
+            ->where('work_schedule_id', $scheduleId)
             ->get()
             ->map(function ($event) {
                 $shift = Shift::find($event->event_id);
@@ -87,7 +91,7 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
                 return $mappedEvent;
             });
 
-        return view('jobs.schedulework.schedule.assignment.create', [
+        return view('groups.time-recording-system.schedulework.schedule.assignment.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
@@ -103,6 +107,7 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
     public function storeCalendar(Request $request)
     {
         $events = $request->data['allEvents'];
+        $daySchedules = $request->data['daySchedules'];
         $month = $request->data['month'];
         $year = $request->data['year'];
         $workScheduleId = $request->data['workScheduleId'];
@@ -126,6 +131,21 @@ class JobsScheduleWorkScheduleAssignmentController extends Controller
             $workScheduleEvent->long_event = $event['longEvent'];
             $workScheduleEvent->save();
         }
+       
+        foreach($daySchedules as $daySchedule)
+        {
+            $eventDate = $daySchedule['eventDate'];
+            $shiftId = $daySchedule['eventId'];
+            $carbonDate = Carbon::createFromFormat('Y-m-d', $eventDate);
+            $day = intval($carbonDate->day);
+            $month = intval($carbonDate->month);
+            $year = $carbonDate->year;
+            WorkScheduleAssignment::where('year',$year)->where('month_id',$month)->where('day',$day)->update([
+                'shift_id' => $shiftId
+            ]);
+        }
+
+
         return response()->json(['workScheduleId' => $workScheduleId]);
     }
 }

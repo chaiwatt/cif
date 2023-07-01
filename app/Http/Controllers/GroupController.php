@@ -69,7 +69,7 @@ class GroupController extends Controller
 
         $group = Group::findOrFail($id);
 
-        return view('dashboard.index', [
+        return view('groups.index', [
             'group' => $group,
             'modules' => $updatedRoleGroupCollection,
             'groupUrl' => url()->current()

@@ -18,20 +18,20 @@ class JobsTableSeeder extends Seeder
         Job::create([
             'code' => 'SHIFT-MANAGEMENT',
             'name' => 'กะการทำงาน',
-            'route' => 'jobs.shift.timeattendance',
-            'view' => 'jobs.shift.timeattendance.index',
+            'route' => 'groups.time-recording-system.shift.timeattendance',    
+            'view' => 'groups.time-recording-system.shift.timeattendance.index',
         ]);
         Job::create([
             'code' => 'YEARLY-HOLIDAY',
             'name' => 'วันหยุดประจำปี',
-            'route' => 'jobs.shift.yearlyholiday',
-            'view' => 'jobs.shift.yearlyholiday.index',
+            'route' => 'groups.time-recording-system.shift.yearlyholiday',
+            'view' => 'groups.time-recording-system.shift.yearlyholiday.index',
         ]);
         Job::create([
             'code' => 'WORK-SCHEDULE',
             'name' => 'ตารางทำงาน',
-            'route' => 'jobs.schedulework.schedule',
-            'view' => 'jobs.schedulework.schedule.index',
+            'route' => 'groups.time-recording-system.schedulework.schedule',  
+            'view' => 'groups.time-recording-system.schedulework.schedule.index',
         ]);
         Job::create([
             'code' => 'EXTRA-EARN-AGREEMENT',

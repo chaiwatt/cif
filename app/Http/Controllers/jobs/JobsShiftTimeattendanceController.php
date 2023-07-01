@@ -64,7 +64,7 @@ class JobsShiftTimeattendanceController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
         // ส่งข้อมูลไปยังหน้าแสดงผลสร้างหลักสูตรใหม่
-        return view('jobs.shift.timeattendance.create', [
+        return view('groups.time-recording-system.shift.timeattendance.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
         ]);
@@ -128,7 +128,7 @@ class JobsShiftTimeattendanceController extends Controller
         $dependencyAdder = new AddDefaultShiftDependency();
         $dependencyAdder->addDependencies($shift,$randomShiftColor);
 
-        return redirect()->route('jobs.shift.timeattendance');
+        return redirect()->route('groups.time-recording-system.shift.timeattendance');
     }
 
     /**
@@ -148,7 +148,7 @@ class JobsShiftTimeattendanceController extends Controller
         // ดึงข้อมูล Shift ตาม ID ที่ระบุ
         $shift = Shift::findOrFail($id);
 
-        return view('jobs.shift.timeattendance.view',[
+        return view('groups.time-recording-system.shift.timeattendance.view',[
             'groupUrl' => $groupUrl,
             'shift' => $shift, 
             'modules' => $updatedRoleGroupCollection 
@@ -202,7 +202,7 @@ class JobsShiftTimeattendanceController extends Controller
             'multiply' => $multiply,
         ]);
 
-        return redirect()->route('jobs.shift.timeattendance');
+        return redirect()->route('groups.time-recording-system.shift.timeattendance');
     }
 
     /**
@@ -237,7 +237,7 @@ class JobsShiftTimeattendanceController extends Controller
         $dependencyAdder = new AddDefaultShiftDependency();
         $dependencyAdder->addDependencies($duplicateShift,$shiftColor);
 
-        return redirect()->route('jobs.shift.timeattendance');
+        return redirect()->route('groups.time-recording-system.shift.timeattendance');
     }
 
     /**

@@ -29,8 +29,8 @@ class ApiController extends Controller
      */
     public function getModuleJson(Request $request)
     {
-        $roleId = $request->role_id;
-        $groupId = $request->group_id;
+        $roleId = $request->data['roleId'];
+        $groupId = $request->data['groupId'];
         $rolegroupjson = RoleGroupJson::where('role_id', $roleId)->where('group_id', $groupId)->first()->json;
         return response()->json($rolegroupjson);
     }

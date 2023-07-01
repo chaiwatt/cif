@@ -54,7 +54,7 @@ class JobsScheduleWorkScheduleController extends Controller
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
-        return view('jobs.schedulework.schedule.create', [
+        return view('groups.time-recording-system.schedulework.schedule.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'years' => $years
@@ -78,7 +78,7 @@ class JobsScheduleWorkScheduleController extends Controller
         $this->activityLogger->log('เพิ่ม', $workSchedule);
                 
         $this->addDefaultWorkScheduleAssignment->addDefaultWorkScheduleAssignment($workSchedule,$request->year);
-        return redirect()->route('jobs.schedulework.schedule');
+        return redirect()->route('groups.time-recording-system.schedulework.schedule');
     }
 
 

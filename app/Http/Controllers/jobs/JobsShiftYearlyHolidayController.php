@@ -63,7 +63,7 @@ class JobsShiftYearlyHolidayController extends Controller
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
-        return view('jobs.shift.yearlyholiday.create', [
+        return view('groups.time-recording-system.shift.yearlyholiday.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
         ]);
@@ -95,7 +95,7 @@ class JobsShiftYearlyHolidayController extends Controller
 
         $this->activityLogger->log('เพิ่ม', $yearHoliday);
 
-        return redirect()->route('jobs.shift.yearlyholiday', [
+        return redirect()->route('groups.time-recording-system.shift.yearlyholiday', [
             'message' => 'นำเข้าข้อมูลเรียบร้อยแล้ว'
         ]);
     }
@@ -114,7 +114,7 @@ class JobsShiftYearlyHolidayController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
         $yearlyHoliday = YearlyHoliday::findOrFail($id);
-        return view('jobs.shift.yearlyholiday.view', [
+        return view('groups.time-recording-system.shift.yearlyholiday.view', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'yearlyHoliday' => $yearlyHoliday
@@ -151,7 +151,7 @@ class JobsShiftYearlyHolidayController extends Controller
             'year' => intval(Carbon::createFromFormat('Y-m-d', $holidayDate)->year)
         ]);
 
-        return redirect()->route('jobs.shift.yearlyholiday');
+        return redirect()->route('groups.time-recording-system.shift.yearlyholiday');
     }
 
     /**

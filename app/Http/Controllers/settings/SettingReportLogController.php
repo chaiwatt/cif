@@ -17,14 +17,14 @@ class SettingReportLogController extends Controller
     public function index()
     {
         $logActivities = LogActivity::orderBy('created_at', 'desc')->paginate(20);
-        return view('dashboard.report.log-activity.index',[
+        return view('setting.report.log-activity.index',[
             'logActivities' => $logActivities
         ]);
     }
 
     public function search(Request $request)
     {
-        $queryInput = $request->searchQuery;
+        $queryInput = $request->data;
 
         $logActivities = LogActivity::where(function ($query) use ($queryInput) {
             $query->where('action', 'like', '%' . $queryInput . '%')
@@ -38,6 +38,6 @@ class SettingReportLogController extends Controller
                 });
         })->paginate(20);
 
-        return view('dashboard.report.log-activity.table-render.log-activity-table',['logActivities' => $logActivities])->render();
+        return view('setting.report.log-activity.table-render.log-activity-table',['logActivities' => $logActivities])->render();
     }
 }

@@ -69,7 +69,7 @@ class SettingController extends Controller
 
         $users = User::all();
         // ส่งข้อมูลไปยังหน้าแสดงผล
-        return view('dashboard.system.index', [
+        return view('setting.index', [
             'companyDepartments' => $companyDepartments,
             'employeeDonutData' => $employeeDonutData,
             'roleDonutData' => $roleDonutData,

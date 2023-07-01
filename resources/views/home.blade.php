@@ -1,4 +1,4 @@
-@extends('layouts.pages.home')
+@extends('layouts.home')
 
 @section('content')
 <div class="container">
@@ -9,7 +9,6 @@
         {{ session('error') }}
     </div>
     @endif
-
     <div class="row">
         @foreach ($groups as $group)
         <div class="col-lg-6">
@@ -40,7 +39,6 @@
             </div>
         </div>
         @endcan
-
     </div>
 </div>
 @endsection

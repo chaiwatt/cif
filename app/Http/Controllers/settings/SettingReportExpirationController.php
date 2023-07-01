@@ -22,16 +22,17 @@ class SettingReportExpirationController extends Controller
             })
             ->paginate(20);
 
-        return view('dashboard.report.expiration.index', [
+        return view('setting.report.expiration.index', [
             'users' => $users
         ]);
     }
 
     public function search(Request $request)
     {
-        $numOfMonth = $request->searchQuery;
+        
+        $numOfMonth = $request->data;
         $currentDate = Carbon::now();
-
+        
         $users = User::whereNotNull('visa_expiry_date')
             ->whereNotNull('permit_expiry_date')
             ->where(function ($query) use ($currentDate, $numOfMonth) {
@@ -39,7 +40,7 @@ class SettingReportExpirationController extends Controller
                     ->orWhereDate('permit_expiry_date', '<', $currentDate->addMonths($numOfMonth));
             })
             ->paginate(20);
-
-        return view('dashboard.report.expiration.table-render.expiration-table',['users' => $users])->render();
+        // return response()->json('ok');
+        return view('setting.report.expiration.table-render.expiration-table',['users' => $users])->render();
     }
 }

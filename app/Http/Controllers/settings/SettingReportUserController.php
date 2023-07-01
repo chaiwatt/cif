@@ -29,7 +29,7 @@ class SettingReportUserController extends Controller
         $employeeTypes = EmployeeType::all();  // เรียกข้อมูลประเภทพนักงานทั้งหมดจากตาราง employee_types
         $companyDepartments = CompanyDepartment::all();  // เรียกข้อมูลแผนกบริษัททั้งหมดจากตาราง company_departments
         $users = User::paginate(20);
-        return view('dashboard.report.user.index',[
+        return view('setting.report.user.index',[
             'users' => $users,
             'employeeTypes' => $employeeTypes,
             'companyDepartments' => $companyDepartments,
@@ -70,13 +70,13 @@ class SettingReportUserController extends Controller
         }
 
         $users = $query->paginate(20);
-        return view('dashboard.report.user.table-render.employee-table',['users' => $users])->render();
+        return view('setting.report.user.table-render.employee-table',['users' => $users])->render();
     }
 
     public function getReportField(Request $request)
     {
         $reportFields = ReportField::where('table','report_fields')->get();
-        return view('dashboard.report.user.table-render.report-field-table',['reportFields' => $reportFields])->render();
+        return view('setting.report.user.table-render.report-field-table',['reportFields' => $reportFields])->render();
     }
 
     public function updateReportField(Request $request)
@@ -91,7 +91,7 @@ class SettingReportUserController extends Controller
             ->whereIn('id', $updateReportFieldIds)
             ->update(['status' => 1]);
         $reportFields = ReportField::where('table','report_fields')->get();
-        return view('dashboard.report.user.table-render.report-field-table',['reportFields' => $reportFields])->render();
+        return view('setting.report.user.table-render.report-field-table',['reportFields' => $reportFields])->render();
     }
 
     public function reportSearch(Request $request)
@@ -127,7 +127,7 @@ class SettingReportUserController extends Controller
         }
 
         $users = $employeesQuery->paginate(20);
-        return view('dashboard.report.user.table-render.employee-table',['users' => $users])->render();
+        return view('setting.report.user.table-render.employee-table',['users' => $users])->render();
         // return response()->json($users);
     }
 }

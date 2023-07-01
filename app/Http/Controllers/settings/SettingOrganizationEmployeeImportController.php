@@ -16,7 +16,7 @@ class SettingOrganizationEmployeeImportController extends Controller
      */
     public function index()
     {
-        return view('dashboard.system.organization.employee.import.index');
+        return view('setting.organization.employee.import.index');
     }
 
     /**

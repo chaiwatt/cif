@@ -29,7 +29,7 @@ class SettingOrganizationApproverController extends Controller
     {
         $approvers = Approver::paginate(20);
 
-        return view('dashboard.system.organization.approver.index', [
+        return view('setting.organization.approver.index', [
             'approvers' => $approvers
         ]);
     }
@@ -45,7 +45,7 @@ class SettingOrganizationApproverController extends Controller
         $companyDepartments = CompanyDepartment::all();
         $approvers = User::where('nationality_id', 1)->where('ethnicity_id', 1)->get();
 
-        return view('dashboard.system.organization.approver.create', [
+        return view('setting.organization.approver.create', [
             'documentTypes' => $documentTypes,
             'companyDepartments' => $companyDepartments,
             'approvers' => $approvers
@@ -101,7 +101,7 @@ class SettingOrganizationApproverController extends Controller
         $companyDepartments = CompanyDepartment::all();
         $approvers = User::where('nationality_id', 1)->where('ethnicity_id', 1)->get();
 
-        return view('dashboard.system.organization.approver.view', [
+        return view('setting.organization.approver.view', [
             'approver' => $approver,
             'documentTypes' => $documentTypes,
             'companyDepartments' => $companyDepartments,

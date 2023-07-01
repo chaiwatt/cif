@@ -28,7 +28,7 @@ class SettingOrganizationEmployeeController extends Controller
     public function index()
     {
         $users = User::paginate(20);
-        return view('dashboard.system.organization.employee.index',[
+        return view('setting.organization.employee.index',[
             'users' => $users
         ]);
     }
@@ -42,7 +42,7 @@ class SettingOrganizationEmployeeController extends Controller
         $userPositions = UserPosition::all();  // เรียกข้อมูลตำแหน่งงานทั้งหมดจากตาราง user_positions
         $companyDepartments = CompanyDepartment::all();  // เรียกข้อมูลแผนกบริษัททั้งหมดจากตาราง company_departments
         
-        return view('dashboard.system.organization.employee.create',[
+        return view('setting.organization.employee.create',[
             'prefixes' => $prefixes,  // ส่งข้อมูลคำนำหน้าชื่อไปยังหน้าจอสร้างพนักงาน
             'nationalities' => $nationalities,  // ส่งข้อมูลสัญชาติไปยังหน้าจอสร้างพนักงาน
             'ethnicities' => $ethnicities,  // ส่งข้อมูลเชื้อชาติไปยังหน้าจอสร้างพนักงาน
@@ -131,7 +131,7 @@ class SettingOrganizationEmployeeController extends Controller
         $userPositions = UserPosition::all();  // เรียกข้อมูลตำแหน่งงานทั้งหมดจากตาราง user_positions
         $companyDepartments = CompanyDepartment::all();  // เรียกข้อมูลแผนกบริษัททั้งหมดจากตาราง company_departments
 
-        return view('dashboard.system.organization.employee.view',[
+        return view('setting.organization.employee.view',[
             'user' => $user, // ส่งข้อมูล user
             'prefixes' => $prefixes,  // ส่งข้อมูลคำนำหน้าชื่อไปยังหน้าจอสร้างพนักงาน
             'nationalities' => $nationalities,  // ส่งข้อมูลสัญชาติไปยังหน้าจอสร้างพนักงาน
@@ -221,7 +221,7 @@ class SettingOrganizationEmployeeController extends Controller
 
     public function search(Request $request)
     {
-        $queryInput = $request->searchInput;
+        $queryInput = $request->data;
              
         $searchFields = SearchField::where('table','users')->where('status',1)->get();
 
@@ -241,7 +241,7 @@ class SettingOrganizationEmployeeController extends Controller
         }
 
         $users = $query->paginate(20);
-        return view('dashboard.system.organization.employee.table-render.employee-table',['users' => $users])->render();
+        return view('setting.organization.employee.table-render.employee-table',['users' => $users])->render();
     }
 
     function validateFormData($request)

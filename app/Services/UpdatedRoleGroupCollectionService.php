@@ -47,7 +47,7 @@ class UpdatedRoleGroupCollectionService
     public function filterRoute($route)
     {
         $parts = explode('.', $route);
-        return implode('.', array_slice($parts, 0, 3));
+        return implode('.', array_slice($parts, 0, 4));
     }
 
     public function getRoleGroupJson($user, $group)

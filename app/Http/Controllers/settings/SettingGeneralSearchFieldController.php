@@ -18,7 +18,7 @@ class SettingGeneralSearchFieldController extends Controller
         // ดึงข้อมูลของการค้นหาฟิลด์ทั้งหมด
         $searchFields = SearchField::all();
         // ส่งข้อมูลไปยังหน้าแสดงผล
-        return view('dashboard.general.searchfield.index', [
+        return view('setting.general.searchfield.index', [
             'searchFields' => $searchFields
         ]);
     }

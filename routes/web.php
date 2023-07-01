@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\LogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
@@ -12,34 +11,23 @@ use App\Http\Controllers\Settings\SettingController;
 use App\Http\Controllers\settings\SettingReportLogController;
 use App\Http\Controllers\Settings\SettingAccessRoleController;
 use App\Http\Controllers\settings\SettingReportUserController;
-use App\Http\Controllers\Jobs\JobsShiftYearlyHolidayController;
 use App\Http\Controllers\jobs\WorkScheduleAssignmentController;
-use App\Http\Controllers\Jobs\JobsShiftTimeattendanceController;
-use App\Http\Controllers\jobs\JobsScheduleWorkScheduleController;
-use App\Http\Controllers\Settings\SettingAssignmentRoleController;
-use App\Http\Controllers\Settings\SettingAssignmentGroupController;
-use App\Http\Controllers\Settings\SettingAssignmentModuleController;
 use App\Http\Controllers\settings\SettingReportExpirationController;
 use App\Http\Controllers\Settings\SettingGeneralSearchFieldController;
+use App\Http\Controllers\settings\SettingAccessAssignmentRoleController;
 use App\Http\Controllers\settings\SettingOrganizationApproverController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeController;
 use App\Http\Controllers\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
-use App\Http\Controllers\jobs\JobsScheduleWorkScheduleAssignmentController;
 use App\Http\Controllers\Settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
+use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftYearlyHolidayController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftTimeattendanceController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 Auth::routes();
 
 Route::get('/', function () {
@@ -62,40 +50,44 @@ Route::group(['prefix' => 'work_schedule'], function () {
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/group/{id}', [GroupController::class, 'index'])->name('group.index');
-    Route::group(['prefix' => 'jobs'], function () {
-        Route::group(['prefix' => 'shift'], function () {
-            Route::group(['prefix' => 'timeattendance'], function () {
-                Route::get('', [JobsShiftTimeattendanceController::class, 'index'])->name('jobs.shift.timeattendance');
-                Route::get('create', [JobsShiftTimeattendanceController::class, 'create'])->name('jobs.shift.timeattendance.create');
-                Route::post('store', [JobsShiftTimeattendanceController::class, 'store'])->name('jobs.shift.timeattendance.store');
-                Route::get('{id}', [JobsShiftTimeattendanceController::class, 'view'])->name('jobs.shift.timeattendance.view');
-                Route::put('{id}', [JobsShiftTimeattendanceController::class, 'update'])->name('jobs.shift.timeattendance.update');
-                Route::get('duplicate/{id}', [JobsShiftTimeattendanceController::class, 'duplicate'])->name('jobs.shift.timeattendance.duplicate');
-                Route::delete('{id}', [JobsShiftTimeattendanceController::class, 'delete'])->name('jobs.shift.timeattendance.delete');
-            });
 
-            Route::group(['prefix' => 'yearlyholiday'], function () {
-                Route::get('', [JobsShiftYearlyHolidayController::class, 'index'])->name('jobs.shift.yearlyholiday');
-                Route::get('create', [JobsShiftYearlyHolidayController::class, 'create'])->name('jobs.shift.yearlyholiday.create');
-                Route::post('store', [JobsShiftYearlyHolidayController::class, 'store'])->name('jobs.shift.yearlyholiday.store');
-                Route::get('{id}', [JobsShiftYearlyHolidayController::class, 'view'])->name('jobs.shift.yearlyholiday.view');
-                Route::put('{id}', [JobsShiftYearlyHolidayController::class, 'update'])->name('jobs.shift.yearlyholiday.update');
-                Route::delete('{id}', [JobsShiftYearlyHolidayController::class, 'delete'])->name('jobs.shift.yearlyholiday.delete');
+    Route::group(['prefix' => 'groups'], function () {
+        Route::group(['prefix' => 'time-recording-system'], function () {
+            Route::group(['prefix' => 'shift'], function () {
+                Route::group(['prefix' => 'timeattendance'], function () {
+                    Route::get('', [TimeRecordingSystemShiftTimeattendanceController::class, 'index'])->name('groups.time-recording-system.shift.timeattendance');
+                    Route::get('create', [TimeRecordingSystemShiftTimeattendanceController::class, 'create'])->name('groups.time-recording-system.shift.timeattendance.create');
+                    Route::post('store', [TimeRecordingSystemShiftTimeattendanceController::class, 'store'])->name('groups.time-recording-system.shift.timeattendance.store');
+                    Route::get('{id}', [TimeRecordingSystemShiftTimeattendanceController::class, 'view'])->name('groups.time-recording-system.shift.timeattendance.view');
+                    Route::put('{id}', [TimeRecordingSystemShiftTimeattendanceController::class, 'update'])->name('groups.time-recording-system.shift.timeattendance.update');
+                    Route::get('duplicate/{id}', [TimeRecordingSystemShiftTimeattendanceController::class, 'duplicate'])->name('groups.time-recording-system.shift.timeattendance.duplicate');
+                    Route::delete('{id}', [TimeRecordingSystemShiftTimeattendanceController::class, 'delete'])->name('groups.time-recording-system.shift.timeattendance.delete');
+                });
+
+                Route::group(['prefix' => 'yearlyholiday'], function () {
+                    Route::get('', [TimeRecordingSystemShiftYearlyHolidayController::class, 'index'])->name('groups.time-recording-system.shift.yearlyholiday');
+                    Route::get('create', [TimeRecordingSystemShiftYearlyHolidayController::class, 'create'])->name('groups.time-recording-system.shift.yearlyholiday.create');
+                    Route::post('store', [TimeRecordingSystemShiftYearlyHolidayController::class, 'store'])->name('groups.time-recording-system.shift.yearlyholiday.store');
+                    Route::get('{id}', [TimeRecordingSystemShiftYearlyHolidayController::class, 'view'])->name('groups.time-recording-system.shift.yearlyholiday.view');
+                    Route::put('{id}', [TimeRecordingSystemShiftYearlyHolidayController::class, 'update'])->name('groups.time-recording-system.shift.yearlyholiday.update');
+                    Route::delete('{id}', [TimeRecordingSystemShiftYearlyHolidayController::class, 'delete'])->name('groups.time-recording-system.shift.yearlyholiday.delete');
+                });
             });
-        });
-        Route::group(['prefix' => 'schedulework'], function () {
-            Route::group(['prefix' => 'schedule'], function () {
-                Route::get('', [JobsScheduleWorkScheduleController::class, 'index'])->name('jobs.schedulework.schedule');
-                Route::get('create', [JobsScheduleWorkScheduleController::class, 'create'])->name('jobs.schedulework.schedule.create');
-                Route::post('store', [JobsScheduleWorkScheduleController::class, 'store'])->name('jobs.schedulework.schedule.store');
-                Route::group(['prefix' => 'assignment'], function () {
-                    Route::get('view/{id}', [JobsScheduleWorkScheduleAssignmentController::class, 'view'])->name('jobs.schedulework.schedule.assignment');
-                    Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [JobsScheduleWorkScheduleAssignmentController::class, 'create'])->name('jobs.schedulework.schedule.assignment.create');
-                    Route::post('store-calendar', [JobsScheduleWorkScheduleAssignmentController::class, 'storeCalendar'])->name('jobs.schedulework.schedule.assignment.store-calendar');
+            Route::group(['prefix' => 'schedulework'], function () {
+                Route::group(['prefix' => 'schedule'], function () {
+                    Route::get('', [TimeRecordingSystemScheduleWorkScheduleController::class, 'index'])->name('groups.time-recording-system.schedulework.schedule');
+                    Route::get('create', [TimeRecordingSystemScheduleWorkScheduleController::class, 'create'])->name('groups.time-recording-system.schedulework.schedule.create');
+                    Route::post('store', [TimeRecordingSystemScheduleWorkScheduleController::class, 'store'])->name('groups.time-recording-system.schedulework.schedule.store');
+                    Route::group(['prefix' => 'assignment'], function () {
+                        Route::get('view/{id}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'view'])->name('groups.time-recording-system.schedulework.schedule.assignment');
+                        Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'create'])->name('groups.time-recording-system.schedulework.schedule.assignment.create');
+                        Route::post('store-calendar', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'storeCalendar'])->name('groups.time-recording-system.schedulework.schedule.assignment.store-calendar');
+                    });
                 });
             });
         });
     });
+
     Route::group(['prefix' => 'setting', 'middleware' => 'admin'], function () {
         Route::get('', [SettingController::class, 'index'])->name('setting');
         Route::group(['prefix' => 'organization'], function () {
@@ -156,28 +148,27 @@ Route::middleware('auth')->group(function () {
                 Route::put('{id}', [SettingAccessRoleController::class, 'update'])->name('setting.access.role.update');
                 Route::delete('{id}', [SettingAccessRoleController::class, 'delete'])->name('setting.access.role.delete');
             });
-        });
-        Route::group(['prefix' => 'assignment'], function () {
-            Route::group(['prefix' => 'group'], function () {
-                Route::post('store', [SettingAssignmentGroupController::class, 'store'])->name('setting.assignment.group.store');
-                Route::delete('roles/{roleId}/groups/{groupId}/delete', [SettingAssignmentGroupController::class, 'delete'])->name('setting.assignment.group.delete');
-                Route::get('{id}', [SettingAssignmentGroupController::class, 'view'])->name('setting.assignment.group.view');
-            });
-            Route::group(['prefix' => 'module'], function () {
-                Route::get('{id}', [SettingAssignmentModuleController::class, 'view'])->name('setting.assignment.module.view');
-                Route::post('module.update-module-json', [SettingAssignmentModuleController::class, 'updateModuleJson'])->name('setting.module.update-module-json');
-            });
-            Route::group(['prefix' => 'role'], function () {
-                Route::post('store', [SettingAssignmentRoleController::class, 'store'])->name('setting.assignment.role.store');
-                Route::get('roles/{roleId}/users/{userId}/delete', [SettingAssignmentRoleController::class, 'delete'])->name('setting.assignment.role.delete');
+            Route::group(['prefix' => 'assignment'], function () {
+                Route::group(['prefix' => 'group-module'], function () {
+                    Route::post('store', [SettingAccessAssignmentGroupModuleController::class, 'store'])->name('setting.access.assignment.group-module.store');
+                    Route::delete('roles/{roleId}/groups/{groupId}/delete', [SettingAccessAssignmentGroupModuleController::class, 'delete'])->name('setting.access.assignment.group-module.delete');
+                    Route::get('{id}', [SettingAccessAssignmentGroupModuleController::class, 'view'])->name('setting.access.assignment.group-module.view');
+                    Route::post('update-module-json', [SettingAccessAssignmentGroupModuleController::class, 'updateModuleJson'])->name('setting.access.assignment.group-module.update-module-json');
+                });
+
+                Route::group(['prefix' => 'role'], function () {
+                    Route::post('store', [SettingAccessAssignmentRoleController::class, 'store'])->name('setting.access.assignment.role.store');
+                    Route::get('roles/{roleId}/users/{userId}/delete', [SettingAccessAssignmentRoleController::class, 'delete'])->name('setting.access.assignment.role.delete');
+                });
             });
         });
+
         Route::group(['prefix' => 'report'], function () {
             Route::group(['prefix' => 'user'], function () {
                 Route::get('', [SettingReportUserController::class, 'index'])->name('setting.report.user');
                 Route::post('export', [SettingReportUserController::class, 'export'])->name('setting.report.user.export');
                 Route::post('search', [SettingReportUserController::class, 'search'])->name('setting.report.user.search');
-                Route::post('report-field', [SettingReportUserController::class, 'getReportField'])->name('setting.report.user.report-field');
+                Route::get('report-field', [SettingReportUserController::class, 'getReportField'])->name('setting.report.user.report-field');
                 Route::post('update-report-field', [SettingReportUserController::class, 'updateReportField'])->name('setting.report.user.update-report-field');
                 Route::post('report-search', [SettingReportUserController::class, 'reportSearch'])->name('setting.report.user.report-search');
             });

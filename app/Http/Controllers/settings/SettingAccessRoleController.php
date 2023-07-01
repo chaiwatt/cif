@@ -27,7 +27,7 @@ class SettingAccessRoleController extends Controller
         $roles = Role::all();
 
         // ส่งข้อมูลรายการบทบาทไปยังหน้าวิวเพื่อแสดงผล
-        return view('dashboard.access.role.index', [
+        return view('setting.access.role.index', [
             'roles' => $roles
         ]);
     }
@@ -40,7 +40,7 @@ class SettingAccessRoleController extends Controller
     public function create()
     {
         // แสดงหน้าสร้างบทบาท
-        return view('dashboard.access.role.create');
+        return view('setting.access.role.create');
     }
 
     /**
@@ -84,7 +84,7 @@ class SettingAccessRoleController extends Controller
     {
         // ค้นหาบทบาทโดยใช้รหัสบทบาท
         $role = Role::findOrFail($id);
-        return view('dashboard.access.role.view', [
+        return view('setting.access.role.view', [
             'role' => $role
         ]);
     }
