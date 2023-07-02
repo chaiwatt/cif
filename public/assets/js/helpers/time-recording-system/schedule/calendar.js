@@ -150,6 +150,7 @@ import * as RequestApi from '../../request-api.js';
             'year': year,
             'workScheduleId': workScheduleId,
         }
+        
         var token = window.params.token
         RequestApi.postRequest(dataSet, addCalendarUrl, token).then(response => {
             var url = window.params.url + '/groups/time-recording-system/schedulework/schedule/assignment/view/' + response.workScheduleId
@@ -175,9 +176,9 @@ import * as RequestApi from '../../request-api.js';
         var currentDate = moment();
         var currentYear = currentDate.year();
         var currentMonth = currentDate.month() + 1; // Note: Month is zero-indexed in Moment.js
-
         // Compare the year and month with the current year and month
-        if (year < currentYear || (year === currentYear && month < currentMonth)) {
+
+        if ((parseInt(year) === parseInt(currentYear) && parseInt(month) < parseInt(currentMonth))) {
             $('#get_updated_event_wrapper').hide();
             $('#expire_message').text('(หมดเวลา)');
         }

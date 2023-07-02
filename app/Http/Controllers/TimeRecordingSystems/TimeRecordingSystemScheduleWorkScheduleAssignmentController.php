@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\TimeRecordingSystems;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Month;
 use App\Models\Shift;
+use App\Models\SearchField;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
+use App\Models\YearlyHoliday;
 use App\Models\WorkScheduleEvent;
 use App\Http\Controllers\Controller;
-use App\Helpers\AddDefaultWorkScheduleAssignment;
 use App\Models\WorkScheduleAssignment;
-use App\Models\YearlyHoliday;
+use App\Helpers\AddDefaultWorkScheduleAssignment;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Controller
@@ -53,7 +55,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
             'viewRoute' => $viewRoute
         ]);
     }
-    public function create($scheduleId,$year,$monthId)
+    public function createWorkSchedule($scheduleId,$year,$monthId)
     {
         $action = 'create';
         $groupUrl = session('groupUrl');
@@ -140,11 +142,71 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
             $day = intval($carbonDate->day);
             $month = intval($carbonDate->month);
             $year = $carbonDate->year;
-            WorkScheduleAssignment::where('year',$year)->where('month_id',$month)->where('day',$day)->update([
+            WorkScheduleAssignment::where('work_schedule_id',$workScheduleId)->where('year',$year)->where('month_id',$month)->where('day',$day)->update([
                 'shift_id' => $shiftId
             ]);
         }
 
         return response()->json(['workScheduleId' => $workScheduleId]);
     }
+
+    // public function createUserAssignment($scheduleId,$year,$monthId)
+    // {
+    //     $action = 'create';
+    //     $groupUrl = session('groupUrl');
+    //     $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+    //     $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+    //     $users = User::paginate(20);
+    //     return view('groups.time-recording-system.schedulework.schedule.assignment.create-user', [
+    //         'groupUrl' => $groupUrl,
+    //         'modules' => $updatedRoleGroupCollection,
+    //         'users' => $users
+    //     ]);
+    // }
+    public function storeUser(Request $request)
+    {
+        $selectedUsers = $request->users;
+        foreach($selectedUsers as $user)
+        {
+            $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id',2)->where('month_id',7)->where('year',2023)->get();
+            $user->workScheduleAssignments()->detach(); 
+            $user->workScheduleAssignments()->attach($workScheduleAssignments); 
+        }
+        
+        return $selectedUsers;
+    }
+
+    /**
+     * ค้นหาพนักงงาน
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $queryInput = $request->data;
+   
+        $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
+
+        $query = User::query();
+
+        foreach ($searchFields as $field) {
+            $fieldName = $field['field'];
+            $fieldType = $field['type'];
+
+            if ($fieldType === 'foreign') {
+                $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
+                    $query->where('name', 'like', "%{$queryInput}%");
+                });
+            } else {
+                $query->orWhere($fieldName, 'like', "%{$queryInput}%");
+            }
+        }
+
+        // return response()->json('ok');
+        $users = $query->paginate(50);
+
+        return view('groups.time-recording-system.schedulework.schedule.assignment.table-render.create-user-table', ['users' => $users])->render();
+    }
+
+
 }

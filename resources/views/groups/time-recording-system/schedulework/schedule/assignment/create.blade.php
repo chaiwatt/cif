@@ -68,7 +68,7 @@
                                         </div>
                                         <div class="card-body ">
                                             <!-- THE CALENDAR -->
-                                            <div id="calendar" data-events="{{ $events }}">></div>
+                                            <div id="calendar" data-events="{{ $events }}"></div>
                                         </div>
                                         <!-- /.card-body -->
                                     </div>
@@ -89,13 +89,12 @@
 
 @push('scripts')
 <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
-{{-- <script type="module" src="{{asset('assets/js/helper/dashboard/jobs/schedule/calendar.js?v=1')}}"></script> --}}
 <script type="module" src="{{asset('assets/js/helpers/time-recording-system/schedule/calendar.js?v=1')}}"></script>
 <script>
     $(function () {
         $('.select2').select2()
         window.params = {
-            addCalendarRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.store-calendar') }}',
+            addCalendarRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.work-schedule.store') }}',
             url: '{{ url('/') }}',
             token: $('meta[name="csrf-token"]').attr('content')
         };

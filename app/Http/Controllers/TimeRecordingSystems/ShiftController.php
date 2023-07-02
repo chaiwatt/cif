@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Controllers\Jobs;
+
+namespace App\Http\Controllers\TimeRecordingSystems;
 
 use App\Models\Shift;
 use App\Models\ShiftColor;
@@ -118,4 +119,3 @@ class ShiftController extends Controller
         ]);
     }
 }
-

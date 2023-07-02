@@ -24,8 +24,6 @@ $(document).on('click', 'a[data-confirm]', function (event) {
     var deleteRoute = $(this).data('delete-route').replace('__id__', deleteId);
     var message = $(this).data('message');
 
-    console.log(deleteRoute);
-
     Swal.fire({
         title: 'ลบ' + message,
         text: confirmationMessage,

@@ -65,11 +65,12 @@
                                         <td class="text-right">
 
                                             @if ($permission->update)
-                                            <a class="btn btn-success btn-sm">
+                                            <a class="btn btn-success btn-sm"
+                                                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user', ['workScheduleId' => $workSchedule->id, 'year' => $workSchedule->year, 'month' => $month->id]) }}">
                                                 <i class="fas fa-users"></i>
                                             </a>
                                             <a class="btn btn-primary btn-sm"
-                                                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.create', ['workScheduleId' => $workSchedule->id, 'year' => $workSchedule->year, 'month' => $month->id]) }}">
+                                                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.work-schedule', ['workScheduleId' => $workSchedule->id, 'year' => $workSchedule->year, 'month' => $month->id]) }}">
                                                 <i class="fas fa-link"></i>
                                             </a>
                                             @endif

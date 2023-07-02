@@ -6,26 +6,27 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
-use App\Http\Controllers\Jobs\ShiftController;
 use App\Http\Controllers\Settings\SettingController;
 use App\Http\Controllers\settings\SettingReportLogController;
 use App\Http\Controllers\Settings\SettingAccessRoleController;
 use App\Http\Controllers\settings\SettingReportUserController;
-use App\Http\Controllers\jobs\WorkScheduleAssignmentController;
+use App\Http\Controllers\TimeRecordingSystems\ShiftController;
 use App\Http\Controllers\settings\SettingReportExpirationController;
 use App\Http\Controllers\Settings\SettingGeneralSearchFieldController;
 use App\Http\Controllers\settings\SettingAccessAssignmentRoleController;
 use App\Http\Controllers\settings\SettingOrganizationApproverController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeController;
-use App\Http\Controllers\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
 use App\Http\Controllers\Settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
+use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
+use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftYearlyHolidayController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftTimeattendanceController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentUserController;
 
 
 Auth::routes();
@@ -80,8 +81,17 @@ Route::middleware('auth')->group(function () {
                     Route::post('store', [TimeRecordingSystemScheduleWorkScheduleController::class, 'store'])->name('groups.time-recording-system.schedulework.schedule.store');
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('view/{id}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'view'])->name('groups.time-recording-system.schedulework.schedule.assignment');
-                        Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'create'])->name('groups.time-recording-system.schedulework.schedule.assignment.create');
-                        Route::post('store-calendar', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'storeCalendar'])->name('groups.time-recording-system.schedulework.schedule.assignment.store-calendar');
+                        Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'createWorkSchedule'])->name('groups.time-recording-system.schedulework.schedule.assignment.work-schedule');
+                        Route::post('store-calendar', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'storeCalendar'])->name('groups.time-recording-system.schedulework.schedule.assignment.work-schedule.store');
+                        // Route::get('user/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'createUserAssignment'])->name('groups.time-recording-system.schedulework.schedule.assignment.user');
+                        // Route::post('store-user', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'storeUser'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.store');
+                        // Route::post('search', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'search'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.search');
+                        Route::group(['prefix' => 'user'], function () {
+                            Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'index'])->name('groups.time-recording-system.schedulework.schedule.assignment.user');
+                            Route::post('store-user', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'store'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.store');
+                            Route::post('search', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'search'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.search');
+                            
+                        });
                     });
                 });
             });

@@ -36,6 +36,7 @@ class WorkSchedule extends Model
         
         // Retrieve the assignments for the given month and year
         $assignments = $this->workScheduleAssignments()
+            ->where('work_schedule_id', $this->id)
             ->where('month_id', $monthId)
             ->where('year', $year)
             ->get();

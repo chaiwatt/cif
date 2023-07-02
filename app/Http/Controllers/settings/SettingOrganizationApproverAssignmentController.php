@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\settings;
 
 use App\Models\User;
 use App\Models\Approver;
-use App\Models\ApproverUser;
 use App\Models\SearchField;
+use App\Models\ApproverUser;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SettingOrganizationApproverAssignmentController extends Controller
 {
@@ -79,7 +80,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
         return redirect()->to('setting/organization/approver/assignment/' . $approverId);
     }
 
-        /**
+    /**
      * ค้นหาพนักงงาน
      *
      * @return \Illuminate\Http\JsonResponse
