@@ -16,8 +16,10 @@ class SearchFieldsTableSeeder extends Seeder
      */
     public function run()
     {
+        $rawQuery = "SELECT COLUMN_NAME, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ?";
         $tableName = 'users';
-        $columns = DB::select(DB::raw("SELECT COLUMN_NAME, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$tableName}'"));
+
+        $columns = DB::select($rawQuery, [$tableName]);
 
         foreach ($columns as $column) {
             $columnName = $column->COLUMN_NAME;
