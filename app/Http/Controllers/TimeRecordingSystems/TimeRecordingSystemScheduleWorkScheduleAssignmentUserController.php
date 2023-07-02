@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\TimeRecordingSystems;
 
 use App\Models\User;
+use App\Models\SearchField;
+use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\WorkScheduleAssignment;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
 use App\Services\UpdatedRoleGroupCollectionService;
 
@@ -20,16 +23,131 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
     }
     public function index($scheduleId,$year,$monthId)
     {
-        // dd('ok');
+        $action = 'show';
+        $groupUrl = session('groupUrl');
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+        $permission = $roleGroupCollection['permission'];
+        $workSchedule = WorkSchedule::find($scheduleId);
+        $users = $this->getUsersByWorkScheduleAssignment($scheduleId, $monthId, $year)->paginate(20);
+        // dd($this->getUsersByWorkScheduleAssignment($scheduleId, $monthId, $year)->get());
+        return view('groups.time-recording-system.schedulework.schedule.assignment.user.index', [
+            'groupUrl' => $groupUrl,
+            'modules' => $updatedRoleGroupCollection,
+            'users' => $users,
+            'workSchedule' => $workSchedule,
+            'year' => $year,
+            'monthId' => $monthId,
+            'permission' => $permission
+        ]);
+    }
+
+    public function create($scheduleId,$year,$monthId)
+    {
         $action = 'create';
         $groupUrl = session('groupUrl');
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+        $workSchedule = WorkSchedule::find($scheduleId);
         $users = User::paginate(20);
-        return view('groups.time-recording-system.schedulework.schedule.assignment.user.index', [
+        return view('groups.time-recording-system.schedulework.schedule.assignment.user.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
-            'users' => $users
+            'users' => $users,
+            'workSchedule' => $workSchedule,
+            'year' => $year,
+            'monthId' => $monthId
         ]);
+    }
+    public function store(Request $request)
+    {
+        $workScheduleId = $request->workScheduleId;
+        $year = $request->year;
+        $month = $request->month;
+        
+        $selectedUsers = $request->users;
+        $users = User::whereIn('id',$selectedUsers)->get();
+
+        foreach($users as $user)
+        {
+            $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id',$workScheduleId)->where('month_id',$month)->where('year',$year)->get();
+            // dd($workScheduleAssignments);
+            $user->workScheduleAssignments()->detach(); 
+            $user->workScheduleAssignments()->attach($workScheduleAssignments); 
+        }
+        
+        $url = "groups/time-recording-system/schedulework/schedule/assignment/user/{$workScheduleId}/year/{$year}/month/{$month}";
+        return redirect()->to($url);
+
+    }
+    /**
+     * ค้นหาพนักงงาน
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $queryInput = $request->data;
+   
+        $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
+
+        $query = User::query();
+
+        foreach ($searchFields as $field) {
+            $fieldName = $field['field'];
+            $fieldType = $field['type'];
+
+            if ($fieldType === 'foreign') {
+                $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
+                    $query->where('name', 'like', "%{$queryInput}%");
+                });
+            } else {
+                $query->orWhere($fieldName, 'like', "%{$queryInput}%");
+            }
+        }
+
+        $users = $query->paginate(50);
+       
+        return view('groups.time-recording-system.schedulework.schedule.assignment.user.table-render.user-table', ['users' => $users])->render();
+    }
+
+    public function delete($workScheduleId,$year,$monthId, $userId)
+    {
+        
+        // $workScheduleAssignment = WorkScheduleAssignment::where('work_schedule_id', $workScheduleId)
+        //     ->where('month_id', $month)
+        //     ->where('year', $year)
+        //     ->first();
+
+        // if ($workScheduleAssignment) {
+        //         $workScheduleAssignment->workScheduleAssignmentUsers()
+        //             ->where('user_id', $userId)
+        //             ->sync([]);
+        //     }
+        $user = User::find($userId);
+        if ($user) {
+            $user->workScheduleAssignments()
+                ->where('work_schedule_id', $workScheduleId)
+                ->where('month_id', $monthId)
+                ->where('year', $year)
+                ->detach();
+        }
+
+
+
+        $url = "groups/time-recording-system/schedulework/schedule/assignment/user/{$workScheduleId}/year/{$year}/month/{$monthId}";
+        return redirect()->to($url);
+    }
+    public function getUsersByWorkScheduleAssignment($workScheduleId, $month, $year)
+    {
+        $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($workScheduleId, $month, $year) {
+            $query->whereHas('workScheduleAssignment', function ($query) use ($workScheduleId, $month, $year) {
+                $query->where('work_schedule_id', $workScheduleId)
+                    ->where('month_id', $month)
+                    ->where('year', $year);
+            });
+        });
+
+        return $users;
     }
 }

@@ -12,7 +12,6 @@ $(document).on('keyup', 'input[name="search_query"]', function () {
     var searchInput = $(this).val();
     var searchUrl = window.params.searchRoute
     RequestApi.postRequest(searchInput, searchUrl, token).then(response => {
-        console.log(response);
         $('#table_container').html(response);
     }).catch(error => { })
 });
@@ -21,7 +20,7 @@ $(document).on('click', '.pagination a', function (e) {
     e.preventDefault();
     var searchInput = $('#search_query').val();
     var page = $(this).attr('href').split('page=')[1];
-    var url = "/groups/time-recording-system/schedulework/schedule/assignment/search?page=" + page
+    var url = "/groups/time-recording-system/schedulework/schedule/assignment/user/search?page=" + page
     RequestApi.postRequest(searchInput, url, token).then(response => {
         $('#table_container').html(response);
     }).catch(error => { })

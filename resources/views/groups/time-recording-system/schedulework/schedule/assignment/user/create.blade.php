@@ -1,8 +1,14 @@
-@extends('layouts.setting-dashboard')
-@push('styles')
-
+@extends('layouts.dashboard')
+@push('scripts')
+<style>
+    #calendar .fc-header-toolbar,
+    #calendar .fc-toolbar {
+        display: none;
+    }
+</style>
 @endpush
 @section('content')
+@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -13,8 +19,9 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('setting.organization.approver.index')}}">รายการอนุมัติ</a></li>
-                        <li class="breadcrumb-item active">นำเข้าพนักงาน</li>
+                                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId]) }}">ตารางทำงาน</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{$workSchedule->name}}</li>
                     </ol>
                 </div>
             </div>
@@ -39,6 +46,9 @@
                                 action="{{route('groups.time-recording-system.schedulework.schedule.assignment.user.store')}}"
                                 method="POST">
                                 @csrf
+                                <input type="text" name="month" value="{{$monthId}}" hidden>
+                                <input type="text" name="year" value="{{$year}}" hidden>
+                                <input type="text" name="workScheduleId" value="{{$workSchedule->id}}" hidden>
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12" id="table_container">

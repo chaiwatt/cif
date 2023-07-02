@@ -1,19 +1,20 @@
-@extends('layouts.setting-dashboard')
-@push('styles')
+@extends('layouts.dashboard')
 
-@endpush
 @section('content')
+@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row ">
                 <div class="col-sm-6">
-                    <h1 class="m-0">พนักงาน</h1>
+                    <h1 class="m-0">ตารางทำงาน: {{$workSchedule->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">พนักงาน</li>
+                        <li class="breadcrumb-item"><a
+                                href="{{route('groups.time-recording-system.schedulework.schedule.assignment',['id' => $workSchedule->id])}}">ตารางทำงาน</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{$workSchedule->name}}</li>
                     </ol>
                 </div>
             </div>
@@ -21,66 +22,62 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2" href="{{route('setting.organization.employee.create')}}">
+            @if ($permission->create)
+            <a class="btn btn-primary mb-2"
+                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.create', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId]) }}">
                 <i class="fas fa-plus mr-1">
                 </i>
                 เพิ่มพนักงาน
             </a>
+            @endif
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายชื่อพนักงาน</h3>
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
-                                </div>
-                            </div>
+                            <h3 class="card-title">รายการพนักงานใน {{$workSchedule->name}}</h3>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline"
-                                            id="userTable">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>
-                                                    <th>ตำแหน่ง</th>
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="employee_tbody">
+                                            <tbody id="approver_tbody">
                                                 @foreach ($users as $key => $user)
                                                 <tr>
-                                                    <td>{{($key + 1 + $users->perPage() * ($users->currentPage() - 1))}}
-                                                    </td>
+                                                    <td>{{$key+1}}</td>
                                                     <td>{{$user->employee_no}}</td>
-                                                    <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
+                                                    <td>{{$user->name}} {{$user->lastname}}</td>
                                                     <td>{{$user->company_department->name}}</td>
-                                                    <td>{{$user->user_position->name}}</td>
                                                     <td class="text-right">
-                                                        <a class="btn btn-info btn-sm"
-                                                            href="{{route('setting.organization.employee.view',['id' => $user->id])}}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a class="btn btn-danger btn-sm"
-                                                            data-confirm='ลบพนักงาน "{{$user->name}} {{$user->lastname}}" หรือไม่?'
-                                                            href="#" data-id="{{$user->id}}"
-                                                            data-delete-route="{{ route('setting.organization.employee.delete', ['id' => '__id__']) }}"
-                                                            data-message="ผู้ใช้งาน">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
+                                                        <div class="form-group d-inline">
+                                                            <a class="btn btn-info btn-sm" href="">
+                                                                <i class="fas fa-folder-open"></i>
+                                                            </a>
+                                                            @if ($permission->delete)
+                                                            <form
+                                                                action="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.delete', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId, 'userId' => $user->id]) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-danger btn-sm" type="submit"><i
+                                                                        class="fas fa-trash"></i></button>
+                                                            </form>
+                                                            @endif
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        {{ $users->links() }}
                                     </div>
                                 </div>
                             </div>
@@ -93,5 +90,12 @@
 </div>
 @push('scripts')
 
+<script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
+<script>
+    window.params = {
+        url: '{{ url('/') }}',
+        token: $('meta[name="csrf-token"]').attr('content')
+    };
+</script>
 @endpush
 @endsection
