@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class WorkSchedule extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'description',
+        'year'
+    ];
 
     public function assignments()
     {
@@ -19,6 +24,21 @@ class WorkSchedule extends Model
     public function workScheduleAssignments()
     {
         return $this->hasMany(WorkScheduleAssignment::class);
+    }
+
+    public function isUsersAssigned($monthId, $year)
+    {
+        // Get the current date
+        $currentDate = now();
+        
+        // Create a Carbon instance for the given month and year
+        $targetDate = Carbon::create($year, $monthId, 1)->endOfMonth();
+        
+        // Check if the target date is older than the current date
+        if ($targetDate->lt($currentDate)) {
+            return 'หมดเวลา';
+        }
+        return true;
     }
 
     public function isAllShiftsAdded($monthId, $year)
@@ -46,9 +66,12 @@ class WorkSchedule extends Model
                 return false;
             }
         }
-        
         return true;
     }
 
+    public function monthName($month)
+    {
+        return Month::find($month)->name;
+    }
 
 }

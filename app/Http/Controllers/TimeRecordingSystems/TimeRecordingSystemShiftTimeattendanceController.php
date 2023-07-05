@@ -7,6 +7,7 @@ use App\Models\Shift;
 use App\Models\ShiftColor;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultShiftDependency;
@@ -31,7 +32,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
     public function index()
     {
         $action = 'show';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
@@ -39,14 +40,18 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $viewName = $roleGroupCollection['viewName'];
 
         // ดึงข้อมูล Shift ทั้งหมด
-        $shifts = Shift::all();
+        $currentYear = Carbon::now()->year;
+        $shifts = Shift::where('year', $currentYear)->get();
+
+        $years = Shift::distinct()->pluck('year');
 
         // ส่งข้อมูลไปยังหน้าแสดงผล
         return view($viewName, [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'shifts' => $shifts,
-            'permission' => $permission
+            'permission' => $permission,
+            'years' => $years
         ]);
     }
 
@@ -58,15 +63,20 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
     public function create()
     {
         $action = 'create';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+
+        $currentYear = Carbon::now()->year;
+        $nextYear = $currentYear + 1;
+        $years = collect([$currentYear, $nextYear]);
 
         // ส่งข้อมูลไปยังหน้าแสดงผลสร้างหลักสูตรใหม่
         return view('groups.time-recording-system.shift.timeattendance.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
+            'years' => $years
         ]);
     }
 
@@ -91,6 +101,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         // ดึงข้อมูลจากฟอร์ม
         $shiftname = $request->shift;
         $description = $request->description;
+        $year = $request->year;
         $code = $formattedDateTime;
         $timepicker_start = $request->timepicker_start;
         $timepicker_end = $request->timepicker_end;
@@ -108,6 +119,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $shift->name = $shiftname;
         $shift->description = $description;
         $shift->code = $code;
+        $shift->year = $year;
         $shift->start = $timepicker_start;
         $shift->end = $timepicker_end;
         $shift->record_start = $timepicker_record_start;
@@ -140,7 +152,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
     public function view($id)
     {
         $action = 'update';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
@@ -148,10 +160,15 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         // ดึงข้อมูล Shift ตาม ID ที่ระบุ
         $shift = Shift::findOrFail($id);
 
+        $currentYear = Carbon::now()->year;
+        $nextYear = $currentYear + 1;
+        $years = collect([$currentYear, $nextYear]);
+
         return view('groups.time-recording-system.shift.timeattendance.view',[
             'groupUrl' => $groupUrl,
             'shift' => $shift, 
-            'modules' => $updatedRoleGroupCollection 
+            'modules' => $updatedRoleGroupCollection,
+            'years' => $years
         ]);
     }
 
@@ -257,6 +274,20 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         Shift::where('common_code',$shift->common_code)->delete();
 
         return response()->json(['message' => 'กะการทำงานได้ถูกลบออกเรียบร้อยแล้ว']);
+    }
+
+    public function search(Request $request)
+    {
+        $action = 'show';
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $permission = $roleGroupCollection['permission'];
+
+        $currentYear = $request->data;
+        $shifts = Shift::where('year', $currentYear)->get();
+        return view('groups.time-recording-system.shift.timeattendance.table-render.timeattendance-table', [
+            'shifts' => $shifts,
+            'permission' => $permission
+            ])->render();
     }
 
     function validateFormData($request)

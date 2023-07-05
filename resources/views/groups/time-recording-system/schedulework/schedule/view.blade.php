@@ -36,14 +36,17 @@
                             <h3 class="card-title">รายละเอียดตารางทำงาน</h3>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('groups.time-recording-system.schedulework.schedule.store')}}"
+                            <form
+                                action="{{route('groups.time-recording-system.schedulework.schedule.update', ['id' => $workSchedule->id])}}"
                                 method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>ตารางทำงาน<span class="small text-danger">*</span></label>
-                                            <input type="text" name="name" value="{{old('name')}}"
+                                            <input type="text" name="name"
+                                                value="{{old('name') ?? $workSchedule->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
                                     </div>
@@ -51,28 +54,31 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>คำอธิบาย</label>
-                                            <input type="text" name="description" value="{{old('description')}}"
+                                            <input type="text" name="description"
+                                                value="{{old('description') ?? $workSchedule->description}}"
                                                 class="form-control ">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ปี</label>
+                                            <label>ปี<span class="small text-danger">*</span></label>
                                             <select name="year"
                                                 class="form-control select2 @error('year') is-invalid @enderror"
                                                 style="width: 100%;">
                                                 @foreach ($years as $year)
-                                                <option value="{{ $year }}" {{ old('year')==$year ? 'selected' : '' }}>
+                                                <option value="{{ $year }}" @if ($year==$workSchedule->year) selected
+                                                    @endif>
                                                     {{ $year }}
                                                 </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        @if ($permission->create)
+                                        @if ($permission->update)
                                         <button type="submit"
                                             class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
                                         @endif

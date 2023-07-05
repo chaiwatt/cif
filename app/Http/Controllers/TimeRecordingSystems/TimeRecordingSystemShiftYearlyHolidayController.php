@@ -29,7 +29,8 @@ class TimeRecordingSystemShiftYearlyHolidayController extends Controller
     public function index()
     {
         $action = 'show';
-        $groupUrl = session('groupUrl');
+        
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
@@ -42,11 +43,15 @@ class TimeRecordingSystemShiftYearlyHolidayController extends Controller
             ->orderBy('holiday_date')
             ->get();
 
+        $currentYear = Carbon::now()->year;
+        $years = YearlyHoliday::distinct()->pluck('year');    
+
         return view($viewName, [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'yearlyHolidays' => $yearlyHolidays,
-            'permission' => $permission
+            'permission' => $permission,
+            'years' => $years
         ]);
     }
 
@@ -58,7 +63,7 @@ class TimeRecordingSystemShiftYearlyHolidayController extends Controller
     public function create()
     {
         $action = 'create';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
@@ -109,7 +114,7 @@ class TimeRecordingSystemShiftYearlyHolidayController extends Controller
     public function view($id)
     {
         $action = 'update';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
 
@@ -173,6 +178,20 @@ class TimeRecordingSystemShiftYearlyHolidayController extends Controller
         $yearlyHoliday->delete();
 
         return response()->json(['message' => 'วันหยุดประจำปีได้ถูกลบออกเรียบร้อยแล้ว']);
+    }
+
+    public function search(Request $request)
+    {
+        $action = 'show';
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $permission = $roleGroupCollection['permission'];
+
+        $currentYear = $request->data;
+        $yearlyHolidays = YearlyHoliday::where('year', $currentYear)->get();
+        return view('groups.time-recording-system.shift.yearlyholiday.table-render.yearlyholiday-table', [
+            'yearlyHolidays' => $yearlyHolidays,
+            'permission' => $permission
+            ])->render();
     }
 
     /**

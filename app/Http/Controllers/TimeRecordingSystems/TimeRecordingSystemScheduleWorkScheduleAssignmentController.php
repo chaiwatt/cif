@@ -29,7 +29,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
     public function view($id)
     {
         $action = 'update';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
@@ -58,7 +58,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
     public function createWorkSchedule($scheduleId,$year,$monthId)
     {
         $action = 'create';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];

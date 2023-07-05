@@ -25,7 +25,9 @@ use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentControlle
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftYearlyHolidayController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftTimeattendanceController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingImportController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentUserController;
 
 
@@ -63,6 +65,7 @@ Route::middleware('auth')->group(function () {
                     Route::put('{id}', [TimeRecordingSystemShiftTimeattendanceController::class, 'update'])->name('groups.time-recording-system.shift.timeattendance.update');
                     Route::get('duplicate/{id}', [TimeRecordingSystemShiftTimeattendanceController::class, 'duplicate'])->name('groups.time-recording-system.shift.timeattendance.duplicate');
                     Route::delete('{id}', [TimeRecordingSystemShiftTimeattendanceController::class, 'delete'])->name('groups.time-recording-system.shift.timeattendance.delete');
+                    Route::post('search', [TimeRecordingSystemShiftTimeattendanceController::class, 'search'])->name('groups.time-recording-system.shift.timeattendance.search');
                 });
 
                 Route::group(['prefix' => 'yearlyholiday'], function () {
@@ -72,6 +75,7 @@ Route::middleware('auth')->group(function () {
                     Route::get('{id}', [TimeRecordingSystemShiftYearlyHolidayController::class, 'view'])->name('groups.time-recording-system.shift.yearlyholiday.view');
                     Route::put('{id}', [TimeRecordingSystemShiftYearlyHolidayController::class, 'update'])->name('groups.time-recording-system.shift.yearlyholiday.update');
                     Route::delete('{id}', [TimeRecordingSystemShiftYearlyHolidayController::class, 'delete'])->name('groups.time-recording-system.shift.yearlyholiday.delete');
+                    Route::post('search', [TimeRecordingSystemShiftYearlyHolidayController::class, 'search'])->name('groups.time-recording-system.shift.yearlyholiday.search');
                 });
             });
             Route::group(['prefix' => 'schedulework'], function () {
@@ -79,6 +83,10 @@ Route::middleware('auth')->group(function () {
                     Route::get('', [TimeRecordingSystemScheduleWorkScheduleController::class, 'index'])->name('groups.time-recording-system.schedulework.schedule');
                     Route::get('create', [TimeRecordingSystemScheduleWorkScheduleController::class, 'create'])->name('groups.time-recording-system.schedulework.schedule.create');
                     Route::post('store', [TimeRecordingSystemScheduleWorkScheduleController::class, 'store'])->name('groups.time-recording-system.schedulework.schedule.store');
+                    Route::get('{id}', [TimeRecordingSystemScheduleWorkScheduleController::class, 'view'])->name('groups.time-recording-system.schedulework.schedule.view');
+                    Route::put('{id}', [TimeRecordingSystemScheduleWorkScheduleController::class, 'update'])->name('groups.time-recording-system.schedulework.schedule.update');
+                    Route::delete('{id}', [TimeRecordingSystemScheduleWorkScheduleController::class, 'delete'])->name('groups.time-recording-system.schedulework.schedule.delete');
+                    Route::post('search', [TimeRecordingSystemScheduleWorkScheduleController::class, 'search'])->name('groups.time-recording-system.schedulework.schedule.search');
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('view/{id}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'view'])->name('groups.time-recording-system.schedulework.schedule.assignment');
                         Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'createWorkSchedule'])->name('groups.time-recording-system.schedulework.schedule.assignment.work-schedule');
@@ -91,6 +99,14 @@ Route::middleware('auth')->group(function () {
                             Route::post('search', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'search'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.search');
                             Route::delete('work_schedule_id/{workScheduleId}/year/{year}/month/{month}/user_id/{userId}/delete', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'delete'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.delete');
                         });
+                    });
+                });
+                Route::group(['prefix' => 'time-recording'], function () {
+                    Route::get('', [TimeRecordingSystemScheduleWorkTimeRecordingController::class, 'index'])->name('groups.time-recording-system.schedulework.time-recording');
+                    Route::group(['prefix' => 'import'], function () {
+                        Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'index'])->name('groups.time-recording-system.schedulework.time-recording.import');
+                        Route::post('batch', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'batch'])->name('groups.time-recording-system.schedulework.time-recording.import.batch');
+                        Route::post('single', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'single'])->name('groups.time-recording-system.schedulework.time-recording.import.single');
                     });
                 });
             });

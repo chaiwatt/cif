@@ -32,6 +32,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $shiftManagementJob = Job::where('code','SHIFT-MANAGEMENT')->first();
         $yearlyHolidayJob = Job::where('code','YEARLY-HOLIDAY')->first();
         $workScheduleJob = Job::where('code','WORK-SCHEDULE')->first();
+        $workScheduleTimeRecording = Job::where('code','TIME-RECORDING')->first();
         $extraEarnAgreementJob = Job::where('code','EXTRA-EARN-AGREEMENT')->first();
         $deductionAgreementJob = Job::where('code','DEDUCTION-AGREEMENT')->first();
         $sararyJobOne = Job::where('code','SARALY-JOB-ONE')->first();
@@ -53,6 +54,11 @@ class GroupModuleJobsTableSeeder extends Seeder
             'group_id' => $timeRecordGroup->id,
             'module_id' => $workScheduleModule->id,
             'job_id' => $workScheduleJob->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $timeRecordGroup->id,
+            'module_id' => $workScheduleModule->id,
+            'job_id' => $workScheduleTimeRecording->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,

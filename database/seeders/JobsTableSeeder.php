@@ -34,6 +34,12 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.time-recording-system.schedulework.schedule.index',
         ]);
         Job::create([
+            'code' => 'TIME-RECORDING',
+            'name' => 'บันทึกเวลา',
+            'route' => 'groups.time-recording-system.schedulework.time-recording',  
+            'view' => 'groups.time-recording-system.schedulework.time-recording.index',
+        ]);
+        Job::create([
             'code' => 'EXTRA-EARN-AGREEMENT',
             'name' => 'ข้อตกลงเงินเพิ่ม',
             'route' => Null,

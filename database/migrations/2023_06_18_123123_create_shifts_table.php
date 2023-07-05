@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->float('multiply')->default(1);
             $table->char('base_shift')->nullable();
             $table->char('common_code')->nullable();
+            $table->char('year', 4)->default(Carbon::now()->year)->nullable();
             $table->string('color')->nullable();
             $table->timestamps();
         });

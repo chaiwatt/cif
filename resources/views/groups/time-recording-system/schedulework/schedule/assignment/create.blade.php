@@ -77,7 +77,9 @@
                                 <!-- /.col -->
                             </div>
                             <div class="row float-right" id="get_updated_event_wrapper">
+                                @if ($permission->create || $permission->update)
                                 <button class="btn btn-info" id="get-updated-event">บันทึก</button>
+                                @endif
                             </div>
                         </div>
                     </div>

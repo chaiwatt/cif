@@ -75,4 +75,10 @@ class WorkScheduleAssignment extends Model
         return $this->belongsTo(Month::class);
     }
 
+    public function workSchedule()
+    {
+        return $this->belongsTo(WorkSchedule::class, 'work_schedule_id');
+    }
+
+
 }

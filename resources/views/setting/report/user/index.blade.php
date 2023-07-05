@@ -88,12 +88,6 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">รายชื่อพนักงาน</h3>
-                            {{-- <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
-                                </div>
-                            </div> --}}
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">

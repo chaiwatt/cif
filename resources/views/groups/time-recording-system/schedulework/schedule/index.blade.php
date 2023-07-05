@@ -34,9 +34,19 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">ตารางทำงาน</h3>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <select name="year" id="year"
+                                        class="form-control @error('year') is-invalid @enderror" style="width: 100%;">
+                                        @foreach ($years as $year)
+                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
-
+                        <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
                                 <thead>
                                     <tr>
@@ -56,7 +66,8 @@
                                         <td>{{$workSchedule->description}}</td>
                                         <td class="text-right">
                                             @if ($permission->update)
-                                            <a class="btn btn-info btn-sm" href="">
+                                            <a class="btn btn-info btn-sm"
+                                                href="{{route('groups.time-recording-system.schedulework.schedule.view',['id' => $workSchedule->id])}}">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>
                                             </a>
@@ -71,7 +82,8 @@
                                             @if ($permission->delete == true)
                                             <a class="btn btn-danger btn-sm"
                                                 data-confirm='ลบตารางทำงาน "{{$workSchedule->name}}" หรือไม่?' href="#"
-                                                data-id="{{$workSchedule->id}}" data-delete-route=""
+                                                data-id="{{$workSchedule->id}}"
+                                                data-delete-route="{{ route('groups.time-recording-system.schedulework.schedule.delete', ['id' => '__id__']) }}"
                                                 data-message="กะตารางทำงาน">
                                                 <i class="fas fa-trash"></i>
                                             </a>
@@ -91,7 +103,15 @@
     </div>
 </div>
 @push('scripts')
+<script type="module" src="{{asset('assets/js/helpers/time-recording-system/schedule/schedule.js?v=1')}}"></script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
+<script>
+    window.params = {
+        searchRoute: '{{ route('groups.time-recording-system.schedulework.schedule.search') }}',        
+        url: '{{ url('/') }}',
+        token: $('meta[name="csrf-token"]').attr('content')
+    };
+</script>
 
 @endpush
 @endsection

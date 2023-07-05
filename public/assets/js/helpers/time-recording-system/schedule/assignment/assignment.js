@@ -6,22 +6,33 @@ const segments = url.split('/');
 var workScheduleId = segments[segments.length - 5];
 var year = segments[segments.length - 3];
 var month = segments[segments.length - 1];
-console.log(workScheduleId + ' ' + year + ' ' + month);
+checkIfExpired(year, month);
 
-$(document).on('keyup', 'input[name="search_query"]', function () {
-    var searchInput = $(this).val();
-    var searchUrl = window.params.searchRoute
-    RequestApi.postRequest(searchInput, searchUrl, token).then(response => {
-        $('#table_container').html(response);
-    }).catch(error => { })
+$(document).on('change', '#select_all', function (e) {
+    $('.user-checkbox').prop('checked', this.checked);
 });
 
-$(document).on('click', '.pagination a', function (e) {
-    e.preventDefault();
-    var searchInput = $('#search_query').val();
-    var page = $(this).attr('href').split('page=')[1];
-    var url = "/groups/time-recording-system/schedulework/schedule/assignment/user/search?page=" + page
-    RequestApi.postRequest(searchInput, url, token).then(response => {
-        $('#table_container').html(response);
-    }).catch(error => { })
+$(document).on('change', '.user-checkbox', function (e) {    
+    if ($('.user-checkbox:checked').length == $('.user-checkbox').length) {
+        $('#select_all').prop('checked', true);
+    } else {
+        $('#select_all').prop('checked', false);
+    }
 });
+
+$(document).on('click', '#import_for_all', function (e) {
+    $('#file-input').trigger('click');
+});
+
+function checkIfExpired(year, month) {
+    // Get the current year and month using Moment.js
+    var currentDate = moment();
+    var currentYear = currentDate.year();
+    var currentMonth = currentDate.month() + 1; // Note: Month is zero-indexed in Moment.js
+    // Compare the year and month with the current year and month
+
+    if ((parseInt(year) === parseInt(currentYear) && parseInt(month) < parseInt(currentMonth))) {
+        $('#add_user_wrapper').hide();
+        $('#expire_message').text('(หมดเวลา)');
+    }
+}

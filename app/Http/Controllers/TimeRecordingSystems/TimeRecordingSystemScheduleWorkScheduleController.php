@@ -28,35 +28,40 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
     public function index()
     {
         $action = 'show';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
-        $workSchedules = WorkSchedule::all();
+        $currentYear = Carbon::now()->year;
+        $workSchedules = WorkSchedule::where('year', $currentYear)->get();
+        $years = WorkSchedule::distinct()->pluck('year');
 
         return view($viewName, [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'workSchedules' => $workSchedules,
+            'years' => $years,
         ]);
     }
 
     public function create()
     {
         $action = 'create';
-        $groupUrl = session('groupUrl');
+        $groupUrl = strval(session('groupUrl'));
 
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+        $permission = $roleGroupCollection['permission'];
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
         return view('groups.time-recording-system.schedulework.schedule.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
+            'permission' => $permission,
             'years' => $years
         ]);
     }
@@ -81,6 +86,82 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         return redirect()->route('groups.time-recording-system.schedulework.schedule');
     }
 
+    public function view($id)
+    {
+        $action = 'update';
+        $groupUrl = strval(session('groupUrl'));
+
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+        $permission = $roleGroupCollection['permission'];
+
+        $workSchedule = WorkSchedule::findOrFail($id);
+
+        $currentYear = Carbon::now()->year;
+        $nextYear = $currentYear + 1;
+        $years = collect([$currentYear, $nextYear]);
+
+        return view('groups.time-recording-system.schedulework.schedule.view',[
+            'groupUrl' => $groupUrl,
+            'workSchedule' => $workSchedule, 
+            'modules' => $updatedRoleGroupCollection,
+            'permission' => $permission,
+            'years' => $years
+        ]);
+    }
+    public function update(Request $request, $id)
+    {
+        $validator = $this->validateFormData($request);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $name = $request->name;
+        $description = $request->description ?? null;
+        $year = $request->year;
+
+        $workSchedule = WorkSchedule::findOrFail($id);
+
+        $this->activityLogger->log('อัปเดต', $workSchedule);
+
+        $workSchedule->update([
+            'name' => $name,
+            'description' => $description,
+            'year' => $year
+        ]);
+        return redirect()->route('groups.time-recording-system.schedulework.schedule');
+
+    }
+   
+    public function delete($id)
+    { 
+        $action = 'delete';
+        
+        $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        
+        $workSchedule = WorkSchedule::findOrFail($id);
+
+        $this->activityLogger->log('ลบ', $workSchedule);
+        
+        $workSchedule->delete();
+
+        return response()->json(['message' => 'ตารางทำงานได้ถูกลบออกเรียบร้อยแล้ว']);
+    }
+
+    public function search(Request $request)
+    {
+        $action = 'show';
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $permission = $roleGroupCollection['permission'];
+
+        $currentYear = $request->data;
+        $workSchedules = WorkSchedule::where('year', $currentYear)->get();
+        return view('groups.time-recording-system.schedulework.schedule.table-render.schedule-table', [
+            'workSchedules' => $workSchedules,
+            'permission' => $permission
+            ])->render();
+    }
 
     function validateFormData($request)
     {

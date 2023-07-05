@@ -56,8 +56,21 @@
                                                 class="form-control ">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>year<span class="small text-danger">*</span></label>
+                                            <select name="year"
+                                                class="form-control select2 @error('year') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                @foreach ($years as $year)
+                                                <option value="{{ $year }}" @if ($year==$shift->year) selected @endif>
+                                                    {{ $year }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>เวลาเข้างาน</label>
@@ -90,8 +103,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>เวลาบันทึกเข้างาน</label>
@@ -124,8 +136,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>เวลาเริ่มพัก</label>
@@ -158,8 +169,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>จำนวนชั่วโมงงาน<span class="small text-danger">*</span></label>
@@ -176,8 +186,7 @@
                                                 class="form-control numericInputSingle @error('break_hour') is-invalid @enderror">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>ค่าตอบแทน<span class="small text-danger">*</span></label>
@@ -186,8 +195,7 @@
                                                 class="form-control numericInputSingle @error('multiply') is-invalid @enderror">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-12">
                                         <button type="submit"
                                             class="btn bg-gradient-success btn-flat float-right">บันทึก</button>

@@ -46,7 +46,18 @@
                                         <td>{{$key + 1}}</td>
                                         <td>{{$workSchedule->name}}</td>
                                         <td>{{$month->name}} {{$workSchedule->year}}</td>
-                                        <td><span class="badge bg-danger">ยังไม่ได้เพิ่ม</span></td>
+                                        <td>
+                                            @php
+                                            $usersAssigned = $workSchedule->isUsersAssigned($month->id,
+                                            $workSchedule->year);
+                                            $isExpired = $usersAssigned === 'หมดเวลา';
+
+                                            @endphp
+
+                                            @if ($isExpired)
+                                            <span class="badge bg-gray">หมดเวลา</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             @php
                                             $shiftsAdded = $workSchedule->isAllShiftsAdded($month->id,
@@ -64,7 +75,7 @@
                                         </td>
                                         <td class="text-right">
 
-                                            @if ($permission->update)
+                                            @if ($permission->create || $permission->update)
                                             <a class="btn btn-success btn-sm"
                                                 href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user', ['workScheduleId' => $workSchedule->id, 'year' => $workSchedule->year, 'month' => $month->id]) }}">
                                                 <i class="fas fa-users"></i>

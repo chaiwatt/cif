@@ -7,7 +7,8 @@
         <div class="container-fluid">
             <div class="row ">
                 <div class="col-sm-6">
-                    <h1 class="m-0">ตารางทำงาน: {{$workSchedule->name}}</h1>
+                    <h1 class="m-0">ตารางทำงาน: {{$workSchedule->name}} <span class="text-danger"
+                            id="expire_message"></span></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,7 +25,8 @@
         <div class="container-fluid">
             @if ($permission->create)
             <a class="btn btn-primary mb-2"
-                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.create', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId]) }}">
+                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.create', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId]) }}"
+                id="add_user_wrapper">
                 <i class="fas fa-plus mr-1">
                 </i>
                 เพิ่มพนักงาน
@@ -58,21 +60,16 @@
                                                     <td>{{$user->name}} {{$user->lastname}}</td>
                                                     <td>{{$user->company_department->name}}</td>
                                                     <td class="text-right">
-                                                        <div class="form-group d-inline">
-                                                            <a class="btn btn-info btn-sm" href="">
-                                                                <i class="fas fa-folder-open"></i>
-                                                            </a>
-                                                            @if ($permission->delete)
-                                                            <form
-                                                                action="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.delete', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId, 'userId' => $user->id]) }}"
-                                                                method="POST" class="d-inline">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="btn btn-danger btn-sm" type="submit"><i
-                                                                        class="fas fa-trash"></i></button>
-                                                            </form>
-                                                            @endif
-                                                        </div>
+                                                        @if ($permission->delete)
+                                                        <form
+                                                            action="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.delete', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId, 'userId' => $user->id]) }}"
+                                                            method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                                                    class="fas fa-trash"></i></button>
+                                                        </form>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -89,7 +86,8 @@
     </div>
 </div>
 @push('scripts')
-
+<script type="module" src="{{asset('assets/js/helpers/time-recording-system/schedule/assignment/assignment.js?v=1')}}">
+</script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {

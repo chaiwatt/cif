@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
 
+
+
     @stack('styles')
 
 <body class="hold-transition sidebar-mini">

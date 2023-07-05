@@ -38,34 +38,6 @@ class Shift extends Model
     }
 
     /**
-     * เมื่อเรียกใช้งานแอตทริบิวต์ 'start' จะทำการแปลงค่าให้เป็นรูปแบบ 'm/d/Y'
-     *
-     * @param  mixed  $value
-     * @return string|null
-     */
-    public function getStartAttribute($value)
-    {
-        if ($value) {
-            return Carbon::parse($value)->format('m/d/Y');
-        }
-        return null;
-    }
-
-    /**
-     * เมื่อเรียกใช้งานแอตทริบิวต์ 'end' จะทำการแปลงค่าให้เป็นรูปแบบ 'm/d/Y'
-     *
-     * @param  mixed  $value
-     * @return string|null
-     */
-    public function getEndAttribute($value)
-    {
-        if ($value) {
-            return Carbon::parse($value)->format('m/d/Y');
-        }
-        return null;
-    }
-
-    /**
      * เมื่อเรียกใช้งานแอตทริบิวต์ 'record_start' จะทำการแปลงค่าให้เป็นรูปแบบ 'm/d/Y'
      *
      * @param  mixed  $value

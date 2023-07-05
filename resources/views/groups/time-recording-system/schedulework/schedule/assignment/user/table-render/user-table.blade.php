@@ -1,7 +1,12 @@
 <table class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
         <tr>
-            <th>เลือก</th>
+            <th>
+                <div class="icheck-primary d-inline">
+                    <input type="checkbox" id="select_all">
+                    <label for="select_all">เลือก</label>
+                </div>
+            </th>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
             <th>แผนก</th>
@@ -13,9 +18,9 @@
         <tr>
             <td>
                 <div class="icheck-primary d-inline">
-                    <input name="users[]" type="checkbox" id="checkboxPrimary{{$user->id}}" value="{{$user->id}}">
-                    <label for="checkboxPrimary{{$user->id}}">
-                    </label>
+                    <input name="users[]" type="checkbox" class="user-checkbox" id="checkboxPrimary{{$user->id}}"
+                        value="{{$user->id}}">
+                    <label for="checkboxPrimary{{$user->id}}"></label>
                 </div>
             </td>
             <td>{{$user->employee_no}}</td>

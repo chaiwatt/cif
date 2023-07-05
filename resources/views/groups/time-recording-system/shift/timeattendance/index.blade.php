@@ -31,29 +31,40 @@
             @if ($permission->show)
             <div class="row">
                 <div class="col-12">
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">กะการทำงาน</h3>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <select name="year" id="year"
+                                        class="form-control @error('year') is-invalid @enderror" style="width: 100%;">
+                                        @foreach ($years as $year)
+                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
-
+                        <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
                                 <thead>
                                     <tr>
-                                        {{-- <th>รหัสกะการทำงาน</th> --}}
                                         <th>ชื่อกะการทำงาน</th>
                                         <th>เวลาเริ่มงาน</th>
                                         <th>เวลาเลิกงาน</th>
+                                        <th>ปีกะทำงาน</th>
                                         <th class="text-right">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($shifts->where('base_shift',1) as $shift)
                                     <tr>
-                                        {{-- <td>{{$shift->code}}</td> --}}
                                         <td>{{$shift->name}}</td>
                                         <td>{{$shift->start}}</td>
                                         <td>{{$shift->end}}</td>
+                                        <td>{{$shift->year}}</td>
                                         <td class="text-right">
                                             @if ($permission->update)
                                             <a class="btn btn-info btn-sm"
@@ -96,7 +107,14 @@
     </div>
 </div>
 @push('scripts')
+<script type="module" src="{{asset('assets/js/helpers/time-recording-system/shift/shift.js?v=1')}}"></script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
-
+<script>
+    window.params = {
+        searchRoute: '{{ route('groups.time-recording-system.shift.timeattendance.search') }}',        
+        url: '{{ url('/') }}',
+        token: $('meta[name="csrf-token"]').attr('content')
+    };
+</script>
 @endpush
 @endsection

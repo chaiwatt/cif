@@ -33,9 +33,19 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">วันหยุดประจำปี</h3>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <select name="year" id="year"
+                                        class="form-control @error('year') is-invalid @enderror" style="width: 100%;">
+                                        @foreach ($years as $year)
+                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
-
+                        <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
                                 <thead>
                                     <tr>
@@ -84,7 +94,15 @@
     </div>
 </div>
 @push('scripts')
+<script type="module" src="{{asset('assets/js/helpers/time-recording-system/shift/yearly-holiday.js?v=1')}}"></script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
+<script>
+    window.params = {
+        searchRoute: '{{ route('groups.time-recording-system.shift.yearlyholiday.search') }}',        
+        url: '{{ url('/') }}',
+        token: $('meta[name="csrf-token"]').attr('content')
+    };
+</script>
 
 @endpush
 @endsection
