@@ -25,6 +25,7 @@ return new class extends Migration
             $table->time('record_end');
             $table->time('break_start');
             $table->time('break_end');
+            $table->unsignedBigInteger('shift_type_id');
             $table->float('duration')->default(8);
             $table->float('break_hour')->default(1);
             $table->float('multiply')->default(1);

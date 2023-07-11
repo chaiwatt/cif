@@ -285,4 +285,64 @@ class User extends Authenticatable
         return $this->hasMany(WorkScheduleAssignmentUser::class);
     }
 
+    public function getWorkScheduleUserByMonthYear($month, $year)
+    {
+        $workScheduleUser = $this->workScheduleAssignmentUsers()
+            ->whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
+                $query->where('month_id', $month)
+                    ->where('year', $year);
+            })
+            ->get();
+
+        return $workScheduleUser;
+    }
+
+    public function getWorkScheduleAssignmentUserByConditions($day, $month, $year)
+    {
+        $workScheduleAssignmentUser = $this->workScheduleAssignmentUsers()
+            ->whereHas('workScheduleAssignment', function ($query) use ($day, $month, $year) {
+                $query->where('day', $day)
+                    ->where('month_id', $month)
+                    ->where('year', $year);
+            })
+            ->get();
+
+        return $workScheduleAssignmentUser;
+    }
+
+    public function getWorkScheduleAssignmentUsersByConditions($month, $year)
+    {
+        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
+                $query->where('month_id', $month)
+                    ->where('year', $year);
+            })
+            ->get();
+
+        return $workScheduleAssignmentUsers;
+    }
+
+
+    public function detachWorkScheduleAssignments($workScheduleId, $month, $year)
+    {
+        $detachIds = $this->workScheduleAssignments()
+            ->where('work_schedule_id', $workScheduleId)
+            ->where('month_id', $month)
+            ->where('year', $year)
+            ->pluck('work_schedule_assignments.id')
+            ->toArray();
+
+        $this->workScheduleAssignments()->detach($detachIds);
+    }
+
+    public function attachWorkScheduleAssignments($workScheduleAssignments)
+    {
+        $this->workScheduleAssignments()->attach($workScheduleAssignments);
+    }
+
+    public function workSchedules()
+    {
+        return $this->belongsToMany(WorkSchedule::class, 'work_schedule_users');
+    }
+
 }

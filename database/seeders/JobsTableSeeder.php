@@ -40,6 +40,24 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.time-recording-system.schedulework.time-recording.index',
         ]);
         Job::create([
+            'code' => 'EMPLOYEE-GROUP',
+            'name' => 'กลุ่มพนักงาน',
+            'route' => 'groups.time-recording-system.setting.employee-group',  
+            'view' => 'groups.time-recording-system.setting.employee-group.index',
+        ]);
+        Job::create([
+            'code' => 'WORK-SCHEDULR-VISIBILITY',
+            'name' => 'การมองเห็น',
+            'route' => 'groups.time-recording-system.setting.work-schedule-visibility',  
+            'view' => 'groups.time-recording-system.setting.work-schedule-visibility.index',
+        ]);
+        Job::create([
+            'code' => 'WORK-SCHEDULR-REPORT',
+            'name' => 'รายงาน',
+            'route' => 'groups.time-recording-system.report',  
+            'view' => 'groups.time-recording-system.report.index',
+        ]);
+        Job::create([
             'code' => 'EXTRA-EARN-AGREEMENT',
             'name' => 'ข้อตกลงเงินเพิ่ม',
             'route' => Null,

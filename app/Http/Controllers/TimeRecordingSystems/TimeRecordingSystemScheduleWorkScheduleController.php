@@ -4,9 +4,11 @@ namespace App\Http\Controllers\TimeRecordingSystems;
 
 use Carbon\Carbon;
 use App\Models\Month;
+use App\Models\Shift;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
+use App\Models\WorkScheduleUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
@@ -35,7 +37,10 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
         $currentYear = Carbon::now()->year;
-        $workSchedules = WorkSchedule::where('year', $currentYear)->get();
+        $uncheckedIds = WorkScheduleUser::where('user_id', auth()->id())
+            ->pluck('work_schedule_id')
+            ->toArray();
+        $workSchedules = WorkSchedule::whereNotIn('id',$uncheckedIds)->where('year', $currentYear)->get();
         $years = WorkSchedule::distinct()->pluck('year');
 
         return view($viewName, [
@@ -58,11 +63,13 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
+        $shifts = Shift::all();
         return view('groups.time-recording-system.schedulework.schedule.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
-            'years' => $years
+            'years' => $years,
+            'shifts' => $shifts
         ]);
     }
 
@@ -79,6 +86,15 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $workSchedule->description = $request->description;
         $workSchedule->year = $request->year;
         $workSchedule->save();
+
+        $shiftIds = $request->shift; 
+        $result = [];
+
+        foreach ($shiftIds as $shiftId) {
+            $result = array_merge($result, range($shiftId, $shiftId + 2));
+        }
+
+        $workSchedule->shifts()->attach($result);
 
         $this->activityLogger->log('เพิ่ม', $workSchedule);
                 
@@ -100,13 +116,15 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
+        $shifts = Shift::all();
 
         return view('groups.time-recording-system.schedulework.schedule.view',[
             'groupUrl' => $groupUrl,
             'workSchedule' => $workSchedule, 
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
-            'years' => $years
+            'years' => $years,
+            'shifts' => $shifts
         ]);
     }
     public function update(Request $request, $id)
@@ -120,8 +138,19 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $name = $request->name;
         $description = $request->description ?? null;
         $year = $request->year;
+        $shiftIds = $request->shift; 
+
+        $result = [];
+
+        foreach ($shiftIds as $shiftId) {
+            $result = array_merge($result, range($shiftId, $shiftId + 2));
+        }
 
         $workSchedule = WorkSchedule::findOrFail($id);
+
+        $workSchedule->shifts()->whereNotIn('shift_id', $result)->detach();
+
+        $workSchedule->shifts()->attach($result);
 
         $this->activityLogger->log('อัปเดต', $workSchedule);
 
@@ -166,8 +195,10 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
     function validateFormData($request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+            'name' => 'required',
+            'shift' => 'required|array|min:1'
         ]);
+        $validator->messages()->add('shift.required', 'กรุณาเลือกกะการทำงาน');
         return $validator;
     }
 }

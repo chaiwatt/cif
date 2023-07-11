@@ -13,24 +13,28 @@ use App\Helpers\AddDefaultWorkScheduleAssignment;
 
 class WorkScheduleAssignmentController extends Controller
 {
-    // public function create()
-    // {
-    //     $workSchedule = WorkSchedule::findOrFail(1); 
-    //     $addDefaultWorkScheduleAssignment = new AddDefaultWorkScheduleAssignment();
-    //     $addDefaultWorkScheduleAssignment->addDefaultWorkScheduleAssignment($workSchedule);
-    //     return ('created');
-    // }
     public function assign()
     {
-        $user = User::find(4); 
-        $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id',2)->where('month_id',7)->where('year',2023)->get();
-        $user->workScheduleAssignments()->detach(); 
-        $user->workScheduleAssignments()->attach($workScheduleAssignments); 
+        $workScheduleId = 1;
+        $userId = 1;
+        $month = 8;
+        $year = 2023;
+
+
+        $user = User::find($userId);
+        $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id', $workScheduleId)
+            ->where('month_id', $month)
+            ->where('year', $year)
+            ->get();
+
+        $user->detachWorkScheduleAssignments($workScheduleId, $month, $year);    
+
+        $user->attachWorkScheduleAssignments($workScheduleAssignments);
+
         return ('assigned');
     }
     public function index()
     {
-        // $user = User::find(1); 
         $workScheduleId = 1;
         $userId = 1;
         $month = 7;
@@ -40,25 +44,46 @@ class WorkScheduleAssignmentController extends Controller
         $workSchedule = WorkSchedule::find($workScheduleId);
         $user = User::find($userId);
 
-        $workScheduleAssignmentUsers = $this->getWorkScheduleAssignmentUsersByConditions($month, $year, $userId);
+        // $user = User::find(123);
+        $month = 6;
+        $year = 2023;
 
-        // dd($workScheduleAssignmentUsers);
-        foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser)
-        {
-            echo($user->name . ' ' . $workScheduleAssignmentUser->workScheduleAssignment->month->name . ' ' . $workScheduleAssignmentUser->workScheduleAssignment->year . ' ' . $workScheduleAssignmentUser->time_in . ' ' . $workScheduleAssignmentUser->time_out . '<br>');
-        }
-        
-        $workScheduleAssignmentUser = $this->getWorkScheduleAssignmentUserByConditions($weekDay, $day, $month, $year, $userId);
-        // dd($workScheduleAssignmentUser);
+        $workScheduleUser = $user->getWorkScheduleUserByMonthYear($month, $year);
+        $workScheduleAssignmentUser = $user->getWorkScheduleAssignmentUserByConditions($weekDay, $day, $month, $year);
+        $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersByConditions($month, $year);
 
-        $users = $this->getUsersByWorkScheduleAssignment($workScheduleId, $month, $year);
 
-        // foreach($users as $user)
+        // $workScheduleAssignmentUsers = $this->getWorkScheduleAssignmentUsersByConditions($month, $year, $userId);
+
+        // // dd($workScheduleAssignmentUsers);
+        // foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser)
         // {
-        //     echo($workSchedule->name . ' ' . $user->name . '<br>');
+        //     echo($user->name . ' ' . $workScheduleAssignmentUser->workScheduleAssignment->month->name . ' ' . $workScheduleAssignmentUser->workScheduleAssignment->year . ' ' . $workScheduleAssignmentUser->time_in . ' ' . $workScheduleAssignmentUser->time_out . '<br>');
         // }
+        
+        // $workScheduleAssignmentUser = $this->getWorkScheduleAssignmentUserByConditions($weekDay, $day, $month, $year, $userId);
+        // // dd($workScheduleAssignmentUser);
+
+        // $users = $this->getUsersByWorkScheduleAssignment($workScheduleId, $month, $year);
+
+        // // foreach($users as $user)
+        // // {
+        // //     echo($workSchedule->name . ' ' . $user->name . '<br>');
+        // // }
+
+        // $workScheduleUserByMonthYears = $this->getWorkScheduleUserByMonthYear($weekDay, $day, $month, $year, $userId);
 
     }
+    public function getWorkScheduleUserByMonthYear($month, $year, $userId)
+    {
+        $workScheduleUser = WorkScheduleAssignmentUser::whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
+            $query->where('month_id', $month)
+                ->where('year', $year);
+        })->where('user_id', $userId)->first();
+
+        return $workScheduleUser;
+    }
+
 
     public function getWorkScheduleAssignmentUserByConditions($weekDay, $day, $month, $year, $userId)
     {

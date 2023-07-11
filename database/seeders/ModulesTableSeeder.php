@@ -26,14 +26,14 @@ class ModulesTableSeeder extends Seeder
             'icon' => 'fa-calendar-alt'
         ]);
         Module::create([
-            'code' => 'EXTRA-EARN',
-            'name' => 'การได้เงินเพิ่ม',
-            'icon' => 'fa-arrow-up'
+            'code' => 'TIME-RECORDING-SETTING',
+            'name' => 'การตั้งค่า',
+            'icon' => 'fa-cog'
         ]);
         Module::create([
-            'code' => 'DEDUCTION',
-            'name' => 'การหักเงิน',
-            'icon' => 'fa-arrow-down'
+            'code' => 'TIME-RECORDING-REPORT',
+            'name' => 'รายงาน',
+            'icon' => 'fa-chart-pie'
         ]);
         Module::create([
             'code' => 'SARALY-MODULE-ONE',

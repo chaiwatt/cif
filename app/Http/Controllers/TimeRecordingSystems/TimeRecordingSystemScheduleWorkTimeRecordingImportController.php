@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TimeRecordingSystems;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Month;
 use App\Models\WorkSchedule;
@@ -41,22 +42,31 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
 
     public function batch(Request $request)
     {
+
         $month = $request->data['month'];
         $year = $request->data['year'];
         $workScheduleId = $request->data['workScheduleId'];
         $importUsers = $request->data['batch'];
+        $distinctACNos = array_unique(array_column($importUsers, 'AC-No'));
+        $distinctACNos = array_values($distinctACNos);
+        $user = User::where('employee_no',$distinctACNos[0])->first();
 
         foreach($importUsers as $importUser)
         {
-            $user = User::where('employee_no',$importUser['AC-No'])->first();
-            if ($user)
+            $date = Carbon::parse($importUser['Date']); 
+            $day = $date->day;
+            $month = $date->month;
+            $year = $date->year;
+            $employeeNo = $importUser['AC-No'];
+            $user = User::where('employee_no',$employeeNo)->first();
+           
+            $workScheduleAssignmentUser = $user->getWorkScheduleAssignmentUserByConditions($day, $month, $year)->first();
+            if($workScheduleAssignmentUser)
             {
-                $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id',$workScheduleId)
-                ->where('month_id',$month)
-                ->where('year',$year)
-                ->get();
-                $user->workScheduleAssignments()->detach(); 
-                $user->workScheduleAssignments()->attach($workScheduleAssignments); 
+                $workScheduleAssignmentUser->update([
+                    'time_in' => '00:00:00',
+                    'time_out' => '00:00:00',
+                ]);
             }
         }
 

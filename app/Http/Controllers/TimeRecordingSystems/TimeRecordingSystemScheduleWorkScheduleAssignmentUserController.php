@@ -95,9 +95,8 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
             foreach($users as $user)
             {
                 $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id',$workScheduleId)->where('month_id',$month)->where('year',$year)->get();
-                // dd($workScheduleAssignments);
-                $user->workScheduleAssignments()->detach(); 
-                $user->workScheduleAssignments()->attach($workScheduleAssignments); 
+                $user->detachWorkScheduleAssignments($workScheduleId, $month, $year); 
+                $user->attachWorkScheduleAssignments($workScheduleAssignments);
             }
             
             $url = "groups/time-recording-system/schedulework/schedule/assignment/user/{$workScheduleId}/year/{$year}/month/{$month}";

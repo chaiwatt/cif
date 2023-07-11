@@ -37,10 +37,14 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
         $viewRoute = $roleGroupCollection['viewRoute'];
         $workSchedule = WorkSchedule::findOrFail($id);
         $year = $workSchedule->year;
+        $currentMonth = date('n');
         $uniqueMonths = $workSchedule->assignments()
             ->where('year', $year)
             ->distinct('month_id')
-            ->pluck('month_id');
+            ->pluck('month_id')
+            ->filter(function ($month) use ($currentMonth) {
+                return $month >= $currentMonth;
+            });
 
         $months = Month::whereIn('id', $uniqueMonths)->get();   
 
@@ -66,8 +70,13 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
         $viewRoute = $roleGroupCollection['viewRoute'];
         $month = Month::find($monthId);
         $workSchedule = WorkSchedule::find($scheduleId);
-        $shifts = Shift::all();
+        // $shifts = Shift::all();
         $yearlyHolidays = YearlyHoliday::where('year',$year)->where('month',$month->id)->get();
+
+        $workSchedule = WorkSchedule::find($scheduleId);
+
+        $workSchedule = WorkSchedule::find($scheduleId);
+        $shifts = $workSchedule->shifts;
 
         $events = WorkScheduleEvent::where('month_id', $month->id)
             ->where('year', $year)

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\WorkSchedule;
 use App\Models\ShiftAgreement;
+use Illuminate\Support\Facades\DB;
 use App\Models\WorkScheduleAssignment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,7 +26,9 @@ class Shift extends Model
         'duration',
         'break_hour',
         'multiply',
-        'common_code'
+        'common_code',
+        'shift_type_id',
+        'color'
     ];
     /**
      * ความสัมพันธ์กับโมเดล ShiftAgreement (ข้อตกลงเวลางาน) ผ่านการสร้างความสัมพันธ์แบบ One-to-Many
@@ -153,6 +157,24 @@ class Shift extends Model
     public function workScheduleAssignments()
     {
         return $this->hasMany(WorkScheduleAssignment::class);
+    }
+
+     /**
+     * ความสัมพันธ์กับโมเดล WorkSchedule 
+     * ผ่านการเชื่อมโยงกับโมเดล WorkSchedule 
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function workSchedules()
+    {
+        return $this->belongsToMany(WorkSchedule::class, 'work_schedule_shifts');
+    }
+
+    public function existsInWorkScheduleShifts($workScheduleId)
+    {
+        return $this->workSchedules()
+                    ->where('work_schedule_id', $workScheduleId)
+                    ->exists();
     }
 
 }

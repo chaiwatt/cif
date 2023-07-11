@@ -62,7 +62,6 @@
                                                             id="checkboxPrimary{{$user->id}}" value="{{$user->id}}">
                                                         <label for="checkboxPrimary{{$user->id}}"></label>
                                                     </div>
-
                                                 </td>
                                                 <td>{{$user->employee_no}}</td>
                                                 <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}

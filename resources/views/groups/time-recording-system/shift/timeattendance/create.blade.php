@@ -133,6 +133,23 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>ประเภทกะทำงาน<span class="small text-danger">*</span></label>
+                                            <select name="shiftType"
+                                                class="form-control select2 @error('shiftType') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="">==เลือก==</option>
+                                                @foreach ($shiftTypes as $shiftType)
+                                                <option value="{{ $shiftType->id }}" {{ old('shiftType')==$shiftType->id
+                                                    ?
+                                                    'selected' : '' }}>
+                                                    {{ $shiftType->name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>เวลาเริ่มพัก</label>
                                             <div class="input-group date" id="timepicker_break_start"
                                                 data-target-input="nearest">
@@ -200,6 +217,7 @@
 @push('scripts')
 <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
 <script>
+    $('.select2').select2()
     const timepickerConfig = {
         format: 'HH:mm'
     };

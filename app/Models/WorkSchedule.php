@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\Shift;
+use App\Models\WorkScheduleUser;
+use Illuminate\Support\Facades\DB;
 use App\Models\WorkScheduleAssignment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -72,6 +75,25 @@ class WorkSchedule extends Model
     public function monthName($month)
     {
         return Month::find($month)->name;
+    }
+
+    public function shifts()
+    {
+        return $this->belongsToMany(Shift::class, 'work_schedule_shifts');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'work_schedule_users');
+    }
+
+    public function shouldUncheck()
+    {
+        $uncheckedIds = WorkScheduleUser::where('user_id', auth()->id())
+            ->pluck('work_schedule_id')
+            ->toArray();
+
+        return in_array($this->id, $uncheckedIds);
     }
 
 }

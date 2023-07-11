@@ -40,7 +40,7 @@
                                 method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ตารางทำงาน<span class="small text-danger">*</span></label>
                                             <input type="text" name="name" value="{{old('name')}}"
@@ -48,14 +48,34 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>คำอธิบาย</label>
                                             <input type="text" name="description" value="{{old('description')}}"
                                                 class="form-control ">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>กะการทำงานที่ใช้<span class="small text-danger">*</span></label>
+                                            <select name="shift[]" id="shift"
+                                                class="form-control select2 @error('shift') is-invalid @enderror"
+                                                style="width: 100%;" multiple>
+                                                @foreach ($shifts->where('base_shift', 1) as $shift)
+                                                <option value="{{ $shift->id }}" @if(in_array($shift->id, old('shift',
+                                                    []))) selected @endif>
+                                                    {{ $shift->name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @error('shift')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>กรุณาเลือกกะการทำงาน</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ปี</label>
                                             <select name="year"

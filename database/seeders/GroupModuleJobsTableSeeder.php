@@ -24,8 +24,8 @@ class GroupModuleJobsTableSeeder extends Seeder
         // Module
         $shiftModule = Module::where('code','SHIFT')->first();
         $workScheduleModule = Module::where('code','WORK-SCHEDULE')->first();
-        $extraEarnModule = Module::where('code','EXTRA-EARN')->first();
-        $deductionModule = Module::where('code','DEDUCTION')->first();
+        $timeRecordingSettingModule = Module::where('code','TIME-RECORDING-SETTING')->first();
+        $timeRecordingReportModule = Module::where('code','TIME-RECORDING-REPORT')->first();
         $sararyModuleOne = Module::where('code','SARALY-MODULE-ONE')->first();
         $sararyModuleTwo = Module::where('code','SARALY-MODULE-TWO')->first();
         // Job
@@ -33,6 +33,9 @@ class GroupModuleJobsTableSeeder extends Seeder
         $yearlyHolidayJob = Job::where('code','YEARLY-HOLIDAY')->first();
         $workScheduleJob = Job::where('code','WORK-SCHEDULE')->first();
         $workScheduleTimeRecording = Job::where('code','TIME-RECORDING')->first();
+        $workScheduleEmployeeGroup = Job::where('code','EMPLOYEE-GROUP')->first();
+        $workScheduleVisibility = Job::where('code','WORK-SCHEDULR-VISIBILITY')->first();
+        $workScheduleReport = Job::where('code','WORK-SCHEDULR-REPORT')->first();
         $extraEarnAgreementJob = Job::where('code','EXTRA-EARN-AGREEMENT')->first();
         $deductionAgreementJob = Job::where('code','DEDUCTION-AGREEMENT')->first();
         $sararyJobOne = Job::where('code','SARALY-JOB-ONE')->first();
@@ -62,13 +65,28 @@ class GroupModuleJobsTableSeeder extends Seeder
         ]);
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
-            'module_id' => $extraEarnModule->id,
+            'module_id' => $timeRecordingSettingModule->id,
+            'job_id' => $workScheduleEmployeeGroup->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $timeRecordGroup->id,
+            'module_id' => $timeRecordingSettingModule->id,
+            'job_id' => $workScheduleVisibility->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $timeRecordGroup->id,
+            'module_id' => $timeRecordingSettingModule->id,
             'job_id' => $extraEarnAgreementJob->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
-            'module_id' => $deductionModule->id,
+            'module_id' => $timeRecordingSettingModule->id,
             'job_id' => $deductionAgreementJob->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $timeRecordGroup->id,
+            'module_id' => $timeRecordingReportModule->id,
+            'job_id' => $workScheduleReport->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,

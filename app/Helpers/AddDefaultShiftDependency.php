@@ -14,7 +14,7 @@ class AddDefaultShiftDependency
         $shiftId = $shift->id;
         $shiftName = $shift->name;
         $shiftCode = $shift->code;
-        // dd($shiftCode);
+        $shiftTypeId = $shift->shift_type_id;
    
         Shift::create([
             'name' => $shiftName .'(วันหยุดประจำสัปดาห์)',
@@ -26,7 +26,8 @@ class AddDefaultShiftDependency
             'break_start' => '00:00:00',
             'break_end' => '00:00:00',
             'common_code' => $shiftCode,
-            'color' => $shiftColor->holiday
+            'color' => $shiftColor->holiday,
+            'shift_type_id' => $shiftTypeId
         ]);
         Shift::create([
             'name' => $shiftName .'(วันหยุดตามนักขัตฤกษ์)',
@@ -38,7 +39,8 @@ class AddDefaultShiftDependency
             'break_start' => '00:00:00',
             'break_end' => '00:00:00',
             'common_code' => $shiftCode,
-            'color' => $shiftColor->public_holiday
+            'color' => $shiftColor->public_holiday,
+            'shift_type_id' => $shiftTypeId
         ]);
         ShiftAgreement::create([
             'shift_id' => $shiftId,

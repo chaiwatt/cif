@@ -4,10 +4,11 @@ namespace App\Http\Controllers\TimeRecordingSystems;
 
 use Carbon\Carbon;
 use App\Models\Shift;
+use App\Models\ShiftType;
 use App\Models\ShiftColor;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultShiftDependency;
@@ -71,12 +72,14 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
+        $shiftTypes = ShiftType::all();
 
         // ส่งข้อมูลไปยังหน้าแสดงผลสร้างหลักสูตรใหม่
         return view('groups.time-recording-system.shift.timeattendance.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
-            'years' => $years
+            'years' => $years,
+            'shiftTypes' => $shiftTypes
         ]);
     }
 
@@ -112,6 +115,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $duration = $request->duration;
         $break_hour = $request->break_hour;
         $multiply = $request->multiply;
+        $shiftTypeId = $request->shiftType;
 
         // สร้างและบันทึกข้อมูล Shift ใหม่
         $randomShiftColor = ShiftColor::inRandomOrder()->first();
@@ -131,6 +135,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $shift->multiply = $multiply;
         $shift->base_shift = 1;
         $shift->common_code = $code;
+        $shift->shift_type_id = $shiftTypeId;
         $shift->color = $randomShiftColor->regular;
         $shift->save();
 
@@ -163,12 +168,14 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
+        $shiftTypes = ShiftType::all();
 
         return view('groups.time-recording-system.shift.timeattendance.view',[
             'groupUrl' => $groupUrl,
             'shift' => $shift, 
             'modules' => $updatedRoleGroupCollection,
-            'years' => $years
+            'years' => $years,
+            'shiftTypes' => $shiftTypes
         ]);
     }
 
@@ -182,8 +189,9 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
     public function update(Request $request, $id)
     {
         $validator = $this->validateFormData($request);
-
+        // dd($request->shiftType);
         if ($validator->fails()) {
+            
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -199,6 +207,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $duration = $request->duration;
         $break_hour = $request->break_hour;
         $multiply = $request->multiply;
+        $shiftTypeId = $request->shiftType;
 
         // อัปเดตข้อมูล Shift ตาม ID ที่ระบุ
         $shift = Shift::findOrFail($id);
@@ -217,6 +226,27 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
             'duration' => $duration,
             'break_hour' => $break_hour,
             'multiply' => $multiply,
+            'shift_type_id' => $shiftTypeId
+        ]);
+
+        $holiday_shift = Shift::where('code',$shift->code.'_H')->first();
+        $holiday_shift->update([
+            'name' => $shiftname . '(วันหยุดประจำสัปดาห์)',
+            'description' => $description,
+            'duration' => $duration,
+            'break_hour' => $break_hour,
+            'multiply' => $multiply,
+            'shift_type_id' => $shiftTypeId
+        ]);
+
+        $yearly_holiday_shift = Shift::where('code',$shift->code.'_TH')->first();
+        $yearly_holiday_shift->update([
+            'name' => $shiftname . '(วันหยุดตามนักขัตฤกษ์)',
+            'description' => $description,
+            'duration' => $duration,
+            'break_hour' => $break_hour,
+            'multiply' => $multiply,
+            'shift_type_id' => $shiftTypeId
         ]);
 
         return redirect()->route('groups.time-recording-system.shift.timeattendance');
@@ -304,6 +334,10 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
             'duration' => 'required|regex:/^\d{1,2}\.\d{2}$/',
             'break_hour' => 'required|regex:/^\d{1,2}\.\d{2}$/',
             'multiply' => 'required|regex:/^\d{1,2}\.\d{2}$/',
+            'shiftType' => [
+                'required',
+                Rule::exists(ShiftType::class, 'id')
+            ],
         ]);
         return $validator;
     }

@@ -41,4 +41,14 @@
         @endcan
     </div>
 </div>
+
+{{-- @foreach ($htmlcolors as $htmlcolor)
+<div class=" font-weight-normal mt-2"
+    style="background-color: {{$htmlcolor->color}}; color: rgb(255, 255, 255); position: relative;height:35px"
+    data-id="1">
+    {{$htmlcolor->color}}
+</div>
+@endforeach --}}
+
+
 @endsection

@@ -22,10 +22,13 @@ use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
 use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemReportController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftYearlyHolidayController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftTimeattendanceController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingWorkScheduleVisibilityController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingImportController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentUserController;
@@ -109,6 +112,18 @@ Route::middleware('auth')->group(function () {
                         Route::post('single', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'single'])->name('groups.time-recording-system.schedulework.time-recording.import.single');
                     });
                 });
+            });
+            Route::group(['prefix' => 'setting'], function () {
+                Route::group(['prefix' => 'work-schedule-visibility'], function () {
+                    Route::get('', [TimeRecordingSystemSettingWorkScheduleVisibilityController::class, 'index'])->name('groups.time-recording-system.setting.work-schedule-visibility');
+                    Route::post('store', [TimeRecordingSystemSettingWorkScheduleVisibilityController::class, 'store'])->name('groups.time-recording-system.setting.work-schedule-visibility.store');
+                });
+                Route::group(['prefix' => 'employee-group'], function () {
+                    Route::get('', [TimeRecordingSystemSettingEmployeeGroupController::class, 'index'])->name('groups.time-recording-system.setting.employee-group');
+                });
+            });
+            Route::group(['prefix' => 'report'], function () {
+                Route::get('', [TimeRecordingSystemReportController::class, 'index'])->name('groups.time-recording-system.report');
             });
         });
     });

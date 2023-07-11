@@ -39,8 +39,8 @@
                         <div class="card-body">
                             <div class="row mt-3">
                                 <div class="col-md-3">
-                                    <div class="sticky-top mb-3">
-                                        <div class="card card-outline card-success">
+                                    {{-- <div class="sticky-top mb-3"> --}}
+                                        <div class="card card-outline card-success sticky-top">
                                             <div class="card-header">
                                                 <h4 class="card-title">กะการทำงาน</h4>
                                             </div>
@@ -50,7 +50,8 @@
                                                     @foreach ($shifts as $key => $shift)
                                                     <div class="external-event font-weight-normal"
                                                         style="background-color: {{$shift->color}};color:#ffffff"
-                                                        data-id="{{$shift->id}}">{{$shift->name}}</div>
+                                                        data-id="{{$shift->id}}">
+                                                        {{$shift->name}}</div>
                                                     @if (($key + 1) % 3 === 0 && $key !== count($shifts) - 1)
                                                     <hr>
                                                     @endif
@@ -58,11 +59,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        {{--
+                                    </div> --}}
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-md-9">
-                                    <div class="card card-outline card-success">
+                                    <div class="card card-outline card-success sticky-top">
                                         <div class="card-header">
                                             <h4 class="card-title">ตารางทำงาน {{$month->name}} {{$year}}</h4>
                                         </div>
@@ -116,6 +118,8 @@
                 }
             });
         }
+
+        
     });
     
 

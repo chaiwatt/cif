@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
         $this->call(EducationLevelsTableSeeder::class);
         $this->call(EducationBranchesTableSeeder::class);
         $this->call(CompanyDepartmentsTableSeeder::class); 
+        $this->call(ShiftTypesTableSeeder::class); 
+        $this->call(HtmlColrsTableSeeder::class); 
+        
         // $this->call(GendersTableSeeder::class);
         // $this->call(BanksTableSeeder::class);
         // $this->call(ProvincesTableSeeder::class);
@@ -31,7 +34,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(TambolsTableSeeder::class);
         $this->call(ShiftColorsTableSeeder::class);
         $this->call(MonthsTableSeeder::class);
-        $this->call(WorkSchedulesTableSeeder::class);
+        
         $this->call(DocumentTyesTableSeeder::class);
         $this->call(YearlyHolidaysTableSeeder::class);
         $this->call(SearchFieldsTableSeeder::class);
@@ -47,7 +50,7 @@ class DatabaseSeeder extends Seeder
         $this->call(JobsTableSeeder::class);
         // $this->call(JobModulesTableSeeder::class);
         $this->call(ShifsTableSeeder::class);
-        
+        $this->call(WorkSchedulesTableSeeder::class);
         $this->call(GroupModuleJobsTableSeeder::class); 
         $this->call(ApproversTableSeeder::class); 
         

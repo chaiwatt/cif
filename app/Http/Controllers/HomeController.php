@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\HtmlColor;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,7 +32,7 @@ class HomeController extends Controller
             $groupIds = $role->role_group_jsons->pluck('group_id');
             $groups = Group::whereIn('id',$groupIds)->get();
         }
-        
-        return view('home', ['groups' => $groups]);
+        $htmlcolors  = HtmlColor::all();
+        return view('home', ['groups' => $groups,'htmlcolors' => $htmlcolors]);
     }
 }
