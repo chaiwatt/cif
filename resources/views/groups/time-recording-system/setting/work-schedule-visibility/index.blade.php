@@ -39,7 +39,12 @@
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">เลือก</th>
+                                                    <th style="width: 120px">
+                                                        <div class="icheck-primary d-inline">
+                                                            <input type="checkbox" id="select_all" checked>
+                                                            <label for="select_all">เลือก</label>
+                                                        </div>
+                                                    </th>
                                                     <th>ชื่อตารางทำงาน</th>
                                                     <th>ปีตารางทำงาน</th>
                                                 </tr>
@@ -47,9 +52,10 @@
                                             <tbody>
                                                 @foreach ($workSchedules as $workSchedule)
                                                 <tr>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <div class="icheck-primary d-inline">
                                                             <input name="workSchedules[]" type="checkbox"
+                                                                class="work-schedule-checkbox"
                                                                 id="checkboxPrimary{{$workSchedule->id}}"
                                                                 value="{{$workSchedule->id}}" {{
                                                                 $workSchedule->shouldUncheck() ? '' : 'checked' }}>
@@ -85,6 +91,19 @@
 </div>
 @push('scripts')
 
+<script>
+    $(document).on('change', '#select_all', function (e) {
+    $('.work-schedule-checkbox').prop('checked', this.checked);
+    });
+    
+    $(document).on('change', '.work-schedule-checkbox', function (e) {
+    if ($('.work-schedule-checkbox:checked').length == $('.work-schedule-checkbox').length) {
+    $('#select_all').prop('checked', true);
+    } else {
+    $('#select_all').prop('checked', false);
+    }
+    });
+</script>
 
 @endpush
 @endsection

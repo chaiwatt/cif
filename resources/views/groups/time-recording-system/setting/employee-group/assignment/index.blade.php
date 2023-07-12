@@ -12,7 +12,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('setting.organization.approver.index')}}">กลุ่มพนักงาน</a></li>
+                                href="{{route('groups.time-recording-system.setting.employee-group')}}">กลุ่มพนักงาน</a>
+                        </li>
                         <li class="breadcrumb-item active">{{$userGroup->name}}</li>
                     </ol>
                 </div>
@@ -21,6 +22,14 @@
     </div>
     <div class="content">
         <div class="container-fluid">
+            @if ($permission->create)
+            <a class="btn btn-primary mb-2"
+                href="{{route('groups.time-recording-system.setting.employee-group.assignment.create',['id' => $userGroup->id])}}">
+                <i class="fas fa-plus mr-1">
+                </i>
+                เพิ่มพนักงาน
+            </a>
+            @endif
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -34,59 +43,45 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('setting.organization.approver.assignment.store')}}" method="POST">
-                                @csrf
-                                <input name="userGroupId" id="userGroupId" value="{{$userGroup->id}}" type="text"
-                                    hidden>
-                                <div class="dataTables_wrapper dt-bootstrap4">
-                                    <div class="row">
-                                        <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            <div class="icheck-primary d-inline">
-                                                                <input type="checkbox" id="select_all">
-                                                                <label for="select_all">เลือก</label>
-                                                            </div>
-                                                        </th>
-                                                        <th>รหัสพนักงาน</th>
-                                                        <th>ชื่อ-สกุล</th>
-                                                        <th>แผนก</th>
-                                                        <th>ตำแหน่ง</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="employee_tbody">
-                                                    @foreach ($users as $user)
-                                                    <tr>
-                                                        <td>
-                                                            <div class="icheck-primary d-inline">
-                                                                <input name="users[]" type="checkbox"
-                                                                    class="user-checkbox"
-                                                                    id="checkboxPrimary{{$user->id}}"
-                                                                    value="{{$user->id}}">
-                                                                <label for="checkboxPrimary{{$user->id}}"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>{{$user->employee_no}}</td>
-                                                        <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
-                                                        </td>
-                                                        <td>{{$user->company_department->name}}</td>
-                                                        <td>{{$user->user_position->name}}</td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                            {{ $users->links() }}
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                    <div class="col-sm-12" id="table_container">
+                                        <table class="table table-bordered table-striped dataTable dtr-inline">
+                                            <thead>
+                                                <tr>
+                                                    <th>เลือก</th>
+                                                    <th>รหัสพนักงาน</th>
+                                                    <th>ชื่อ-สกุล</th>
+                                                    <th>แผนก</th>
+                                                    <th class="text-right">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="employee_tbody">
+                                                @foreach ($users as $key => $user)
+                                                <tr>
+                                                    <td>{{$key +1}}</td>
+                                                    <td>{{$user->employee_no}}</td>
+                                                    <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
+                                                    </td>
+                                                    <td>{{$user->company_department->name}}</td>
+                                                    <td class="text-right">
+                                                        <form
+                                                            action="{{ route('groups.time-recording-system.setting.employee-group.assignment.delete', ['user_group_id' => $userGroup->id, 'user_id' => $user->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                                                    class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        {{ $users->links() }}
                                     </div>
                                 </div>
+                            </div>
                             </form>
 
                         </div>
@@ -98,14 +93,7 @@
 </div>
 @push('scripts')
 
-<script type="module" src="{{asset('assets/js/helpers/time-recording-system/setting/usergroup.js?v=1')}}"></script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
-<script>
-    window.params = {
-        searchRoute: '{{ route('groups.time-recording-system.setting.employee-group.assignment.search') }}',
-        url: '{{ url('/') }}',
-        token: $('meta[name="csrf-token"]').attr('content')
-    };
-</script>
+
 @endpush
 @endsection

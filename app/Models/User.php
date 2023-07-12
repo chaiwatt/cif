@@ -10,6 +10,7 @@ use App\Models\Gender;
 use App\Models\Prefix;
 use App\Models\Approver;
 use App\Models\Ethnicity;
+use App\Models\UserGroup;
 use App\Models\Nationality;
 use App\Models\EmployeeType;
 use App\Models\UserPosition;
@@ -343,6 +344,11 @@ class User extends Authenticatable
     public function workSchedules()
     {
         return $this->belongsToMany(WorkSchedule::class, 'work_schedule_users');
+    }
+
+    public function userGroups()
+    {
+        return $this->belongsToMany(UserGroup::class, 'user_group_users', 'user_id', 'user_group_id');
     }
 
 }

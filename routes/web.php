@@ -128,7 +128,10 @@ Route::middleware('auth')->group(function () {
                     Route::delete('{id}', [TimeRecordingSystemSettingEmployeeGroupController::class, 'delete'])->name('groups.time-recording-system.setting.employee-group.delete');
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('{id}', [TimeRecordingSystemSettingEmployeeGroupAssignmentController::class, 'index'])->name('groups.time-recording-system.setting.employee-group.assignment');
+                        Route::delete('usergroups/{user_group_id}/users/{user_id}/delete', [TimeRecordingSystemSettingEmployeeGroupAssignmentController::class, 'delete'])->name('groups.time-recording-system.setting.employee-group.assignment.delete');
+                        Route::get('create/{id}', [TimeRecordingSystemSettingEmployeeGroupAssignmentController::class, 'create'])->name('groups.time-recording-system.setting.employee-group.assignment.create');
                         Route::post('search', [TimeRecordingSystemSettingEmployeeGroupAssignmentController::class, 'search'])->name('groups.time-recording-system.setting.employee-group.assignment.search');
+                        Route::post('store', [TimeRecordingSystemSettingEmployeeGroupAssignmentController::class, 'store'])->name('groups.time-recording-system.setting.employee-group.assignment.store');
                     });
                 });
             });
