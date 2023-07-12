@@ -34,7 +34,7 @@
                 <a class="btn btn-danger btn-sm" data-confirm='ลบตารางทำงาน "{{$workSchedule->name}}" หรือไม่?' href="#"
                     data-id="{{$workSchedule->id}}"
                     data-delete-route="{{ route('groups.time-recording-system.schedulework.schedule.delete', ['id' => '__id__']) }}"
-                    data-message="กะตารางทำงาน">
+                    data-message="ตารางทำงาน">
                     <i class="fas fa-trash"></i>
                 </a>
                 @endif

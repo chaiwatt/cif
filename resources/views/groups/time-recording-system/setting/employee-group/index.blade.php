@@ -22,7 +22,7 @@
         <div class="container-fluid">
             @if ($permission->create)
             <a class="btn btn-primary mb-2"
-                href="{{route('groups.time-recording-system.schedulework.schedule.create')}}">
+                href="{{route('groups.time-recording-system.setting.employee-group.create')}}">
                 <i class="fas fa-plus mr-1">
                 </i>
                 เพิ่มกลุ่มพนักงาน
@@ -52,24 +52,24 @@
                                         <td class="text-right">
                                             @if ($permission->update)
                                             <a class="btn btn-info btn-sm"
-                                                href="{{route('groups.time-recording-system.schedulework.schedule.view',['id' => $userGroup->id])}}">
+                                                href="{{route('groups.time-recording-system.setting.employee-group.view',['id' => $userGroup->id])}}">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>
                                             </a>
                                             @endif
                                             @if ($permission->create)
                                             <a class="btn btn-primary btn-sm"
-                                                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment', ['id' => $userGroup->id]) }}">
+                                                href="{{ route('groups.time-recording-system.setting.employee-group.assignment', ['id' => $userGroup->id]) }}">
                                                 <i class="fas fa-link"></i>
                                                 </i>
                                             </a>
                                             @endif
                                             @if ($permission->delete == true)
                                             <a class="btn btn-danger btn-sm"
-                                                data-confirm='ลบตารางทำงาน "{{$userGroup->name}}" หรือไม่?' href="#"
+                                                data-confirm='ลบกลุ่มพนักงาน "{{$userGroup->name}}" หรือไม่?' href="#"
                                                 data-id="{{$userGroup->id}}"
-                                                data-delete-route="{{ route('groups.time-recording-system.schedulework.schedule.delete', ['id' => '__id__']) }}"
-                                                data-message="กะตารางทำงาน">
+                                                data-delete-route="{{ route('groups.time-recording-system.setting.employee-group.delete', ['id' => '__id__']) }}"
+                                                data-message="กลุ่มพนักงาน">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                             @endif
@@ -88,15 +88,7 @@
     </div>
 </div>
 @push('scripts')
-
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
-<script>
-    window.params = {
-        searchRoute: '{{ route('groups.time-recording-system.schedulework.schedule.search') }}',        
-        url: '{{ url('/') }}',
-        token: $('meta[name="csrf-token"]').attr('content')
-    };
-</script>
 
 @endpush
 @endsection

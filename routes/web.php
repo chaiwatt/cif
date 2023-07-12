@@ -30,6 +30,7 @@ use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployee
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingWorkScheduleVisibilityController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingImportController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentUserController;
 
@@ -120,6 +121,15 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::group(['prefix' => 'employee-group'], function () {
                     Route::get('', [TimeRecordingSystemSettingEmployeeGroupController::class, 'index'])->name('groups.time-recording-system.setting.employee-group');
+                    Route::get('create', [TimeRecordingSystemSettingEmployeeGroupController::class, 'create'])->name('groups.time-recording-system.setting.employee-group.create');
+                    Route::post('store', [TimeRecordingSystemSettingEmployeeGroupController::class, 'store'])->name('groups.time-recording-system.setting.employee-group.store');
+                    Route::get('{id}', [TimeRecordingSystemSettingEmployeeGroupController::class, 'view'])->name('groups.time-recording-system.setting.employee-group.view');
+                    Route::put('{id}', [TimeRecordingSystemSettingEmployeeGroupController::class, 'update'])->name('groups.time-recording-system.setting.employee-group.update');
+                    Route::delete('{id}', [TimeRecordingSystemSettingEmployeeGroupController::class, 'delete'])->name('groups.time-recording-system.setting.employee-group.delete');
+                    Route::group(['prefix' => 'assignment'], function () {
+                        Route::get('{id}', [TimeRecordingSystemSettingEmployeeGroupAssignmentController::class, 'index'])->name('groups.time-recording-system.setting.employee-group.assignment');
+                        Route::post('search', [TimeRecordingSystemSettingEmployeeGroupAssignmentController::class, 'search'])->name('groups.time-recording-system.setting.employee-group.assignment.search');
+                    });
                 });
             });
             Route::group(['prefix' => 'report'], function () {
