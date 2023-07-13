@@ -99,7 +99,8 @@ Route::middleware('auth')->group(function () {
                         Route::group(['prefix' => 'user'], function () {
                             Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'index'])->name('groups.time-recording-system.schedulework.schedule.assignment.user');
                             Route::get('users/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'create'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.create');
-                            Route::post('store-user', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'store'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.store');
+                            Route::post('store', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'store'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.store');
+                            Route::post('import-user-group', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'importUserGroup'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.import-user-group');
                             Route::post('search', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'search'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.search');
                             Route::delete('work_schedule_id/{workScheduleId}/year/{year}/month/{month}/user_id/{userId}/delete', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'delete'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.delete');
                         });

@@ -24,6 +24,50 @@ $(document).on('click', '#import_for_all', function (e) {
     $('#file-input').trigger('click');
 });
 
+$(document).on('change', '#userGroup', function (e) {
+    var selectedUserGroupId = $(this).val(); // Get the selected value
+    var importUserGroupRoute = window.params.importUserGroupRoute
+    if (selectedUserGroupId === '') {
+        return; // Return or exit the function
+    }
+    var dataSet = {
+        userGroupId: selectedUserGroupId,
+        workScheduleId: workScheduleId,
+        month: month,
+        year : year
+    }
+
+    var selectedText = $(this).find('option:selected').text();
+    Swal.fire({
+        title: 'นำเข้าพนักงาน',
+        text: 'นำเข้าพนักงานจากกลุ่ม' + selectedText,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '##6495ed',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'นำเข้า',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: importUserGroupRoute,
+                type: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": token
+                },
+                data: dataSet,
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr) {
+
+                }
+            });
+        }
+    });
+
+});
+
 function checkIfExpired(year, month) {
     // Get the current year and month using Moment.js
     var currentDate = moment();

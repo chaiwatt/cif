@@ -24,15 +24,33 @@
     <div class="content">
         <div class="container-fluid">
             @if ($permission->create)
-            <a class="btn btn-primary mb-2"
-                href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.create', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId]) }}"
-                id="add_user_wrapper">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มพนักงาน
-            </a>
+            <div class="d-flex align-items-center mt-2">
+                <div class="form-group mr-2">
+                    <a class="btn btn-primary "
+                        href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.create', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId]) }}"
+                        id="add_user_wrapper">
+                        <i class="fas fa-plus mr-1"></i>
+                        เพิ่มพนักงาน
+                    </a>
+                </div>
+                <div>
+                    <span>หรือนำเข้าจากกลุ่มพนักงาน</span>
+                </div>
+                <div class="form-group ml-2" style="width: 300px;">
+                    <select name="userGroup" id="userGroup"
+                        class="form-control select2 @error('userGroup') is-invalid @enderror" style="width: 100%;">
+                        <option value="">==เลือกกลุ่มพนักงาน==</option>
+                        @foreach ($userGroups as $userGroup)
+                        <option value="{{ $userGroup->id }}">
+                            {{ $userGroup->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             @endif
-            <div class="row">
+            <div class="row mt-2">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
@@ -41,7 +59,7 @@
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12" id="table_content">
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
@@ -90,7 +108,9 @@
 </script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
+    $('.select2').select2()
     window.params = {
+        importUserGroupRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.import-user-group') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

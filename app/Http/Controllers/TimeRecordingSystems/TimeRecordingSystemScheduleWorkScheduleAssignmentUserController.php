@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TimeRecordingSystems;
 
 use App\Models\User;
+use App\Models\UserGroup;
 use App\Models\SearchField;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
     }
     public function index($scheduleId,$year,$monthId)
     {
+
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -40,6 +42,8 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
         // เรียกใช้งานฟังก์ชัน getUsersByWorkScheduleAssignment เพื่อดึงข้อมูลผู้ใช้ที่เกี่ยวข้องกับ WorkScheduleAssignment
         $users = $this->getUsersByWorkScheduleAssignment($scheduleId, $monthId, $year)->paginate(20);
 
+        $userGroups = UserGroup::all();
+
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.schedule.assignment.user.index'
         return view('groups.time-recording-system.schedulework.schedule.assignment.user.index', [
             'groupUrl' => $groupUrl,
@@ -48,7 +52,8 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
             'users' => $users,
             'workSchedule' => $workSchedule,
             'year' => $year,
-            'monthId' => $monthId
+            'monthId' => $monthId,
+            'userGroups' => $userGroups,
         ]);
 
     }
@@ -133,6 +138,32 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
             // ทำการ redirect ไปยัง URL ที่กำหนด
             return redirect()->to($url);
         }
+
+    }
+
+    public function importUserGroup(Request $request)
+    {
+        $workScheduleId = $request->workScheduleId;
+        $userGroupId = $request->userGroupId;
+        $month = $request->month;
+        $year = $request->year;
+        $userGroup = UserGroup::findOrFail($userGroupId);
+        $users = $userGroup->users;
+
+        foreach ($users as $user) {
+            // ค้นหา WorkScheduleAssignment ที่ตรงกับ workScheduleId, month, year และเก็บในตัวแปร $workScheduleAssignments
+            $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id', $workScheduleId)
+                ->where('month_id', $month)
+                ->where('year', $year)
+                ->get();
+
+            // ลบการกำหนดงานใน WorkScheduleAssignment ของผู้ใช้นั้น
+            $user->detachWorkScheduleAssignments($workScheduleId, $month, $year);
+
+            // กำหนดการกำหนดงานใหม่ใน WorkScheduleAssignment ของผู้ใช้นั้น
+            $user->attachWorkScheduleAssignments($workScheduleAssignments);
+        }
+        return response()->json($users);
 
     }
 

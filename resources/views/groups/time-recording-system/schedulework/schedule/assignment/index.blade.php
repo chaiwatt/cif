@@ -47,16 +47,7 @@
                                         <td>{{$workSchedule->name}}</td>
                                         <td>{{$month->name}} {{$workSchedule->year}}</td>
                                         <td>
-                                            @php
-                                            $usersAssigned = $workSchedule->isUsersAssigned($month->id,
-                                            $workSchedule->year);
-                                            $isExpired = $usersAssigned === 'หมดเวลา';
-
-                                            @endphp
-
-                                            @if ($isExpired)
-                                            <span class="badge bg-gray">หมดเวลา</span>
-                                            @endif
+                                            {{$workSchedule->getUsersByWorkScheduleAssignment($month->id,$workSchedule->year)->count()}}
                                         </td>
                                         <td>
                                             @php

@@ -96,4 +96,18 @@ class WorkSchedule extends Model
         return in_array($this->id, $uncheckedIds);
     }
 
+    public function getUsersByWorkScheduleAssignment($month, $year)
+    {
+        $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($month, $year) {
+            $query->whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
+                $query->where('work_schedule_id', $this->id)
+                    ->where('month_id', $month)
+                    ->where('year', $year);
+            });
+        })->get();
+
+        return $users;
+    }
+
+
 }
