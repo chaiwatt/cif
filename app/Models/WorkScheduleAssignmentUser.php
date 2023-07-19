@@ -14,8 +14,12 @@ class WorkScheduleAssignmentUser extends Model
     protected $fillable = [
         'work_schedule_assignment_id',
         'user_id',
+        'date_in',
         'time_in',
+        'date_out',
         'time_out',
+        'original_time',
+        'code'
     ];
 
     /**

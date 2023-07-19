@@ -22,6 +22,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน DDDDD 07.00-16.00',
             'year' => $currentYear,
+            'description' => 'เดย์ตลอด',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -43,6 +44,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน DDNND (07.00-16.00 เวียน 16.00-01.00)',
             'year' => $currentYear,
+            'description' => 'เดย์ เดย์ ไนท์ ไนท์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -75,6 +77,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NNDDN (16.00-01.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ ไนท์ เดย์ เดย์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -109,6 +112,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน DDNND (08.00-17.00 เวียน 17.00-02.00)',
             'year' => $currentYear,
+            'description' => 'เดย์ เดย์ ไนท์ ไนท์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -142,6 +146,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NNDDN (17.00-02.00 เวียน 08.00-17.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ ไนท์ เดย์ เดย์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -175,6 +180,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน DNNND (07.00-16.00 เวียน 18.00-03.00)',
             'year' => $currentYear,
+            'description' => 'เดย์ ไนท์ ไนท์ ไนท์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -208,6 +214,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NNNDN (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ ไนท์ ไนท์ เดย์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -241,6 +248,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NDDNN (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ เดย์ เดย์ ไนท์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -274,6 +282,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NDNNN (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ เดย์ ไนท์ ไนท์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -307,6 +316,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NNNDD (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ ไนท์ ไนท์ เดย์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -340,6 +350,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NNDNN (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ ไนท์ เดย์ ไนท์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -373,6 +384,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน DDDNN (07.00-16.00 เวียน 18.00-03.00)',
             'year' => $currentYear,
+            'description' => 'เดย์ เดย์ เดย์ ไนท์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -406,6 +418,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NDNND (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ เดย์ ไนท์ ไนท์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -439,6 +452,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน DNNDD (07.00-16.00 เวียน 18.00-03.00)',
             'year' => $currentYear,
+            'description' => 'เดย์ ไนท์ ไนท์ เดย์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -472,6 +486,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NNDDD (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ ไนท์ เดย์ เดย์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -505,6 +520,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NDDDN (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ เดย์ เดย์ เดย์ ไนท์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -536,20 +552,9 @@ class WorkSchedulesTableSeeder extends Seeder
         $addDefaultWorkScheduleAssignment->addDefaultWorkScheduleAssignment($workSchedule,$currentYear); 
 
         $workSchedule = WorkSchedule::create([
-            'name' => 'รายวัน DDDDN (07.00-16.00 เวียน 18.00-03.00)',
+            'name' => 'รายวัน NDDDD (07.00-16.00 เวียน 18.00-03.00)',
             'year' => $currentYear,
-        ]);
-        WorkScheduleShift::create([
-            'work_schedule_id' => $workSchedule->id,
-            'shift_id' => 10,
-        ]);
-        WorkScheduleShift::create([
-            'work_schedule_id' => $workSchedule->id,
-            'shift_id' => 11,
-        ]);
-        WorkScheduleShift::create([
-            'work_schedule_id' => $workSchedule->id,
-            'shift_id' => 12,
+            'description' => 'ไนท์ เดย์ เดย์ เดย์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -563,6 +568,18 @@ class WorkSchedulesTableSeeder extends Seeder
             'work_schedule_id' => $workSchedule->id,
             'shift_id' => 24,
         ]);
+        WorkScheduleShift::create([
+            'work_schedule_id' => $workSchedule->id,
+            'shift_id' => 10,
+        ]);
+        WorkScheduleShift::create([
+            'work_schedule_id' => $workSchedule->id,
+            'shift_id' => 11,
+        ]);
+        WorkScheduleShift::create([
+            'work_schedule_id' => $workSchedule->id,
+            'shift_id' => 12,
+        ]);
 
         $workSchedule = WorkSchedule::findOrFail(17); 
         $addDefaultWorkScheduleAssignment = new AddDefaultWorkScheduleAssignment();
@@ -571,6 +588,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน NNNND (18.00-03.00 เวียน 07.00-16.00)',
             'year' => $currentYear,
+            'description' => 'ไนท์ ไนท์ ไนท์ ไนท์ เดย์',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,
@@ -604,6 +622,7 @@ class WorkSchedulesTableSeeder extends Seeder
         $workSchedule = WorkSchedule::create([
             'name' => 'รายวัน DDDDD 06.30-15.30 + 07.00-16.00',
             'year' => $currentYear,
+            'description' => 'เดย์ตลอดสลับเวลา',
         ]);
         WorkScheduleShift::create([
             'work_schedule_id' => $workSchedule->id,

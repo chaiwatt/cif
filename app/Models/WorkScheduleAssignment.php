@@ -20,6 +20,7 @@ class WorkScheduleAssignment extends Model
         'month_id',
         'year',
         'shift_id',
+        'start_shift'
     ];
     
     /**

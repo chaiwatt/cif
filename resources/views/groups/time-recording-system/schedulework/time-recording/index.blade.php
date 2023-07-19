@@ -54,7 +54,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 ">
-                            <button class="btn btn-primary float-right mr-2"><i
+                            <button class="btn btn-primary float-right mr-2" id="search_work_schedule"><i
                                     class="fas fa-search mr-1"></i>ค้นหา</button>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="card-header">
                             <h3 class="card-title">ตารางทำงาน</h3>
                         </div>
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
                                 <thead>
                                     <tr>
@@ -84,7 +84,7 @@
                                     <tr>
                                         <td>{{$key +1}}</td>
                                         <td>{{$workSchedule->name}}</td>
-                                        <td>{{$workSchedule->monthName($currentMonth)}} {{$currentYear}}</td>
+                                        <td>{{$workSchedule->monthName($month)}} {{$year}}</td>
                                         <td></td>
                                         <td class="text-right">
                                             <a class="btn btn-info btn-sm"
@@ -108,9 +108,18 @@
     </div>
 </div>
 @push('scripts')
+
+<script type="module"
+    src="{{asset('assets/js/helpers/time-recording-system/schedule/time-recording/time-recording.js?v=1')}}"></script>
 <script>
     $('.select2').select2();
+        window.params = {
+            searchRoute: '{{ route('groups.time-recording-system.schedulework.time-recording.search') }}',
+            url: '{{ url('/') }}',
+            token: $('meta[name="csrf-token"]').attr('content')
+        };
 </script>
+
 
 @endpush
 @endsection

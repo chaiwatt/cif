@@ -41,6 +41,9 @@ Route::get('/', function () {
     return view('landing');
 });
 Route::get('isdatevalid', [TestController::class, 'isDateValid'])->name('isDateValid');
+Route::get('clear-db', [TestController::class, 'clearDB'])->name('clear-db');
+Route::get('classify-date', [TestController::class, 'classifyDate'])->name('classify-date');
+
 Route::group(['prefix' => 'shift'], function () {
     Route::get('', [ShiftController::class, 'index'])->name('shifts.index');
     Route::get('{id}', [ShiftController::class, 'view'])->name('shifts.view');
@@ -96,6 +99,7 @@ Route::middleware('auth')->group(function () {
                         Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'createWorkSchedule'])->name('groups.time-recording-system.schedulework.schedule.assignment.work-schedule');
                         Route::post('store-calendar', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'storeCalendar'])->name('groups.time-recording-system.schedulework.schedule.assignment.work-schedule.store');
                         
+                        
                         Route::group(['prefix' => 'user'], function () {
                             Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'index'])->name('groups.time-recording-system.schedulework.schedule.assignment.user');
                             Route::get('users/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'create'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.create');
@@ -108,6 +112,7 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::group(['prefix' => 'time-recording'], function () {
                     Route::get('', [TimeRecordingSystemScheduleWorkTimeRecordingController::class, 'index'])->name('groups.time-recording-system.schedulework.time-recording');
+                    Route::post('search', [TimeRecordingSystemScheduleWorkTimeRecordingController::class, 'search'])->name('groups.time-recording-system.schedulework.time-recording.search');
                     Route::group(['prefix' => 'import'], function () {
                         Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'index'])->name('groups.time-recording-system.schedulework.time-recording.import');
                         Route::post('batch', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'batch'])->name('groups.time-recording-system.schedulework.time-recording.import.batch');

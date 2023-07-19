@@ -43,7 +43,7 @@
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
-                                                    <th>เลือก</th>
+                                                    <th>#</th>
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>

@@ -25,7 +25,6 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
     }
     public function index($scheduleId,$year,$monthId)
     {
-
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ

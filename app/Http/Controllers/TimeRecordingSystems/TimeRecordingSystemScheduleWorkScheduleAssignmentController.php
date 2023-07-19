@@ -49,13 +49,18 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
         $currentMonth = date('n');
 
         // ค้นหาเดือนที่ไม่ซ้ำกันจากการมอบหมายงานในปีเดียวกันและเก็บในตัวแปร $uniqueMonths
+        // $uniqueMonths = $workSchedule->assignments()
+        //     ->where('year', $year)
+        //     ->distinct('month_id')
+        //     ->pluck('month_id')
+        //     ->filter(function ($month) use ($currentMonth) {
+        //         return $month >= $currentMonth;
+        //     });
+
         $uniqueMonths = $workSchedule->assignments()
             ->where('year', $year)
             ->distinct('month_id')
-            ->pluck('month_id')
-            ->filter(function ($month) use ($currentMonth) {
-                return $month >= $currentMonth;
-            });
+            ->pluck('month_id');    
 
         // ค้นหาข้อมูลเดือนจากตาราง Month โดยเลือกเฉพาะเดือนที่อยู่ใน $uniqueMonths และเก็บในตัวแปร $months
         $months = Month::whereIn('id', $uniqueMonths)->get();   

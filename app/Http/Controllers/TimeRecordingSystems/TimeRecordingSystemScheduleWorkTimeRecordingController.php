@@ -5,6 +5,7 @@ namespace App\Http\Controllers\TimeRecordingSystems;
 use Carbon\Carbon;
 use App\Models\Month;
 use App\Models\WorkSchedule;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\UpdatedRoleGroupCollectionService;
 
@@ -55,9 +56,27 @@ class TimeRecordingSystemScheduleWorkTimeRecordingController extends Controller
             'years' => $years,
             'months' => $months,
             'workSchedules' => $workSchedules,
-            'currentYear' => $currentYear,
-            'currentMonth' => $currentMonth
+            'year' => $currentYear,
+            'month' => $currentMonth
         ]);
 
+    }
+
+    public function search(Request $request)
+    {
+        $selectedYear = $request->data['selectedYear'];
+        $selectedMonth = $request->data['selectedMonth'];
+        // dd($selectedMonth);
+        $workSchedules = WorkSchedule::whereHas('assignments', function ($query) use ($selectedYear, $selectedMonth) {
+            $query->where('year', $selectedYear)
+                ->where('month_id', $selectedMonth)
+                ->whereNotNull('shift_id');
+        })->get();
+
+        return view('groups.time-recording-system.schedulework.time-recording.table-render.work-schedule-table',[
+            'workSchedules' => $workSchedules,
+            'month' => $selectedMonth,
+            'year' => $selectedYear,
+            ])->render();
     }
 }

@@ -177,4 +177,20 @@ class Shift extends Model
                     ->exists();
     }
 
+    public function getIsShiftHolidayAttribute()
+    {
+        return $this->start === "00:00:00" && $this->end === "00:00:00";
+    }
+
+    public function getShiftTypeAttribute()
+    {
+        if ($this->shift_type_id == 1) {
+            return 'FULL_DAY_SHIFT';
+        } elseif ($this->shift_type_id == 2) {
+            return 'CROSS_DAY_SHIFT';
+        }
+        // Default fallback if shift_type_id doesn't match any case
+        return null;
+    }
+
 }

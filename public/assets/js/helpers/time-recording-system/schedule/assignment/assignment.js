@@ -6,7 +6,8 @@ const segments = url.split('/');
 var workScheduleId = segments[segments.length - 5];
 var year = segments[segments.length - 3];
 var month = segments[segments.length - 1];
-checkIfExpired(year, month);
+
+checkIfExpired(year, month); // Example function call
 
 $(document).on('change', '#select_all', function (e) {
     $('.user-checkbox').prop('checked', this.checked);
@@ -23,6 +24,27 @@ $(document).on('change', '.user-checkbox', function (e) {
 $(document).on('click', '#import_for_all', function (e) {
     $('#file-input').trigger('click');
 });
+
+$(document).on('keyup', 'input[name="search_query"]', function () {
+    var searchInput = $(this).val();
+    var url = window.params.searchRoute
+
+    RequestApi.postRequest(searchInput, url, token).then(response => {
+        $('#table_container').html(response);
+    }).catch(error => { })
+});
+
+$(document).on('click', '.pagination a', function (e) {
+    e.preventDefault();
+    var searchInput = $('#search_query').val();
+    var page = $(this).attr('href').split('page=')[1];
+    var url = "/groups/time-recording-system/schedulework/schedule/assignment/user/search?page=" + page
+
+    RequestApi.postRequest(searchInput, url, token).then(response => {
+        $('#table_container').html(response);
+    }).catch(error => { })
+});
+
 
 $(document).on('change', '#userGroup', function (e) {
     var selectedUserGroupId = $(this).val(); // Get the selected value

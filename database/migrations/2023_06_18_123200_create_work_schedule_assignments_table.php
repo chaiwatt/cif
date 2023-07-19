@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('work_schedule_id');
             $table->foreign('work_schedule_id')->references('id')->on('work_schedules')->onDelete('cascade');
             $table->unsignedBigInteger('shift_id')->nullable();
+            $table->char('start_shift',1)->default(0);  
             $table->char('week_day',1)->nullable();    
             $table->char('day',2)->nullable(); 
             $table->unsignedBigInteger('month_id')->nullable(); 
