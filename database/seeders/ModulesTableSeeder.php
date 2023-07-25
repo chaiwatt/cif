@@ -41,9 +41,14 @@ class ModulesTableSeeder extends Seeder
             'icon' => 'fa-wallet'
         ]);
         Module::create([
-            'code' => 'SARALY-MODULE-TWO',
-            'name' => 'โมดูลเงินเดือน2',
-            'icon' => 'fa-wallet'
+            'code' => 'SARALY-MODULE-SETTING',
+            'name' => 'ตั้งค่า',
+            'icon' => 'fa-cog'
+        ]);
+        Module::create([
+            'code' => 'APPROVE-MODULE-SETTING',
+            'name' => 'ตั้งค่า',
+            'icon' => 'fa-cog'
         ]);
     }
 }

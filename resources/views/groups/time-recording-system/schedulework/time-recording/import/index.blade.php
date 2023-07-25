@@ -11,7 +11,9 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">นำเข้าไฟล์เวลา: {{$month->name}} {{$year}} ({{$workSchedule->name}})</h1>
+                    <h1 class="m-0">นำเข้าไฟล์เวลา: {{$month->name}} {{$year}} ({{$workSchedule->name}})
+                    </h1>
+                    <input type="text" id="schedule_type_id" value="{{$workSchedule->schedule_type_id}}" hidden>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -48,9 +50,6 @@
                                                 <th>รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
                                                 <th>แผนก</th>
-                                                <th>การนำเข้า</th>
-                                                <th>ผิดพลาด</th>
-                                                <th class="text-right">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -67,18 +66,6 @@
                                                 <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
                                                 </td>
                                                 <td>{{$user->company_department->name}}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td class="text-right">
-                                                    <a class="btn btn-success btn-sm" href="">
-                                                        <i class="fas fa-download">
-                                                        </i>
-                                                    </a>
-                                                    <a class="btn btn-danger btn-sm" href="">
-                                                        <i class="fas fa-eraser">
-                                                        </i>
-                                                    </a>
-                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -90,8 +77,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <button type="submit" class="btn bg-gradient-success btn-flat float-right"
-                                        id="import_for_all">นำเข้าทุกคน</button>
-                                    <input type="file" id="file-input" style="display: none;">
+                                        id="show_modal">นำเข้า</button>
                                 </div>
                             </div>
                         </div>
@@ -104,6 +90,81 @@
 
         </div>
     </div>
+    <div class="modal fade" id="modal-date-range">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bs-stepper linear">
+                                <div class="bs-stepper-header" role="tablist">
+                                    <div class="step active" data-target="#logins-part">
+                                        <button type="button" class="step-trigger" role="tab"
+                                            aria-controls="logins-part" id="logins-part-trigger" aria-selected="true">
+                                            <span class="bs-stepper-circle">1</span>
+                                            <span class="bs-stepper-label">รอบวันที่</span>
+                                        </button>
+                                    </div>
+                                    <div class="line"></div>
+                                    <div class="step" data-target="#information-part">
+                                        <button type="button" class="step-trigger" role="tab"
+                                            aria-controls="information-part" id="information-part-trigger"
+                                            aria-selected="false" disabled="disabled">
+                                            <span class="bs-stepper-circle">2</span>
+                                            <span class="bs-stepper-label">เพิ่มไฟล์สแกน</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="bs-stepper-content">
+                                    <div id="logins-part" class="content active dstepper-block" role="tabpanel"
+                                        aria-labelledby="logins-part-trigger">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="startDate">เริ่มวันที่ (วดป. คศ)<span
+                                                            class="small text-danger">*</span></label>
+                                                    <input type="text" class="form-control input-date-format"
+                                                        id="startDate">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="endDate">ถึงวันที่ (วดป. คศ)<span
+                                                            class="small text-danger">*</span></label>
+                                                    <input type="text" class="form-control input-date-format"
+                                                        id="endDate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary" id="nextButton">ต่อไป<i
+                                                class="fas fa-angle-double-right ml-1"></i></button>
+                                    </div>
+                                    <div id="information-part" class="content" role="tabpanel"
+                                        aria-labelledby="information-part-trigger">
+                                        <div class="form-group">
+                                            <input type="file" id="file-inputs" style="display: none;" multiple>
+                                        </div>
+                                        <button class="btn btn-primary" onclick="stepper.previous()"><i
+                                                class="fas fa-angle-double-left mr-1"></i>กลับ</button>
+                                        <button type="button" class="btn btn-success"
+                                            id="import_file_inputs">เลือกไฟล์และนำเข้า</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+    <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
+</div>
+</div>
+</div>
+</div>
 </div>
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"
@@ -112,7 +173,10 @@
 <script type="module"
     src="{{ asset('assets/js/helpers/time-recording-system/schedule/assignment/import-finger-print.js?v=1') }}">
 </script>
+<script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
+    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+
     window.params = {
         searchRoute: '{{ route('groups.time-recording-system.shift.timeattendance.search') }}',        
         batchImportRoute: '{{ route('groups.time-recording-system.schedulework.time-recording.import.batch') }}',

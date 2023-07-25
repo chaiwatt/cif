@@ -9,17 +9,12 @@ use App\Models\Shift;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\PayDayRange;
 use App\Models\WorkScheduleAssignment;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Controller
 {
-    // Enum definition for DayType
-    private const DayType = [
-        'HOLIDAY' => 'holiday',
-        'WORKDAY' => 'workday',
-    ];
-
     private $updatedRoleGroupCollectionService;
 
     public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService) 
@@ -28,6 +23,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
     }
     public function index($workScheduleId,$year,$monthId)
     {
+
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -46,6 +42,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
 
         // ค้นหาเดือนที่ monthId
         $month = Month::find($monthId);
+        $payDayRanges = PayDayRange::all();
 
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.time-recording.import.index'
         return view('groups.time-recording-system.schedulework.time-recording.import.index', [
@@ -55,40 +52,43 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
             'users' => $users,
             'workSchedule' => $workSchedule,
             'month' => $month,
-            'year' => $year
+            'year' => $year,
+            'payDayRanges' => $payDayRanges
         ]);
 
     }
 
     public function batch(Request $request)
     {
-        // ดึงค่า month, year, workScheduleId, importUsers จาก request
-        $month = $request->data['month'];
-        $year = $request->data['year'];
+        $month = null;
+        $year = null;
         $importUsers = $request->data['batch'];
-        // dd($importUsers);
 
-        // หา AC-No ที่ไม่ซ้ำกันใน importUsers
-        $distinctACNos = array_unique(array_column($importUsers, 'AC-No'));
-        $distinctACNos = array_values($distinctACNos);
+        $startDateRange = Carbon::createFromFormat('d/m/Y', $request->data['start_date'])->startOfDay();
+        $endDateRange = Carbon::createFromFormat('d/m/Y', $request->data['end_date'])->endOfDay();
 
-        // ค้นหาผู้ใช้ที่มี employee_no เป็น distinctACNos[0]
-        $user = User::where('employee_no', $distinctACNos[0])->first();
-        $results = [];
         // วนลูปตาม importUsers
-        
         foreach ($importUsers as $importUser) {
-            // แปลงค่า Date เป็น Carbon object
-            $date = Carbon::parse($importUser['Date']);
+            
+            $date = Carbon::parse($importUser['Date'])->startOfDay();
+
+            if ($date->isBefore($startDateRange) || $date->isAfter($endDateRange)) {
+                continue; // Skip processing for this importUser
+            }
+            
             $day = $date->day;
             $month = $date->month;
             $year = $date->year;
-            $employeeNo = $importUser['AC-No'];
             $time = $importUser['Time'];
-
             $date = $importUser['Date'];
+            $user = User::where('employee_no', $importUser['AC-No'])->first();
 
             $workScheduleAssignmentUser = $user->getWorkScheduleAssignmentUserByConditions($day, $month, $year)->first();
+
+            if (!$workScheduleAssignmentUser) {
+                return response()->json(['error' => 'work schedule not found for ' . $user->name ]);
+            }
+
             $shift = $workScheduleAssignmentUser->workScheduleAssignment->shift;
 
             $inOutTime = $this->getInOutTime($importUsers,$time,$shift,$date);
@@ -96,6 +96,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
             $startTime = $inOutTime['inTime']['time'];
             $endDate = $inOutTime['outTime']['date'];
             $endTime = $inOutTime['outTime']['time'];
+            
             $workScheduleAssignmentUser->update([
                     'date_in' => $startDate,
                     'date_out' => $endDate,
@@ -104,7 +105,6 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
                     'original_time' => $time,
                     'code' => null
                 ]);
-            
         }
     }
 
@@ -127,6 +127,9 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
         $shiftTime = $date . ' ' . $startShiftTime;
         $timeParts = explode(' ', $time);
 
+        if($time == '00:00 00:00'){
+            return ['date'=>$date,'time'=>null];
+        }
         foreach ($timeParts as $timePart) {
             $timeToCheck = $date . ' ' . $timePart;
             $times = $this->calculateBeginEndTime($shiftTime);
@@ -134,7 +137,6 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
                 return ['date'=>$date,'time'=>$timePart];
             }
         }
-
         return ['date'=>$date,'time'=>null];
     }
 
@@ -148,14 +150,6 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
         ];
     }
 
-    function isTimeInRange($time, $start, $end) {
-        $time = Carbon::createFromFormat('Y-m-d H:i', $time);
-        $start = Carbon::createFromFormat('Y-m-d H:i', $start);
-        $end = Carbon::createFromFormat('Y-m-d H:i', $end);
-
-        return $time->gte($start) && $time->lte($end);
-    }
-
     public function getEndTime($importUsers,$time,$shift,$date)
     {
         $endShiftTime = $shift->end;
@@ -167,6 +161,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
         if ($shift->ShiftType == 'CROSS_DAY_SHIFT')
         {
             $date = Carbon::createFromFormat('Y-m-d', $date)->addDay()->format('Y-m-d');
+
             $nextImportUser = array_filter($importUsers, function ($element) use ($date) {
                     return $element['Date'] === $date;
                 });
@@ -180,17 +175,54 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
         if($time == '00:00 00:00'){
             return ['date'=>$date,'time'=>null];
         }
-
+        
         $timeParts = explode(' ', $time);
         foreach ($timeParts as $timePart) {
             $timeToCheck = $date . ' ' . $timePart;
             $times = $this->calculateBeginEndTime($shiftTime);
-            if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {
-                
-                return ['date'=>$date,'time'=>$timePart];
+
+            $beginTimeDateFormat = Carbon::createFromFormat('Y-m-d H:i', $times['beginTime']);
+            $endTimeDateFormat = Carbon::createFromFormat('Y-m-d H:i', $times['endTime']);
+
+            if ($beginTimeDateFormat->format('Y-m-d') == $endTimeDateFormat->format('Y-m-d')) {
+                if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {
+                    return ['date'=>$date,'time'=>$timePart];
+                }
+            }else if($beginTimeDateFormat->format('Y-m-d') != $endTimeDateFormat->format('Y-m-d'))
+            {
+                $dateInDateFormat = Carbon::createFromFormat('Y-m-d', $date);
+                $timeToCheckPrevious = $dateInDateFormat->copy()->subDay()->format('Y-m-d');
+                if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {     
+                    return ['date'=>$date,'time'=>$timePart];
+                }else if($this->isTimeInRange($timeToCheckPrevious. ' ' . $timePart, $times['beginTime'], $times['endTime']))
+                {
+                    return ['date'=>$timeToCheckPrevious,'time'=>$timePart];
+                }
             }
+            
         }
         return ['date'=>$date,'time'=>null];;
+    }
+
+    public function showInfo()
+    {
+        
+        $startDate = '2023-04-26';
+        $endDate = '2023-05-25';
+        $user = User::where('employee_no','220115')->first();
+        $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsers($startDate, $endDate);
+        foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser)
+        {
+            echo($workScheduleAssignmentUser->date_in . ' <br>');
+        }
+        return;
+    }
+
+    function isTimeInRange($time, $start, $end) {
+        $time = Carbon::createFromFormat('Y-m-d H:i', $time);
+        $start = Carbon::createFromFormat('Y-m-d H:i', $start);
+        $end = Carbon::createFromFormat('Y-m-d H:i', $end);
+        return $time->gte($start) && $time->lte($end);
     }
 
     public function getUsersByWorkScheduleAssignment($workScheduleId, $month, $year)

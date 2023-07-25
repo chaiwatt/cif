@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/fullcalendar/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/bs-stepper/css/bs-stepper.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
 
@@ -100,6 +101,7 @@
 <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
 <!-- fullCalendar 2.2.5 -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TimeRecordingSystems;
 
 use Carbon\Carbon;
 use App\Models\Shift;
+use App\Models\ScheduleType;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
@@ -88,13 +89,16 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         // ค้นหา shift ทั้งหมด
         $shifts = Shift::all();
 
+        $scheduleTypes = ScheduleType::all();
+
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.schedule.create'
         return view('groups.time-recording-system.schedulework.schedule.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'years' => $years,
-            'shifts' => $shifts
+            'shifts' => $shifts,
+            'scheduleTypes' => $scheduleTypes
         ]);
 
     }
@@ -114,6 +118,7 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $workSchedule->name = $request->name;
         $workSchedule->description = $request->description;
         $workSchedule->year = $request->year;
+        $workSchedule->schedule_type_id = $request->schedule_type;
         $workSchedule->save();
 
         // ดึง shiftIds จากข้อมูลที่ส่งมา
@@ -166,6 +171,8 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         // ค้นหา shift ทั้งหมด
         $shifts = Shift::all();
 
+        $scheduleTypes = ScheduleType::all();
+
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.schedule.view'
         return view('groups.time-recording-system.schedulework.schedule.view', [
             'groupUrl' => $groupUrl,
@@ -173,7 +180,8 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'years' => $years,
-            'shifts' => $shifts
+            'shifts' => $shifts,
+            'scheduleTypes' => $scheduleTypes,
         ]);
 
     }
@@ -216,7 +224,8 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $workSchedule->update([
             'name' => $name,
             'description' => $description,
-            'year' => $year
+            'year' => $year,
+            'schedule_type_id' => $request->schedule_type
         ]);
 
         // ทำการ redirect ไปยัง route 'groups.time-recording-system.schedulework.schedule'

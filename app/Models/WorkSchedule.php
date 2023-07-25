@@ -16,7 +16,8 @@ class WorkSchedule extends Model
     protected $fillable = [
         'name',
         'description',
-        'year'
+        'year',
+        'schedule_type_id'
     ];
 
     public function assignments()

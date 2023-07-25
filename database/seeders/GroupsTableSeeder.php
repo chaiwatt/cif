@@ -30,6 +30,13 @@ class GroupsTableSeeder extends Seeder
             'dashboard' => 'groups.dashboard.salary-system'
         ]);
         Group::create([
+            'code' => 'DOCUMENT',
+            'name' => 'ระบบเอกสาร',
+            'description' => 'รายละเอียดระบบเอกสาร',
+            'icon' => 'fa-book',
+            'dashboard' => 'groups.dashboard.document-system'
+        ]);
+        Group::create([
             'code' => 'TRAINING',
             'name' => 'ระบบฝึกอบรม',
             'description' => 'รายละเอียดระบบฝึกอบรม',

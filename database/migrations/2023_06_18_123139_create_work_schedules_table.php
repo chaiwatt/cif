@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->comment('ชื่อตารางทำงาน');
             $table->char('year',4)->comment('ปีตารางการทำงาน');
             $table->string('description')->nullable()->comment('คำอธิบายตารางทำงาน');
+            $table->unsignedBigInteger('schedule_type_id')->default(1)->comment('ประเภทตารางทำงาน เต็มเดือน 0 เวียนกะ 1');
             $table->timestamps();
         });
     }

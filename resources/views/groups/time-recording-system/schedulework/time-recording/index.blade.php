@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">บันทึกเวลา</h1>
+                    <h1 class="m-0">บันทึกเวลาff</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -20,7 +20,7 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="card card-success">
+            <div class="card card-info card-outline">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -75,7 +75,6 @@
                                         <th>#</th>
                                         <th>ตารางทำงาน</th>
                                         <th>เดือน-ปี</th>
-                                        <th>จำนวนนำเข้า</th>
                                         <th class="text-right">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
@@ -85,7 +84,6 @@
                                         <td>{{$key +1}}</td>
                                         <td>{{$workSchedule->name}}</td>
                                         <td>{{$workSchedule->monthName($month)}} {{$year}}</td>
-                                        <td></td>
                                         <td class="text-right">
                                             <a class="btn btn-info btn-sm"
                                                 href="{{route('groups.time-recording-system.schedulework.time-recording.import',['workScheduleId' => $workSchedule->id,'year' => $currentYear,'month' => $currentMonth])}}">

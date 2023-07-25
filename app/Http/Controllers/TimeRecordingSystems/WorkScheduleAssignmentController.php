@@ -49,7 +49,7 @@ class WorkScheduleAssignmentController extends Controller
 
         $workScheduleUser = $user->getWorkScheduleUserByMonthYear($month, $year);
         $workScheduleAssignmentUser = $user->getWorkScheduleAssignmentUserByConditions($weekDay, $day, $month, $year);
-        $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersByConditions($month, $year);
+        $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersByConditions('2023-05-10','2023-05-20', '2023');
 
     }
     public function getWorkScheduleUserByMonthYear($month, $year, $userId)

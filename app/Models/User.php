@@ -311,13 +311,56 @@ class User extends Authenticatable
         return $workScheduleAssignmentUser;
     }
 
-    public function getWorkScheduleAssignmentUsersByConditions($month, $year)
+    public function getWorkScheduleAssignmentUsersByConditions($startDate, $endDate, $year)
     {
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
         $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
-            ->whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
-                $query->where('month_id', $month)
-                    ->where('year', $year);
+            // ->whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
+            ->whereHas('workScheduleAssignment', function ($query) use ($year) {
+                // $query->where('month_id', $month)
+                $query->where('year', $year);
             })
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->orderBy('date_in') 
+            ->get();
+
+        return $workScheduleAssignmentUsers;
+    }
+
+    public function getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year)
+    {
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+        
+        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereHas('workScheduleAssignment', function ($query) use ($year) {
+                $query->where('year', $year)
+                    ->whereHas('shift', function ($subQuery) {
+                        $subQuery->where('code', 'NOT LIKE', '%_H')
+                                ->where('code', 'NOT LIKE', '%_TH');
+                    });
+            })
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->where(function ($query) {
+                $query->whereNull('time_in')
+                    ->orWhereNull('time_out');
+            })
+            ->orderBy('date_in')
+            ->get();
+
+        return $workScheduleAssignmentUsers;
+    }
+
+    public function getWorkScheduleAssignmentUsers($startDate, $endDate)
+    {
+        // Convert the input strings to valid date formats (Y-m-d)
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->orderBy('date_in') 
             ->get();
 
         return $workScheduleAssignmentUsers;

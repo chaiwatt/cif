@@ -21,18 +21,21 @@ class GroupModuleJobsTableSeeder extends Seeder
         // Group
         $timeRecordGroup = Group::where('code','TIME-RECORD')->first();
         $salaryManagementgroup = Group::where('code','SARALY-MANAGEMENT')->first();
+        $documentGroup = Group::where('code','DOCUMENT')->first();
         // Module
         $shiftModule = Module::where('code','SHIFT')->first();
         $workScheduleModule = Module::where('code','WORK-SCHEDULE')->first();
         $timeRecordingSettingModule = Module::where('code','TIME-RECORDING-SETTING')->first();
         $timeRecordingReportModule = Module::where('code','TIME-RECORDING-REPORT')->first();
         $sararyModuleOne = Module::where('code','SARALY-MODULE-ONE')->first();
-        $sararyModuleTwo = Module::where('code','SARALY-MODULE-TWO')->first();
+        $sararyModuleSetting = Module::where('code','SARALY-MODULE-SETTING')->first();
+        $approveModuleSetting = Module::where('code','APPROVE-MODULE-SETTING')->first();
         // Job
         $shiftManagementJob = Job::where('code','SHIFT-MANAGEMENT')->first();
         $yearlyHolidayJob = Job::where('code','YEARLY-HOLIDAY')->first();
         $workScheduleJob = Job::where('code','WORK-SCHEDULE')->first();
         $workScheduleTimeRecording = Job::where('code','TIME-RECORDING')->first();
+        $workScheduleTimeRecordingCheck = Job::where('code','TIME-RECORDING-CHECK')->first();
         $workScheduleEmployeeGroup = Job::where('code','EMPLOYEE-GROUP')->first();
         $workScheduleVisibility = Job::where('code','WORK-SCHEDULR-VISIBILITY')->first();
         $workScheduleReport = Job::where('code','WORK-SCHEDULR-REPORT')->first();
@@ -41,7 +44,10 @@ class GroupModuleJobsTableSeeder extends Seeder
         $sararyJobOne = Job::where('code','SARALY-JOB-ONE')->first();
         $sararyJobTwo = Job::where('code','SARALY-JOB-TWO')->first();
         $sararyJobThree = Job::where('code','SARALY-JOB-THREE')->first();
-        $sararyJobFour = Job::where('code','SARALY-JOB-FOUR')->first();
+        $sararyPayday = Job::where('code','SARALY-PAYDAY')->first();
+        $approveDocument = Job::where('code','APPROVE-DOCUMENT')->first();
+
+        
         
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
@@ -62,6 +68,11 @@ class GroupModuleJobsTableSeeder extends Seeder
             'group_id' => $timeRecordGroup->id,
             'module_id' => $workScheduleModule->id,
             'job_id' => $workScheduleTimeRecording->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $timeRecordGroup->id,
+            'module_id' => $workScheduleModule->id,
+            'job_id' => $workScheduleTimeRecordingCheck->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
@@ -100,13 +111,19 @@ class GroupModuleJobsTableSeeder extends Seeder
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleTwo->id,
+            'module_id' => $sararyModuleOne->id,
             'job_id' => $sararyJobThree->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleTwo->id,
-            'job_id' => $sararyJobFour->id,
+            'module_id' => $sararyModuleSetting->id,
+            'job_id' => $sararyPayday->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $documentGroup->id,
+            'module_id' => $approveModuleSetting->id,
+            'job_id' => $approveDocument->id,
         ]);
     }
 }
+

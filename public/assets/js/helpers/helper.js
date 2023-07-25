@@ -14,6 +14,16 @@ $(document).ready(function () {
     // Apply input masking for numeric input
     $('.numericInputInt').inputmask('9{1,}', { "placeholder": "" });
 
+    $('.numericInputMonth').inputmask('9{1,2}', {
+        "placeholder": "", // Remove the placeholder character
+        "min": 1, // Set the minimum value to 1
+        "max": 31, // Set the maximum value to 31
+    });
+
+    $('.input-date-format').inputmask('99/99/9999');
+    $('.input-time-format').inputmask('99:99:99');
+    // 
+
 });
 
 $(document).on('click', 'a[data-confirm]', function (event) {

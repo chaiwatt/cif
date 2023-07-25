@@ -16,6 +16,7 @@ use App\Http\Controllers\Settings\SettingGeneralSearchFieldController;
 use App\Http\Controllers\settings\SettingAccessAssignmentRoleController;
 use App\Http\Controllers\settings\SettingOrganizationApproverController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeController;
+use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
 use App\Http\Controllers\Settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
@@ -23,13 +24,16 @@ use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
 use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemReportController;
+use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftYearlyHolidayController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftTimeattendanceController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupController;
+use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingWorkScheduleVisibilityController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentController;
+use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingCheckController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingImportController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentUserController;
@@ -42,7 +46,7 @@ Route::get('/', function () {
 });
 Route::get('isdatevalid', [TestController::class, 'isDateValid'])->name('isDateValid');
 Route::get('clear-db', [TestController::class, 'clearDB'])->name('clear-db');
-Route::get('classify-date', [TestController::class, 'classifyDate'])->name('classify-date');
+Route::get('test', [TestController::class, 'testRoute'])->name('test');
 
 Route::group(['prefix' => 'shift'], function () {
     Route::get('', [ShiftController::class, 'index'])->name('shifts.index');
@@ -117,7 +121,16 @@ Route::middleware('auth')->group(function () {
                         Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'index'])->name('groups.time-recording-system.schedulework.time-recording.import');
                         Route::post('batch', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'batch'])->name('groups.time-recording-system.schedulework.time-recording.import.batch');
                         Route::post('single', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'single'])->name('groups.time-recording-system.schedulework.time-recording.import.single');
+                        // Route::get('show-info', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'showInfo'])->name('groups.time-recording-system.schedulework.time-recording.import.show-info');
                     });
+                });
+                Route::group(['prefix' => 'time-recording-check'], function () {
+                    Route::get('', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'index'])->name('groups.time-recording-system.schedulework.time-recording-check');
+                    Route::post('search', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'search'])->name('groups.time-recording-system.schedulework.time-recording-check.search');
+                    Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'view'])->name('groups.time-recording-system.schedulework.time-recording-check.view');
+                    Route::post('time-record-check', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'timeRecordCheck'])->name('groups.time-recording-system.schedulework.time-recording-check.time-record-check');
+                    Route::post('view-user', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'viewUser'])->name('groups.time-recording-system.schedulework.time-recording-check.view-user');
+                    Route::post('update', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'update'])->name('groups.time-recording-system.schedulework.time-recording-check.update');
                 });
             });
             Route::group(['prefix' => 'setting'], function () {
@@ -143,6 +156,51 @@ Route::middleware('auth')->group(function () {
             });
             Route::group(['prefix' => 'report'], function () {
                 Route::get('', [TimeRecordingSystemReportController::class, 'index'])->name('groups.time-recording-system.report');
+            });
+        });
+        Route::group(['prefix' => 'salary-system'], function () {
+            Route::group(['prefix' => 'setting'], function () {
+                Route::group(['prefix' => 'payday'], function () {
+                    Route::get('', [SalarySystemSettingPaydayController::class, 'index'])->name('groups.salary-system.setting.payday');
+                    Route::get('create', [SalarySystemSettingPaydayController::class, 'create'])->name('groups.salary-system.setting.payday.create');
+                    Route::post('store', [SalarySystemSettingPaydayController::class, 'store'])->name('groups.salary-system.setting.payday.store');
+                    Route::get('{id}', [SalarySystemSettingPaydayController::class, 'view'])->name('groups.salary-system.setting.payday.view');
+                    Route::put('{id}', [SalarySystemSettingPaydayController::class, 'update'])->name('groups.salary-system.setting.payday.update');
+                    Route::delete('{id}', [SalarySystemSettingPaydayController::class, 'delete'])->name('groups.salary-system.setting.payday.delete');
+                });
+            });
+        });
+        Route::group(['prefix' => 'document-system'], function () {
+            Route::group(['prefix' => 'setting'], function () {
+                Route::group(['prefix' => 'approve-document'], function () {
+                    Route::get('', [DocumentSystemSettingApproveDocumentController::class, 'index'])->name('groups.document-system.setting.approve-document');
+                    Route::get('create', [DocumentSystemSettingApproveDocumentController::class, 'create'])->name('groups.document-system.setting.approve-document.create');
+                    Route::post('store', [DocumentSystemSettingApproveDocumentController::class, 'store'])->name('groups.document-system.setting.approve-document.store');
+                    Route::get('{id}', [DocumentSystemSettingApproveDocumentController::class, 'view'])->name('groups.document-system.setting.approve-document.view');
+                    Route::put('{id}', [DocumentSystemSettingApproveDocumentController::class, 'update'])->name('groups.document-system.setting.approve-document.update');
+                    Route::delete('{id}', [DocumentSystemSettingApproveDocumentController::class, 'delete'])->name('groups.document-system.setting.approve-document.delete');
+                    
+                    Route::group(['prefix' => 'assignment'], function () {
+                        Route::get('{id}', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'index'])->name('groups.document-system.setting.approve-document.assignment.index');
+                        Route::get('create/{id}', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'create'])->name('groups.document-system.setting.approve-document.assignment.create');
+                        Route::post('store', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'store'])->name('groups.document-system.setting.approve-document.assignment.store');
+                        Route::delete('approves/{approver_id}/users/{user_id}/delete', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'delete'])->name('groups.document-system.setting.approve-document.assignment.delete');
+                        Route::post('search', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'search'])->name('groups.document-system.setting.approve-document.assignment.search');
+                        
+                    });
+                });
+
+
+
+
+
+
+
+
+
+
+
+
             });
         });
     });

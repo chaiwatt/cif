@@ -40,6 +40,12 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.time-recording-system.schedulework.time-recording.index',
         ]);
         Job::create([
+            'code' => 'TIME-RECORDING-CHECK',
+            'name' => 'ตรวจสอบบันทึกเวลา',
+            'route' => 'groups.time-recording-system.schedulework.time-recording-check',  
+            'view' => 'groups.time-recording-system.schedulework.time-recording-check.index',
+        ]);
+        Job::create([
             'code' => 'EMPLOYEE-GROUP',
             'name' => 'กลุ่มพนักงาน',
             'route' => 'groups.time-recording-system.setting.employee-group',  
@@ -88,10 +94,16 @@ class JobsTableSeeder extends Seeder
             'view' => Null
         ]);
         Job::create([
-            'code' => 'SARALY-JOB-FOUR',
-            'name' => 'Jobระบบเงินเดือน4',
-            'route' => Null,
-            'view' => Null
+            'code' => 'SARALY-PAYDAY',
+            'name' => 'รอบคำนวนเงินเดือน',
+            'route' => 'groups.salary-system.setting.payday',
+            'view' => 'groups.salary-system.setting.payday.index'
+        ]);
+        Job::create([
+            'code' => 'APPROVE-DOCUMENT',
+            'name' => 'การอนุมัติ',
+            'route' => 'groups.document-system.setting.approve-document',
+            'view' => 'groups.document-system.setting.approve-document.index'
         ]);
     }
 }

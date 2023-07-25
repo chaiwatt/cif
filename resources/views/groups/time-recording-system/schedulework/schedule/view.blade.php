@@ -81,6 +81,24 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>ประเภทตารางทำงาน<span class="small text-danger">*</span></label>
+                                            <select name="schedule_type"
+                                                class="form-control select2 @error('schedule_type') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                @foreach ($scheduleTypes as $scheduleType)
+                                                <option value="{{ $scheduleType->id }}" @if ($scheduleType->id ==
+                                                    $workSchedule->schedule_type_id)
+                                                    selected
+
+                                                    @endif>
+                                                    {{ $scheduleType->name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>ปี<span class="small text-danger">*</span></label>
                                             <select name="year"
                                                 class="form-control select2 @error('year') is-invalid @enderror"

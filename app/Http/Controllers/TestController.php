@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\WorkScheduleAssignment;
@@ -128,6 +129,13 @@ class TestController extends Controller
             }
         }
         return null;
+    }
+
+    public function testRoute()
+    {
+        $user = User::where('employee_no',170107)->first();
+        $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersByConditions('2023-05-26','2023-06-25', '2023');
+        dd($workScheduleAssignmentUsers);
     }
 
   

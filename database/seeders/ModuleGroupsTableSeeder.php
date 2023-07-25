@@ -30,5 +30,17 @@ class ModuleGroupsTableSeeder extends Seeder
             $module3->id,
             $module4->id
         ]);
+
+        $group2 = Group::where('code','SARALY-MANAGEMENT')->first();
+        $module5 = Module::where('code','SARALY-MODULE-SETTING')->first();
+        $group2->modules()->attach([
+            $module5->id
+        ]);
+
+        $group3 = Group::where('code','DOCUMENT')->first();
+        $module6 = Module::where('code','APPROVE-MODULE-SETTING')->first();
+        $group3->modules()->attach([
+            $module6->id
+        ]);
     }
 }
