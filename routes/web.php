@@ -18,15 +18,10 @@ use App\Http\Controllers\settings\SettingOrganizationApproverController;
 use App\Http\Controllers\settings\SettingOrganizationEmployeeController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
-<<<<<<< HEAD
-use App\Http\Controllers\Settings\SettingGeneralCompanyDepartmentController;
-use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
-use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveApprovalController;
-use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveDocumentController;
-=======
 use App\Http\Controllers\settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\settings\SettingOrganizationEmployeeImportController;
->>>>>>> d5b61548b276e61e492553fabbb4d37703b5b3b8
+use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveApprovalController;
+use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveDocumentController;
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalController;
