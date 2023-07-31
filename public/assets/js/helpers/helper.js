@@ -5,6 +5,8 @@ $(document).ready(function () {
     // Apply input masking for numeric inputs with format 9.99
     $('.numericInputSingle').inputmask('9.99');
 
+    // Apply input masking for numeric inputs with format 9.99
+
     // Apply input masking for a 13-digit number
     $('.numericInputPhone').inputmask('999-999-9999');
 
@@ -22,9 +24,13 @@ $(document).ready(function () {
 
     $('.input-date-format').inputmask('99/99/9999');
     $('.input-time-format').inputmask('99:99:99');
-    // 
 
+    $('.decimal-input').inputmask({
+        regex: "^\\d+(\\.\\d)?$",
+        placeholder: '0'
+    });
 });
+    // 
 
 $(document).on('click', 'a[data-confirm]', function (event) {
     event.preventDefault();

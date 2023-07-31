@@ -100,7 +100,31 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.salary-system.setting.payday.index'
         ]);
         Job::create([
-            'code' => 'APPROVE-DOCUMENT',
+            'code' => 'DOCUMENT-LEAVE',
+            'name' => 'รายการลา',
+            'route' => 'groups.document-system.leave.document',
+            'view' => 'groups.document-system.leave.document.index'
+        ]);
+        Job::create([
+            'code' => 'DOCUMENT-LEAVE-APPROVAL',
+            'name' => 'อนุมัติการลา',
+            'route' => 'groups.document-system.leave.approval',
+            'view' => 'groups.document-system.leave.approval.index'
+        ]);
+        Job::create([
+            'code' => 'DOCUMENT-OVERTIME',
+            'name' => 'รายการล่วงเวลา',
+            'route' => 'groups.document-system.overtime.document',
+            'view' => 'groups.document-system.overtime.document.index'
+        ]);
+        Job::create([
+            'code' => 'DOCUMENT-OVERTIME-APPROVAL',
+            'name' => 'อนุมัติล่วงเวลา',
+            'route' => 'groups.document-system.overtime.approval',
+            'view' => 'groups.document-system.overtime.approval.index'
+        ]);
+        Job::create([
+            'code' => 'DOCUMENT-APPROVE',
             'name' => 'การอนุมัติ',
             'route' => 'groups.document-system.setting.approve-document',
             'view' => 'groups.document-system.setting.approve-document.index'

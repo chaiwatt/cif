@@ -46,7 +46,17 @@ class ModulesTableSeeder extends Seeder
             'icon' => 'fa-cog'
         ]);
         Module::create([
-            'code' => 'APPROVE-MODULE-SETTING',
+            'code' => 'DOCUMENT-LEAVE',
+            'name' => 'การลา',
+            'icon' => 'fa-calendar-alt'
+        ]);
+        Module::create([
+            'code' => 'DOCUMENT-OVERTIME',
+            'name' => 'ล่วงเวลา',
+            'icon' => 'fa-clock'
+        ]);
+        Module::create([
+            'code' => 'DOCUMENT-APPROVE-SETTING',
             'name' => 'ตั้งค่า',
             'icon' => 'fa-cog'
         ]);

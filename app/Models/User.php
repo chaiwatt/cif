@@ -6,11 +6,13 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\Group;
+use App\Models\Leave;
 use App\Models\Gender;
 use App\Models\Prefix;
 use App\Models\Approver;
 use App\Models\Ethnicity;
 use App\Models\UserGroup;
+use App\Models\LeaveDetail;
 use App\Models\Nationality;
 use App\Models\EmployeeType;
 use App\Models\UserPosition;
@@ -275,6 +277,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Approver::class, 'approver_users', 'user_id', 'approver_id');
     }
 
+    public function getUniqueApproverOneIdsAttribute()
+    {
+        return $this->approvers->pluck('approver_one_id')->unique()->toArray();
+    }
+
+    public function getUniqueApproverTwoIdsAttribute()
+    {
+        return $this->approvers->pluck('approver_two_id')->unique()->toArray();
+    }
+
     /**
      * ความสัมพันธ์กับโมเดล WorkScheduleAssignmentUser (ผู้ใช้งานที่ได้รับการกำหนดตารางเวลางาน)
      * ผ่านการเชื่อมโยงกับโมเดล WorkScheduleAssignmentUser (ผู้ใช้งานที่ได้รับการกำหนดตารางเวลางาน)
@@ -346,10 +358,31 @@ class User extends Authenticatable
                 $query->whereNull('time_in')
                     ->orWhereNull('time_out');
             })
+            ->whereDoesntHave('user.leaves', function ($subQuery) {
+                $subQuery->where('status', 1)
+                ->orWhere('status', 2);
+            })
             ->orderBy('date_in')
             ->get();
 
         return $workScheduleAssignmentUsers;
+    }
+
+    public function getHolidayDates($startDate, $endDate)
+    {
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+        $holidayDates = $this->workScheduleAssignmentUsers()
+            ->whereHas('workScheduleAssignment', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('short_date', [$startDate, $endDate])
+                    ->whereHas('shift', function ($subQuery) {
+                        $subQuery->where('code', 'LIKE', '%_H')
+                                ->orWhere('code', 'LIKE', '%_TH');
+                    });
+            })
+            ->get()
+            ->pluck('workScheduleAssignment.short_date');
+        return $holidayDates;
     }
 
     public function getWorkScheduleAssignmentUsers($startDate, $endDate)
@@ -392,6 +425,16 @@ class User extends Authenticatable
     public function userGroups()
     {
         return $this->belongsToMany(UserGroup::class, 'user_group_users', 'user_id', 'user_group_id');
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
+
+    public function leaveDetails()
+    {
+        return $this->hasManyThrough(LeaveDetail::class, Leave::class, 'user_id', 'leave_id', 'user_id', 'id');
     }
 
 }

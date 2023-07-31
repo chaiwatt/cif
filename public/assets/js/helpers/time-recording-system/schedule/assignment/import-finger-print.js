@@ -372,7 +372,7 @@ function processFile(results, selectedEmployeeNos, year, month) {
     // Process the filtered results and create a new array
     const processedResults = filteredResults.map(row => {
         // Remove the 'Name' keys
-        delete row['Department'];
+        // delete row['Department'];
         delete row['Name.'];
 
         const timeValue = row['Time'];

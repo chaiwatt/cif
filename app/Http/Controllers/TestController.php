@@ -133,10 +133,21 @@ class TestController extends Controller
 
     public function testRoute()
     {
-        $user = User::where('employee_no',170107)->first();
-        $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersByConditions('2023-05-26','2023-06-25', '2023');
-        dd($workScheduleAssignmentUsers);
-    }
+        // $user = User::where('employee_no',170107)->first();
+        // $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersByConditions('2023-05-26','2023-06-25', '2023');
+        // dd($workScheduleAssignmentUsers);
+        // $user = User::where('employee_no',170107)->first();
+        // $approvers = $user->approvers->first();
+        
+        // $user = User::where('employee_no',170107)->first();
+        // $holidays = $user->getHolidayDates('2023-05-01','2023-05-15');
+        // dd($holidays);
+
+        $user = User::where('employee_no',170094)->first();
+
+
+
+}
 
   
 

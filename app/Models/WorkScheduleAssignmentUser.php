@@ -45,4 +45,52 @@ class WorkScheduleAssignmentUser extends Model
         return $this->belongsTo(User::class);
     }
 
+    
+    public function checkLeaveStatus($checkDate)
+    {
+        // Get the leaves for the current user
+        $userId = $this->user_id;
+        $user = User::find($userId);
+        $leaves = $user->leaves;
+
+        // Get the associated leave_details for the leaves
+        $leaveDetails = $leaves->flatMap->leaveDetails;
+
+        // Loop through the leaveDetails and check if $checkDate exists in the collection
+        foreach ($leaveDetails as $leaveDetail) {
+            if ($leaveDetail->from_date == $checkDate) {
+                // Check if the corresponding leave status is 1 (approved)
+                $correspondingLeave = $leaves->firstWhere('id', $leaveDetail->leave_id);
+                if ($correspondingLeave->status == 1) {
+                    return [
+                        'leave' => true,
+                        'approved' => true,
+                        'rejected' => false
+                    ];
+                } elseif ($correspondingLeave->status === null) {
+                    // If the status is 0, it means the leave is not approved yet
+                    return [
+                        'leave' => true,
+                        'approved' => false,
+                        'rejected' => false
+                    ];
+                } elseif ($correspondingLeave->status == 2) {
+                    // If the status is 2, it means the leave is rejected
+                    return [
+                        'leave' => true,
+                        'approved' => false,
+                        'rejected' => true
+                    ];
+                }
+            }
+        }
+        // If $checkDate was not found in the leaveDetails, return false for both leave and approved
+        return [
+            'leave' => false,
+            'approved' => false,
+            'rejected' => false
+        ];
     }
+
+
+}

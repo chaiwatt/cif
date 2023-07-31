@@ -2,8 +2,25 @@ import * as RequestApi from '../../../request-api.js';
 
 var token = window.params.token
 
+var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+
 $(document).on('click', '#show_modal', function (e) {
     $('#modal-date-range').modal('show');
+    // var todayDate = moment().format('DD/MM/YYYY');
+    // var startDateVal = $('#startDate').val().trim();
+    // var endDateVal = $('#endDate').val().trim();
+    // if (startDateVal === '') {
+    //     $('#startDate').val(todayDate);
+    // }
+
+    // if (endDateVal === '') {
+    //     $('#endDate').val(todayDate);
+    // }
 });
 
 $(document).on('click', '#check-time-record', function (e) {
@@ -114,6 +131,11 @@ $(document).on('click', '.btnSaveBtn', function (e) {
 
     RequestApi.postRequest(data, updateUrl, token).then(response => {
         $('#table_container').html(response);
+        $('#error_' + workScheduleAssignmentUserId).hide();
+        Toast.fire({
+            icon: 'success',
+            title: 'แก้ไขรายการสำเร็จ เวลาเข้า ' + timeInValue + ' เวลาออก ' + timeOutValue
+        })
     }).catch(error => {
 
     })
@@ -122,7 +144,48 @@ $(document).on('click', '.btnSaveBtn', function (e) {
 });
 
 
+$(document).on('click', '#add_note', function (e) {
+    $('#modal-add-note').modal('show');
+});
 
+// Attach an event listener for the checkbox change
+$(document).on('change', '#auto_text', function (e) {
+    var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
+    var dateRangeMessage = '';
+    if (startDate != '' && endDate != '')
+    {
+        dateRangeMessage = ' (' + startDate + ' - ' + endDate  + ')'
+    }
+    if ($('#auto_text').prop('checked')) {
+        // Set the message in the textarea
+        $('#note').val('ตรวจแล้ว' + dateRangeMessage);
+    } else {
+        // If checkbox is unchecked, clear the textarea
+        $('#note').val('');
+    }
+});
+
+$(document).on('click', '#save_note', function (e) {
+    var monthId = $('#month_id').val();
+    var workScheduleId = $('#work_schedule_id').val();
+    var year = $('#year').val();
+    var note = $('#note').val();
+    var saveNoteUrl = window.params.saveNoteRoute;
+
+    var data = {
+        'note': note,
+        'monthId': monthId,
+        'workScheduleId': workScheduleId,
+        'year': year,
+    }
+    RequestApi.postRequest(data, saveNoteUrl, token).then(response => {
+        $('#modal-add-note').modal('hide');
+    }).catch(error => {
+
+    })
+
+});
 
 function isEndDateAfterStartDate(startDate, endDate) {
     var parsedStartDate = moment(startDate, 'DD/MM/YYYY', true); // Parse start date

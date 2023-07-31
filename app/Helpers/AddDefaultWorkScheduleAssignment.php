@@ -24,6 +24,7 @@ class AddDefaultWorkScheduleAssignment
                         'month_id' => $month,
                         'year' => $year,
                         'shift_id' => Null,
+                        'short_date' => Carbon::create($year, $month, $day['day'])->format('Y-m-d'),
                     ]);
                 }
             }

@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการอนุมัติ</h1>
+                    <h1 class="m-0">กลุ่มอนุมัติ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">รายการอนุมัติ</li>
+                        <li class="breadcrumb-item active">กลุ่มอนุมัติ</li>
                     </ol>
                 </div>
             </div>
@@ -23,13 +23,13 @@
             <a class="btn btn-primary mb-2" href="{{route('groups.document-system.setting.approve-document.create')}}">
                 <i class="fas fa-plus mr-1">
                 </i>
-                เพิ่มรายการอนุมัติ
+                เพิ่มกลุ่มอนุมัติ
             </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการอนุมัติ</h3>
+                            <h3 class="card-title">กลุ่มอนุมัติ</h3>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
@@ -72,10 +72,10 @@
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
                                                         <a class="btn btn-danger btn-sm"
-                                                            data-confirm='ลบรายการอนุมัติ "{{$approver->name}} {{$approver->lastname}}" หรือไม่?'
+                                                            data-confirm='ลบกลุ่มอนุมัติ "{{$approver->name}} {{$approver->lastname}}" หรือไม่?'
                                                             href="#" data-id="{{$approver->id}}"
                                                             data-delete-route="{{ route('groups.document-system.setting.approve-document.delete', ['id' => '__id__']) }}"
-                                                            data-message="รายการอนุมัติ">
+                                                            data-message="กลุ่มอนุมัติ">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>

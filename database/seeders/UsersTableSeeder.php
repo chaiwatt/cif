@@ -39,6 +39,76 @@ class UsersTableSeeder extends Seeder
             'email' => '6944@gmail.com',
             'password' => bcrypt('11111111')
         ]);
+        User::create([
+            'is_admin' => 1,
+            'prefix_id' => 1,
+            'nationality_id' => 1,
+            'ethnicity_id' => 1,
+            'address' => '',
+            'user_position_id' => 63,
+            'employee_type_id' => 1,
+            'company_department_id' => 2,
+            'employee_no' => 'design001',
+            'username' => 'design001',
+            'name' => 'Design',
+            'lastname' => '001',
+            'phone' => '',
+            'hid' => '',
+            'start_work_date' => Carbon::createFromFormat('m/d/Y', '1/16/1995')->format('Y-m-d'),
+            'birth_date' => Carbon::createFromFormat('m/d/Y', '02/17/1980')->format('Y-m-d'),
+            'visa_expiry_date' => Null,
+            'permit_expiry_date' => Null,
+            'work_schedule_id' => 1,
+            'email' => 'design001@gmail.com',
+            'password' => bcrypt('design001$')
+        ]);
+
+        User::create([
+            'is_admin' => 1,
+            'prefix_id' => 1,
+            'nationality_id' => 1,
+            'ethnicity_id' => 1,
+            'address' => '',
+            'user_position_id' => 63,
+            'employee_type_id' => 1,
+            'company_department_id' => 2,
+            'employee_no' => 'frontend001',
+            'username' => 'frontend001',
+            'name' => 'Frontend',
+            'lastname' => '001',
+            'phone' => '',
+            'hid' => '',
+            'start_work_date' => Carbon::createFromFormat('m/d/Y', '1/16/1995')->format('Y-m-d'),
+            'birth_date' => Carbon::createFromFormat('m/d/Y', '02/17/1980')->format('Y-m-d'),
+            'visa_expiry_date' => Null,
+            'permit_expiry_date' => Null,
+            'work_schedule_id' => 1,
+            'email' => 'frontend001@gmail.com',
+            'password' => bcrypt('frontend001$')
+        ]);
+        User::create([
+            'is_admin' => 0,
+            'prefix_id' => 1,
+            'nationality_id' => 1,
+            'ethnicity_id' => 1,
+            'address' => '503/15 ม.3 ตำบลหนองขาม อำเภอศรีราชา จังหวัดชลบุรี',
+            'user_position_id' => 63,
+            'employee_type_id' => 1,
+            'company_department_id' => 2,
+            'employee_no' => 6945,
+            'username' => 6945,
+            'name' => 'ฮาร์ไมโอนี',
+            'lastname' => 'แกรนด์',
+            'phone' => '0654867618',
+            'hid' => '3635673034333',
+            'start_work_date' => Carbon::createFromFormat('m/d/Y', '1/16/1995')->format('Y-m-d'),
+            'birth_date' => Carbon::createFromFormat('m/d/Y', '02/17/1980')->format('Y-m-d'),
+            'visa_expiry_date' => Null,
+            'permit_expiry_date' => Null,
+            'work_schedule_id' => 1,
+            'email' => '6945@gmail.com',
+            'password' => bcrypt('11111111')
+        ]);
 
         $chaveewan_users = [
             [

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Month;
 use App\Models\Shift;
 use App\Models\WorkSchedule;
+use App\Models\WorkScheduleMonthNote;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\WorkScheduleAssignmentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,6 +45,7 @@ class WorkScheduleAssignment extends Model
     {
         return $this->belongsTo(Shift::class);
     }
+
 
     /**
      * ความสัมพันธ์กับโมเดล WorkScheduleAssignmentUser (การมองเห็นตารางเวลางานผู้ใช้งาน)

@@ -113,7 +113,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         $companyDepartments = CompanyDepartment::all();
         $approvers = User::where('nationality_id', 1)->where('ethnicity_id', 1)->get();
 
-        return view('setting.organization.approver.view', [
+        return view('groups.document-system.setting.approve-document.view', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
@@ -124,6 +124,35 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         ]);
     }
 
+
+        public function update(Request $request, $id)
+    {
+        $validator = $this->validateFormData($request);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $approveName = $request->name;
+        $companyDepartmentId = $request->company_department;
+        $approverOneId = $request->approver_one;
+        $approverTwoId = $request->approver_two ?? null;
+        $documentType = $request->document_type;
+
+        $approver = Approver::findOrFail($id);
+
+        $this->activityLogger->log('อัปเดต', $approver);
+
+        $approver->update([
+            'name' => $approveName,
+            'document_type_id' => $documentType,
+            'company_department_id' => $companyDepartmentId,
+            'approver_one_id' => $approverOneId,
+            'approver_two_id' => $approverTwoId
+        ]);
+
+        return redirect()->route('groups.document-system.setting.approve-document');
+    }
     public function delete($id)
     {
         $approver = Approver::findOrFail($id);

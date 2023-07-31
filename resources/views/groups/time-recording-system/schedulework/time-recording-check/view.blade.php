@@ -31,10 +31,20 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-3" id="show_modal">
-                ตรวจสอบการบันทึกเวลา
-            </a>
+
+            <div class="row">
+                <div class="col-12">
+                    <a class="btn btn-primary mb-3" id="show_modal">
+                        ตรวจสอบการบันทึกเวลา
+                    </a>
+                    @if ($permission->create)
+                    <button class="btn bg-success float-right" id="add_note"><i class="fas fa-comments mr-2"></i>
+                        เพิ่มโน้ต</button>
+                    @endif
+                </div>
+            </div>
             @if ($permission->show)
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -65,7 +75,9 @@
                     </div>
                 </div>
 
+
             </div>
+
 
             @endif
 
@@ -112,6 +124,33 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-add-note">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="startDate">โน้ต</label><br>
+                                <textarea type="text" class="form-control" id="note" rows="3"></textarea>
+                            </div>
+                            <div class="icheck-primary d-inline">
+                                <input type="checkbox" id="auto_text" id="checkbox-auto-text">
+                                <label for="auto_text">
+                                    ข้อความอัตโนมัติ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group float-right">
+                                <button type="button" class="btn btn-primary" id="save_note">บันทึก</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div>
@@ -128,6 +167,7 @@
         timeRecordCheckRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.time-record-check') }}',        
         viewUserRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.view-user') }}',
         updateRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.update') }}',
+        saveNoteRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.save-note') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

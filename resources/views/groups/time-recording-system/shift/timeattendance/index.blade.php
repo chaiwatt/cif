@@ -51,7 +51,7 @@
                             <table class="table table-striped text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        {{-- <th>#</th> --}}
                                         <th>ชื่อกะการทำงาน</th>
                                         <th>เวลาเริ่มงาน</th>
                                         <th>เวลาเลิกงาน</th>
@@ -62,7 +62,7 @@
                                 <tbody>
                                     @foreach ($shifts->where('base_shift',1) as $key => $shift)
                                     <tr>
-                                        <td>{{$key +1}}</td>
+                                        {{-- <td>{{$key +1}}</td> --}}
                                         <td>{{$shift->name}}</td>
                                         <td>{{$shift->start}}</td>
                                         <td>{{$shift->end}}</td>

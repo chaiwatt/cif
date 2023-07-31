@@ -17,30 +17,34 @@ class ModuleGroupsTableSeeder extends Seeder
     public function run()
     {
         // Retrieve groups and modules
-        $group1 = Group::where('code','TIME-RECORD')->first();
-        $module1 = Module::where('code','SHIFT')->first();
-        $module2 = Module::where('code','WORK-SCHEDULE')->first();
-        $module3 = Module::where('code','TIME-RECORDING-SETTING')->first();
-        $module4 = Module::where('code','TIME-RECORDING-REPORT')->first();
+        $timeRecord = Group::where('code','TIME-RECORD')->first();
+        $shift = Module::where('code','SHIFT')->first();
+        $workSchedule = Module::where('code','WORK-SCHEDULE')->first();
+        $timeRecordingSetting = Module::where('code','TIME-RECORDING-SETTING')->first();
+        $timeRecordingReport = Module::where('code','TIME-RECORDING-REPORT')->first();
 
         // Assign modules to group
-        $group1->modules()->attach([
-            $module1->id, 
-            $module2->id,
-            $module3->id,
-            $module4->id
+        $timeRecord->modules()->attach([
+            $shift->id, 
+            $workSchedule->id,
+            $timeRecordingSetting->id,
+            $timeRecordingReport->id
         ]);
 
-        $group2 = Group::where('code','SARALY-MANAGEMENT')->first();
-        $module5 = Module::where('code','SARALY-MODULE-SETTING')->first();
-        $group2->modules()->attach([
-            $module5->id
+        $salaryManagement = Group::where('code','SARALY-MANAGEMENT')->first();
+        $salaryModuleSetting = Module::where('code','SARALY-MODULE-SETTING')->first();
+        $salaryManagement->modules()->attach([
+            $salaryModuleSetting->id
         ]);
 
-        $group3 = Group::where('code','DOCUMENT')->first();
-        $module6 = Module::where('code','APPROVE-MODULE-SETTING')->first();
-        $group3->modules()->attach([
-            $module6->id
+        $document = Group::where('code','DOCUMENT')->first();
+        $documentLeave = Module::where('code','DOCUMENT-LEAVE')->first();
+        $documentOvertime = Module::where('code','DOCUMENT-OVERTIME')->first();
+        $documentApproveSetting = Module::where('code','DOCUMENT-APPROVE-SETTING')->first();
+        $document->modules()->attach([
+            $documentLeave->id,
+            $documentOvertime->id,
+            $documentApproveSetting->id,
         ]);
     }
 }

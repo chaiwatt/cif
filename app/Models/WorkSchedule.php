@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Shift;
 use App\Models\WorkScheduleUser;
 use Illuminate\Support\Facades\DB;
+use App\Models\WorkScheduleMonthNote;
 use App\Models\WorkScheduleAssignment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -108,6 +109,19 @@ class WorkSchedule extends Model
         })->get();
 
         return $users;
+    }
+
+    public function getWorkScheduleMonthNoteByYearAndMonth($year, $month)
+    {
+        return $this->workScheduleMonthNote()
+            ->where('year', $year)
+            ->where('month_id', $month)
+            ->first();
+    }
+
+    public function workScheduleMonthNote()
+    {
+        return $this->hasOne(WorkScheduleMonthNote::class);
     }
 
 

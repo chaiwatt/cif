@@ -23,6 +23,7 @@ return new class extends Migration
             $table->char('day',2)->nullable(); 
             $table->unsignedBigInteger('month_id')->nullable(); 
             $table->char('year',4)->nullable(); 
+            $table->date('short_date')->nullable(); 
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Models\WorkScheduleUser;
 use App\Http\Controllers\Controller;
+use App\Models\WorkScheduleMonthNote;
 use App\Models\WorkScheduleAssignmentUser;
 use App\Services\UpdatedRoleGroupCollectionService;
 
@@ -132,9 +133,8 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $monthId = $request->data['monthId'];
         $year = $request->data['year'];
         $workScheduleId = $request->data['workScheduleId'];
-        // dd($startDate,$endDate,$monthId,$year,$workScheduleId);
 
-        $users = $this->getUsersByWorkScheduleAssignment($workScheduleId, $monthId, $year);
+        $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
 
         $usersWithWorkScheduleAssignments = [];
         foreach($users as $user)
@@ -143,7 +143,6 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
             $usersWithWorkScheduleAssignments[$user->id] = [
                 'user' => $user,
                 'date_in_list' => $workScheduleAssignmentUsers->pluck('date_in')->toArray()
-                
             ];   
         }
 
@@ -176,7 +175,8 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
 
         $workScheduleAssignmentUser = WorkScheduleAssignmentUser::find($workScheduleAssignmentUserId)->update([
             'time_in' => $timeInValue,
-            'time_out' => $timeOutValue
+            'time_out' => $timeOutValue,
+            'code' => 'E'
         ]);
 
         $startDate = Carbon::createFromFormat('d/m/Y', $request->data['startDate'])->format('Y-m-d');
@@ -184,9 +184,8 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $monthId = $request->data['monthId'];
         $year = $request->data['year'];
         $workScheduleId = $request->data['workScheduleId'];
-        // dd($startDate,$endDate,$monthId,$year,$workScheduleId);
 
-        $users = $this->getUsersByWorkScheduleAssignment($workScheduleId, $monthId, $year);
+        $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
 
         $usersWithWorkScheduleAssignments = [];
         foreach($users as $user)
@@ -204,18 +203,47 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
             ])->render();
     }
 
-    public function getUsersByWorkScheduleAssignment($workScheduleId, $month, $year)
+    public function saveNote(Request $request){
+        $note = $request->data['note'];
+        $monthId = $request->data['monthId'];
+        $workScheduleId = $request->data['workScheduleId'];
+        $year = $request->data['year'];
+
+        WorkScheduleMonthNote::updateOrCreate(
+            [
+                'work_schedule_id' => $workScheduleId,
+                'month_id' => $monthId,
+                'year' => $year,
+            ],
+            [
+                'note' => $note
+            ]
+        );
+    }
+
+    public function getUsersByWorkScheduleAssignment($startDate,$endDate)
     {
         // ค้นหาผู้ใช้ที่มีการกำหนดงานเรียกงานใน workScheduleId, month, year
-        $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($workScheduleId, $month, $year) {
-            $query->whereHas('workScheduleAssignment', function ($query) use ($workScheduleId, $month, $year) {
-                $query->where('work_schedule_id', $workScheduleId)
-                    ->where('month_id', $month)
-                    ->where('year', $year);
-            });
+        // $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($workScheduleId, $year) {
+        //     $query->whereHas('workScheduleAssignment', function ($query) use ($workScheduleId, $year) {
+        //         $query->where('work_schedule_id', $workScheduleId)
+        //             // ->where('month_id', $month)
+        //             ->where('year', $year);
+        //     })->whereNotNull('date_in');
+        // })->get();
+
+        // Convert the start and end date to the correct format
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        // ค้นหาผู้ใช้ที่มีการกำหนดงานเรียกงานใน workScheduleId และ date_in อยู่ในช่วง startDate ถึง endDate
+        $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($startDate, $endDate) {
+            $query->whereNotNull('date_in')
+                ->whereBetween('date_in', [$startDate, $endDate]);
         })->get();
 
         return $users;
+
     }
 
     // public function getUsersByWorkScheduleAssignment($workScheduleId, $month, $year)

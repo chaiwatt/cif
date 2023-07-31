@@ -69,7 +69,7 @@ class DocumentSystemSettingApproveDocumentAssignmentController extends Controlle
         ]);
     }
 
-      public function store(Request $request)
+    public function store(Request $request)
     {
         $selectedUsers = $request->users;
         $approverId = $request->approverId;

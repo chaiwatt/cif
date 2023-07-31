@@ -29,7 +29,9 @@ class GroupModuleJobsTableSeeder extends Seeder
         $timeRecordingReportModule = Module::where('code','TIME-RECORDING-REPORT')->first();
         $sararyModuleOne = Module::where('code','SARALY-MODULE-ONE')->first();
         $sararyModuleSetting = Module::where('code','SARALY-MODULE-SETTING')->first();
-        $approveModuleSetting = Module::where('code','APPROVE-MODULE-SETTING')->first();
+        $approveModuleSetting = Module::where('code','DOCUMENT-APPROVE-SETTING')->first();
+        $ducumentLeaveModule = Module::where('code','DOCUMENT-LEAVE')->first();
+        $ducumentOvertimeModule = Module::where('code','DOCUMENT-OVERTIME')->first();
         // Job
         $shiftManagementJob = Job::where('code','SHIFT-MANAGEMENT')->first();
         $yearlyHolidayJob = Job::where('code','YEARLY-HOLIDAY')->first();
@@ -45,9 +47,12 @@ class GroupModuleJobsTableSeeder extends Seeder
         $sararyJobTwo = Job::where('code','SARALY-JOB-TWO')->first();
         $sararyJobThree = Job::where('code','SARALY-JOB-THREE')->first();
         $sararyPayday = Job::where('code','SARALY-PAYDAY')->first();
-        $approveDocument = Job::where('code','APPROVE-DOCUMENT')->first();
-
-        
+        $documentApprove = Job::where('code','DOCUMENT-APPROVE')->first();
+        $documentLeave = Job::where('code','DOCUMENT-LEAVE')->first();
+        $documentLeaveApproval = Job::where('code','DOCUMENT-LEAVE-APPROVAL')->first();
+        $documentOvertime = Job::where('code','DOCUMENT-OVERTIME')->first();
+        $documentOvetimeApproval = Job::where('code','DOCUMENT-OVERTIME-APPROVAL')->first();
+     
         
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
@@ -121,8 +126,28 @@ class GroupModuleJobsTableSeeder extends Seeder
         ]);
         GroupModuleJob::create([
             'group_id' => $documentGroup->id,
+            'module_id' => $ducumentLeaveModule->id,
+            'job_id' => $documentLeave->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $documentGroup->id,
+            'module_id' => $ducumentLeaveModule->id,
+            'job_id' => $documentLeaveApproval->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $documentGroup->id,
+            'module_id' => $ducumentOvertimeModule->id,
+            'job_id' => $documentOvertime->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $documentGroup->id,
+            'module_id' => $ducumentOvertimeModule->id,
+            'job_id' => $documentOvetimeApproval->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $documentGroup->id,
             'module_id' => $approveModuleSetting->id,
-            'job_id' => $approveDocument->id,
+            'job_id' => $documentApprove->id,
         ]);
     }
 }

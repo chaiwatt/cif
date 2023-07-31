@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row ">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการอนุมัติ: {{$approver->name}}</h1>
+                    <h1 class="m-0">กลุ่มอนุมัติ: {{$approver->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.document-system.setting.approve-document')}}">รายการอนุมัติ</a>
+                                href="{{route('groups.document-system.setting.approve-document')}}">กลุ่มอนุมัติ</a>
                         </li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
                     </ol>

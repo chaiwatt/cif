@@ -20,8 +20,12 @@ use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
 use App\Http\Controllers\Settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
+use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveApprovalController;
+use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveDocumentController;
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
+use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalController;
+use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeDocumentController;
 use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemReportController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentController;
@@ -131,6 +135,7 @@ Route::middleware('auth')->group(function () {
                     Route::post('time-record-check', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'timeRecordCheck'])->name('groups.time-recording-system.schedulework.time-recording-check.time-record-check');
                     Route::post('view-user', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'viewUser'])->name('groups.time-recording-system.schedulework.time-recording-check.view-user');
                     Route::post('update', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'update'])->name('groups.time-recording-system.schedulework.time-recording-check.update');
+                    Route::post('save-note', [TimeRecordingSystemScheduleWorkTimeRecordingCheckController::class, 'saveNote'])->name('groups.time-recording-system.schedulework.time-recording-check.save-note');
                 });
             });
             Route::group(['prefix' => 'setting'], function () {
@@ -189,18 +194,32 @@ Route::middleware('auth')->group(function () {
                         
                     });
                 });
+            });
+            Route::group(['prefix' => 'leave'], function () {
+                Route::group(['prefix' => 'document'], function () {
+                    Route::get('', [DocumentSystemLeaveDocumentController::class, 'index'])->name('groups.document-system.leave.document');
+                    Route::get('create', [DocumentSystemLeaveDocumentController::class, 'create'])->name('groups.document-system.leave.document.create');
+                    Route::post('check-leave', [DocumentSystemLeaveDocumentController::class, 'checkLeave'])->name('groups.document-system.leave.document.check-leave');
+                    Route::post('store', [DocumentSystemLeaveDocumentController::class, 'store'])->name('groups.document-system.leave.document.store');
+                    Route::get('{id}', [DocumentSystemLeaveDocumentController::class, 'view'])->name('groups.document-system.leave.document.view');
+                    Route::post('{id}', [DocumentSystemLeaveDocumentController::class, 'update'])->name('groups.document-system.leave.document.update');
+                    Route::delete('{id}', [DocumentSystemLeaveDocumentController::class, 'delete'])->name('groups.document-system.leave.document.delete');
+                    
+                });
+                Route::group(['prefix' => 'approval'], function () {
+                    Route::get('', [DocumentSystemLeaveApprovalController::class, 'index'])->name('groups.document-system.leave.approval');
+                    Route::post('leave-approval', [DocumentSystemLeaveApprovalController::class, 'leaveApproval'])->name('groups.document-system.leave.approval.leave-approval');
+                    Route::post('search', [DocumentSystemLeaveApprovalController::class, 'search'])->name('groups.document-system.leave.approval.search');
 
-
-
-
-
-
-
-
-
-
-
-
+                });
+            });
+              Route::group(['prefix' => 'overtime'], function () {
+                Route::group(['prefix' => 'document'], function () {
+                    Route::get('', [DocumentSystemOvertimeDocumentController::class, 'index'])->name('groups.document-system.overtime.document');
+                });
+                Route::group(['prefix' => 'approval'], function () {
+                    Route::get('', [DocumentSystemOvertimeApprovalController::class, 'index'])->name('groups.document-system.overtime.approval');
+                });
             });
         });
     });
