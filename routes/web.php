@@ -6,22 +6,27 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
-use App\Http\Controllers\Settings\SettingController;
+use App\Http\Controllers\settings\SettingController;
 use App\Http\Controllers\settings\SettingReportLogController;
-use App\Http\Controllers\Settings\SettingAccessRoleController;
+use App\Http\Controllers\settings\SettingAccessRoleController;
 use App\Http\Controllers\settings\SettingReportUserController;
 use App\Http\Controllers\TimeRecordingSystems\ShiftController;
 use App\Http\Controllers\settings\SettingReportExpirationController;
-use App\Http\Controllers\Settings\SettingGeneralSearchFieldController;
+use App\Http\Controllers\settings\SettingGeneralSearchFieldController;
 use App\Http\Controllers\settings\SettingAccessAssignmentRoleController;
 use App\Http\Controllers\settings\SettingOrganizationApproverController;
-use App\Http\Controllers\Settings\SettingOrganizationEmployeeController;
+use App\Http\Controllers\settings\SettingOrganizationEmployeeController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
+<<<<<<< HEAD
 use App\Http\Controllers\Settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\Settings\SettingOrganizationEmployeeImportController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveApprovalController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveDocumentController;
+=======
+use App\Http\Controllers\settings\SettingGeneralCompanyDepartmentController;
+use App\Http\Controllers\settings\SettingOrganizationEmployeeImportController;
+>>>>>>> d5b61548b276e61e492553fabbb4d37703b5b3b8
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalController;
@@ -106,8 +111,8 @@ Route::middleware('auth')->group(function () {
                         Route::get('view/{id}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'view'])->name('groups.time-recording-system.schedulework.schedule.assignment');
                         Route::get('work-schedule/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'createWorkSchedule'])->name('groups.time-recording-system.schedulework.schedule.assignment.work-schedule');
                         Route::post('store-calendar', [TimeRecordingSystemScheduleWorkScheduleAssignmentController::class, 'storeCalendar'])->name('groups.time-recording-system.schedulework.schedule.assignment.work-schedule.store');
-                        
-                        
+
+
                         Route::group(['prefix' => 'user'], function () {
                             Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'index'])->name('groups.time-recording-system.schedulework.schedule.assignment.user');
                             Route::get('users/{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'create'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.create');
@@ -184,14 +189,14 @@ Route::middleware('auth')->group(function () {
                     Route::get('{id}', [DocumentSystemSettingApproveDocumentController::class, 'view'])->name('groups.document-system.setting.approve-document.view');
                     Route::put('{id}', [DocumentSystemSettingApproveDocumentController::class, 'update'])->name('groups.document-system.setting.approve-document.update');
                     Route::delete('{id}', [DocumentSystemSettingApproveDocumentController::class, 'delete'])->name('groups.document-system.setting.approve-document.delete');
-                    
+
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('{id}', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'index'])->name('groups.document-system.setting.approve-document.assignment.index');
                         Route::get('create/{id}', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'create'])->name('groups.document-system.setting.approve-document.assignment.create');
                         Route::post('store', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'store'])->name('groups.document-system.setting.approve-document.assignment.store');
                         Route::delete('approves/{approver_id}/users/{user_id}/delete', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'delete'])->name('groups.document-system.setting.approve-document.assignment.delete');
                         Route::post('search', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'search'])->name('groups.document-system.setting.approve-document.assignment.search');
-                        
+
                     });
                 });
             });
@@ -235,7 +240,7 @@ Route::middleware('auth')->group(function () {
                 Route::put('{id}', [SettingOrganizationEmployeeController::class, 'update'])->name('setting.organization.employee.update');
                 Route::delete('{id}', [SettingOrganizationEmployeeController::class, 'delete'])->name('setting.organization.employee.delete');
                 Route::post('search', [SettingOrganizationEmployeeController::class, 'search'])->name('setting.organization.employee.search');
-                
+
                 Route::group(['prefix' => 'import'], function () {
                     Route::get('index', [SettingOrganizationEmployeeImportController::class, 'index'])->name('setting.organization.employee.import.index');
                     Route::post('store', [SettingOrganizationEmployeeImportController::class, 'store'])->name('setting.organization.employee.import.store');
@@ -248,14 +253,14 @@ Route::middleware('auth')->group(function () {
                 Route::get('{id}', [SettingOrganizationApproverController::class, 'view'])->name('setting.organization.approver.view');
                 Route::put('{id}', [SettingOrganizationApproverController::class, 'update'])->name('setting.organization.approver.update');
                 Route::delete('{id}', [SettingOrganizationApproverController::class, 'delete'])->name('setting.organization.approver.delete');
-                
+
                 Route::group(['prefix' => 'assignment'], function () {
                     Route::get('{id}', [SettingOrganizationApproverAssignmentController::class, 'index'])->name('setting.organization.approver.assignment.index');
                     Route::get('create/{id}', [SettingOrganizationApproverAssignmentController::class, 'create'])->name('setting.organization.approver.assignment.create');
                     Route::post('store', [SettingOrganizationApproverAssignmentController::class, 'store'])->name('setting.organization.approver.assignment.store');
                     Route::delete('approves/{approver_id}/users/{user_id}/delete', [SettingOrganizationApproverAssignmentController::class, 'delete'])->name('setting.organization.approver.assignment.delete');
                     Route::post('search', [SettingOrganizationApproverAssignmentController::class, 'search'])->name('setting.organization.approver.assignment.search');
-                    
+
                 });
             });
         });
@@ -271,7 +276,7 @@ Route::middleware('auth')->group(function () {
             Route::group(['prefix' => 'searchfield'], function () {
                 Route::get('', [SettingGeneralSearchFieldController::class, 'index'])->name('setting.general.searchfield.index');
                 Route::group(['prefix' => 'user'], function () {
-                    Route::post('update', [SettingGeneralSearchFieldUserController::class, 'update'])->name('setting.general.searchfield.user.update'); 
+                    Route::post('update', [SettingGeneralSearchFieldUserController::class, 'update'])->name('setting.general.searchfield.user.update');
                 });
             });
         });
@@ -316,7 +321,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('', [SettingReportExpirationController::class, 'index'])->name('setting.report.expiration');
                 Route::post('search', [SettingReportExpirationController::class, 'search'])->name('setting.report.expiration.search');
             });
-            
+
         });
     });
 
