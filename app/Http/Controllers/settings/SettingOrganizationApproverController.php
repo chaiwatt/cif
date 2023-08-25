@@ -157,7 +157,7 @@ class SettingOrganizationApproverController extends Controller
         $this->activityLogger->log('ลบ', $approver);
         $approver->delete();
 
-        return response()->json(['message' => 'การอนุมัติได้ถูกลบออกเรียบร้อยแล้ว']);
+        return response()->json(['message' => 'สายอนุมัติได้ถูกลบออกเรียบร้อยแล้ว']);
     }
 
     /**

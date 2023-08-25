@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">เพิ่มกะการทำงาน</li>
+                        <li class="breadcrumb-item active">พนักงาน</li>
                     </ol>
                 </div>
             </div>
@@ -139,27 +139,6 @@
                                             <label>เบอร์โทรศัพท์มือถือ</label>
                                             <input type="text" name="phone" value="{{old('phone') ?? $user->phone}}"
                                                 class="form-control numericInputPhone">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label>ระดับการศึกษาสูงสุด</label>
-                                                <input type="text" name="educationLevel"
-                                                    value="{{old('educationLevel') ?? $user->education_level}}"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label>สาขาวิชา</label>
-                                                <input type="text" name="educationBranch"
-                                                    value="{{old('educationBranch') ?? $user->education_branch}}"
-                                                    class="form-control">
-                                            </div>
                                         </div>
                                     </div>
 
@@ -298,6 +277,25 @@
                                             <label>เลขประจำตัวผู้เสียภาษีอากร</label>
                                             <input type="text" name="tax" value="{{old('tax') ?? $user->tax}}"
                                                 class="form-control numericInputInt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>การสแกนเวลาเข้าออก<span class="small text-danger">*</span></label>
+                                            <select name="timeRecordRequire"
+                                                class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"
+                                                style="width: 100%;">
+
+                                                <option value="1" @if ($user->time_record_require == 1) selected
+                                                    @endif>
+                                                    ต้องสแกนเวลา
+                                                </option>
+                                                <option value="0" @if ($user->time_record_require == 0) selected
+                                                    @endif>
+                                                    ไม่ต้องสแกนเวลา
+                                                </option>
+
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

@@ -9,9 +9,13 @@ use App\Models\PayDayRange;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use App\Models\WorkScheduleUser;
+use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
 use App\Models\WorkScheduleMonthNote;
+use Illuminate\Support\Facades\Storage;
 use App\Models\WorkScheduleAssignmentUser;
+use App\Models\WorkScheduleAssignmentUserFile;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Controller
@@ -63,8 +67,8 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
             'years' => $years,
             'months' => $months,
             'workSchedules' => $workSchedules,
-            'year' => $currentYear,
-            'month' => $currentMonth
+            'currentYear' => $currentYear,
+            'currentMonth' => $currentMonth
         ]);
 
     }
@@ -133,22 +137,47 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $monthId = $request->data['monthId'];
         $year = $request->data['year'];
         $workScheduleId = $request->data['workScheduleId'];
+        $page = optional($request->data)['page'];
+        $filter = optional($request->data)['filter'];
 
         $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
-
+        
         $usersWithWorkScheduleAssignments = [];
         foreach($users as $user)
         {
-            $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersInformation($startDate,$endDate, $year);
-            $usersWithWorkScheduleAssignments[$user->id] = [
-                'user' => $user,
-                'date_in_list' => $workScheduleAssignmentUsers->pluck('date_in')->toArray()
-            ];   
+            $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
+            $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
+            
+            // Apply filtering based on the selected filter option or show all if filter is not set
+            if (!$filter || ($filter == 0) || ($filter == 1 && count($dateInList) == 0) || ($filter == 2 && count($dateInList) > 0)) {
+                $usersWithWorkScheduleAssignments[$user->id] = [
+                    'user' => $user,
+                    'date_in_list' => $dateInList
+                ]; 
+            }
         }
 
-        return view('groups.time-recording-system.schedulework.time-recording-check.table-render.work-schedule-check-table',[
-            'usersWithWorkScheduleAssignments' => $usersWithWorkScheduleAssignments
-            ])->render();
+        $usersCollection = new Collection($usersWithWorkScheduleAssignments);
+
+        // Set up pagination parameters
+        $perPage = 20; // Number of items per page
+        $currentPage = $request->query('page', $page); // Get the current page from the request query
+
+        // Calculate the items for the current page
+        $currentPageItems = $usersCollection->slice(($currentPage - 1) * $perPage, $perPage);
+
+        // Create a LengthAwarePaginator instance for pagination
+        $paginatedUsers = new LengthAwarePaginator(
+            $currentPageItems,
+            $usersCollection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => route('groups.time-recording-system.schedulework.time-recording-check')] // Replace with the correct route name
+        );
+
+        return view('groups.time-recording-system.schedulework.time-recording-check.table-render.work-schedule-check-table', [
+            'usersWithWorkScheduleAssignments' => $paginatedUsers,
+        ])->render();       
 
     }
 
@@ -172,8 +201,14 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $timeInValue = $request->data['timeInValue'];
         $timeOutValue = $request->data['timeOutValue'];
         $workScheduleAssignmentUserId = $request->data['workScheduleAssignmentUserId'];
+        $page = optional($request->data)['page'];
+        $filter = optional($request->data)['filter'];
 
-        $workScheduleAssignmentUser = WorkScheduleAssignmentUser::find($workScheduleAssignmentUserId)->update([
+        if ($timeInValue == null && $timeOutValue == null) {
+            $timeInValue = $timeOutValue = '00:00:00';
+        }
+
+        WorkScheduleAssignmentUser::find($workScheduleAssignmentUserId)->update([
             'time_in' => $timeInValue,
             'time_out' => $timeOutValue,
             'code' => 'E'
@@ -190,17 +225,39 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $usersWithWorkScheduleAssignments = [];
         foreach($users as $user)
         {
-            $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersInformation($startDate,$endDate, $year);
-            $usersWithWorkScheduleAssignments[$user->id] = [
-                'user' => $user,
-                'date_in_list' => $workScheduleAssignmentUsers->pluck('date_in')->toArray()
-                
-            ];   
+            $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
+            $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
+            
+            // Apply filtering based on the selected filter option or show all if filter is not set
+            if (!$filter || ($filter == 0) || ($filter == 1 && count($dateInList) == 0) || ($filter == 2 && count($dateInList) > 0)) {
+                $usersWithWorkScheduleAssignments[$user->id] = [
+                    'user' => $user,
+                    'date_in_list' => $dateInList
+                ]; 
+            }
         }
 
-        return view('groups.time-recording-system.schedulework.time-recording-check.table-render.work-schedule-check-table',[
-            'usersWithWorkScheduleAssignments' => $usersWithWorkScheduleAssignments
-            ])->render();
+        $usersCollection = new Collection($usersWithWorkScheduleAssignments);
+
+        // Set up pagination parameters
+        $perPage = 20; // Number of items per page
+        $currentPage = $request->query('page', $page); // Get the current page from the request query
+
+        // Calculate the items for the current page
+        $currentPageItems = $usersCollection->slice(($currentPage - 1) * $perPage, $perPage);
+
+        // Create a LengthAwarePaginator instance for pagination
+        $paginatedUsers = new LengthAwarePaginator(
+            $currentPageItems,
+            $usersCollection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => route('groups.time-recording-system.schedulework.time-recording-check')] // Replace with the correct route name
+        );
+
+        return view('groups.time-recording-system.schedulework.time-recording-check.table-render.work-schedule-check-table', [
+            'usersWithWorkScheduleAssignments' => $paginatedUsers,
+        ])->render();  
     }
 
     public function saveNote(Request $request){
@@ -223,15 +280,6 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
 
     public function getUsersByWorkScheduleAssignment($startDate,$endDate)
     {
-        // ค้นหาผู้ใช้ที่มีการกำหนดงานเรียกงานใน workScheduleId, month, year
-        // $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($workScheduleId, $year) {
-        //     $query->whereHas('workScheduleAssignment', function ($query) use ($workScheduleId, $year) {
-        //         $query->where('work_schedule_id', $workScheduleId)
-        //             // ->where('month_id', $month)
-        //             ->where('year', $year);
-        //     })->whereNotNull('date_in');
-        // })->get();
-
         // Convert the start and end date to the correct format
         $startDate = date('Y-m-d', strtotime($startDate));
         $endDate = date('Y-m-d', strtotime($endDate));
@@ -246,17 +294,65 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
 
     }
 
-    // public function getUsersByWorkScheduleAssignment($workScheduleId, $month, $year)
-    // {
-    //     // ค้นหาผู้ใช้ที่มีการกำหนดงานเรียกงานใน workScheduleId, month, year
-    //     $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($workScheduleId, $month, $year) {
-    //         $query->whereHas('workScheduleAssignment', function ($query) use ($workScheduleId, $month, $year) {
-    //             $query->where('work_schedule_id', $workScheduleId)
-    //                 ->where('month_id', $month)
-    //                 ->where('year', $year);
-    //         });
-    //     })->paginate(50);
+    public function getImage(Request $request)
+    {
+        $workScheduleAssignmentId = $request->data['workScheduleAssignmentId'];
+        $workScheduleAssignment = WorkScheduleAssignmentUserFile::where('work_schedule_assignment_user_id', $workScheduleAssignmentId)
+                            ->latest()
+                            ->first();
+        return response()->json($workScheduleAssignment);
+    }
+    public function uploadImage(Request $request){
+        
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
 
-    //     return $users;
-    // }
+            $workScheduleAssignmentId = $request->input('workScheduleAssignmentId');
+
+            // Store the file in the 'attachments' disk
+            $filePath = $file->store('', 'attachments');
+            
+
+            // Create a record in the work_schedule_assignment_user_files table
+            WorkScheduleAssignmentUserFile::create([
+                'work_schedule_assignment_user_id' => $workScheduleAssignmentId,
+                'file' => $filePath,
+            ]);
+
+            $workScheduleAssignment = WorkScheduleAssignmentUserFile::where('work_schedule_assignment_user_id', $workScheduleAssignmentId)
+                                    ->latest()
+                                    ->first();
+            return response()->json($workScheduleAssignment);
+        }
+        
+    }
+    public function deleteImage(Request $request)
+    {
+        $workScheduleAssignmentUserFileId = $request->data['workScheduleAssignmentUserFileId'];
+    
+        // Find the file record by its ID
+        $workScheduleAssignmentUserFile = WorkScheduleAssignmentUserFile::find($workScheduleAssignmentUserFileId);
+        
+        if ($workScheduleAssignmentUserFile) {
+            // Delete the file from storage
+            Storage::disk('attachments')->delete($workScheduleAssignmentUserFile->file);
+            
+            // Delete the record from the database
+            $workScheduleAssignmentUserFile->delete();
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'File not found.']);
+        }
+
+    }
+
+    public function getLeaveAttachment(Request $request)
+    {
+        $workScheduleAssignmentUserId = $request->data['workScheduleAssignmentUserId'];
+        $leaveAttachment = WorkScheduleAssignmentUser::find($workScheduleAssignmentUserId)->getAttachmentForDate();
+        // dd($leaveAttachment);
+        return response()->json($leaveAttachment);
+    }
+    
 }

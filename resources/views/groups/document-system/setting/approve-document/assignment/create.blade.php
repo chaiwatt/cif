@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.document-system.setting.approve-document')}}">กลุ่มอนุมัติ</a>
+                                href="{{route('groups.document-system.setting.approve-document')}}">สายอนุมัติ</a>
                         </li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
                     </ol>

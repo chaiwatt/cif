@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->time('start');
             $table->time('end');
-            $table->time('record_start');
-            $table->time('record_end');
+            $table->float('record_start',8,1)->default(2.0);
+            $table->float('record_end',8,1)->default(6.5);
             $table->time('break_start');
             $table->time('break_end');
             $table->unsignedBigInteger('shift_type_id');

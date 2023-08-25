@@ -23,7 +23,7 @@ class GroupsTableSeeder extends Seeder
             'dashboard' => 'groups.dashboard.time-recording-system'
         ]);
         Group::create([
-            'code' => 'SARALY-MANAGEMENT',
+            'code' => 'SALARY-MANAGEMENT',
             'name' => 'ระบบเงินเดือน',
             'description' => 'รายละเอียดระบบเงินเดือน',
             'icon' => 'fa-wallet',
@@ -35,6 +35,13 @@ class GroupsTableSeeder extends Seeder
             'description' => 'รายละเอียดระบบเอกสาร',
             'icon' => 'fa-book',
             'dashboard' => 'groups.dashboard.document-system'
+        ]);
+        Group::create([
+            'code' => 'USER-MANAGEMENT',
+            'name' => 'ระบบจัดการพนักงาน',
+            'description' => 'รายละเอียดระบบจัดการพนักงาน',
+            'icon' => 'fa-user',
+            'dashboard' => 'groups.dashboard.user-management-system'
         ]);
         Group::create([
             'code' => 'TRAINING',

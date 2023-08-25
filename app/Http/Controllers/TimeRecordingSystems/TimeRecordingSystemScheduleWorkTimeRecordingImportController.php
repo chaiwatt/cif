@@ -66,7 +66,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
 
         $startDateRange = Carbon::createFromFormat('d/m/Y', $request->data['start_date'])->startOfDay();
         $endDateRange = Carbon::createFromFormat('d/m/Y', $request->data['end_date'])->endOfDay();
-
+        
         // วนลูปตาม importUsers
         foreach ($importUsers as $importUser) {
             
@@ -91,7 +91,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
 
             $shift = $workScheduleAssignmentUser->workScheduleAssignment->shift;
 
-            $inOutTime = $this->getInOutTime($importUsers,$time,$shift,$date);
+            $inOutTime = $this->getInOutTime($importUsers,$user,$time,$shift,$date);
             $startDate = $inOutTime['inTime']['date'];
             $startTime = $inOutTime['inTime']['time'];
             $endDate = $inOutTime['outTime']['date'];
@@ -106,51 +106,77 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
                     'code' => null
                 ]);
         }
+
+        // dd($inOutTime);
     }
 
-    public function getInOutTime($importUsers,$time,$shift,$date)
+    public function getInOutTime($importUsers,$user,$time,$shift,$date)
     {
+        // dd($importUsers);
         return [
-            'inTime' => $this->getStartTime($time,$shift,$date),
-            'outTime' => $this->getEndTime($importUsers,$time,$shift,$date)
+            'inTime' => $this->getStartTime($time,$user,$shift,$date),
+            'outTime' => $this->getEndTime($importUsers,$user,$time,$shift,$date)
         ];
     }
 
-    public function getStartTime($time,$shift,$date)
+    public function getStartTime($time,$user,$shift,$date)
     {
         $startShiftTime = $shift->start;
         if ($startShiftTime == '00:00:00'){
             $startShiftTime = Shift::where('code',$shift->common_code)->first()->start;
         }
+        
         $startShiftTime = substr($startShiftTime, 0, -3);
-
+        
         $shiftTime = $date . ' ' . $startShiftTime;
         $timeParts = explode(' ', $time);
 
-        if($time == '00:00 00:00'){
+        if($time == '00:00 00:00' && $user->time_record_require != '0'){
             return ['date'=>$date,'time'=>null];
         }
-        foreach ($timeParts as $timePart) {
-            $timeToCheck = $date . ' ' . $timePart;
-            $times = $this->calculateBeginEndTime($shiftTime);
-            if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {
-                return ['date'=>$date,'time'=>$timePart];
+        
+        if ($user->time_record_require == '1'){
+            foreach ($timeParts as $timePart) {
+                $timeToCheck = $date . ' ' . $timePart;
+                $times = $this->calculateBeginEndTime($shiftTime,$shift);
+                if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {
+                    return ['date'=>$date,'time'=>$timePart];
+                }
             }
+        }else if($user->time_record_require == '0') {
+            return ['date'=>$date,'time'=>$startShiftTime];
         }
+
+        
         return ['date'=>$date,'time'=>null];
     }
 
-    function calculateBeginEndTime($shiftTime)
+    function calculateBeginEndTime($shiftTime,$shift)
     {
-        $beginTime = Carbon::createFromFormat('Y-m-d H:i', $shiftTime)->subHours(2)->format('Y-m-d H:i');
-        $endTime = Carbon::createFromFormat('Y-m-d H:i', $shiftTime)->addHours(6)->addMinutes(30)->format('Y-m-d H:i');
+        $record_start = $shift->record_start;
+        $record_start_hours = intVal(floor($record_start));
+        $record_start_minutes = intVal(($record_start - $record_start_hours) * 60); 
+
+        $record_end = $shift->record_end;
+        $record_end_hours = intVal(floor($record_end));
+        $record_end_minutes = intVal(($record_end - $record_end_hours) * 60); 
+
+        $beginTime = Carbon::createFromFormat('Y-m-d H:i', $shiftTime)
+                        ->subHours($record_start_hours)
+                        ->subMinutes($record_start_minutes)
+                        ->format('Y-m-d H:i');
+        $endTime = Carbon::createFromFormat('Y-m-d H:i', $shiftTime)
+                        ->addHours($record_end_hours)
+                        ->addMinutes($record_end_minutes)
+                        ->format('Y-m-d H:i');
         return [
             'beginTime' => $beginTime,
             'endTime' => $endTime,
         ];
+
     }
 
-    public function getEndTime($importUsers,$time,$shift,$date)
+    public function getEndTime($importUsers,$user,$time,$shift,$date)
     {
         $endShiftTime = $shift->end;
         if ($endShiftTime == '00:00:00'){
@@ -172,35 +198,59 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
 
         $shiftTime = $date . ' ' . $endShiftTime;
         
-        if($time == '00:00 00:00'){
+        if($time == '00:00 00:00' && $user->time_record_require != '0'){
             return ['date'=>$date,'time'=>null];
         }
         
         $timeParts = explode(' ', $time);
-        foreach ($timeParts as $timePart) {
-            $timeToCheck = $date . ' ' . $timePart;
-            $times = $this->calculateBeginEndTime($shiftTime);
+        if ($user->time_record_require == '1'){
+            foreach ($timeParts as $timePart) {
+                $timeToCheck = $date . ' ' . $timePart;
+                $times = $this->calculateBeginEndTime($shiftTime,$shift);
+
+                $beginTimeDateFormat = Carbon::createFromFormat('Y-m-d H:i', $times['beginTime']);
+                $endTimeDateFormat = Carbon::createFromFormat('Y-m-d H:i', $times['endTime']);
+
+                if ($beginTimeDateFormat->format('Y-m-d') == $endTimeDateFormat->format('Y-m-d')) {
+                    if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {
+                        return ['date'=>$date,'time'=>$timePart];
+                    }
+                }else if($beginTimeDateFormat->format('Y-m-d') != $endTimeDateFormat->format('Y-m-d'))
+                {
+                    $dateInDateFormat = Carbon::createFromFormat('Y-m-d', $date);
+                    $timeToCheckPrevious = $dateInDateFormat->copy()->subDay()->format('Y-m-d');
+                    if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {     
+                        return ['date'=>$date,'time'=>$timePart];
+                    }else if($this->isTimeInRange($timeToCheckPrevious. ' ' . $timePart, $times['beginTime'], $times['endTime']))
+                    {
+                        return ['date'=>$timeToCheckPrevious,'time'=>$timePart];
+                    }
+                }   
+            }
+        }else if($user->time_record_require == '0'){
+            $timeToCheck = $date . ' ' . $endShiftTime;
+            $times = $this->calculateBeginEndTime($shiftTime,$shift);
 
             $beginTimeDateFormat = Carbon::createFromFormat('Y-m-d H:i', $times['beginTime']);
             $endTimeDateFormat = Carbon::createFromFormat('Y-m-d H:i', $times['endTime']);
 
             if ($beginTimeDateFormat->format('Y-m-d') == $endTimeDateFormat->format('Y-m-d')) {
                 if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {
-                    return ['date'=>$date,'time'=>$timePart];
+                    return ['date'=>$date,'time'=>$endShiftTime];
                 }
             }else if($beginTimeDateFormat->format('Y-m-d') != $endTimeDateFormat->format('Y-m-d'))
             {
                 $dateInDateFormat = Carbon::createFromFormat('Y-m-d', $date);
                 $timeToCheckPrevious = $dateInDateFormat->copy()->subDay()->format('Y-m-d');
                 if ($this->isTimeInRange($timeToCheck, $times['beginTime'], $times['endTime'])) {     
-                    return ['date'=>$date,'time'=>$timePart];
-                }else if($this->isTimeInRange($timeToCheckPrevious. ' ' . $timePart, $times['beginTime'], $times['endTime']))
+                    return ['date'=>$date,'time'=>$endShiftTime];
+                }else if($this->isTimeInRange($timeToCheckPrevious. ' ' . $endShiftTime, $times['beginTime'], $times['endTime']))
                 {
-                    return ['date'=>$timeToCheckPrevious,'time'=>$timePart];
+                    return ['date'=>$timeToCheckPrevious,'time'=>$endShiftTime];
                 }
-            }
-            
+            } 
         }
+        
         return ['date'=>$date,'time'=>null];;
     }
 

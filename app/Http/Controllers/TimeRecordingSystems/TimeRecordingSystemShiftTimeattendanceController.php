@@ -108,8 +108,8 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $code = $formattedDateTime;
         $timepicker_start = $request->timepicker_start;
         $timepicker_end = $request->timepicker_end;
-        $timepicker_record_start = $request->timepicker_record_start;
-        $timepicker_record_end = $request->timepicker_record_end;
+        $record_start_hour = $request->record_start_hour;
+        $record_end_hour = $request->record_end_hour;
         $timepicker_break_start = $request->timepicker_break_start;
         $timepicker_break_end = $request->timepicker_break_end;
         $duration = $request->duration;
@@ -126,8 +126,8 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $shift->year = $year;
         $shift->start = $timepicker_start;
         $shift->end = $timepicker_end;
-        $shift->record_start = $timepicker_record_start;
-        $shift->record_end = $timepicker_record_end;
+        $shift->record_start = $record_start_hour;
+        $shift->record_end = $record_end_hour;
         $shift->break_start = $timepicker_break_start;
         $shift->break_end = $timepicker_break_end;
         $shift->duration = $duration;
@@ -164,6 +164,7 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
 
         // ดึงข้อมูล Shift ตาม ID ที่ระบุ
         $shift = Shift::findOrFail($id);
+        // dd($shift);
 
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
@@ -200,8 +201,8 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
         $description = $request->description;
         $timepicker_start = $request->timepicker_start;
         $timepicker_end = $request->timepicker_end;
-        $timepicker_record_start = $request->timepicker_record_start;
-        $timepicker_record_end = $request->timepicker_record_end;
+        $record_start_hour = $request->record_start_hour;
+        $record_end_hour = $request->record_end_hour;
         $timepicker_break_start = $request->timepicker_break_start;
         $timepicker_break_end = $request->timepicker_break_end;
         $duration = $request->duration;
@@ -219,8 +220,8 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
             'description' => $description,
             'start' => $timepicker_start,
             'end' => $timepicker_end,
-            'record_start' => $timepicker_record_start,
-            'record_end' => $timepicker_record_end,
+            'record_start' => $record_start_hour,
+            'record_end' => $record_end_hour,
             'break_start' => $timepicker_break_start,
             'break_end' => $timepicker_break_end,
             'duration' => $duration,
@@ -327,13 +328,13 @@ class TimeRecordingSystemShiftTimeattendanceController extends Controller
             'description' => 'nullable',
             'timepicker_start' => 'required|date_format:H:i',
             'timepicker_end' => 'required|date_format:H:i',
-            'timepicker_record_start' => 'required|date_format:H:i',
-            'timepicker_record_end' => 'required|date_format:H:i',
+            'record_start_hour' => 'required|regex:/^\d{1,2}\.\d{1}$/',
+            'record_end_hour' => 'required|regex:/^\d{1,2}\.\d{1}$/',
             'timepicker_break_start' => 'required|date_format:H:i',
             'timepicker_break_end' => 'required|date_format:H:i',
-            'duration' => 'required|regex:/^\d{1,2}\.\d{2}$/',
-            'break_hour' => 'required|regex:/^\d{1,2}\.\d{2}$/',
-            'multiply' => 'required|regex:/^\d{1,2}\.\d{2}$/',
+            'duration' => 'required|regex:/^\d{1,2}\.\d{1}$/',
+            'break_hour' => 'required|regex:/^\d{1,2}\.\d{1}$/',
+            'multiply' => 'required|regex:/^\d{1,2}\.\d{1}$/',
             'shiftType' => [
                 'required',
                 Rule::exists(ShiftType::class, 'id')

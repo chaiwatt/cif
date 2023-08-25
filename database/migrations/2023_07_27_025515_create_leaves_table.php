@@ -16,12 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('leave_type_id');
-            $table->date('from_date')->nullable();
-            $table->date('to_date')->nullable();
-            $table->char('half_day',1)->nullable();
-            $table->char('half_day_type',1)->nullable();
+            $table->dateTime('from_date')->nullable();
+            $table->dateTime('to_date')->nullable();
             $table->char('status',1)->nullable();
             $table->float('duration')->default(1);
+            $table->string('approved_list')->nullable();
+            $table->text('attachment')->nullable();
             $table->timestamps();
         });
     }

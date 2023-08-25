@@ -30,6 +30,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">รายการลาล่าสุด</h3>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="search_query" id="search_query"
+                                        class="form-control float-right" placeholder="ค้นหา">
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
@@ -38,28 +44,41 @@
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>สายอนุมัติ</th>
                                                     <th>ชื่อสกุล</th>
                                                     <th>แผนก</th>
                                                     <th>ประเภทการลา</th>
                                                     <th>ช่วงวันที่</th>
-                                                    <th>ครึ่งวัน</th>
+                                                    <th>ผู้อนุมัติเอกสาร</th>
                                                     <th>สถานะ</th>
+
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="approver_tbody">
+                                            <tbody>
                                                 @foreach ($leaves as $key=> $leave)
+                                                @php
+                                                $approver =
+                                                $leave->user->approvers->where('document_type_id',1)->first()
+                                                @endphp
                                                 <tr>
-                                                    <td>{{$key+1}}</td>
+                                                    <td>{{$approver->code}}</td>
                                                     <td>{{$leave->user->name}} {{$leave->user->lastname}}</td>
                                                     <td>{{$leave->user->company_department->name}}</td>
                                                     <td>{{$leave->leaveType->name}}</td>
-                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                        $leave->from_date)->format('d/m/Y') }}
-                                                        - {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                        $leave->to_date)->format('d/m/Y') }}</td>
-                                                    <td>{{$leave->half_day == 1 ? 'ใช่' : '-'}}</td>
+                                                    <td>{{ date_create_from_format('Y-m-d H:i:s',
+                                                        $leave->from_date)->format('d/m/Y H:i') }} - {{
+                                                        date_create_from_format('Y-m-d H:i:s',
+                                                        $leave->to_date)->format('d/m/Y H:i') }}</td>
+                                                    <td>
+                                                        {{$approver->name}}
+                                                        @foreach ($approver->authorizedUsers as $user)
+                                                        <br>
+                                                        <span class="ml-3">-{{$user->name}}
+                                                            {{$user->lastname}}</span>
+
+                                                        @endforeach
+                                                    </td>
                                                     <td>@if ($leave->status === null)
                                                         <span class="badge bg-primary">รออนุมัติ</span>
                                                         @elseif ($leave->status === '1')
@@ -68,7 +87,15 @@
                                                         <span class="badge bg-danger">ไม่อนุมัติ</span>
                                                         @endif
                                                     </td>
+
                                                     <td class="text-right">
+                                                        @if (!empty($leave->attachment))
+                                                        <a class="btn btn-primary btn-sm show-attachment"
+                                                            data-id="{{$leave->id}}">
+                                                            <i class="fas fa-link"></i>
+                                                        </a>
+                                                        @endif
+
                                                         <a class="btn btn-info btn-sm"
                                                             href="{{route('groups.document-system.leave.document.view',['id' => $leave->id])}}">
                                                             <i class="fas fa-pencil-alt"></i>
@@ -85,9 +112,23 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        {{$leaves->links()}}
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-attachment">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <img src="" class="img-fluid">
                         </div>
                     </div>
                 </div>
@@ -101,6 +142,8 @@
 <script>
     $('.select2').select2()
     window.params = {
+        searchRoute: '{{ route('groups.document-system.leave.document.search') }}',
+        getAttachmentRoute: '{{ route('groups.document-system.leave.document.get-attachment') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

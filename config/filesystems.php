@@ -55,6 +55,12 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
+        'attachments' => [
+            'driver' => 'local',
+            'root' => public_path('storage/uploads/attachment'),
+            'url' => env('APP_URL').'/storage/uploads/attachment',
+            'visibility' => 'public',
+        ],
 
     ],
 

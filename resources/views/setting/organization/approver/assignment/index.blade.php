@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row ">
                 <div class="col-sm-6">
-                    <h1 class="m-0">กลุ่มอนุมัติ: {{$approver->name}}</h1>
+                    <h1 class="m-0">สายอนุมัติ: {{$approver->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('setting.organization.approver.index')}}">กลุ่มอนุมัติ</a></li>
+                                href="{{route('setting.organization.approver.index')}}">สายอนุมัติ</a></li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
                     </ol>
                 </div>
@@ -48,7 +48,7 @@
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="approver_tbody">
+                                            <tbody>
                                                 @foreach ($approver->users as $key => $user)
                                                 <tr>
                                                     <td>{{$key+1}}</td>

@@ -36,12 +36,12 @@ class ModulesTableSeeder extends Seeder
             'icon' => 'fa-chart-pie'
         ]);
         Module::create([
-            'code' => 'SARALY-MODULE-ONE',
-            'name' => 'โมดูลเงินเดือน1',
+            'code' => 'SALARY',
+            'name' => 'จัดการเงินเดือน',
             'icon' => 'fa-wallet'
         ]);
         Module::create([
-            'code' => 'SARALY-MODULE-SETTING',
+            'code' => 'SALARY-MODULE-SETTING',
             'name' => 'ตั้งค่า',
             'icon' => 'fa-cog'
         ]);
@@ -57,6 +57,11 @@ class ModulesTableSeeder extends Seeder
         ]);
         Module::create([
             'code' => 'DOCUMENT-APPROVE-SETTING',
+            'name' => 'ตั้งค่า',
+            'icon' => 'fa-cog'
+        ]);
+        Module::create([
+            'code' => 'USER-MANAGEMENT-MODULE-SETTING',
             'name' => 'ตั้งค่า',
             'icon' => 'fa-cog'
         ]);

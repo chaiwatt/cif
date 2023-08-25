@@ -19,6 +19,27 @@ function postRequest(dataSet, url, token) {
     })
 }
 
+function postRequestFormData(formData, url, token) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: url,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+                resolve(data)
+            },
+            error: function (error) {
+                reject(error)
+            },
+        })
+    })
+}
+
 function getRequest(url) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -42,6 +63,7 @@ function deleteRequest(url, token) {
             headers: {
                 'X-CSRF-TOKEN': token
             },
+            
             success: function (data) {
                 resolve(data)
             },
@@ -52,4 +74,4 @@ function deleteRequest(url, token) {
     })
 }
 
-export { postRequest, getRequest, deleteRequest }
+export { postRequest, getRequest, deleteRequest, postRequestFormData }

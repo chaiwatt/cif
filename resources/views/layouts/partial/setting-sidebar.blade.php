@@ -31,13 +31,13 @@
                             <p>พนักงาน</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="{{route('setting.organization.approver.index')}}"
-                            class="nav-link {{ request()->is('setting/organization/approver*') ? 'active' : '' }}">
+                    <li class="nav-item">
+                        <a href="{{route('setting.organization.company.index')}}"
+                            class="nav-link {{ request()->is('setting/organization/company*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>การอนุมัติ</p>
+                            <p>ข้อมูลบริษัท</p>
                         </a>
-                    </li> --}}
+                    </li>
                 </ul>
             </li>
             <li class="nav-item {{ request()->is('setting/access*', 'setting/assignment*') ? 'menu-open' : '' }}">

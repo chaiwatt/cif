@@ -16,7 +16,7 @@ class CompanyDepartment extends Model
     ];
     /**
      * ความสัมพันธ์กับโมเดล User (ผู้ใช้งาน) ผ่านตารางกลาง approver_users
-     * (ผู้ใช้งานที่มีสิทธิ์ในการอนุมัติสำหรับผู้อนุมัตินี้)
+     * (ผู้ใช้งานที่มีสิทธิ์ในสายอนุมัติสำหรับผู้อนุมัตินี้)
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

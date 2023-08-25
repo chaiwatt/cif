@@ -70,49 +70,30 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>วันที่เริ่ม (วดป. คศ)<span class="small text-danger">*</span></label>
+                                        <label>เริ่มวันที่ (วดป.) <span class="small text-danger">*</span></label>
                                         <input type="text" name="startDate" id="startDate" value="{{old('startDate')}}"
-                                            class="form-control input-date-format @error('startDate') is-invalid @enderror">
+                                            class="form-control input-datetime-format @error('startDate') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>ถึงวันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
+                                        <label>ถึงวันที่ (วดป.) <span class="small text-danger">*</span></label>
                                         <input type="text" name="endDate" id="endDate" value="{{old('endDate')}}"
-                                            class="form-control input-date-format @error('endDate') is-invalid @enderror">
+                                            class="form-control input-datetime-format @error('endDate') is-invalid @enderror">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>ลาครึ่งวัน</label>
-                                        <select name="haftDayLeave" id="haftDayLeave"
-                                            class="form-control select2 @error('haftDayLeave') is-invalid @enderror"
-                                            style="width: 100%;">
-                                            <option value="">===เลือกรายการ===</option>
-                                            <option value="1">ใช่</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>ครึ่งวัน</label>
-                                        <select name="haftDayLeaveType" id="haftDayLeaveType"
-                                            class="form-control select2 @error('haftDayLeaveType') is-invalid @enderror"
-                                            style="width: 100%;">
-                                            <option value="">===เลือกรายการ===</option>
-                                            <option value="1">ครึ่งวันแรก</option>
-                                            <option value="2">ครึ่งวันหลัง (ใช้ไม่ได้กรณีลาหลายวัน)</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <button type="button" class="btn btn-info" id="btnAddFile">เพิ่มไฟล์แนบ <span
+                                        id="fileName" class="text-dark"></span></button>
 
+                                <div class="form-group">
+                                    <input type="file" accept="image/*" id="file-input" style="display: none;">
+
+                                </div>
 
                                 <div class="col-12 text-right">
                                     <button class="btn bg-primary" id="leave_check">ตรวจสอบ</button>
-
                                 </div>
                             </div>
 
@@ -126,14 +107,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="row mb-2">
-                        <div class="col-12" id="modal_container">
+                    <div class="row mb-2" id="modal_container">
 
-                        </div>
-
-                        <div class="col-md-12">
-                            <button class="btn bg-success float-right" id="save_leave">บันทึก</button>
-                        </div>
 
 
                     </div>

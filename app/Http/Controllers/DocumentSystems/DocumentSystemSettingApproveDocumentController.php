@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\DocumentSystems;
 
 use App\Models\User;
+use App\Models\Leave;
 use App\Models\Approver;
+use App\Models\ApproverUser;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
+use App\Models\OverTimeDetail;
 use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
-use App\Services\UpdatedRoleGroupCollectionService;
 use Illuminate\Support\Facades\Validator;
+use App\Services\UpdatedRoleGroupCollectionService;
 
 class DocumentSystemSettingApproveDocumentController extends Controller
 {
@@ -57,7 +60,6 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         
         $documentTypes = DocumentType::all();
         $companyDepartments = CompanyDepartment::all();
-        $approvers = User::where('nationality_id', 1)->where('ethnicity_id', 1)->get();
 
         return view('groups.document-system.setting.approve-document.create', [
             'groupUrl' => $groupUrl,
@@ -65,7 +67,6 @@ class DocumentSystemSettingApproveDocumentController extends Controller
             'permission' => $permission,
             'documentTypes' => $documentTypes,
             'companyDepartments' => $companyDepartments,
-            'approvers' => $approvers
         ]);
     }
     public function store(Request $request)
@@ -75,20 +76,23 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+        $userIds = $request->userId;
         $approveName = $request->name;
         $companyDepartmentId = $request->company_department;
-        $approverOneId = $request->approver_one;
-        $approverTwoId = $request->approver_two ?? null;
+        $code = $request->code;
         $documentType = $request->document_type;
 
         $approver = new Approver();
         $approver->name = $approveName;
+        $approver->code = $code;
         $approver->document_type_id = $documentType;
         $approver->company_department_id = $companyDepartmentId;
-        $approver->approver_one_id = $approverOneId;
-        $approver->approver_two_id = $approverTwoId;
         $approver->save();
+
+        // Attach users to the newly created Approver
+        if ($userIds && is_array($userIds)) {
+            $approver->authorizedUsers()->attach($userIds);
+        }
 
         $this->activityLogger->log('เพิ่ม', $approver);
 
@@ -125,7 +129,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
     }
 
 
-        public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validator = $this->validateFormData($request);
 
@@ -133,23 +137,113 @@ class DocumentSystemSettingApproveDocumentController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // dd($request->userId);
+        $userIds = $request->userId;
         $approveName = $request->name;
         $companyDepartmentId = $request->company_department;
-        $approverOneId = $request->approver_one;
-        $approverTwoId = $request->approver_two ?? null;
+        $code = $request->code;
         $documentType = $request->document_type;
 
         $approver = Approver::findOrFail($id);
+        $currentAuthorizedUserIds = $approver->authorizedUsers->pluck('id')->toArray();
 
         $this->activityLogger->log('อัปเดต', $approver);
 
         $approver->update([
             'name' => $approveName,
+            'code' => $code,
             'document_type_id' => $documentType,
             'company_department_id' => $companyDepartmentId,
-            'approver_one_id' => $approverOneId,
-            'approver_two_id' => $approverTwoId
         ]);
+
+        if ($documentType == 1)
+        {
+            $leaves = Leave::all();
+            $approverUsers = ApproverUser::where('approver_id',$id)->get();
+            if (!$leaves->isEmpty()) {
+                $leaveUserIds = $leaves->pluck('user_id')->toArray();
+                $approverUserIds = $approverUsers->pluck('user_id')->toArray();
+                $usersToUpdates = array_intersect($leaveUserIds, $approverUserIds);
+                foreach ($usersToUpdates as $usersToUpdate) {
+                    $currentLeave = Leave::where('user_id', $usersToUpdate)->first();
+                    if ($currentLeave) {
+                        $currentApprovedList = json_decode($currentLeave->approved_list, true);
+
+                        // Remove entries not in $authorizedUserIds
+                        $currentApprovedList = array_filter($currentApprovedList, function ($entry) use ($currentAuthorizedUserIds) {
+                            return in_array($entry['user_id'], $currentAuthorizedUserIds);
+                        });
+
+                        // Add missing entries from $authorizedUserIds
+                        foreach ($currentAuthorizedUserIds as $authorizedUserId) {
+                            $found = false;
+                            foreach ($currentApprovedList as $entry) {
+                                if ($entry['user_id'] == $authorizedUserId) {
+                                    $found = true;
+                                    break;
+                                }
+                            }
+                            if (!$found) {
+                                $currentApprovedList[] = ['user_id' => $authorizedUserId, 'status' => 0];
+                            }
+                        }
+
+                        // Update the approved_list field
+                        $currentLeave->update([
+                            'approved_list' => json_encode($currentApprovedList)
+                        ]);
+                    }
+                }
+            }
+        }else if ($documentType == 2){
+            $overtimeDetails = OverTimeDetail::all();
+            $approverUsers = ApproverUser::where('approver_id',$id)->get();
+            if (!$overtimeDetails->isEmpty()) {
+                $overtimeDetailUserIds = $overtimeDetails->pluck('user_id')->toArray();
+                $approverUserIds = $approverUsers->pluck('user_id')->toArray();
+
+                $usersToUpdates = array_intersect($overtimeDetailUserIds, $approverUserIds);
+
+                foreach ($usersToUpdates as $usersToUpdate) {
+                    $currentOvertimeDetail = OverTimeDetail::where('user_id', $usersToUpdate)->first();
+                    if ($currentOvertimeDetail) {
+                        $currentApprovedList = json_decode($currentOvertimeDetail->approved_list, true);
+
+                        $currentApprovedList = array_filter($currentApprovedList, function ($entry) use ($currentAuthorizedUserIds) {
+                            return in_array($entry['user_id'], $currentAuthorizedUserIds);
+                        });
+
+                        foreach ($currentAuthorizedUserIds as $authorizedUserId) {
+                            $found = false;
+                            foreach ($currentApprovedList as $entry) {
+                                if ($entry['user_id'] == $authorizedUserId) {
+                                    $found = true;
+                                    break;
+                                }
+                            }
+                            if (!$found) {
+                                $currentApprovedList[] = ['user_id' => $authorizedUserId, 'status' => 0];
+                            }
+                        }
+                        // Update the approved_list field
+                        $currentOvertimeDetail->update([
+                            'approved_list' => json_encode($currentApprovedList)
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // Detach nonexistent users from the authorizedUsers relationship
+        
+        $detachUserIds = array_diff($currentAuthorizedUserIds, $userIds);
+        if (!empty($detachUserIds)) {
+            $approver->authorizedUsers()->detach($detachUserIds);
+        }
+
+        // Attach incoming unique users to the authorizedUsers relationship (without detaching existing ones)
+        $uniqueUserIds = array_unique($userIds);
+        $approver->authorizedUsers()->syncWithoutDetaching($uniqueUserIds);
 
         return redirect()->route('groups.document-system.setting.approve-document');
     }
@@ -159,16 +253,24 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         $this->activityLogger->log('ลบ', $approver);
         $approver->delete();
 
-        return response()->json(['message' => 'การอนุมัติได้ถูกลบออกเรียบร้อยแล้ว']);
+        return response()->json(['message' => 'สายอนุมัติได้ถูกลบออกเรียบร้อยแล้ว']);
     }
+
+    public function getUsers(Request $request)
+    {
+        $users = User::where('nationality_id', 1)->where('ethnicity_id', 1)->get();
+        return view('groups.document-system.setting.approve-document.modal-user-render.modal-user',['users' => $users])->render();
+    }
+
 
     public function validateFormData($request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'code' => 'required',
             'company_department.*' => 'required',
             'document_type.*' => 'required',
-            'approver_one.*' => 'required'
+            'userId' => 'required|array|min:1',
         ]);
 
         return $validator;

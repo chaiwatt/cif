@@ -50,6 +50,21 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">พนักงาน</h3>
+                            <div class="card-tools" id="filter-container" style="display: none;">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-info btn-sm active">
+                                        <input type="radio" name="options" id="option_0" autocomplete="off" checked="">
+                                        ทั้งหมด
+                                    </label>
+                                    <label class="btn btn-info btn-sm">
+                                        <input type="radio" name="options" id="option_1" autocomplete="off">
+                                        สำเร็จ
+                                    </label>
+                                    <label class="btn btn-info btn-sm">
+                                        <input type="radio" name="options" id="option_2" autocomplete="off"> ผิดพลาด
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -83,6 +98,7 @@
 
         </div>
     </div>
+
     <div class="modal fade" id="modal-date-range">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -151,6 +167,43 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-attachment">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-12 mb-2">
+                            <img src="" class="img-fluid">
+                        </div>
+                        <div class="col-12">
+                            <input type="text" id="workScheduleAssignmentUserFileId" hidden>
+                            <input type="text" id="workScheduleAssignmentUserId" hidden>
+                            <div class="form-group float-right">
+                                <button type="button" class="btn btn-danger d-none" id="delete-image">ลบ</button>
+                                <button type="button" class="btn btn-primary" id="btnAddFile">เพิ่มไฟล์รูป</button>
+                                <div class="form-group">
+                                    <input type="file" accept="image/*" id="file-input" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-leave-attachment">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <img src="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div>
@@ -168,6 +221,10 @@
         viewUserRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.view-user') }}',
         updateRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.update') }}',
         saveNoteRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.save-note') }}',
+        getImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.get-image') }}',
+        uploadImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.upload-image') }}',
+        deleteImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.delete-image') }}',
+        getLeaveAttachmentRoute: '{{route('groups.time-recording-system.schedulework.time-recording-check.get-leave-attachment') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

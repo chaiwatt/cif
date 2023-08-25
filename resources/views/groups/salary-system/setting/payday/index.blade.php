@@ -33,34 +33,49 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">รอบคำนวนเงินเดือน</h3>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <select name="year" id="year"
+                                        class="form-control @error('year') is-invalid @enderror" style="width: 100%;">
+                                        @foreach ($years as $year)
+                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
                                 <thead>
                                     <tr>
                                         <th>กลุ่มพนักงาน</th>
-                                        <th>รอบคำนวนเงินเดือน</th>
-                                        <th>เริ่มวันที่</th>
-                                        <th>ถึงวันที่</th>
-                                        <th>วันที่เงินเดือนออก</th>
+                                        <th>ปี</th>
                                         <th class="text-right">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($payDayRanges as $payDayRange)
+                                    @foreach ($paydays as $payday)
                                     <tr>
-                                        <td>{{$payDayRange->employeeType->name}}</td>
-                                        <td>{{$payDayRange->name}}</td>
-                                        <td>{{$payDayRange->start}}</td>
-                                        <td>{{$payDayRange->end}}</td>
-                                        <td>{{$payDayRange->payday}}</td>
-                                        <td class="text-right"><a class="btn btn-info btn-sm"
-                                                href="{{route('groups.salary-system.setting.payday.view',['id' => $payDayRange->id])}}">
+                                        <td>{{$payday->name}}</td>
+                                        <td>{{$payday->year}}</td>
+
+                                        <td class="text-right">
+                                            <a class="btn btn-success btn-sm"
+                                                href="{{ route('groups.salary-system.setting.payday.assignment-user', ['id' => $payday->id]) }}">
+                                                <i class="fas fa-users"></i>
+                                            </a>
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('groups.salary-system.setting.payday.assignment', ['id' => $payday->id]) }}">
+                                                <i class="fas fa-link"></i>
+                                            </a>
+                                            <a class="btn btn-info btn-sm"
+                                                href="{{route('groups.salary-system.setting.payday.view',['id' => $payday->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             <a class="btn btn-danger btn-sm"
-                                                data-confirm='ลบรอบคำนวนเงินเดือน "{{$payDayRange->name}}" หรือไม่?'
-                                                href="#" data-id="{{$payDayRange->id}}"
+                                                data-confirm='ลบรอบคำนวนเงินเดือน "{{$payday->name}}" หรือไม่?' href="#"
+                                                data-id="{{$payday->id}}"
                                                 data-delete-route="{{ route('groups.salary-system.setting.payday.delete', ['id' => '__id__']) }}"
                                                 data-message="รอบคำนวนเงินเดือน">
                                                 <i class="fas fa-trash"></i>

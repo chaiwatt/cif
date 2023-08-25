@@ -49,6 +49,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingController extends Controller
                 ->whereNotNull('shift_id');
         })->get();
 
+
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.time-recording.index'
         return view('groups.time-recording-system.schedulework.time-recording.index', [
             'groupUrl' => $groupUrl,
@@ -57,8 +58,8 @@ class TimeRecordingSystemScheduleWorkTimeRecordingController extends Controller
             'years' => $years,
             'months' => $months,
             'workSchedules' => $workSchedules,
-            'year' => $currentYear,
-            'month' => $currentMonth
+            'currentYear' => $currentYear,
+            'currentMonth' => $currentMonth
         ]);
 
     }

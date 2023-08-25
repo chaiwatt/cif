@@ -109,10 +109,10 @@ class EmployeeExport implements FromCollection, WithHeadings
                     $data['VisaExpiryDate'] = "\t" .$employee->visa_expiry_date;
                 } elseif ($field === 'permit_expiry_date') {
                     $data['PermitExpiryDate'] = "\t" .$employee->permit_expiry_date;
-                } elseif ($field === 'education_level') {
-                    $data['EducationLevel'] = $employee->education_level;
-                } elseif ($field === 'education_branch') {
-                    $data['EducationBranch'] = $employee->education_branch;
+                // } elseif ($field === 'education_level') {
+                //     $data['EducationLevel'] = $employee->education_level;
+                // } elseif ($field === 'education_branch') {
+                //     $data['EducationBranch'] = $employee->education_branch;
                 } elseif ($field === 'bank') {
                     $data['Bank'] = $employee->bank;
                 } elseif ($field === 'bank_account') {

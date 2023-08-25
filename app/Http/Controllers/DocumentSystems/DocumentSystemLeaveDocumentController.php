@@ -5,13 +5,16 @@ namespace App\Http\Controllers\DocumentSystems;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Leave;
+use App\Models\Month;
+use App\Models\Shift;
+use App\Models\Approver;
 use App\Models\LeaveType;
+use App\Models\LeaveDetail;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
-use App\Models\LeaveDetail;
-use App\Models\Month;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Services\UpdatedRoleGroupCollectionService;
 
@@ -44,9 +47,8 @@ class DocumentSystemLeaveDocumentController extends Controller
 
         // Retrieve Leave records with from_date equal to or greater than today
         // $leaves = Leave::where('from_date', '>=', $currentDate)->get();
-        $leaves = Leave::all();
+        $leaves = Leave::paginate(50);
         $months = Month::all();
-
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
@@ -114,7 +116,6 @@ class DocumentSystemLeaveDocumentController extends Controller
         ]);
     }
 
-
     public function delete($id)
     {
         $action = 'delete';
@@ -132,125 +133,308 @@ class DocumentSystemLeaveDocumentController extends Controller
     {
         $leaveType = LeaveType::find($request->data['leaveType']);
         $userId = $request->data['userId'];
-        $haftDayLeave = $request->data['haftDayLeave'] ?? false;
        
         $startDate = Carbon::createFromFormat('d/m/Y', $request->data['startDate'])->format('Y-m-d');
         $endDate = Carbon::createFromFormat('d/m/Y', $request->data['endDate'])->format('Y-m-d');
 
+        $startTime = $request->data['startTime'];
+        $endTime = $request->data['endTime'];
+
         $user = User::find($userId);
 
-        $holidays = $user->getHolidayDates($startDate, $endDate);
+        $startDateTime = Carbon::createFromFormat('d/m/Y H:i', $request->data['startDate'] . ' ' . $startTime);
+        $endDateTime = Carbon::createFromFormat('d/m/Y H:i', $request->data['endDate'] . ' ' . $endTime);
 
-        $formattedHolidays = $holidays->map(function ($date) {
-            return Carbon::createFromFormat('Y-m-d', $date)->format('d/m/Y');
-        });
+        $dateLists = $this->generateDateList($startDateTime, $endDateTime);
+        
+        $user = User::find($userId);
 
-        // Calculate the day count between the start date and end date, including the end date
-        $dayCount = Carbon::parse($startDate)->diffInDaysFiltered(function ($date) use ($endDate, $holidays) {
-            return !$holidays->contains($date->toDateString());
-        }, $endDate) + 1;
+        $holidays = $user->getHolidayDates($startDate, $endDate)->toArray();
 
-        $takeLeaveDates = [];
-        $currDate = Carbon::createFromFormat('Y-m-d', $startDate);
+        $formattedDates = array_map(function($date) {
+            return date_create_from_format('Y-m-d', $date)->format('d/m/Y');
+        }, $holidays);
 
-        while ($currDate->lte(Carbon::createFromFormat('Y-m-d', $endDate))) {
-            if (!$holidays->contains($currDate->format('Y-m-d'))) {
-                $takeLeaveDates[] = $currDate->format('d/m/Y');
+        $takeLeaveDates = array_diff($dateLists, $formattedDates);
+        $dayCount = count($takeLeaveDates);
+
+        $workShifts = [];
+        $notFoundShiftAssignments = [];
+        foreach ($takeLeaveDates as $takeLeaveDate){
+            $date = Carbon::createFromFormat('d/m/Y', $takeLeaveDate)->format('Y-m-d');
+            $shiftIds = $user->isShiftAssignment($date);
+            if (count($shiftIds) != 0){
+                $shift = Shift::find($shiftIds->first());
+                $workShifts[] = $shift->name;
+            }else{
+                $notFoundShiftAssignments[] = 1;
             }
-
-            $currDate->addDay();
         }
 
-        // Check if it's a half-day leave and subtract 0.5 from the day count
-        if ($haftDayLeave) {
-            $dayCount -= 0.5;
-        }
-
+        $approver = null;
+        $approvers = $user->approvers;
+        if ($approvers->isNotEmpty()) {
+            $approver = $approvers->first();
+        } 
         return view('groups.document-system.leave.document.modal-render.leave-info-modal',[
             'dayCount' => $dayCount,
             'startDate' => $request->data['startDate'],
+            'startTime' => $startTime,
             'endDate' => $request->data['endDate'],
+            'endTime' => $endTime,
             'user' => $user,
             'leaveType' => $leaveType,
-            'holidays' => $formattedHolidays,
-            'takeLeaveDates' => $takeLeaveDates
+            'holidays' => $formattedDates,
+            'takeLeaveDates' => $takeLeaveDates,
+            'approver' => $approver,
+            'workShifts' => $workShifts,
+            'notFoundShiftAssignments' => $notFoundShiftAssignments
             ])->render();
 
     }
 
     public function store(Request $request)
     {
-        $leaveId = $request->data['leaveId'];
-        $leaveType = $request->data['leaveType'];
-        $userId = $request->data['userId'];
-        $haftDayLeave = $request->data['haftDayLeave'] ?? false;
-        $haftDayLeaveType = $request->data['haftDayLeaveType'];
+        $leaveId = $request->leaveId;
+        $leaveType = $request->leaveType;
+        $userId = $request->userId;
        
-        $startDate = Carbon::createFromFormat('d/m/Y', $request->data['startDate'])->format('Y-m-d');
-        $endDate = Carbon::createFromFormat('d/m/Y', $request->data['endDate'])->format('Y-m-d');
+        $startDate = Carbon::createFromFormat('d/m/Y', $request->startDate)->format('Y-m-d');
+        $endDate = Carbon::createFromFormat('d/m/Y', $request->endDate)->format('Y-m-d');
+
+        $startTime = $request->startTime;
+        $endTime = $request->endTime;
+
+        $startDateTime = Carbon::createFromFormat('d/m/Y H:i', $request->startDate . ' ' . $startTime);
+        $endDateTime = Carbon::createFromFormat('d/m/Y H:i', $request->endDate . ' ' . $endTime);
+
+        $dateLists = $this->generateDateList($startDateTime, $endDateTime);
 
         $user = User::find($userId);
 
-        $holidays = $user->getHolidayDates($startDate, $endDate);
+        $holidays = $user->getHolidayDates($startDate, $endDate)->toArray();
 
-        $dayCount = Carbon::parse($startDate)->diffInDaysFiltered(function ($date) use ($endDate, $holidays) {
-            return !$holidays->contains($date->toDateString());
-        }, $endDate) + 1;
+        $formattedDates = array_map(function($date) {
+            return date_create_from_format('Y-m-d', $date)->format('d/m/Y');
+        }, $holidays);
 
-        $takeLeaveDates = [];
-        $currDate = Carbon::createFromFormat('Y-m-d', $startDate);
-
-        while ($currDate->lte(Carbon::createFromFormat('Y-m-d', $endDate))) {
-            if (!$holidays->contains($currDate->format('Y-m-d'))) {
-                $takeLeaveDates[] = $currDate->format('d/m/Y');
-            }
-
-            $currDate->addDay();
-        }
+        $takeLeaveDates = array_diff($dateLists, $formattedDates);
+        $dayCount = count($takeLeaveDates);
 
         if (!isset($leaveId)) {
+            $approver = User::find($userId)->approvers->first();
+            $authorizedUserIds = $approver->authorizedUsers->pluck('id')->toArray();
+
+            $approvedList = collect($authorizedUserIds)->map(function ($userId) {
+                return ['user_id' => $userId, 'status' => 0];
+            });
+            $filePath = null;
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $filePath = $file->store('', 'attachments');
+            }
             $leave = Leave::create([
                 'user_id' => $userId,
                 'leave_type_id' => $leaveType,
-                'from_date' => $startDate,
-                'to_date' => $endDate,
+                'from_date' => $startDate . ' ' . $startTime,
+                'to_date' => $endDate . ' ' . $endTime,
                 'duration' => $dayCount,
-                'half_day' => $request->data['haftDayLeave'],
-                'half_day_type' => $haftDayLeaveType,
+                'attachment' => $filePath,
+                'approved_list' => $approvedList->toJson(),
             ]);
-
-            foreach($takeLeaveDates as $takeLeaveDate)
-            {
-                $leaveDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDate)->format('Y-m-d');
+            if (count($takeLeaveDates) == 1){
                 LeaveDetail::firstOrCreate([
                     'leave_id' => $leave->id,
-                    'from_date' => $leaveDate,
-                    'to_date' => $leaveDate
+                    'from_date' => $startDate . ' ' . $startTime,
+                    'to_date' => $endDate . ' ' . $endTime,
+                ]);
+                
+            }else if(count($takeLeaveDates) == 2 ) {
+                $startDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDates[0])->format('Y-m-d');
+                $endDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDates[1])->format('Y-m-d');
+                $shiftId = $user->isShiftAssignment($startDate)->first();
+                $shift = Shift::find($shiftId);
+                LeaveDetail::Create([
+                    'leave_id' => $leave->id,
+                    'from_date' => $startDate . ' ' . $startTime,
+                    'to_date' => $startDate . ' ' . $shift->end,
+                ]);
+                LeaveDetail::Create([
+                    'leave_id' => $leave->id,
+                    'from_date' => $endDate . ' ' . $shift->start,
+                    'to_date' => $endDate . ' ' . $endTime,
+                ]);
+            }else if(count($takeLeaveDates) > 2 ) {
+                $firstItem = reset($takeLeaveDates);
+                $lastItem = end($takeLeaveDates);
+                $datesWithoutFirstLasts = array_slice($takeLeaveDates, 1, -1);
+
+                $date = Carbon::createFromFormat('d/m/Y', $firstItem)->format('Y-m-d');
+                $shiftId = $user->isShiftAssignment($date)->first();
+                $shift = Shift::find($shiftId);
+                LeaveDetail::Create([
+                    'leave_id' => $leave->id,
+                    'from_date' => $date . ' ' . $startTime,
+                    'to_date' => $date . ' ' . $shift->end,
+                ]);
+                
+                foreach($datesWithoutFirstLasts as $datesWithoutFirstLast)
+                {
+                    $date = Carbon::createFromFormat('d/m/Y', $datesWithoutFirstLast)->format('Y-m-d');
+                    $shiftId = $user->isShiftAssignment($date)->first();
+                    $shift = Shift::find($shiftId);
+                    LeaveDetail::firstOrCreate([
+                        'leave_id' => $leave->id,
+                        'from_date' => $date . ' ' . $shift->start,
+                        'to_date' => $date . ' ' . $shift->end,
+                    ]);
+                }
+                $date = Carbon::createFromFormat('d/m/Y', $lastItem)->format('Y-m-d');
+                $shiftId = $user->isShiftAssignment($date)->first();
+                $shift = Shift::find($shiftId);
+                LeaveDetail::Create([
+                    'leave_id' => $leave->id,
+                    'from_date' => $date . ' ' . $shift->start,
+                    'to_date' => $date . ' ' . $endTime,
                 ]);
             }
+
         } else {
+            
             LeaveDetail::where('leave_id',$leaveId)->delete();
-            $leave = Leave::find($leaveId)->update([
+            $approver = User::find($userId)->approvers->first();
+            $authorizedUserIds = $approver->authorizedUsers->pluck('id')->toArray();
+
+            $approvedList = collect($authorizedUserIds)->map(function ($userId) {
+                return ['user_id' => $userId, 'status' => 0];
+            });
+
+            
+            $leave = Leave::find($leaveId);
+            $filePath = $leave->attachment;
+             if ($request->hasFile('file')) {
+                // dd('here');
+                // Storage::disk('attachments')->delete($filePath);
+                if ($filePath !== null) {
+                    Storage::disk('attachments')->delete($filePath);
+                }
+                $file = $request->file('file');
+                $filePath = $file->store('', 'attachments');
+            }
+            Leave::find($leaveId)->update([
                 'user_id' => $userId,
                 'leave_type_id' => $leaveType,
-                'from_date' => $startDate,
-                'to_date' => $endDate,
+                'from_date' => $startDate . ' ' . $startTime,
+                'to_date' => $endDate . ' ' . $endTime,
                 'duration' => $dayCount,
-                'half_day' => $request->data['haftDayLeave'],
-                'half_day_type' => $haftDayLeaveType,
+                'attachment' => $filePath,
+                'approved_list' => $approvedList->toJson(),
             ]);
             $leave = Leave::find($leaveId);
-            foreach($takeLeaveDates as $takeLeaveDate)
-            {
-                $leaveDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDate)->format('Y-m-d');
+
+            if (count($takeLeaveDates) == 1){
                 LeaveDetail::firstOrCreate([
                     'leave_id' => $leave->id,
-                    'from_date' => $leaveDate,
-                    'to_date' => $leaveDate
+                    'from_date' => $startDate . ' ' . $startTime,
+                    'to_date' => $endDate . ' ' . $endTime,
+                ]);
+            }else if(count($takeLeaveDates) == 2 ) {
+                $startDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDates[0])->format('Y-m-d');
+                $endDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDates[1])->format('Y-m-d');
+                $shiftId = $user->isShiftAssignment($startDate)->first();
+                $shift = Shift::find($shiftId);
+                LeaveDetail::firstOrCreate([
+                    'leave_id' => $leave->id,
+                    'from_date' => $startDate . ' ' . $startTime,
+                    'to_date' => $startDate . ' ' . $shift->end,
+                ]);
+                LeaveDetail::firstOrCreate([
+                    'leave_id' => $leave->id,
+                    'from_date' => $endDate . ' ' . $shift->start,
+                    'to_date' => $endDate . ' ' . $endTime,
+                ]);
+            }else if(count($takeLeaveDates) > 2 ) {
+                $firstItem = reset($takeLeaveDates);
+                $lastItem = end($takeLeaveDates);
+                $datesWithoutFirstLasts = array_slice($takeLeaveDates, 1, -1);
+
+                $date = Carbon::createFromFormat('d/m/Y', $firstItem)->format('Y-m-d');
+                $shiftId = $user->isShiftAssignment($date)->first();
+                $shift = Shift::find($shiftId);
+                LeaveDetail::firstOrCreate([
+                    'leave_id' => $leave->id,
+                    'from_date' => $date . ' ' . $startTime,
+                    'to_date' => $date . ' ' . $shift->end,
+                ]);
+                
+                foreach($datesWithoutFirstLasts as $datesWithoutFirstLast)
+                {
+                    $date = Carbon::createFromFormat('d/m/Y', $datesWithoutFirstLast)->format('Y-m-d');
+                    $shiftId = $user->isShiftAssignment($date)->first();
+                    $shift = Shift::find($shiftId);
+                    LeaveDetail::firstOrCreate([
+                        'leave_id' => $leave->id,
+                        'from_date' => $date . ' ' . $shift->start,
+                        'to_date' => $date . ' ' . $shift->end,
+                    ]);
+                }
+                $date = Carbon::createFromFormat('d/m/Y', $lastItem)->format('Y-m-d');
+                $shiftId = $user->isShiftAssignment($date)->first();
+                $shift = Shift::find($shiftId);
+                LeaveDetail::firstOrCreate([
+                    'leave_id' => $leave->id,
+                    'from_date' => $date . ' ' . $shift->start,
+                    'to_date' => $date . ' ' . $endTime,
                 ]);
             }
         }
         return;
+    }
 
+    public function getAttachment(Request $request)
+    {
+        $leaveId = $request->data['leaveId'];
+        $leave = Leave::find($leaveId);
+        return response()->json($leave);
+    }
+
+    public function generateDateList($startDateTime, $endDateTime)
+    {
+        $dateList = [];
+        if ($startDateTime->format('Y-m-d') === $endDateTime->format('Y-m-d')) {
+            $dateList[] = $startDateTime->format('d/m/Y');
+        } else {
+            // Generate and add intermediate dates to the list
+            while ($startDateTime->lte($endDateTime)) {
+                $dateList[] = $startDateTime->format('d/m/Y');
+                $startDateTime->addDay();
+            }
+        }
+        return $dateList;
+    }
+
+    public function search(Request $request)
+    {
+
+        $searchString =$request->data;
+
+        $leaves = Leave::whereHas('user', function ($query) use ($searchString) {
+            $query->where('employee_no', 'like', '%' . $searchString . '%')
+                ->orWhere('name', 'like', '%' . $searchString . '%')
+                ->orWhere('lastname', 'like', '%' . $searchString . '%')
+                ->orWhereHas('company_department', function ($subQuery) use ($searchString) {
+                    $subQuery->where('name', 'like', '%' . $searchString . '%');
+                })
+                ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
+                    $subQuery->where('name', 'like', '%' . $searchString . '%')
+                    ->orWhere('code', 'like', '%' . $searchString . '%');
+                });
+        })
+        ->paginate(50);
+
+
+        return view('groups.document-system.leave.document.table-render.leave-table-render',[
+            'leaves' => $leaves
+            ])->render();
     }
 }

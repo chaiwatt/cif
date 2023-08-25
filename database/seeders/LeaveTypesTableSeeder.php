@@ -18,6 +18,9 @@ class LeaveTypesTableSeeder extends Seeder
             'name' =>'ลากิจ'
             ],
             [
+            'name' =>'ลากิจพิเศษ'
+            ],
+            [
             'name' =>'ลาป่วย'
             ],
             [

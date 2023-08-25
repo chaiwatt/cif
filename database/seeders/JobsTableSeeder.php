@@ -41,9 +41,21 @@ class JobsTableSeeder extends Seeder
         ]);
         Job::create([
             'code' => 'TIME-RECORDING-CHECK',
-            'name' => 'ตรวจสอบบันทึกเวลา',
+            'name' => 'ตรวจสอบเวลา',
             'route' => 'groups.time-recording-system.schedulework.time-recording-check',  
             'view' => 'groups.time-recording-system.schedulework.time-recording-check.index',
+        ]);
+        Job::create([
+            'code' => 'TIME-RECORDING-CURRENT-PAYDAY',
+            'name' => 'บันทึกเวลารอบปัจจุบัน',
+            'route' => 'groups.time-recording-system.schedulework.time-recording-current-payday',  
+            'view' => 'groups.time-recording-system.schedulework.time-recording-current-payday.index',
+        ]);
+        Job::create([
+            'code' => 'TIME-RECORDING-CHECK-CURRENT-PAYDAY',
+            'name' => 'ตรวจสอบเวลารอบปัจจุบัน',
+            'route' => 'groups.time-recording-system.schedulework.time-recording-check-current-payday',  
+            'view' => 'groups.time-recording-system.schedulework.time-recording-check-current-payday.index',
         ]);
         Job::create([
             'code' => 'EMPLOYEE-GROUP',
@@ -64,40 +76,40 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.time-recording-system.report.index',
         ]);
         Job::create([
-            'code' => 'EXTRA-EARN-AGREEMENT',
-            'name' => 'ข้อตกลงเงินเพิ่ม',
-            'route' => Null,
-            'view' => Null
+            'code' => 'SALARY-CALCULATION',
+            'name' => 'คำนวนเงินเดือน',
+            'route' => 'groups.salary-system.salary.calculation',
+            'view' => 'groups.salary-system.salary.calculation.index'
         ]);
         Job::create([
-            'code' => 'DEDUCTION-AGREEMENT',
-            'name' => 'ข้อตกลงเงินหัก',
-            'route' => Null,
-            'view' => Null
+            'code' => 'INCOME-DEDUCT-ASSIGNMENT',
+            'name' => 'เพิ่มเงินได้ / เงินหัก',
+            'route' => 'groups.salary-system.salary.income-deduct-assignment',
+            'view' => 'groups.salary-system.salary.income-deduct-assignment.index'
         ]);
         Job::create([
-            'code' => 'SARALY-JOB-ONE',
-            'name' => 'Jobระบบเงินเดือน1',
-            'route' => Null,
-            'view' => Null
-        ]);
-        Job::create([
-            'code' => 'SARALY-JOB-TWO',
-            'name' => 'Jobระบบเงินเดือน2',
-            'route' => Null,
-            'view' => Null
-        ]);
-        Job::create([
-            'code' => 'SARALY-JOB-THREE',
-            'name' => 'Jobระบบเงินเดือน3',
-            'route' => Null,
-            'view' => Null
-        ]);
-        Job::create([
-            'code' => 'SARALY-PAYDAY',
+            'code' => 'SALARY-PAYDAY',
             'name' => 'รอบคำนวนเงินเดือน',
             'route' => 'groups.salary-system.setting.payday',
             'view' => 'groups.salary-system.setting.payday.index'
+        ]);
+        Job::create([
+            'code' => 'SALARY-SKILL-BASED-COST',
+            'name' => 'ค่าทักษะ',
+            'route' => 'groups.salary-system.setting.skill-based-cost',
+            'view' => 'groups.salary-system.setting.skill-based-cost.index'
+        ]);
+        Job::create([
+            'code' => 'INCOME-DEDUCT',
+            'name' => 'เงินได้ / เงินหัก',
+            'route' => 'groups.salary-system.setting.income-deduct',
+            'view' => 'groups.salary-system.setting.income-deduct.index'
+        ]);
+        Job::create([
+            'code' => 'DILIGENCE-ALLOWANCE',
+            'name' => 'เบี้ยขยัน',
+            'route' => 'groups.salary-system.setting.diligence-allowance',
+            'view' => 'groups.salary-system.setting.diligence-allowance.index'
         ]);
         Job::create([
             'code' => 'DOCUMENT-LEAVE',
@@ -128,6 +140,12 @@ class JobsTableSeeder extends Seeder
             'name' => 'การอนุมัติ',
             'route' => 'groups.document-system.setting.approve-document',
             'view' => 'groups.document-system.setting.approve-document.index'
+        ]);
+        Job::create([
+            'code' => 'USER-INFO',
+            'name' => 'ข้อมูลพนักงาน',
+            'route' => 'groups.user-management-system.setting.userinfo',
+            'view' => 'groups.user-management-system.setting.userinfo.index'
         ]);
     }
 }

@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('approvers', function (Blueprint $table) {
             $table->id();
+            $table->string('code',50)->nullable();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('document_type_id');
             $table->unsignedBigInteger('company_department_id');
-            $table->unsignedBigInteger('approver_one_id');
-            $table->unsignedBigInteger('approver_two_id')->nullable();
             $table->timestamps();
         });
     }

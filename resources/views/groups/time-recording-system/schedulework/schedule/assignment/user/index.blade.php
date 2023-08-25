@@ -35,9 +35,18 @@
                             </a>
                         </div>
                         <div>
+                            <span>หรือนำเข้าจากรหัสพนักงาน</span>
+                        </div>
+                        <div class="form-group ml-2 mr-2">
+                            <a class="btn btn-primary " href="" id="import-employee-code">
+                                <i class="fas fa-plus mr-1"></i>
+                                รหัสพนักงาน
+                            </a>
+                        </div>
+                        <div>
                             <span>หรือนำเข้าจากกลุ่มพนักงาน</span>
                         </div>
-                        <div class="form-group ml-2" style="width: 300px;">
+                        <div class="form-group ml-2 mr-2" style="width: 300px;">
                             <select name="userGroup" id="userGroup"
                                 class="form-control select2 @error('userGroup') is-invalid @enderror"
                                 style="width: 100%;">
@@ -74,7 +83,7 @@
                                                         <th class="text-right">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="approver_tbody">
+                                                <tbody>
                                                     @foreach ($users as $key => $user)
                                                     <tr>
                                                         <td>{{$key+1}}</td>
@@ -107,6 +116,28 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-import-employee-code">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="employee-code">รหัสพนักงานแถวละ 1 รายการ</label>
+                                <textarea class="form-control" id="employee-code" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-primary float-right"
+                                id="btn-import-employee-code">เพิ่มรายการ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @push('scripts')
     <script type="module"
         src="{{asset('assets/js/helpers/time-recording-system/schedule/assignment/assignment.js?v=1')}}">
@@ -116,6 +147,7 @@
         $('.select2').select2()
     window.params = {
         importUserGroupRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.import-user-group') }}',
+        importEmployeeNoRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.import-employee-no') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

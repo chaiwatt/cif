@@ -239,4 +239,33 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
 
         return $users;
     }
+
+    public function importEmployeeNo(Request $request)
+    {
+        $employeeNos = $request->data['employeeNos'];
+        $workScheduleId = $request->data['workScheduleId'];
+        $month = $request->data['month'];
+        $year = $request->data['year'];
+        // dd($employeeNos);
+        // dd($employeeNos,$workScheduleId,$month,$year);
+        $users = User::whereIn('employee_no',$employeeNos)->get();
+        foreach ($users as $user) {
+            // ค้นหา WorkScheduleAssignment ที่ตรงกับ workScheduleId, month, year และเก็บในตัวแปร $workScheduleAssignments
+            $workScheduleAssignments = WorkScheduleAssignment::where('work_schedule_id', $workScheduleId)
+                ->where('month_id', $month)
+                ->where('year', $year)
+                ->get();
+
+            // ลบการกำหนดงานใน WorkScheduleAssignment ของผู้ใช้นั้น
+            $user->detachWorkScheduleAssignments($workScheduleId, $month, $year);
+
+            // กำหนดการกำหนดงานใหม่ใน WorkScheduleAssignment ของผู้ใช้นั้น
+            $user->attachWorkScheduleAssignments($workScheduleAssignments);
+        }
+                    // กำหนด URL สำหรับ redirect
+            $url = "groups/time-recording-system/schedulework/schedule/assignment/user/{$workScheduleId}/year/{$year}/month/{$month}";
+            
+            // ทำการ redirect ไปยัง URL ที่กำหนด
+            return redirect()->to($url);
+    }
 }

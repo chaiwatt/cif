@@ -67,6 +67,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">ตารางทำงาน</h3>
+
                         </div>
                         <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
@@ -84,16 +85,18 @@
                                     <tr>
                                         <td>{{$key +1}}</td>
                                         <td>{{$workSchedule->name}}</td>
-                                        <td>{{$workSchedule->monthName($month)}} {{$year}}</td>
+                                        <td>{{$workSchedule->monthName($currentMonth)}} {{$year}}</td>
                                         <td>@php
                                             $workScheduleMonthNote =
-                                            $workSchedule->getWorkScheduleMonthNoteByYearAndMonth($year, $month);
+                                            $workSchedule->getWorkScheduleMonthNoteByYearAndMonth($year, $currentMonth);
+
                                             @endphp
                                             @if ($workScheduleMonthNote)
                                             {{ $workScheduleMonthNote->note }}
-                                            @else
-                                            Note not available
-                                            @endif</td>
+
+                                            @endif
+
+                                        </td>
                                         <td class="text-right">
                                             <a class="btn btn-info btn-sm"
                                                 href="{{route('groups.time-recording-system.schedulework.time-recording-check.view',['workScheduleId' => $workSchedule->id,'year' => $currentYear,'month' => $currentMonth])}}">
@@ -124,6 +127,7 @@
     $('.select2').select2();
         window.params = {
             searchRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.search') }}',
+            
             url: '{{ url('/') }}',
             token: $('meta[name="csrf-token"]').attr('content')
         };  

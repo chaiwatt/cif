@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('leave_id');
             $table->foreign('leave_id')->references('id')->on('leaves')->onDelete('cascade');
-            $table->date('from_date')->nullable();
-            $table->date('to_date')->nullable();
+            $table->dateTime('from_date')->nullable();
+            $table->dateTime('to_date')->nullable();
             $table->timestamps();
         });
     }

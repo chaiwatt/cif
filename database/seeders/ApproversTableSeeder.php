@@ -17,27 +17,22 @@ class ApproversTableSeeder extends Seeder
     public function run()
     {
         Approver::create([
+            'code' => 'L-001',
             'name' => 'เอกสารการลา1',
             'document_type_id' => 1,
-            'company_department_id' => 1,
-            'approver_one_id' => 1,
-            'approver_two_id' => 2
+            'company_department_id' => 1
         ]);
         Approver::create([
-            'name' => 'เอกสารโอที1',
+            'code' => 'OT-001',
+            'name' => 'โอที รายวัน NNDDN (17.00-02.00 เวียน 08.00-17.00) กะดึก',
             'document_type_id' => 2,
-            'company_department_id' => 1,
-            'approver_one_id' => 1,
-            'approver_two_id' => 3
+            'company_department_id' => 1
         ]);
 
         $approver1 = Approver::find(1);
-        $userID1 = 4;
+        $approver1->authorizedUsers()->attach([1,4]);
         $approver2 = Approver::find(2);
-        $userID2 = 4;
-
-        // $user = User::find(310);
-        // dd($user->employee_no);
+        $approver2->authorizedUsers()->attach([1]);
 
         $approver1->users()->attach(User::where('employee_no',170094)->first()->id);
         $approver1->users()->attach(User::where('employee_no',170107)->first()->id);
@@ -52,6 +47,6 @@ class ApproversTableSeeder extends Seeder
         $approver1->users()->attach(User::where('employee_no',200001)->first()->id);
         $approver1->users()->attach(User::where('employee_no',200084)->first()->id);
 
-        $approver2->users()->attach($userID2);
+        $approver2->users()->attach(User::where('employee_no',100530)->first()->id);
     }
 }

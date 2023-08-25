@@ -20,6 +20,14 @@
     </div>
     <div class="content">
         <div class="container-fluid">
+            @if($errors->has('error_out_payday_range'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> ผิดพลาด</h5>
+                ไม่สามารถใช้ฟังก์ชั่นนี้นอกช่วงเวลาคำนวนเงินเดือน
+            </div>
+            @endif
+
             <div class="card card-info card-outline">
                 <div class="card-body">
                     <div class="row">
@@ -83,7 +91,7 @@
                                     <tr>
                                         <td>{{$key +1}}</td>
                                         <td>{{$workSchedule->name}}</td>
-                                        <td>{{$workSchedule->monthName($month)}} {{$year}}</td>
+                                        <td>{{$workSchedule->monthName($currentMonth)}} {{$year}}</td>
                                         <td class="text-right">
                                             <a class="btn btn-info btn-sm"
                                                 href="{{route('groups.time-recording-system.schedulework.time-recording.import',['workScheduleId' => $workSchedule->id,'year' => $currentYear,'month' => $currentMonth])}}">

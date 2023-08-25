@@ -31,8 +31,8 @@ class ModuleGroupsTableSeeder extends Seeder
             $timeRecordingReport->id
         ]);
 
-        $salaryManagement = Group::where('code','SARALY-MANAGEMENT')->first();
-        $salaryModuleSetting = Module::where('code','SARALY-MODULE-SETTING')->first();
+        $salaryManagement = Group::where('code','SALARY-MANAGEMENT')->first();
+        $salaryModuleSetting = Module::where('code','SALARY-MODULE-SETTING')->first();
         $salaryManagement->modules()->attach([
             $salaryModuleSetting->id
         ]);
@@ -45,6 +45,13 @@ class ModuleGroupsTableSeeder extends Seeder
             $documentLeave->id,
             $documentOvertime->id,
             $documentApproveSetting->id,
+        ]);
+
+        $userManagement = Group::where('code','USER-MANAGEMENT')->first();
+        $userManagementModuleSetting = Module::where('code','USER-MANAGEMENT-MODULE-SETTING')->first();
+
+        $userManagement->modules()->attach([
+            $userManagementModuleSetting->id
         ]);
     }
 }

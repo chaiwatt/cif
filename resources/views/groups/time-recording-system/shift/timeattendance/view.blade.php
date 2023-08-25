@@ -105,35 +105,24 @@
                                     </div>
 
                                     <div class="col-md-6">
+
+
                                         <div class="form-group">
-                                            <label>เวลาบันทึกเข้างาน</label>
-                                            <div class="input-group date" id="timepicker_record_start"
-                                                data-target-input="nearest">
-                                                <input type="text" name="timepicker_record_start"
-                                                    value="{{old('timepicker_record_start') ?? $shift->record_start}}"
-                                                    class="form-control datetimepicker-input @error('timepicker_record_start') is-invalid @enderror"
-                                                    data-target="#timepicker_record_start">
-                                                <div class="input-group-append" data-target="#timepicker_record_start"
-                                                    data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
-                                                </div>
-                                            </div>
+                                            <label>เวลาบันทึกเข้า (ชั่วโมง)<span
+                                                    class="small text-danger">*</span></label>
+                                            <input type="text" name="record_start_hour"
+                                                value="{{old('record_start_hour') ?? $shift->record_start}}"
+                                                class="form-control numericInputSingle @error('record_start_hour') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+
                                         <div class="form-group">
-                                            <label>เวลาบันทึกออกงาน</label>
-                                            <div class="input-group date" id="timepicker_record_end"
-                                                data-target-input="nearest">
-                                                <input type="text" name="timepicker_record_end"
-                                                    value="{{old('timepicker_record_end') ?? $shift->record_end}}"
-                                                    class="form-control datetimepicker-input @error('timepicker_record_end') is-invalid @enderror"
-                                                    data-target="#timepicker_record_end">
-                                                <div class="input-group-append" data-target="#timepicker_record_end"
-                                                    data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
-                                                </div>
-                                            </div>
+                                            <label>เวลาบันทึกออก (ชั่วโมง)<span
+                                                    class="small text-danger">*</span></label>
+                                            <input type="text" name="record_end_hour"
+                                                value="{{old('record_end_hour') ?? $shift->record_end}}"
+                                                class="form-control numericInputSingle @error('record_end_hour') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -191,7 +180,7 @@
                                             <label>จำนวนชั่วโมงงาน<span class="small text-danger">*</span></label>
                                             <input type="text" name="duration"
                                                 value="{{old('duration') ?? $shift->duration}}"
-                                                class="form-control numericInput @error('duration') is-invalid @enderror">
+                                                class="form-control numericInputSingle @error('duration') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -232,7 +221,7 @@
     const timepickerConfig = {
         format: 'HH:mm'
     };
-    $('#timepicker_start, #timepicker_end, #timepicker_record_start, #timepicker_record_end, #timepicker_break_start,#timepicker_break_end').datetimepicker(timepickerConfig);  
+    $('#timepicker_start, #timepicker_end, #record_start_hour, #record_end_hour, #timepicker_break_start,#timepicker_break_end').datetimepicker(timepickerConfig);  
 
 </script>
 @endpush

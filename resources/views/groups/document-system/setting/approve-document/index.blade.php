@@ -1,18 +1,21 @@
 @extends('layouts.dashboard')
 
 @section('content')
+@push('styles')
+
+@endpush
 @include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">กลุ่มอนุมัติ</h1>
+                    <h1 class="m-0">สายอนุมัติ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">กลุ่มอนุมัติ</li>
+                        <li class="breadcrumb-item active">สายอนุมัติ</li>
                     </ol>
                 </div>
             </div>
@@ -23,13 +26,13 @@
             <a class="btn btn-primary mb-2" href="{{route('groups.document-system.setting.approve-document.create')}}">
                 <i class="fas fa-plus mr-1">
                 </i>
-                เพิ่มกลุ่มอนุมัติ
+                เพิ่มสายอนุมัติ
             </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">กลุ่มอนุมัติ</h3>
+                            <h3 class="card-title">สายอนุมัติ</h3>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
@@ -38,28 +41,25 @@
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>การอนุมัติ</th>
+                                                    <th>รหัส</th>
+                                                    <th>สายอนุมัติ</th>
                                                     <th>แผนก</th>
                                                     <th>ประเภทเอกสาร</th>
-                                                    <th>ผู้อนุมัติลำดับที่ 1</th>
-                                                    <th>ผู้อนุมัติลำดับที่ 2</th>
+                                                    <th>ผู้อนุมัติ</th>
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="approver_tbody">
+                                            <tbody>
                                                 @foreach ($approvers as $key=> $approver)
                                                 <tr>
-                                                    <td>{{$key+1}}</td>
+                                                    <td>{{$approver->code}}</td>
                                                     <td>{{$approver->name}}</td>
                                                     <td>{{$approver->company_department->name}}</td>
                                                     <td>{{$approver->document_type->name}}</td>
-                                                    <td>{{$approver->approver_one->name}}
-                                                        {{$approver->approver_one->lastname}}</td>
-                                                    <td>@if ($approver->approver_two)
-                                                        {{$approver->approver_two->name}}
-                                                        {{$approver->approver_two->lastname}}
-                                                        @endif
+                                                    <td>
+                                                        @foreach ($approver->authorizedUsers as $user)
+                                                        {{$user->name}} {{$user->lastname}} <br>
+                                                        @endforeach
                                                     </td>
                                                     <td class="text-right">
 
@@ -72,10 +72,10 @@
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
                                                         <a class="btn btn-danger btn-sm"
-                                                            data-confirm='ลบกลุ่มอนุมัติ "{{$approver->name}} {{$approver->lastname}}" หรือไม่?'
+                                                            data-confirm='ลบสายอนุมัติ "{{$approver->name}} {{$approver->lastname}}" หรือไม่?'
                                                             href="#" data-id="{{$approver->id}}"
                                                             data-delete-route="{{ route('groups.document-system.setting.approve-document.delete', ['id' => '__id__']) }}"
-                                                            data-message="กลุ่มอนุมัติ">
+                                                            data-message="สายอนุมัติ">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>

@@ -11,16 +11,6 @@ var Toast = Swal.mixin({
 
 $(document).on('click', '#show_modal', function (e) {
     $('#modal-date-range').modal('show');
-    // var todayDate = moment().format('DD/MM/YYYY');
-    // var startDateVal = $('#startDate').val().trim();
-    // var endDateVal = $('#endDate').val().trim();
-    // if (startDateVal === '') {
-    //     $('#startDate').val(todayDate);
-    // }
-
-    // if (endDateVal === '') {
-    //     $('#endDate').val(todayDate);
-    // }
 });
 
 $(document).on('click', '#check-time-record', function (e) {
@@ -58,6 +48,8 @@ $(document).on('click', '#check-time-record', function (e) {
     RequestApi.postRequest(data, timeRecordCheckUrl, token).then(response => {
         $('#table_container').html(response);
         $('#modal-date-range').modal('hide');
+        $('#filter-container').show();
+        
     }).catch(error => {
 
     })
@@ -93,8 +85,11 @@ $(document).on('click', '#user', function (e) {
 });
 
 $(document).on('click', '.btnSaveBtn', function (e) {
+    console.log('ok');
     // Prevent the default click behavior (if necessary)
     e.preventDefault();
+    var filter = $('.btn-group-toggle input[type="radio"]:checked').attr('id').split('_')[1];
+    // var page = $(this).attr('href').split('page=')[1];
 
     // Get the corresponding row of the clicked button
     var row = $(this).closest('tr');
@@ -116,7 +111,7 @@ $(document).on('click', '.btnSaveBtn', function (e) {
     var year = $('#year').val();
 
     var updateUrl = window.params.updateRoute;
-
+  
 
     var data = {
         'timeInValue': timeInValue,
@@ -128,10 +123,19 @@ $(document).on('click', '.btnSaveBtn', function (e) {
         'workScheduleId': workScheduleId,
         'year': year,
     }
-
+    
+    data.filter = filter;
+    
     RequestApi.postRequest(data, updateUrl, token).then(response => {
         $('#table_container').html(response);
         $('#error_' + workScheduleAssignmentUserId).hide();
+        if (timeInValue === '' && timeOutValue === '') {
+            var timeInInput = row.find('input[id^="time_in"]');
+            var timeOutInput = row.find('input[id^="time_out"]');
+
+            timeInInput.val('00:00:00');
+            timeOutInput.val('00:00:00');
+        }
         Toast.fire({
             icon: 'success',
             title: 'แก้ไขรายการสำเร็จ เวลาเข้า ' + timeInValue + ' เวลาออก ' + timeOutValue
@@ -203,5 +207,170 @@ function isEndDateAfterStartDate(startDate, endDate) {
 
     return true;
 }
+
+
+$(document).on('click', '.btnAttachment', function (e) {
+    e.preventDefault();
+    var workScheduleAssignmentId = $(this).data('id');
+    var getImageUrl = window.params.getImageRoute;
+    $('#workScheduleAssignmentUserId').val(workScheduleAssignmentId);
+    
+    var data = {
+        'workScheduleAssignmentId': workScheduleAssignmentId
+    }
+    console.log(workScheduleAssignmentId)
+    RequestApi.postRequest(data, getImageUrl, token).then(response => {
+        var imageUrl = response.file;
+        var baseUrl = window.location.origin; // Get the base URL of the application
+        
+        if (imageUrl) {
+            var workScheduleAssignmentUserFileId = response.id;
+            $('#workScheduleAssignmentUserFileId').val(workScheduleAssignmentUserFileId);
+            // console.log(workScheduleAssignmentUserFileId)
+            var fullImageUrl = baseUrl + '/storage/uploads/attachment/' + imageUrl;
+            $('#modal-attachment').modal('show');
+            $('#modal-attachment img').attr('src', fullImageUrl);
+            $('#delete-image').attr('data-id', workScheduleAssignmentUserFileId);
+            $('#delete-image').removeClass('d-none'); // Show the "ลบ" button
+            $('#btnAddFile').addClass('d-none'); 
+        } else {
+            $('#modal-attachment').modal('show');
+            $('#modal-attachment img').removeAttr('src');
+        }
+    }).catch(error => {
+
+    })
+});
+
+$(document).on('click', '#btnAddFile', function (e) {
+    e.preventDefault();
+    $('#file-input').trigger('click');
+});
+
+$(document).on('change', '#file-input', function (event) {
+    
+    var fileInput = event.target;
+    var uploadImageUrl = window.params.uploadImageRoute;
+    var workScheduleAssignmentId = $('#workScheduleAssignmentUserId').val();
+
+    var formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('workScheduleAssignmentId', workScheduleAssignmentId);
+
+
+    RequestApi.postRequestFormData(formData, uploadImageUrl, token).then(response => {
+        var workScheduleAssignmentUserFileId = response.id;
+        var imageUrl = response.file;
+        var baseUrl = window.location.origin; // Get the base URL of the application
+        $('#workScheduleAssignmentUserFileId').val(workScheduleAssignmentUserFileId);
+        if (imageUrl) {
+            var fullImageUrl = baseUrl + '/storage/uploads/attachment/' + imageUrl;
+            $('#modal-attachment').modal('show');
+            $('#modal-attachment img').attr('src', fullImageUrl);
+            $('#delete-image').attr('data-id', workScheduleAssignmentUserFileId);
+            $('#delete-image').removeClass('d-none'); // Show the "ลบ" button
+            $('#btnAddFile').addClass('d-none'); // Show the "ลบ" button
+        } else {
+            $('#modal-attachment').modal('show');
+            $('#modal-attachment img').removeAttr('src');
+
+        }
+        $('#file-input').val('');
+    }).catch(error => {
+
+    })
+});
+
+$(document).on('click', '#delete-image', function (e) {
+    e.preventDefault();
+    var workScheduleAssignmentUserFileId = $('#workScheduleAssignmentUserFileId').val();
+    var deleteImageDelete = window.params.deleteImageRoute;
+
+    var data = {
+        'workScheduleAssignmentUserFileId': workScheduleAssignmentUserFileId
+    }
+    RequestApi.postRequest(data, deleteImageDelete, token).then(response => {
+        $('#modal-attachment img').removeAttr('src'); 
+        $('#delete-image').attr('data-id', '');
+        $('#delete-image').addClass('d-none');
+        $('#modal-attachment').modal('hide');
+        $('#btnAddFile').removeClass('d-none');
+    }).catch(error => {
+
+    })
+});
+
+$(document).on('click', '.show-leave-attachment', function (e) {
+    e.preventDefault();
+    var workScheduleAssignmentUserId = $(this).data('id');
+    var data = {
+        'workScheduleAssignmentUserId': workScheduleAssignmentUserId
+    }
+    var getLeaveAttachmentUrl = window.params.getLeaveAttachmentRoute;
+
+    RequestApi.postRequest(data, getLeaveAttachmentUrl, token).then(response => {
+        var imageUrl = response;
+        var baseUrl = window.location.origin;
+        var fullImageUrl = baseUrl + '/storage/uploads/attachment/' + imageUrl;
+        $('#modal-leave-attachment').modal('show');
+        $('#modal-leave-attachment img').attr('src', fullImageUrl);
+    }).catch(error => {
+
+    })
+});
+
+$(document).on('click', '.pagination a', function (e) {
+    e.preventDefault();
+    var filter = $('.btn-group-toggle input[type="radio"]:checked').attr('id').split('_')[1];
+    var page = $(this).attr('href').split('page=')[1];
+    var data = {
+        'startDate': $('#startDate').val(),
+        'endDate': $('#endDate').val(),
+        'monthId': $('#month_id').val(),
+        'workScheduleId': $('#work_schedule_id').val(),
+        'year': $('#year').val(),
+    };
+    var timeRecordCheckUrl = window.params.timeRecordCheckRoute;
+
+    data.page = page; 
+    data.filter = filter;
+    
+    RequestApi.postRequest(data, timeRecordCheckUrl, token)
+        .then(response => {
+            $('#table_container').html(response);
+            // $('#modal-date-range').modal('hide');
+        })
+        .catch(error => {
+            // Handle error if necessary
+        });
+});
+
+$('.btn-group-toggle input[type="radio"]').on('change', function () {
+    var filter = $(this).attr('id').split('_')[1];
+    var data = {
+        'startDate': $('#startDate').val(),
+        'endDate': $('#endDate').val(),
+        'monthId': $('#month_id').val(),
+        'workScheduleId': $('#work_schedule_id').val(),
+        'year': $('#year').val(),
+    };
+    var timeRecordCheckUrl = window.params.timeRecordCheckRoute;
+
+    // data.page = page;
+    data.filter = filter;
+
+    RequestApi.postRequest(data, timeRecordCheckUrl, token)
+        .then(response => {
+            $('#table_container').html(response);
+            // $('#modal-date-range').modal('hide');
+        })
+        .catch(error => {
+            // Handle error if necessary
+        });
+});
+
+
+
+
 
 

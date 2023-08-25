@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row ">
                 <div class="col-sm-6">
-                    <h1 class="m-0">กลุ่มอนุมัติ: {{$approver->name}}</h1>
+                    <h1 class="m-0">สายอนุมัติ: {{$approver->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.document-system.setting.approve-document')}}">กลุ่มอนุมัติ</a>
+                                href="{{route('groups.document-system.setting.approve-document')}}">สายอนุมัติ</a>
                         </li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
                     </ol>
@@ -22,12 +22,29 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2"
-                href="{{route('groups.document-system.setting.approve-document.assignment.create',['id' => $approver->id])}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มพนักงาน
-            </a>
+            <div class="d-flex align-items-center mt-2">
+                <div class="form-group mr-2">
+                    <a class="btn btn-primary"
+                        href="{{route('groups.document-system.setting.approve-document.assignment.create',['id' => $approver->id])}}">
+                        <i class="fas fa-plus mr-1">
+                        </i>
+                        เพิ่มพนักงาน
+                    </a>
+                </div>
+
+                <div>
+                    <span>หรือนำเข้าจากรหัสพนักงาน</span>
+                </div>
+                <div class="form-group ml-2 mr-2">
+                    <a class="btn btn-primary " href="" id="import-employee-code">
+                        <i class="fas fa-plus mr-1"></i>
+                        รหัสพนักงาน
+                    </a>
+                </div>
+
+            </div>
+
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -48,7 +65,7 @@
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="approver_tbody">
+                                            <tbody>
                                                 @foreach ($approver->users as $key => $user)
                                                 <tr>
                                                     <td>{{$key+1}}</td>
@@ -78,12 +95,37 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-import-employee-code">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="text" id="approverId" value="{{$approver->id}}" hidden>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="employee-code">รหัสพนักงานแถวละ 1 รายการ</label>
+                                <textarea class="form-control" id="employee-code" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-primary float-right"
+                                id="btn-import-employee-code">เพิ่มรายการ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @push('scripts')
-
+<script type="module" src="{{asset('assets/js/helpers/document-system/setting/approve-document/assignment.js?v=1')}}">
+</script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {
+        importEmployeeNoRoute: '{{ route('groups.document-system.setting.approve-document.assignment.import-employee-no') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

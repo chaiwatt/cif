@@ -20,13 +20,7 @@ class DocumentTyesTableSeeder extends Seeder
                 'name' => 'เอกสารลางาน'
             ],
             [
-                'name' => 'โอที'
-            ],
-            [
-                'name' => 'เปลี่ยนกะทำงาน'
-            ],
-            [
-                'name' => 'เปลี่ยนวันหยุด'
+                'name' => 'ล่วงเวลา'
             ]
         ]);
     }

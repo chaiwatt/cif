@@ -113,6 +113,7 @@ class WorkSchedule extends Model
 
     public function getWorkScheduleMonthNoteByYearAndMonth($year, $month)
     {
+        // dd($this->workScheduleMonthNote()->first());
         return $this->workScheduleMonthNote()
             ->where('year', $year)
             ->where('month_id', $month)

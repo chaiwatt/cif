@@ -16,6 +16,7 @@ use Illuminate\Validation\Rule;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Models\UserDiligenceAllowance;
 
 class SettingOrganizationEmployeeController extends Controller
 {
@@ -71,8 +72,8 @@ class SettingOrganizationEmployeeController extends Controller
         $birthDate = !is_null($request->birthDate) ? Carbon::createFromFormat('m/d/Y', $request->birthDate)->format('Y-m-d') : null;  // วันเกิด
         $address = $request->address;  // ที่อยู่
         $phone = preg_replace('/[^0-9]/', '', $request->phone) ?? null;  // เบอร์โทรศัพท์ (ลบช่องว่าง)
-        $educationLevel = $request->educationLevel ?? null;  // ระดับการศึกษา
-        $educationBranch = $request->educationBranch ?? null;  // สาขาวิชาที่ศึกษา
+        // $educationLevel = $request->educationLevel ?? null;  // ระดับการศึกษา
+        // $educationBranch = $request->educationBranch ?? null;  // สาขาวิชาที่ศึกษา
         $employeeType = $request->employeeType;  // ประเภทพนักงาน
         $userPosition = $request->userPosition;  // ตำแหน่งงาน
         $companyDepartment = $request->companyDepartment;  // แผนกบริษัท
@@ -84,6 +85,7 @@ class SettingOrganizationEmployeeController extends Controller
         $passport = $request->passport ?? null;  // พาสพอร์ต
         $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
         $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
+        $timeRecordRequire = $request->timeRecordRequire;
 
         $user = new User();
         $user->prefix_id = $prefix;  // กำหนดค่าคำนำหน้าชื่อให้กับคอลัมน์ prefix_id
@@ -105,14 +107,22 @@ class SettingOrganizationEmployeeController extends Controller
         $user->start_work_date = $startWorkDate;  // กำหนดค่าวันที่เริ่มทำงานให้กับคอลัมน์ start_work_date
         $user->bank = $bank;  // กำหนดค่าธนาคารให้กับคอลัมน์ bank
         $user->bank_account = $bankAccount;  // กำหนดค่าเลขที่บัญชีธนาคารให้กับคอลัมน์ bank_account
-        $user->education_level = $educationLevel;  // กำหนดค่าระดับการศึกษาให้กับคอลัมน์ education_level
-        $user->education_branch = $educationBranch;  // กำหนดค่าสาขาวิชาที่ศึกษาให้กับคอลัมน์ education_branch
+        // $user->education_level = $educationLevel;  // กำหนดค่าระดับการศึกษาให้กับคอลัมน์ education_level
+        // $user->education_branch = $educationBranch;  // กำหนดค่าสาขาวิชาที่ศึกษาให้กับคอลัมน์ education_branch
         $user->email = $employeeNo . '@cif.com';  // กำหนดค่าอีเมลให้กับคอลัมน์ email (รหัสพนักงาน@cif.com)
         $user->password = bcrypt('11111111');  // กำหนดค่ารหัสผ่านให้กับคอลัมน์ password (เข้ารหัสแบบ bcrypt)
         $user->passport = $passport;  
         $user->work_permit = $workPermit;  
         $user->tax = $tax;  
+        $user->time_record_require = $timeRecordRequire; 
+        
         $user->save();  // บันทึกข้อมูลในฐานข้อมูล
+
+        UserDiligenceAllowance::create([
+                'user_id' => $user->id,
+                'level' => 1,
+                'diligence_allowance_id' => 1,
+            ]);
 
         $this->activityLogger->log('เพิ่ม', $user);
 
@@ -160,8 +170,8 @@ class SettingOrganizationEmployeeController extends Controller
         $birthDate = !is_null($request->birthDate) ? Carbon::createFromFormat('m/d/Y', $request->birthDate)->format('Y-m-d') : null;  // วันเกิด
         $address = $request->address;  // ที่อยู่
         $phone = preg_replace('/[^0-9]/', '', $request->phone) ?? null;  // เบอร์โทรศัพท์ (ลบช่องว่าง)
-        $educationLevel = $request->educationLevel ?? null;  // ระดับการศึกษา
-        $educationBranch = $request->educationBranch ?? null;  // สาขาวิชาที่ศึกษา
+        // $educationLevel = $request->educationLevel ?? null;  // ระดับการศึกษา
+        // $educationBranch = $request->educationBranch ?? null;  // สาขาวิชาที่ศึกษา
         $employeeType = $request->employeeType;  // ประเภทพนักงาน
         $userPosition = $request->userPosition;  // ตำแหน่งงาน
         $companyDepartment = $request->companyDepartment;  // แผนกบริษัท
@@ -173,6 +183,7 @@ class SettingOrganizationEmployeeController extends Controller
         $passport = $request->passport ?? null;  // พาสพอร์ต
         $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
         $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
+        $timeRecordRequire = $request->timeRecordRequire;
 
         $user = User::findOrFail($id);
 
@@ -195,13 +206,14 @@ class SettingOrganizationEmployeeController extends Controller
             'birth_date' => $birthDate,
             'visa_expiry_date' => $visaExpireDate,
             'permit_expiry_date' => $workPermitExpireDate,
-            'education_level' => $educationLevel,
-            'education_branch' => $educationBranch,
+            // 'education_level' => $educationLevel,
+            // 'education_branch' => $educationBranch,
             'bank' => $bank,
             'bank_account' => $bankAccount,
             'passport' => $passport,
             'work_permit' => $workPermit,
-            'tax' => $tax
+            'tax' => $tax,
+            'time_record_require' => $timeRecordRequire,
         ]);
 
         return redirect()->route('setting.organization.employee.index', [
@@ -279,6 +291,7 @@ class SettingOrganizationEmployeeController extends Controller
                 'startWorkDate' => 'required|date',
                 'visaExpireDate' => 'nullable|date|after_or_equal:today', // Add validation for visaExpireDate
                 'workPermitExpireDate' => 'nullable|date|after_or_equal:today',
+                'timeRecordRequire' => 'required',
             ]);
         return $validator;
     }

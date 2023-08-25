@@ -73,46 +73,27 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>วันที่เริ่ม (วดป. คศ)<span class="small text-danger">*</span></label>
-                                        <input type="text" name="startDate" id="startDate" value="{{old('startDate') ?? \Carbon\Carbon::createFromFormat('Y-m-d',
-                                            $leave->from_date)->format('d/m/Y')}}"
-                                            class="form-control input-date-format @error('startDate') is-invalid @enderror">
+                                        <label>เริ่มวันที่ (วดป.)<span class="small text-danger">*</span></label>
+                                        <input type="text" name="startDate" id="startDate"
+                                            value="{{ date_create_from_format('Y-m-d H:i:s', $leave->from_date)->format('d/m/Y H:i') }}"
+                                            class="form-control input-datetime-format @error('startDate') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>ถึงวันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
-                                        <input type="text" name="endDate" id="endDate" value="{{old('endDate') ?? \Carbon\Carbon::createFromFormat('Y-m-d',
-                                            $leave->to_date)->format('d/m/Y')}}"
-                                            class="form-control input-date-format @error('endDate') is-invalid @enderror">
+                                        <label>ถึงวันที่ (วดป.) <span class="small text-danger">*</span></label>
+                                        <input type="text" name="endDate" id="endDate"
+                                            value="{{ date_create_from_format('Y-m-d H:i:s', $leave->to_date)->format('d/m/Y H:i') }}"
+                                            class="form-control input-datetime-format @error('endDate') is-invalid @enderror">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-info" id="btnAddFile">เพิ่มไฟล์แนบ <span
+                                            id="fileName" class="text-dark"></span></button>
                                     <div class="form-group">
-                                        <label>ลาครึ่งวัน</label>
-                                        <select name="haftDayLeave" id="haftDayLeave"
-                                            class="form-control select2 @error('haftDayLeave') is-invalid @enderror"
-                                            style="width: 100%;">
-                                            <option value="">===เลือกรายการ===</option>
-                                            <option value="1" {{ $leave->half_day == 1 ? 'selected' : '' }}>ใช่</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>ครึ่งวัน</label>
-                                        <select name="haftDayLeaveType" id="haftDayLeaveType"
-                                            class="form-control select2 @error('haftDayLeaveType') is-invalid @enderror"
-                                            style="width: 100%;">
-                                            <option value="">===เลือกรายการ===</option>
-                                            <option value="1" {{ $leave->half_day_type == 1 ? 'selected' : ''
-                                                }}>ครึ่งวันแรก</option>
-                                            <option value="2" {{ $leave->half_day_type == 2 ? 'selected' : ''
-                                                }}>ครึ่งวันหลัง (ใช้ไม่ได้กรณีลาหลายวัน)</option>
-                                        </select>
+                                        <input type="file" accept="image/*" id="file-input" style="display: none;">
                                     </div>
                                 </div>
 
@@ -131,21 +112,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="row mb-2">
-                        <div class="col-12" id="modal_container">
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <button class="btn bg-success float-right" id="save_leave">บันทึก</button>
-                        </div>
-
+                    <div class="row mb-2" id="modal_container">
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 @push('scripts')
 <script type="module" src="{{asset('assets/js/helpers/document-system/leave/document.js?v=1')}}"></script>

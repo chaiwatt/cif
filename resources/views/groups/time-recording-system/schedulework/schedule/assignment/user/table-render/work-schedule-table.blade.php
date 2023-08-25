@@ -8,7 +8,7 @@
             <th class="text-right">เพิ่มเติม</th>
         </tr>
     </thead>
-    <tbody id="approver_tbody">
+    <tbody>
         @foreach ($users as $key => $user)
         <tr>
             <td>{{$key+1}}</td>

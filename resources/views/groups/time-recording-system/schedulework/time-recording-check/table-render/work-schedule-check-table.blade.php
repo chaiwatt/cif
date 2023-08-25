@@ -24,7 +24,7 @@
                 @if (count($userWithWorkSchedule['date_in_list']) > 0)
                 <ul>
                     @foreach ($userWithWorkSchedule['date_in_list'] as $dateIn)
-                    <li>{{ $dateIn }}</li>
+                    <li>{{ \Carbon\Carbon::parse($dateIn)->format('d/m/Y') }}</li>
                     @endforeach
                 </ul>
                 @endif
@@ -39,3 +39,4 @@
         @endforeach
     </tbody>
 </table>
+{{ $usersWithWorkScheduleAssignments->links() }}

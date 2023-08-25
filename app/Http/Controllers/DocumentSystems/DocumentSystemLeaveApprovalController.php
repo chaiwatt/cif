@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Leave;
 use App\Models\Month;
+use App\Models\Approver;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
@@ -40,8 +41,8 @@ class DocumentSystemLeaveApprovalController extends Controller
         $currentDate = Carbon::today()->format('Y-m-d');
 
         // Retrieve Leave records with from_date equal to or greater than today
-        // $leaves = Leave::where('from_date', '>=', $currentDate)->get();
-        $leaves = Leave::all();
+        // $leaves = Leave::where('from_date', '>=', $currentDate)->paginate(2);
+        // $leaves = Leave::get();
         $months = Month::all();
 
         $currentYear = Carbon::now()->year;
@@ -53,7 +54,7 @@ class DocumentSystemLeaveApprovalController extends Controller
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'companyDepartments' => $companyDepartments,
-            'leaves' => $leaves,
+            // 'leaves' => $leaves,
             'months' => $months,
             'years' => $years
         ]);
@@ -64,23 +65,88 @@ class DocumentSystemLeaveApprovalController extends Controller
         $userId = $request->data['userId'];
         $leaveId = $request->data['leaveId'];
         $value = $request->data['value'];
+        $approverId = $request->data['approverId'];
+        $approver = Approver::find($approverId);
 
-        $user = User::find($userId);
-        
-        $uniqueApproverOneIds = $user->unique_approver_one_ids;
-        $uniqueApproverTwoIds = $user->unique_approver_two_ids;
+        $year = $request->data['year'];
+        $month = $request->data['month'];
+        $searchString = $request->data['searchString'];
 
-        $authenticatedUserId = auth()->user()->id;
-        if (!in_array($authenticatedUserId, $uniqueApproverOneIds) && !in_array($authenticatedUserId, $uniqueApproverTwoIds)) {
+        $authId = auth()->user()->id;
+        $authorizedUserIds =$approver->authorizedUsers->pluck('id')->toArray();
+
+        if (!in_array($authId, $authorizedUserIds)) {
             return response()->json(['error' => 'คุณไม่ได้รับอนุญาติให้ทำรายการ']);
         }
 
-        Leave::find($leaveId)->update([
-            'status' => $value
-        ]);
+        $leave = Leave::find($leaveId);
 
-        // $leaves = Leave::where('from_date', '>=', $currentDate)->get();
-        $leaves = Leave::all();
+        $approvedList = json_decode($leave->approved_list, true);
+
+        $userIndex = null;
+        foreach ($approvedList as $index => $item) {
+            if ($item['user_id'] === $authId) {
+                $userIndex = $index;
+                break;
+            }
+        }
+        
+        if ($userIndex !== null) {
+            // Update the status of the user in the approved_list
+            $approvedList[$userIndex]['status'] = $value;
+
+            // Encode the updated approved_list back to JSON
+            $updatedApprovedList = json_encode($approvedList);
+
+            // Update the approved_list in the Leave model
+            $leave->update(['approved_list' => $updatedApprovedList]);
+            // Check if all statuses in approved_list are 1
+            $allStatusesAreOne = collect($approvedList)->pluck('status')->every(function ($status) {
+                return $status == 1;
+            });
+
+            // Check if there is at least one status with value 2
+            $hasStatusTwo = collect($approvedList)->pluck('status')->contains(2);
+
+            if ($allStatusesAreOne) {
+                // Update the status field of the Leave model to 1
+                $leave->update(['status' => 1]);
+            } elseif ($hasStatusTwo) {
+                // Update the status field of the Leave model to 2
+                $leave->update(['status' => 2]);
+            } else {
+                // Update the status field of the Leave model to 0
+                $leave->update(['status' => 0]);
+            }
+
+        } 
+
+        if (isset($request->data['selectedCompanyDepartment'])) {
+            $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
+        } else {
+            $companyDepartmentIds = [];
+        }
+
+        $query = Leave::whereHas('user', function ($query) use ($searchString,$companyDepartmentIds) {
+            $query->where(function ($query) use ($searchString) {
+                $query->where('employee_no', 'like', '%' . $searchString . '%')
+                    ->orWhere('name', 'like', '%' . $searchString . '%')
+                    ->orWhere('lastname', 'like', '%' . $searchString . '%')
+                    ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
+                        $subQuery->where('name', 'like', '%' . $searchString . '%')
+                        ->orWhere('code', 'like', '%' . $searchString . '%');
+                    });
+            });
+            if (!empty($companyDepartmentIds)) {
+                $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
+                    $subQuery->whereIn('id', $companyDepartmentIds);
+                });
+            }
+        })
+        ->whereYear('from_date', $year)
+        ->whereMonth('from_date', $month);
+
+        $leaves = $query->get();
 
         return view('groups.document-system.leave.approval.table-render.leave-table-render',[
             'leaves' => $leaves
@@ -104,8 +170,10 @@ class DocumentSystemLeaveApprovalController extends Controller
                 $query->where('employee_no', 'like', '%' . $searchString . '%')
                     ->orWhere('name', 'like', '%' . $searchString . '%')
                     ->orWhere('lastname', 'like', '%' . $searchString . '%')
-                    ->orWhere('passport', 'like', '%' . $searchString . '%')
-                    ->orWhere('hid', 'like', '%' . $searchString . '%');
+                    ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
+                        $subQuery->where('name', 'like', '%' . $searchString . '%')
+                        ->orWhere('code', 'like', '%' . $searchString . '%');
+                    });
             });
             if (!empty($companyDepartmentIds)) {
                 $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {

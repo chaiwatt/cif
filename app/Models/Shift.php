@@ -49,8 +49,8 @@ class Shift extends Model
      */
     public function getRecordStartAttribute($value)
     {
-        if ($value) {
-            return Carbon::parse($value)->format('m/d/Y');
+        if ($value !== null) {
+            return number_format($value, 1);
         }
         return null;
     }
@@ -63,8 +63,8 @@ class Shift extends Model
      */
     public function getRecordEndAttribute($value)
     {
-        if ($value) {
-            return Carbon::parse($value)->format('m/d/Y');
+        if ($value !== null) {
+            return number_format($value, 1);
         }
         return null;
     }

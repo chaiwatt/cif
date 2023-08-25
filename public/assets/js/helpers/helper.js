@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('.numericInput').inputmask('99.99');
 
     // Apply input masking for numeric inputs with format 9.99
-    $('.numericInputSingle').inputmask('9.99');
+    $('.numericInputSingle').inputmask('9.9');
 
     // Apply input masking for numeric inputs with format 9.99
 
@@ -24,6 +24,8 @@ $(document).ready(function () {
 
     $('.input-date-format').inputmask('99/99/9999');
     $('.input-time-format').inputmask('99:99:99');
+    $('.input-time-short-format').inputmask('99:99');
+    $('.input-datetime-format').inputmask('99/99/9999 99:99');
 
     $('.decimal-input').inputmask({
         regex: "^\\d+(\\.\\d)?$",

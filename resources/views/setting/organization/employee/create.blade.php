@@ -135,25 +135,6 @@
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <div class="form-group">
-                                                <label>ระดับการศึกษาสูงสุด</label>
-                                                <input type="text" name="educationLevel"
-                                                    value="{{old('educationLevel')}}" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label>สาขาวิชา</label>
-                                                <input type="text" name="educationBranch"
-                                                    value="{{old('educationBranch')}}" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
                                             <label>ประเภทพนักงาน<span class="small text-danger">*</span></label>
                                             <select name="employeeType"
                                                 class="form-control select2 @error('employeeType') is-invalid @enderror"
@@ -289,6 +270,23 @@
                                             <label>เลขประจำตัวผู้เสียภาษีอากร</label>
                                             <input type="text" name="tax" value="{{old('tax')}}"
                                                 class="form-control numericInputInt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>การสแกนเวลาเข้าออก<span class="small text-danger">*</span></label>
+                                            <select name="timeRecordRequire"
+                                                class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"
+                                                style="width: 100%;">
+
+                                                <option value="1">
+                                                    ต้องสแกนเวลา
+                                                </option>
+                                                <option value="0">
+                                                    ไม่ต้องสแกนเวลา
+                                                </option>
+
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

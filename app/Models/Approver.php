@@ -15,8 +15,8 @@ class Approver extends Model
         'name',
         'document_type_id',
         'company_department_id',
-        'approver_one_id',
-        'approver_two_id'
+        'code',
+        // 'approver_two_id'
     ];
     /**
      * ความสัมพันธ์กับโมเดล CompanyDepartment (บริษัทและแผนก)
@@ -39,34 +39,26 @@ class Approver extends Model
     }
 
     /**
-     * ความสัมพันธ์กับโมเดล User (ผู้ใช้งาน) เป็นผู้อนุมัติคนที่หนึ่ง
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function approver_one()
-    {
-        return $this->belongsTo(User::class, 'approver_one_id');
-    }
-
-    /**
-     * ความสัมพันธ์กับโมเดล User (ผู้ใช้งาน) เป็นผู้อนุมัติคนที่สอง
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function approver_two()
-    {
-        return $this->belongsTo(User::class, 'approver_two_id');
-    }
-
-    /**
      * ความสัมพันธ์กับโมเดล User (ผู้ใช้งาน) ผ่านตารางกลาง approver_users
-     * (ผู้ใช้งานที่มีสิทธิ์ในการอนุมัติสำหรับผู้อนุมัตินี้)
+     * (ผู้ใช้งานที่มีสิทธิ์ในสายอนุมัติสำหรับผู้อนุมัตินี้)
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
         return $this->belongsToMany(User::class, 'approver_users', 'approver_id', 'user_id');
+    }
+
+    public function authorizedUsers()
+    {
+        return $this->belongsToMany(User::class, 'approve_authorities', 'approver_id', 'user_id');
+    }
+
+    public function getApproverUserByUserId($userId)
+    {
+        return ApproverUser::where('approver_id', $this->id)
+            ->where('user_id', $userId)
+            ->first();
     }
 
 }

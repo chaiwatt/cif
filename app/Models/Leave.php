@@ -18,7 +18,9 @@ class Leave extends Model
         'to_date',
         'status',
         'half_day',
-        'half_day_type'
+        'half_day_type',
+        'approved_list',
+        'attachment'
     ];
 
     public function leaveDetails()
@@ -34,4 +36,17 @@ class Leave extends Model
     {
         return $this->belongsTo(LeaveType::class);
     }
+    public function getApprovalStatusForUser($userId)
+    {
+        $approvedList = json_decode($this->approved_list, true);
+        if (is_array($approvedList)) {
+            foreach ($approvedList as $item) {
+                if (isset($item['user_id']) && $item['user_id'] == $userId) {
+                    return $item['status'];
+                }
+            }
+        }
+        return null; // Return null if the user ID is not found in the 'approved_list'
+    }
+    
 }

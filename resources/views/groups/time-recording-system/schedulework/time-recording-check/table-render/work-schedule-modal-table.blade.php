@@ -20,14 +20,9 @@
 
                 @if (strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_H') === false &&
                 strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_TH') === false)
-                {{-- @if (empty($workScheduleAssignmentUser->time_in) || empty($workScheduleAssignmentUser->time_out))
-                <span class="badge bg-danger" id="error_{{$workScheduleAssignmentUser->id}}">M</span>
-                @endif --}}
-
                 @if (empty($workScheduleAssignmentUser->time_in) || empty($workScheduleAssignmentUser->time_out))
                 @php
                 $checkDate = $workScheduleAssignmentUser->date_in; // Assuming the date is available as
-                // $workScheduleAssignmentUser->date
                 $leaveStatus = $workScheduleAssignmentUser->checkLeaveStatus($checkDate);
                 @endphp
 
@@ -58,10 +53,22 @@
                     class="form-control input-time-format" value="{{ $workScheduleAssignmentUser->time_out }}">
             </td>
             <td class="text-right">
-                <!-- Add a unique class (e.g., "btnSaveBtn") to the <a> elements -->
                 <a class="btn btn-info btn-sm btnSaveBtn">
                     <i class="far fa-save"></i>
                 </a>
+                @if (strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_H') === false &&
+                strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_TH') === false)
+                @if (empty($workScheduleAssignmentUser->time_in) || empty($workScheduleAssignmentUser->time_out))
+                <a class="btn btn-danger btn-sm btnAttachment" data-id="{{$workScheduleAssignmentUser->id}}">
+                    <i class="fas fa-link"></i>
+                </a>
+                @endif
+                @endif
+                @if (!empty($workScheduleAssignmentUser->getAttachmentForDate()))
+                <a class="btn btn-warning btn-sm show-leave-attachment" data-id="{{$workScheduleAssignmentUser->id}}">
+                    <i class="fas fa-leaf"></i>
+                </a>
+                @endif
             </td>
         </tr>
         @endforeach

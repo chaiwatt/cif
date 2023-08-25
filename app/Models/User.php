@@ -8,17 +8,27 @@ use App\Models\Role;
 use App\Models\Group;
 use App\Models\Leave;
 use App\Models\Gender;
+use App\Models\Payday;
 use App\Models\Prefix;
 use App\Models\Approver;
+use App\Models\Training;
+use App\Models\Education;
 use App\Models\Ethnicity;
 use App\Models\UserGroup;
+use App\Models\Punishment;
 use App\Models\LeaveDetail;
 use App\Models\Nationality;
 use App\Models\EmployeeType;
+use App\Models\SalaryRecord;
 use App\Models\UserPosition;
 use App\Models\WorkSchedule;
+use App\Models\UserAttachment;
+use App\Models\PositionHistory;
+use App\Models\ApproveAuthority;
+use App\Models\IncomeDeductUser;
 use App\Models\CompanyDepartment;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\DiligenceAllowance;
 use App\Models\WorkScheduleAssignment;
 use Illuminate\Notifications\Notifiable;
 use App\Models\WorkScheduleAssignmentUser;
@@ -55,8 +65,8 @@ class User extends Authenticatable
         'email',
         'password',
         'tax',
-        'education_level',
-        'education_branch',
+        // 'education_level',
+        'time_record_require',
         'bank',
         'bank_account',
         'is_admin',
@@ -268,7 +278,7 @@ class User extends Authenticatable
 
     /**
      * ความสัมพันธ์กับโมเดล Approver (ผู้อนุมัติ)
-     * ผ่านตารางกลาง approver_users (ผู้ใช้งานที่มีสิทธิ์ในการอนุมัติ)
+     * ผ่านตารางกลาง approver_users (ผู้ใช้งานที่มีสิทธิ์ในสายอนุมัติ)
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -277,14 +287,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Approver::class, 'approver_users', 'user_id', 'approver_id');
     }
 
-    public function getUniqueApproverOneIdsAttribute()
+    public function approveAuthorities()
     {
-        return $this->approvers->pluck('approver_one_id')->unique()->toArray();
-    }
-
-    public function getUniqueApproverTwoIdsAttribute()
-    {
-        return $this->approvers->pluck('approver_two_id')->unique()->toArray();
+        return $this->belongsToMany(ApproveAuthority::class, 'approve_authorities', 'user_id', 'approver_id');
     }
 
     /**
@@ -385,9 +390,39 @@ class User extends Authenticatable
         return $holidayDates;
     }
 
+    public function getWorkScheduleByCurrentMonth()
+    {
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        $workSchedule = $this->workScheduleAssignmentUsers()
+            ->whereHas('workScheduleAssignment', function ($query) use ($currentMonth, $currentYear) {
+                $query->where('month_id', $currentMonth)
+                    ->where('year', $currentYear);
+            })
+            ->orderBy('date_in')
+            ->with('workScheduleAssignment.workSchedule')
+            ->get()
+            ->pluck('workScheduleAssignment.workSchedule')
+            ->unique('work_schedule_id')
+            ->first();
+
+        return $workSchedule;
+    }
+
+    public function isShiftAssignment($date)
+    {
+        $shiftId = $this->workScheduleAssignmentUsers()
+            ->whereHas('workScheduleAssignment', function ($query) use ($date) {
+                $query->where('short_date', $date);
+            })
+            ->get()
+            ->pluck('workScheduleAssignment.shift_id');
+        return $shiftId;
+    }
+
     public function getWorkScheduleAssignmentUsers($startDate, $endDate)
     {
-        // Convert the input strings to valid date formats (Y-m-d)
         $startDate = date('Y-m-d', strtotime($startDate));
         $endDate = date('Y-m-d', strtotime($endDate));
 
@@ -403,7 +438,7 @@ class User extends Authenticatable
     public function detachWorkScheduleAssignments($workScheduleId, $month, $year)
     {
         $detachIds = $this->workScheduleAssignments()
-            ->where('work_schedule_id', $workScheduleId)
+            // ->where('work_schedule_id', $workScheduleId)
             ->where('month_id', $month)
             ->where('year', $year)
             ->pluck('work_schedule_assignments.id')
@@ -436,5 +471,172 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(LeaveDetail::class, Leave::class, 'user_id', 'leave_id', 'user_id', 'id');
     }
+    public function overTimeDetails()
+    {
+        return $this->hasMany(OverTimeDetail::class);
+    }
 
+    public function paydays()
+    {
+        return $this->belongsToMany(Payday::class, 'user_paydays', 'user_id', 'payday_id');
+    }
+
+    public function salaryRecords()
+    {
+        return $this->hasMany(SalaryRecord::class);
+    }
+
+    public function getAuthorizedUsers($documentType)
+    {
+        $firstApprover = $this->approvers->where('document_type_id', $documentType)->first();
+
+        if ($firstApprover) {
+            return $firstApprover->authorizedUsers;
+        } else {
+            return collect(); 
+        }
+    }
+
+    public function positionHistories()
+    {
+        return $this->hasMany(PositionHistory::class);
+    }
+
+    public function trainings()
+    {
+        return $this->hasMany(Training::class);
+    }
+
+    public function educations()
+    {
+        return $this->hasMany(Education::class);
+    }
+
+    public function punishments()
+    {
+        return $this->hasMany(Punishment::class);
+    }
+
+    public function user_attachments()
+    {
+        return $this->hasMany(UserAttachment::class);
+    }
+
+    public function diligenceAllowance()
+    {
+        return $this->belongsTo(DiligenceAllowance::class);
+    }
+
+    public function getErrorDate()
+    {
+        $today = Carbon::today();
+        $year = $today->year;
+        $paydayDetail = $this->getPaydayDetailWithToday();
+        
+        if($paydayDetail)
+        {
+            $startDate = $paydayDetail->start_date;
+            $endDate = $paydayDetail->end_date;
+            $workScheduleAssignmentUsers = $this->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
+            $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
+            return $dateInList;
+        }
+        
+    }
+
+    public function getPaydayDetailWithToday()
+    {       
+        $today = Carbon::today();
+        $paydayDetail = PaydayDetail::whereDate('end_date', '<=', $today)
+            ->whereDate('payment_date', '>=', $today)
+            ->whereHas('payday', function ($query) {
+                $query->whereHas('users', function ($subQuery) {
+                    $subQuery->where('user_id', $this->id);
+                });
+            })
+            ->first();
+
+        return $paydayDetail;
+    }
+
+    public function getPaydayWithToday()
+    {       
+        $today = Carbon::today();
+        $paydayWithToday = $this->paydays()->whereHas('paydayDetails', function ($query) use ($today) {
+            $query->whereDate('end_date', '<=', $today)
+                ->whereDate('payment_date', '>=', $today);
+        })->first();
+        return $paydayWithToday;
+    }
+
+    public function incomeDeductUsers()
+    {
+        return $this->hasMany(IncomeDeductUser::class, 'user_id');
+    }
+
+    public function getIncomeDeductByUsers()
+    {
+        $paydayDetail = $this->getPaydayDetailWithToday();
+        if ($paydayDetail != null)
+        {
+            $incomeDeductUsers = IncomeDeductUser::where('user_id',$this->id)->where('payday_detail_id',$paydayDetail->id)->get();
+            if ($incomeDeductUsers != null)
+            {
+                return $incomeDeductUsers;
+            }else{
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public function IsvalidTimeInOut($startDate,$endDate)
+    {
+        $workScheduleAssignmentUsers = WorkScheduleAssignmentUser::where('user_id', $this->id)
+            ->where(function ($query) {
+                $query->whereNull('time_in')
+                    ->orWhereNull('time_out');
+            })
+            ->where(function ($query) {
+                $query->whereNotNull('time_in')
+                    ->orWhereNotNull('time_out');
+            })
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->get();
+
+            return $workScheduleAssignmentUsers;
+            
+    }
+
+    public function getTimeRecordInfo($startDate,$endDate)
+    {
+        $result = collect([
+            'workHour' => null,
+            'leaveCount' => null,
+            'absentCount' => null,
+            'lateMinute' => null,
+            'earlyMinute' => null,
+        ]);
+        if(count($this->IsvalidTimeInOut($startDate,$endDate)) ==0 ){
+            $workScheduleAssignmentUsers = WorkScheduleAssignmentUser::where('user_id', $this->id)
+                    ->whereBetween('date_in', [$startDate, $endDate])
+                    ->get();
+
+            foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser)
+            {
+                $dateTimeIn = $workScheduleAssignmentUser->date_in . ' ' . $workScheduleAssignmentUser->time_in;
+                $dateTimeOut = $workScheduleAssignmentUser->date_out . ' ' . $workScheduleAssignmentUser->time_out;
+                $shift = $workScheduleAssignmentUser->workScheduleAssignment->shift;
+                echo($dateTimeIn . ' ' . $dateTimeOut . ' <br>');
+                // echo($shift->start . ' ' . $shift->end . ' <br>');
+            }
+        }
+       
+    }
 }
+
+
+
+
+
+ 

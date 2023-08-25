@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">กลุ่มอนุมัติ</h1>
+                    <h1 class="m-0">สายอนุมัติ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('setting.organization.approver.index')}}">กลุ่มอนุมัติ</a></li>
+                                href="{{route('setting.organization.approver.index')}}">สายอนุมัติ</a></li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
                     </ol>
                 </div>
@@ -24,7 +24,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดข้อมูลการอนุมัติ</h3>
+                            <h3 class="card-title">รายละเอียดข้อมูลสายอนุมัติ</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                     <i class="fas fa-minus"></i>
@@ -40,7 +40,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>การอนุมัติ<span class="small text-danger">*</span></label>
+                                            <label>สายอนุมัติ<span class="small text-danger">*</span></label>
                                             <input type="text" name="name" value="{{old('name') ?? $approver->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
@@ -75,7 +75,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ผู้อนุมัติลำดับที่1<span class="small text-danger">*</span></label>
                                             <select name="approver_one"
@@ -89,8 +89,8 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    </div> --}}
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ผู้อนุมัติลำดับที่2</label>
                                             <select name="approver_two"
@@ -105,7 +105,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-12">

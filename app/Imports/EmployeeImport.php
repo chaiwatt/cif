@@ -13,6 +13,7 @@ use Illuminate\Validation\Rule;
 use App\Models\CompanyDepartment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserDiligenceAllowance;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -27,7 +28,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         // ตรวจสอบส่วนหัวของไฟล์
-        $requiredHeaders = ['code','department','prefix','name','lastname','nationality','ethnicity','address','province','amphur','tambol','phone','birth','position','employee_type','hid','work_permit','passport','visa_expire','work_permitted_expire','start_work_date','education_level','education_branch','tax','bank_account','bank'];
+        $requiredHeaders = ['code','department','prefix','name','lastname','nationality','ethnicity','address','province','amphur','tambol','phone','birth','position','employee_type','hid','work_permit','passport','visa_expire','work_permitted_expire','start_work_date','tax','bank_account','bank'];
         $fileHeaders = $rows->first();
         // dd($rows);
         if (!$fileHeaders || !$this->validateHeaders($fileHeaders, $requiredHeaders)) {
@@ -145,8 +146,8 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                         'visa_expiry_date' => $visaExpire,
                         'permit_expiry_date' => $workPermittedExpire,
                         'start_work_date' => $startWorkDate,
-                        'education_level' => $row['education_level'] ?? null,
-                        'education_branch' => $row['education_branch'] ?? null,
+                        // 'education_level' => $row['education_level'] ?? null,
+                        // 'education_branch' => $row['education_branch'] ?? null,
                         'tax' => $row['tax'] ?? null,
                         'bank_account' => $row['bank_account'] ?? null,
                         'bank' => $row['bank'] ?? null,
@@ -156,11 +157,20 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                         'updated_at' => now(),
                     ];
 
+                    
+
                     // Add the user record to the array
                     $users[] = $user;
                 }
             }
             DB::table('users')->insert($users);
+            foreach (User::all() as $user) {
+                UserDiligenceAllowance::create([
+                    'user_id' => $user->id,
+                    'level' => 1,
+                    'diligence_allowance_id' => 1,
+                ]);
+            }
         }
     }
 
