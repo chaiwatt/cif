@@ -53,5 +53,26 @@ class ModuleGroupsTableSeeder extends Seeder
         $userManagement->modules()->attach([
             $userManagementModuleSetting->id
         ]);
+
+        $assessment = Group::where('code','ASSESSMENT')->first();
+        $assessmentModuleSetting = Module::where('code','ASSESSMENT-MODULE-SETTING')->first();
+
+        $assessment->modules()->attach([
+            $assessmentModuleSetting->id
+        ]);
+
+        $announcement = Group::where('code','ANNOUNCEMENT')->first();
+        $announcementModuleSetting = Module::where('code','ANNOUNCEMENT-MODULE-SETTING')->first();
+
+        $announcement->modules()->attach([
+            $announcementModuleSetting->id
+        ]);
+
+        $jobApplication = Group::where('code','JOB-APPLICATION')->first();
+        $jobApplicationModuleSetting = Module::where('code','JOB-APPLICATION-MODULE-SETTING')->first();
+
+        $jobApplication->modules()->attach([
+            $jobApplicationModuleSetting->id
+        ]);
     }
 }

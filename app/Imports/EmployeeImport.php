@@ -164,13 +164,13 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                 }
             }
             DB::table('users')->insert($users);
-            foreach (User::all() as $user) {
-                UserDiligenceAllowance::create([
-                    'user_id' => $user->id,
-                    'level' => 1,
-                    'diligence_allowance_id' => 1,
-                ]);
-            }
+            // foreach (User::all() as $user) {
+            //     UserDiligenceAllowance::create([
+            //         'user_id' => $user->id,
+            //         'level' => 1,
+            //         'diligence_allowance_id' => 1,
+            //     ]);
+            // }
         }
     }
 

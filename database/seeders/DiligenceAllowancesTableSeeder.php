@@ -15,7 +15,10 @@ class DiligenceAllowancesTableSeeder extends Seeder
     {
         DB::table('diligence_allowances')->insert([
             [
-                'name' => 'พนักงานทั่วไป',
+                'name' => 'พนักงานรายวัน',
+            ],
+            [
+                'name' => 'พนักงานรายเดือน',
             ]
         ]);
     }

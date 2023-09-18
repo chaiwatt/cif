@@ -61,16 +61,69 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>วันที่ต้นงวด<span class="small text-danger">*</span></label>
-                                            <input type="text" name="startDay" value="{{old('startDay')}}"
-                                                class="form-control numericInputInt @error('startDay') is-invalid @enderror">
+                                            <label>งวดจ่าย<span class="small text-danger">*</span></label>
+                                            <select name="paydayType" id="paydayType" class="form-control select2"
+                                                style="width: 100%;">
+                                                <option value="1">งวดปกติ</option>
+                                                <option value="2">งวดพิเศษ</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>วันที่ปลายงวด<span class="small text-danger">*</span></label>
-                                            <input type="text" name="endDay" value="{{old('startDay')}}"
-                                                class="form-control numericInputInt @error('endDay') is-invalid @enderror">
+                                    <div class="col-md-6" id="cantain_wrapper1">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>วันที่ต้นงวด<span class="small text-danger">*</span></label>
+                                                    <input type="text" name="startDay" value="{{old('startDay')}}"
+                                                        class="form-control numericInputInt @error('startDay') is-invalid @enderror">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>วันที่ปลายงวด<span class="small text-danger">*</span></label>
+                                                    <input type="text" name="endDay" value="{{old('startDay')}}"
+                                                        class="form-control numericInputInt @error('endDay') is-invalid @enderror">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" id="cantain_wrapper2" style="display:none">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+
+                                                    <label>รอบคำนวนต้น<span class="small text-danger">*</span></label>
+                                                    <select name="firstPayday" id="firstPayday"
+                                                        class="form-control select2" style="width: 100%;">
+                                                        <option value="">==เลือกรอบคำนวนต้น==</option>
+                                                        @foreach ($paydays as $payday)
+                                                        <option value="{{$payday->id}}">{{$payday->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('firstPayday') <span
+                                                        class="text-sm mb-0 text-danger">*กรุณาเลือกรอบคำนวนต้น</span>
+                                                    @enderror
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>รอบคำนวนปลาย<span class="small text-danger">*</span></label>
+                                                    <select name="secondPayday" id="secondPayday"
+                                                        class="form-control select2" style="width: 100%;">
+                                                        <option value="">==เลือกรอบคำนวนปลาย==</option>
+                                                        @foreach ($paydays as $payday)
+                                                        <option value="{{$payday->id}}">{{$payday->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('secondPayday') <span
+                                                        class="text-sm mb-0 text-danger">*กรุณาเลือกรอบคำนวนปลาย</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -127,6 +180,19 @@
             $('#duration_wrapper').show();
         }
     });
+
+    $(document).on('change', '#paydayType', function (e) {
+        var selectedValue = $(this).val();
+        if (selectedValue === '1') {
+            $('#cantain_wrapper1').show();
+            $('#cantain_wrapper2').hide();
+        } else if (selectedValue === '2') {
+            $('#cantain_wrapper1').hide();
+            $('#cantain_wrapper2').show();
+        }
+    });
+
+    
 </script>
 @endpush
 @endsection

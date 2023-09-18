@@ -59,9 +59,7 @@
                                                         <th class="text-center" style="width: 10%">ชม.งาน</th>
                                                         <th class="text-center" style="width: 10%">มาสาย</th>
                                                         <th class="text-center" style="width: 10%">กลับก่อน</th>
-                                                        <th class="text-center" style="width: 10%">ลาป่วย</th>
-                                                        <th class="text-center" style="width: 10%">ลากิจ</th>
-                                                        <th class="text-center" style="width: 10%">พักร้อน</th>
+                                                        <th class="text-center" style="width: 10%">ลา</th>
                                                         <th class="text-center" style="width: 10%">ขาดงาน</th>
                                                         <th class="text-center" style="width: 10%">ล่วงเวลา</th>
                                                     </tr>
@@ -95,11 +93,24 @@
                                                         <td class="text-center">{{$getWorkHour['workHour']}}</td>
                                                         <td class="text-center">{{$getWorkHour['lateHour']}}</td>
                                                         <td class="text-center">{{$getWorkHour['earlyHour']}}</td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            @if($getWorkHour['leaveCount'] !== null)
+                                                            {{$getWorkHour['leaveCount']['count']}}
+                                                            ({{$getWorkHour['leaveCount']['leaveName']}})
+                                                            @endif
+                                                        </td>
                                                         <td class="text-center">{{$getWorkHour['absentCount']}}</td>
-                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+
+                                                            @if ($getWorkHour['overTime'] != null)
+                                                            {{$getWorkHour['overTime']['hourDifference']}}
+                                                            @if ($getWorkHour['overTime']['isHoliday'] == true)
+                                                            (ล่วงเวลา3.0)
+                                                            @else
+                                                            (ล่วงเวลา1.5)
+                                                            @endif
+                                                            @endif
+                                                        </td>
 
 
                                                     </tr>
@@ -122,7 +133,8 @@
                                         <tbody>
                                             @foreach ($user->getIncomeDeductByUsers() as $incomeDeductByUser)
                                             <tr>
-                                                <td>{{$incomeDeductByUser->incomeDeduct->name}}</td>
+                                                <td>{{$incomeDeductByUser->incomeDeduct->name}}
+                                                </td>
                                                 <td>{{$incomeDeductByUser->value}}</td>
                                                 <td>{{$incomeDeductByUser->incomeDeduct->unit->name}}</td>
                                             </tr>
@@ -157,18 +169,9 @@
 </div>
 @push('scripts')
 
-<script type="module"
-    src="{{ asset('assets/js/helpers/time-recording-system/schedulework/time-recording-check-current-payday/index.js?v=1') }}">
-</script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {
-        // searchRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.search') }}',        
-        // viewUserRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.view-user') }}',
-        // updateRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.update') }}',
-        // getImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.get-image') }}',
-        // uploadImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.upload-image') }}',
-        // deleteImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.delete-image') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

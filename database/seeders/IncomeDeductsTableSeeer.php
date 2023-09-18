@@ -14,26 +14,26 @@ class IncomeDeductsTableSeeer extends Seeder
     public function run(): void
     {
         DB::table('income_deducts')->insert([
-            [
-            'name' =>'ค่าล่วงเวลาx1',
-            'assessable_type_id' => 1,
-            'unit_id' => 2
-            ],
-            [
-            'name' =>'ค่าล่วงเวลาx1.5',
-            'assessable_type_id' => 1,
-            'unit_id' => 2
-            ],
-            [
-            'name' =>'ค่าล่วงเวลาx2',
-            'assessable_type_id' => 1,
-            'unit_id' => 2
-            ],
-            [
-            'name' =>'ค่าล่วงเวลาx3',
-            'assessable_type_id' => 1,
-            'unit_id' => 2
-            ],
+            // [
+            // 'name' =>'ค่าล่วงเวลาx1',
+            // 'assessable_type_id' => 1,
+            // 'unit_id' => 2
+            // ],
+            // [
+            // 'name' =>'ค่าล่วงเวลาx1.5',
+            // 'assessable_type_id' => 1,
+            // 'unit_id' => 2
+            // ],
+            // [
+            // 'name' =>'ค่าล่วงเวลาx2',
+            // 'assessable_type_id' => 1,
+            // 'unit_id' => 2
+            // ],
+            // [
+            // 'name' =>'ค่าล่วงเวลาx3',
+            // 'assessable_type_id' => 1,
+            // 'unit_id' => 2
+            // ],
             [
             'name' =>'ค่ากะ',
             'assessable_type_id' => 1,
@@ -79,21 +79,21 @@ class IncomeDeductsTableSeeer extends Seeder
             'assessable_type_id' => 1,
             'unit_id' => 1
             ],
-            [
-            'name' =>'เบี้ยขยัน',
-            'assessable_type_id' => 1,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'เบี้ยขยันประจำวัน',
-            'assessable_type_id' => 1,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'เบี้ยขยันประจำเดือน',
-            'assessable_type_id' => 1,
-            'unit_id' => 1
-            ],
+            // [
+            // 'name' =>'เบี้ยขยัน',
+            // 'assessable_type_id' => 1,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'เบี้ยขยันประจำวัน',
+            // 'assessable_type_id' => 1,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'เบี้ยขยันประจำเดือน',
+            // 'assessable_type_id' => 1,
+            // 'unit_id' => 1
+            // ],
             [
             'name' =>'ค่าเหมา',
             'assessable_type_id' => 1,
@@ -144,51 +144,51 @@ class IncomeDeductsTableSeeer extends Seeder
             'assessable_type_id' => 1,
             'unit_id' => 1
             ],
-            [
-            'name' =>'ลาพักร้อน',
-            'assessable_type_id' => 2,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'ลาคลอด',
-            'assessable_type_id' => 2,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'ลาบวช',
-            'assessable_type_id' => 2,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'ลาป่วยมีใบรับรองแพทย์',
-            'assessable_type_id' => 2,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'ลาป่วยไม่มีใบรับรองแพทย์',
-            'assessable_type_id' => 2,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'หักขาดงาน',
-            'assessable_type_id' => 2,
-            'unit_id' => 1
-            ],
-            [
-            'name' =>'หักมาสาย',
-            'assessable_type_id' => 2,
-            'unit_id' => 2
-            ],
-            [
-            'name' =>'หักกลับก่อนเวลา',
-            'assessable_type_id' => 2,
-            'unit_id' => 2
-            ],
-            [
-            'name' =>'ลาคลอด (หักเงิน)',
-            'assessable_type_id' => 2,
-            'unit_id' => 1
-            ],
+            // [
+            // 'name' =>'ลาพักร้อน',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'ลาคลอด',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'ลาบวช',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'ลาป่วยมีใบรับรองแพทย์',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'ลาป่วยไม่มีใบรับรองแพทย์',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'หักขาดงาน',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 1
+            // ],
+            // [
+            // 'name' =>'หักมาสาย',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 2
+            // ],
+            // [
+            // 'name' =>'หักกลับก่อนเวลา',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 2
+            // ],
+            // [
+            // 'name' =>'ลาคลอด (หักเงิน)',
+            // 'assessable_type_id' => 2,
+            // 'unit_id' => 1
+            // ],
             [
             'name' =>'หักค่าเช่าบ้าน',
             'assessable_type_id' => 2,

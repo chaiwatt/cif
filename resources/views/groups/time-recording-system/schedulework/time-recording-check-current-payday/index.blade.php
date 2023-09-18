@@ -16,7 +16,7 @@
                     <ul class="mt-2">
                         @foreach ($paydayDetails as $paydayDetail)
                         <li>
-                            <h4>{{$paydayDetail->payday->name}} (รอบงาน {{date('d/m/Y',
+                            <h4>{{$paydayDetail->payday->name}} (รอบเงินเดือน {{date('d/m/Y',
                                 strtotime($paydayDetail->start_date))}}
                                 -
                                 {{date('d/m/Y', strtotime($paydayDetail->end_date))}})</h4>
@@ -97,7 +97,16 @@
                                                     <i class="fas fa-check-circle text-success"></i>
                                                     @endif
                                                 </td>
-                                                <td>{{$user->getPaydayWithToday()->name}}</td>
+                                                <td>
+                                                    <ul>
+                                                        @foreach ($user->getPaydayWithTodays() as $getPaydayWithToday)
+                                                        <li>{{$getPaydayWithToday->name}}</li>
+                                                        @endforeach
+                                                    </ul>
+
+
+                                                    {{-- {{$user->getPaydayWithToday()->name}} --}}
+                                                </td>
                                                 <td>
                                                     @if (count($user->getErrorDate()) > 0)
                                                     <ul>

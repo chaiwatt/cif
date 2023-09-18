@@ -23,6 +23,9 @@ class GroupModuleJobsTableSeeder extends Seeder
         $salaryManagementgroup = Group::where('code','SALARY-MANAGEMENT')->first();
         $documentGroup = Group::where('code','DOCUMENT')->first();
         $userManagementGroup = Group::where('code','USER-MANAGEMENT')->first();
+        $assessmentGroup = Group::where('code','ASSESSMENT')->first();
+        $announcementGroup = Group::where('code','ANNOUNCEMENT')->first();
+        $jobApplicationGroup = Group::where('code','JOB-APPLICATION')->first();
         // Module
         $shiftModule = Module::where('code','SHIFT')->first();
         $workScheduleModule = Module::where('code','WORK-SCHEDULE')->first();
@@ -34,6 +37,10 @@ class GroupModuleJobsTableSeeder extends Seeder
         $ducumentLeaveModule = Module::where('code','DOCUMENT-LEAVE')->first();
         $ducumentOvertimeModule = Module::where('code','DOCUMENT-OVERTIME')->first();
         $userManagementModuleSetting = Module::where('code','USER-MANAGEMENT-MODULE-SETTING')->first();
+        $assessmentModule = Module::where('code','ASSESSMENT-MODULE')->first();
+        $assessmentModuleSetting = Module::where('code','ASSESSMENT-MODULE-SETTING')->first();
+        $announcementModuleSetting = Module::where('code','ANNOUNCEMENT-MODULE-SETTING')->first();
+        $jobApplicationModuleSetting = Module::where('code','JOB-APPLICATION-MODULE-SETTING')->first();
         
         // Job
         $shiftManagementJob = Job::where('code','SHIFT-MANAGEMENT')->first();
@@ -46,8 +53,9 @@ class GroupModuleJobsTableSeeder extends Seeder
         $workScheduleEmployeeGroup = Job::where('code','EMPLOYEE-GROUP')->first();
         $workScheduleVisibility = Job::where('code','WORK-SCHEDULR-VISIBILITY')->first();
         $workScheduleReport = Job::where('code','WORK-SCHEDULR-REPORT')->first();
-        $sararyCalculation = Job::where('code','SALARY-CALCULATION')->first();
-        $sararyIncomeDeductAssignment = Job::where('code','INCOME-DEDUCT-ASSIGNMENT')->first();
+        // $sararyCalculation = Job::where('code','SALARY-CALCULATION')->first();
+        // $sararyIncomeDeductAssignment = Job::where('code','INCOME-DEDUCT-ASSIGNMENT')->first();
+        // $sararySummary = Job::where('code','SALARY-SUMMARY')->first();
         $sararyPayday = Job::where('code','SALARY-PAYDAY')->first();
         $sararySkillBasedCost = Job::where('code','SALARY-SKILL-BASED-COST')->first();
         $sararyIncomeDeduct = Job::where('code','INCOME-DEDUCT')->first();
@@ -58,8 +66,18 @@ class GroupModuleJobsTableSeeder extends Seeder
         $documentOvertime = Job::where('code','DOCUMENT-OVERTIME')->first();
         $documentOvetimeApproval = Job::where('code','DOCUMENT-OVERTIME-APPROVAL')->first();
         $userInfo = Job::where('code','USER-INFO')->first();
+        $userLeave = Job::where('code','USER-LEAVE')->first();
+        $assessment = Job::where('code','ASSESSMENT')->first();
+        $assessmentGroupMenu = Job::where('code','ASSESSMENT-GROUP')->first();
+        $assessmentCriteria = Job::where('code','ASSESSMENT-CRITERIA')->first();
+        $assessmentScore = Job::where('code','ASSESSMENT-SCORE')->first();
+        $assessmentScoreMultiplication = Job::where('code','ASSESSMENT-SCORE-MULTIPLICATION')->first();
+        $announcementCategory = Job::where('code','ANNOUNCEMENT-CATEGORY')->first();
+        $jobApplicationCategory = Job::where('code','JOB-APPLICATION-CATEGORY')->first();
+        $calculationList = Job::where('code','CALCULATION-LIST')->first();
+        $calculationExtraList = Job::where('code','CALCULATION-EXTRA-LIST')->first();
         
-     
+        
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
             'module_id' => $shiftModule->id,
@@ -113,13 +131,28 @@ class GroupModuleJobsTableSeeder extends Seeder
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
             'module_id' => $sararyModuleOne->id,
-            'job_id' => $sararyCalculation->id,
+            'job_id' => $calculationList->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
             'module_id' => $sararyModuleOne->id,
-            'job_id' => $sararyIncomeDeductAssignment->id,
+            'job_id' => $calculationExtraList->id,
         ]);
+        // GroupModuleJob::create([
+        //     'group_id' => $salaryManagementgroup->id,
+        //     'module_id' => $sararyModuleOne->id,
+        //     'job_id' => $sararyIncomeDeductAssignment->id,
+        // ]);
+        // GroupModuleJob::create([
+        //     'group_id' => $salaryManagementgroup->id,
+        //     'module_id' => $sararyModuleOne->id,
+        //     'job_id' => $sararyCalculation->id,
+        // ]);
+        // GroupModuleJob::create([
+        //     'group_id' => $salaryManagementgroup->id,
+        //     'module_id' => $sararyModuleOne->id,
+        //     'job_id' => $sararySummary->id,
+        // ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
             'module_id' => $sararyModuleSetting->id,
@@ -169,6 +202,46 @@ class GroupModuleJobsTableSeeder extends Seeder
             'group_id' => $userManagementGroup->id,
             'module_id' => $userManagementModuleSetting->id,
             'job_id' => $userInfo->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $userManagementGroup->id,
+            'module_id' => $userManagementModuleSetting->id,
+            'job_id' => $userLeave->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $assessmentGroup->id,
+            'module_id' => $assessmentModule->id,
+            'job_id' => $assessment->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $assessmentGroup->id,
+            'module_id' => $assessmentModuleSetting->id,
+            'job_id' => $assessmentGroupMenu->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $assessmentGroup->id,
+            'module_id' => $assessmentModuleSetting->id,
+            'job_id' => $assessmentCriteria->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $assessmentGroup->id,
+            'module_id' => $assessmentModuleSetting->id,
+            'job_id' => $assessmentScore->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $assessmentGroup->id,
+            'module_id' => $assessmentModuleSetting->id,
+            'job_id' => $assessmentScoreMultiplication->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $announcementGroup->id,
+            'module_id' => $announcementModuleSetting->id,
+            'job_id' => $announcementCategory->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $jobApplicationGroup->id,
+            'module_id' => $jobApplicationModuleSetting->id,
+            'job_id' => $jobApplicationCategory->id,
         ]);
     }
 }

@@ -118,11 +118,11 @@ class SettingOrganizationEmployeeController extends Controller
         
         $user->save();  // บันทึกข้อมูลในฐานข้อมูล
 
-        UserDiligenceAllowance::create([
-                'user_id' => $user->id,
-                'level' => 1,
-                'diligence_allowance_id' => 1,
-            ]);
+        // UserDiligenceAllowance::create([
+        //         'user_id' => $user->id,
+        //         'level' => 1,
+        //         'diligence_allowance_id' => 1,
+        //     ]);
 
         $this->activityLogger->log('เพิ่ม', $user);
 

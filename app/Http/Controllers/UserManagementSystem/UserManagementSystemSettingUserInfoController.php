@@ -4,11 +4,13 @@ namespace App\Http\Controllers\UserManagementSystem;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Leave;
 use App\Models\Month;
 use App\Models\Payday;
 use App\Models\Prefix;
 use App\Models\Approver;
 use App\Models\Ethnicity;
+use App\Models\UserLeave;
 use App\Models\Nationality;
 use App\Models\EmployeeType;
 use App\Models\UserPosition;
@@ -17,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
+use App\Models\UserDiligenceAllowance;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
 use App\Services\UpdatedRoleGroupCollectionService;
 
@@ -34,6 +37,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
     }
     public function index()
     {
+
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -56,6 +60,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
     }
     public function view($id)
     {
+        
         // กำหนดค่าตัวแปร $action ให้เป็น 'create'
         $action = 'create';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -79,6 +84,9 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $user = User::find($id);
         $approvers = Approver::all();
         $months = Month::all();
+        $userDiligenceAllowances = UserDiligenceAllowance::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $leaves = Leave::where('user_id',$id)->whereYear('from_date',$currentYear)->get();
+        $userLeaves = UserLeave::where('user_id',$id)->get();
         
         return view('groups.user-management-system.setting.userinfo.view', [
             'groupUrl' => $groupUrl,
@@ -95,7 +103,10 @@ class UserManagementSystemSettingUserInfoController extends Controller
             'workSchedules' => $workSchedules,
             'users' => $users,
             'approvers' => $approvers,
-            'months' => $months
+            'months' => $months,
+            'userDiligenceAllowances' => $userDiligenceAllowances,
+            'leaves' => $leaves,
+            'userLeaves' => $userLeaves
         ]);
     }
 
@@ -125,4 +136,6 @@ class UserManagementSystemSettingUserInfoController extends Controller
             'users' => $users
             ])->render();
     }
+
+
 }

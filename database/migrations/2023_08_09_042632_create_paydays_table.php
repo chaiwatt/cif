@@ -19,7 +19,10 @@ return new class extends Migration
             $table->char('end_day',2)->nullable();
             $table->char('payment_type',1)->default(1);
             $table->char('duration',2)->default(7);
+            $table->char('type',1)->default(1);
             $table->char('year',4)->nullable();
+            $table->unsignedBigInteger('first_payday_id')->nullable();
+            $table->unsignedBigInteger('second_payday_id')->nullable();
             $table->timestamps();
         });
     }

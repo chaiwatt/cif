@@ -528,11 +528,99 @@
 
                                 <div class="tab-pane fade" id="custom-tabs-one-leave" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-leave-tab">
-                                    การลา
+                                    <div class="col-12" id="user-leave-container">
+                                        <label for="">วันลาคงเหลือ</label>
+                                        <table class="table table-bordered table-striped dataTable dtr-inline">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50%">ประเภท</th>
+                                                    <th>คงเหลือ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($userLeaves as $key =>$userLeave)
+                                                <tr>
+                                                    <td>{{$userLeave->leaveType->name}}</td>
+                                                    <td>{{$userLeave->count}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-12" id="leave-container">
+                                        <label for="">รายการลา</label>
+                                        <table class="table table-bordered table-striped dataTable dtr-inline">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50%">วันที่</th>
+                                                    <th>ประเภท</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($leaves as $key =>$leave)
+                                                <tr>
+                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
+                                                        $leave->from_date)->format('d/m/Y H:i')
+                                                        }} -
+                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
+                                                        $leave->to_date)->format('d/m/Y H:i')
+                                                        }}</td>
+                                                    <td>{{$leave->leaveType->name}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-diligence-allowance" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-diligence-allowance-tab">
-                                    เบี้ยขยัน
+                                    {{-- เบี้ยขยัน --}}
+                                    {{-- $userDiligenceAllowances --}}
+                                    <div class="col-12" id="dilegence-allowance-container">
+                                        <table class="table table-bordered table-striped dataTable dtr-inline">
+                                            <thead>
+                                                <tr>
+                                                    {{-- <th>ระดับ</th> --}}
+                                                    <th>รอบจ่ายเงินเดือน</th>
+                                                    <th>เบี้ยขยัน</th>
+                                                    <th class="text-right">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($userDiligenceAllowances as $key
+                                                =>$userDiligenceAllowance)
+                                                <tr>
+
+                                                    {{-- <td>{{$education->level}}</td> --}}
+                                                    <td>
+                                                        @if ($userDiligenceAllowance->paydayDetail->start_date != null
+                                                        && $userDiligenceAllowance->paydayDetail->end_date != null)
+                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                        $userDiligenceAllowance->paydayDetail->start_date)->format('d/m/Y')
+                                                        }} -
+                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                        $userDiligenceAllowance->paydayDetail->end_date)->format('d/m/Y')
+                                                        }}
+                                                        @endif
+
+
+                                                    </td>
+                                                    <td>{{$userDiligenceAllowance->diligenceAllowanceClassify->cost}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        @if ($loop->iteration == 2)
+                                                        <a class="btn btn-info btn-sm btn-update-user-diligence-allowance"
+                                                            data-id="{{$userDiligenceAllowance->id}}">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+                                                        @endif
+
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-education" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-education-tab">
@@ -649,9 +737,13 @@
                                                     @foreach ($user->positionHistories->sortBy('adjust_date') as $key =>
                                                     $positionHistory)
                                                     <tr>
-                                                        <td>{{
+                                                        <td>
+                                                            @if ($positionHistory->adjust_date != null)
+                                                            {{
                                                             \Carbon\Carbon::createFromFormat('Y-m-d',$positionHistory->adjust_date)->format('d/m/Y')
-                                                            }}</td>
+                                                            }}
+                                                            @endif
+                                                        </td>
                                                         <td>{{$positionHistory->user_position->name}}</td>
                                                         <td class="text-right">
                                                             <a class="btn btn-info btn-sm btn-update-position-history"
@@ -694,8 +786,12 @@
                                                     @foreach ($user->salaryRecords->sortBy('record_date') as $key =>
                                                     $salaryRecord)
                                                     <tr>
-                                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                            $salaryRecord->record_date)->format('d/m/Y') }}</td>
+                                                        <td>
+                                                            @if ($salaryRecord->record_date != null)
+                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                            $salaryRecord->record_date)->format('d/m/Y') }}
+                                                            @endif
+                                                        </td>
                                                         <td>{{$salaryRecord->salary}}</td>
                                                         <td class="text-right">
                                                             <a class="btn btn-info btn-sm btn-update-salary"
@@ -737,8 +833,14 @@
                                                 <tbody>
                                                     @foreach ($user->punishments as $key => $punishment)
                                                     <tr>
-                                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                            $punishment->record_date)->format('d/m/Y') }}</td>
+                                                        <td>
+                                                            @if ($punishment->record_date != null)
+                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                            $punishment->record_date)->format('d/m/Y') }}
+                                                            @endif
+
+
+                                                        </td>
                                                         <td>{{$punishment->punishment}}</td>
                                                         <td class="text-right">
                                                             <a class="btn btn-info btn-sm btn-update-punishment"
@@ -1167,6 +1269,18 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-update-user-diligence-allowance">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="text" name="" id="user-diligence-allowance-id" hidden>
+                    <div class="row" id="update-user-diligence-allowance-modal-container">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @push('scripts')
 <script type="module" src="{{asset('assets/js/helpers/user-management-system/setting/userinfo.js?v=1')}}"></script>
@@ -1201,6 +1315,10 @@
 
         storeAttachmentRoute: '{{ route('groups.user-management-system.setting.userinfo.attachment.store') }}',
         deleteAttachmentRoute: '{{ route('groups.user-management-system.setting.userinfo.attachment.delete') }}',
+
+        getDiligenceAllowanceClassifyRoute: '{{ route('groups.user-management-system.setting.userinfo.get-diligence-allowance-classify') }}',
+        updateDiligenceAllowanceClassifyRoute: '{{ route('groups.user-management-system.setting.userinfo.update-diligence-allowance-classify') }}',
+
 
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')

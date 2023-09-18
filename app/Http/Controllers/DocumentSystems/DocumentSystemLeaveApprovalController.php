@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Leave;
 use App\Models\Month;
 use App\Models\Approver;
+use App\Models\UserLeave;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
@@ -37,12 +38,13 @@ class DocumentSystemLeaveApprovalController extends Controller
         $viewName = $roleGroupCollection['viewName'];
         $companyDepartments = CompanyDepartment::all();
         
-        // Get the current date
-        $currentDate = Carbon::today()->format('Y-m-d');
+        $currentMonth = Carbon::today()->month;
 
-        // Retrieve Leave records with from_date equal to or greater than today
-        // $leaves = Leave::where('from_date', '>=', $currentDate)->paginate(2);
-        // $leaves = Leave::get();
+        $leaves = Leave::where(function ($query) use ($currentMonth) {
+            $query->whereMonth('from_date', $currentMonth)
+                ->orWhereMonth('to_date', $currentMonth);
+        })->get();
+
         $months = Month::all();
 
         $currentYear = Carbon::now()->year;
@@ -54,7 +56,7 @@ class DocumentSystemLeaveApprovalController extends Controller
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'companyDepartments' => $companyDepartments,
-            // 'leaves' => $leaves,
+            'leaves' => $leaves,
             'months' => $months,
             'years' => $years
         ]);
@@ -110,7 +112,19 @@ class DocumentSystemLeaveApprovalController extends Controller
 
             if ($allStatusesAreOne) {
                 // Update the status field of the Leave model to 1
-                $leave->update(['status' => 1]);
+                $leave = Leave::find($leaveId);
+                $duration = $leave->duration;
+                $leaveTypeId = $leave->leave_type_id;
+                $userLeave = UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveTypeId)->first();
+                $leaveCount = $userLeave->count - $duration;
+                $leave = Leave::find($leaveId);
+                if($leave->status != 1)
+                {
+                    UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveTypeId)->first()->update(['count' => $leaveCount]);
+                    $leave->update(['status' => 1]);
+                }
+                
+                
             } elseif ($hasStatusTwo) {
                 // Update the status field of the Leave model to 2
                 $leave->update(['status' => 2]);

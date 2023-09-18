@@ -26,6 +26,12 @@ return new class extends Migration
             $table->string('original_time')->nullable();
             $table->string('code')->nullable();
             $table->timestamps();
+
+            // Add indexes
+            $table->index('work_schedule_assignment_id');
+            $table->index('user_id');
+            // Use a composite index
+            // $table->index(['work_schedule_assignment_id', 'user_id']);
         });
     }
 

@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>สายอนุมัติ</th>
+            <th>รหัสพนักงาน</th>
             <th>ชื่อสกุล</th>
             <th>แผนก</th>
             <th>ประเภทการลา</th>
@@ -15,17 +16,19 @@
     <tbody>
         @foreach ($leaves as $key=> $leave)
         @php
-        $approver = $leave->user->approvers->where('document_type_id',1)->first()
+        $approver =
+        $leave->user->approvers->where('document_type_id',1)->first()
         @endphp
         <tr>
             <td>{{$approver->code}}</td>
+            <td>{{$leave->user->employee_no}}</td>
             <td>{{$leave->user->name}} {{$leave->user->lastname}}</td>
             <td>{{$leave->user->company_department->name}}</td>
             <td>{{$leave->leaveType->name}}</td>
-            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                $leave->from_date)->format('d/m/Y') }}
-                - {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                $leave->to_date)->format('d/m/Y') }}</td>
+            <td>{{ date_create_from_format('Y-m-d H:i:s',
+                $leave->from_date)->format('d/m/Y H:i') }} - {{
+                date_create_from_format('Y-m-d H:i:s',
+                $leave->to_date)->format('d/m/Y H:i') }}</td>
             <td>
                 {{$approver->name}}
                 @foreach ($approver->authorizedUsers as $user)
@@ -45,6 +48,13 @@
             </td>
 
             <td class="text-right">
+                @if (!empty($leave->attachment))
+                <a class="btn btn-primary btn-sm show-attachment" data-id="{{$leave->id}}">
+                    <i class="fas fa-link"></i>
+                </a>
+                @endif
+
+                @if ($leave->status === null)
                 <a class="btn btn-info btn-sm"
                     href="{{route('groups.document-system.leave.document.view',['id' => $leave->id])}}">
                     <i class="fas fa-pencil-alt"></i>
@@ -56,6 +66,7 @@
                     data-message="รายการลา">
                     <i class="fas fa-trash"></i>
                 </a>
+                @endif
             </td>
         </tr>
         @endforeach

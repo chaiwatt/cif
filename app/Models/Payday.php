@@ -17,7 +17,10 @@ class Payday extends Model
         'end_day',
         'payment_type',
         'duration',
-        'year'
+        'year',
+        'first_payday_id',
+        'second_payday_id',
+        'type'
     ];
 
     public function users()

@@ -120,13 +120,6 @@ class WorkScheduleAssignmentUser extends Model
 
     public function getWorkHour()
     {
-        // $result = collect([
-        //     'workHour' => null,
-        //     'leaveCount' => null,
-        //     'absentCount' => null,
-        //     'lateMinute' => null,
-        //     'earlyMinute' => null,
-        // ]);
         $workHour = 0;
         $lateMinute = 0;
         $earlyMinute = 0;
@@ -134,7 +127,9 @@ class WorkScheduleAssignmentUser extends Model
         $lateHour =0;
         $earlyHour =0;
         $absentCount = null;
-        if ($this->time_in && $this->time_out && $this->time_in != "00:00:00" && $this->time_out != "00:00:00")
+        $holidayShift = $this->isHolidayShift();
+        
+        if ($this->time_in && $this->time_out && $this->time_in != "00:00:00" && $this->time_out != "00:00:00" && count($holidayShift) == 0)
         {
             $startDate = $this->date_in;
             $endDate = $this->date_out;
@@ -171,18 +166,226 @@ class WorkScheduleAssignmentUser extends Model
         }elseif ($this->time_in == "00:00:00" && $this->time_out == "00:00:00"){
             $absentCount = 1;
         }
+        $totalOvertime = $this->getOvertimeInfo();
+        // dd($totalOvertime,$this->user_id);
         return collect([
             'workHour' => $totalWorkHour !== 0 ? $totalWorkHour : null,
-            'leaveCount' => null,
+            'leaveCount' => $this->getLeaveInfo(),
             'absentCount' => $absentCount,
             'lateHour' => $lateHour !== 0 ? $lateHour : null,
             'earlyHour' => $earlyHour !== 0 ? $earlyHour : null,
+            'overTime' => $totalOvertime,
+            'earlyMinute' => $earlyMinute !== 0 ? $earlyMinute : null,
+            'lateMinute' => $lateMinute !== 0 ? $lateMinute : null,
         ]);
+    }
+    public function getWorkHourHoliday()
+    {
+        $userId = $this->user_id;
+        $shift = $this->workScheduleAssignment->shift;
+        $shiftType = $shift->shift_type_id;
+        $scheduleAssignmentDate = ($shiftType == 2) ? $this->date_out : $this->date_in;
+        $type = 2;
+        $overtimeDetail = OverTimeDetail::where('user_id',$userId)
+            ->whereDate('from_date',$scheduleAssignmentDate)
+            ->whereHas('overtime', function ($query) use ($type) {
+                    $query->where('type', '=', $type);
+                })
+            ->first();
+
+        $startOvertime = Carbon::parse("$overtimeDetail->from_date $overtimeDetail->start_time");
+        $endOverTime = Carbon::parse("$overtimeDetail->to_date $overtimeDetail->end_time");
+
+        $overtimeHourDifference = $startOvertime->diffInHours($endOverTime);
+        
+        $scheduleAssignmentDateTime = Carbon::parse("$scheduleAssignmentDate $this->time_out")->addMinutes(5);
+
+        if ($scheduleAssignmentDateTime > $startOvertime) {
+            $hourDifference = $startOvertime->diffInHours($scheduleAssignmentDateTime);
+            if ($hourDifference > $overtimeHourDifference){
+                $hourDifference = $overtimeHourDifference;
+            }
+            if ($hourDifference > 0){
+                if ($hourDifference > 4 ){
+                    $hourDifference = $hourDifference -1 ;
+                }
+                return $hourDifference;
+            }else{
+                
+                return 0;
+            }
+        } else {
+            
+            return 0;
+        }    
+
     }
     function minutesToHoursAndMinutes($minutes) {
         $hours = intval($minutes / 60);
         $minutes %= 60;
         return $hours + ($minutes / 100);
+    }
+
+    function getLeaveInfo()
+    {
+        $startDate = $this->date_in;
+        $endDate = $this->date_out;
+
+        $shift = $this->workScheduleAssignment->shift;
+        $shiftStartDate = "$startDate $shift->start";
+        $shiftEndDate = "$endDate $shift->end";
+
+        $leaveDetail = LeaveDetail::join('leaves', 'leave_details.leave_id', '=', 'leaves.id')
+            ->where('leaves.user_id', $this->user_id)
+            ->where(function ($query) use ($shiftStartDate, $shiftEndDate) {
+                $query->whereBetween('leave_details.from_date', [$shiftStartDate, $shiftEndDate])
+                    ->orWhereBetween('leave_details.to_date', [$shiftStartDate, $shiftEndDate])
+                    ->orWhere(function ($subquery) use ($shiftStartDate, $shiftEndDate) {
+                        $subquery->where('leave_details.from_date', '<=', $shiftStartDate)
+                                ->where('leave_details.to_date', '>=', $shiftEndDate);
+                    });
+            })
+            ->get(['leave_details.*'])->first();
+        if($leaveDetail != null){
+
+            $fromDate = Carbon::parse($leaveDetail->from_date);
+            $toDate = Carbon::parse($leaveDetail->to_date);
+            
+            $hourDifference = intval($fromDate->diffInHours($toDate));
+            if ( $hourDifference > 4 ){
+                $hourDifference = intval($fromDate->diffInHours($toDate))-1;
+            }
+            $diffInWorkHour = $hourDifference / 8 ;
+
+            return collect([
+            'count' => $diffInWorkHour,
+            'leaveType' => $leaveDetail->leave->leaveType->id,
+            'leaveName' => $leaveDetail->leave->leaveType->name,
+            ]);
+        }  else{
+            return null;
+        }  
+
+    }
+
+    // public function isHolidayShift()
+    // {      
+    //     $workScheduleAssignmentUser = $this->where('user_id',$this->user_id)
+    //                 ->whereHas('workScheduleAssignment', function ($query) {
+    //                 $query->where('short_date',$this->date_in)
+    //                     ->whereHas('shift', function ($subQuery) {
+    //                         $subQuery->where('code', 'LIKE', '%_H')
+    //                         ->orWhere('code', 'LIKE', '%_TH');
+    //                     });
+    //             });
+    //     $shifId = $workScheduleAssignmentUser->get()->pluck('workScheduleAssignment.shift_id');
+    //     return $shifId;
+    // }
+
+    public function isHolidayShift()
+    {
+        $workScheduleAssignmentUser = $this->where('user_id', $this->user_id)
+            ->whereHas('workScheduleAssignment.shift', function ($query) {
+                $query->where('code', 'LIKE', '%_H')
+                    ->orWhere('code', 'LIKE', '%_TH');
+            })
+            ->with('workScheduleAssignment.shift') // Eager load the 'workScheduleAssignment' and 'shift' relationships
+            ->whereHas('workScheduleAssignment', function ($query) {
+                $query->where('short_date', $this->date_in);
+            });
+
+        $shiftIds = $workScheduleAssignmentUser->get()->pluck('workScheduleAssignment.shift_id');
+
+        return $shiftIds;
+    }
+
+
+    // public function getHolidayWorkScheduleAssignmentUsers()
+    // {      
+    //     $holidayWorkScheduleAssignmentUsers = $this->where('user_id',$this->user_id)
+    //             ->whereHas('workScheduleAssignment', function ($query) {
+    //                 $query->where('short_date',$this->date_in)
+    //                     ->whereHas('shift', function ($subQuery) {
+    //                         $subQuery->where('code', 'LIKE', '%_H')
+    //                         ->orWhere('code', 'LIKE', '%_TH');
+    //                     });
+    //             })->get();
+    //     return $holidayWorkScheduleAssignmentUsers;
+    // }
+
+    public function getHolidayWorkScheduleAssignmentUsers()
+    {
+        $holidayWorkScheduleAssignmentUsers = $this->where('user_id', $this->user_id)
+            ->whereHas('workScheduleAssignment.shift', function ($query) {
+                $query->where('code', 'LIKE', '%_H')
+                    ->orWhere('code', 'LIKE', '%_TH');
+            })
+            ->with('workScheduleAssignment.shift') // Eager load the 'workScheduleAssignment' and 'shift' relationships
+            ->whereHas('workScheduleAssignment', function ($query) {
+                $query->where('short_date', $this->date_in);
+            })
+            ->get();
+
+        return $holidayWorkScheduleAssignmentUsers;
+    }
+
+
+    public function getOvertimeInfo()
+    {
+        // dd($this->date_in);
+        $userId = $this->user_id;
+        
+        $shift = $this->workScheduleAssignment->shift;
+        $shiftType = $shift->shift_type_id;
+        $scheduleAssignmentDate = ($shiftType == 2) ? $this->date_out : $this->date_in;
+        $type = 1;
+        $overtimeDetail = OverTimeDetail::where('user_id',$userId)
+            ->whereDate('from_date',$scheduleAssignmentDate)
+            ->whereHas('overtime', function ($query) use ($type) {
+                    $query->where('type', '=', $type);
+                })
+            ->first();
+        
+        $holidayShift = $this->isHolidayShift();
+        
+        if ($overtimeDetail != null && ($this->time_in != null && $this->time_out != null) && count($holidayShift) == 0){
+            $startOvertime = Carbon::parse("$overtimeDetail->from_date $overtimeDetail->start_time");
+            $endOverTime = Carbon::parse("$overtimeDetail->to_date $overtimeDetail->end_time");
+            
+
+            $isHoliday = false;
+            $user = User::find($userId);
+            $holiday = $user->getHolidayDates($this->date_in, $this->date_out)->toArray();
+
+            if(count($holiday) != 0)
+            {
+                $isHoliday = true;
+            }
+
+            $overtimeHourDifference = $startOvertime->diffInHours($endOverTime);
+            
+            $scheduleAssignmentDateTime = Carbon::parse("$scheduleAssignmentDate $this->time_out")->addMinutes(5);
+
+            if ($scheduleAssignmentDateTime > $startOvertime) {
+                $hourDifference = $startOvertime->diffInHours($scheduleAssignmentDateTime);
+                if ($hourDifference > $overtimeHourDifference){
+                    $hourDifference = $overtimeHourDifference;
+                }
+                if ($hourDifference > 0){
+                    return collect([
+                        'hourDifference' => $hourDifference,
+                        'isHoliday' => $isHoliday
+                        ]); 
+                }else{
+                    
+                    return null;
+                }
+            } else {
+                
+                return null;
+            }
+        }
+        
     }
 
 }

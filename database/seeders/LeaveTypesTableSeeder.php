@@ -15,22 +15,32 @@ class LeaveTypesTableSeeder extends Seeder
     {
          DB::table('leave_types')->insert([
             [
-            'name' =>'ลากิจ'
+            'name' =>'ลากิจ',
+            'diligence_allowance_deduct' => 1
             ],
             [
-            'name' =>'ลากิจพิเศษ'
+            'name' =>'ลากิจพิเศษ',
+            'diligence_allowance_deduct' => 0
             ],
             [
-            'name' =>'ลาป่วย'
+            'name' =>'ลาป่วยมีใบรับรองแพทย์',
+            'diligence_allowance_deduct' => 1
             ],
             [
-            'name' =>'ลาพักร้อน'
+            'name' =>'ลาป่วยไม่มีใบรับรองแพทย์',
+            'diligence_allowance_deduct' => 1
             ],
             [
-            'name' =>'ลาคลอด'
+            'name' =>'ลาพักร้อน',
+            'diligence_allowance_deduct' => 0
             ],
             [
-            'name' =>'ลาบวช'
+            'name' =>'ลาคลอด',
+            'diligence_allowance_deduct' => 1
+            ],
+            [
+            'name' =>'ลาบวช',
+            'diligence_allowance_deduct' => 1
             ]
         ]);
     }

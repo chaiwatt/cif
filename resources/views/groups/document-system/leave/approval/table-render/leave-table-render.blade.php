@@ -6,7 +6,6 @@
             <th>แผนก</th>
             <th>ประเภทการลา</th>
             <th>ช่วงวันที่</th>
-            {{-- <th>ครึ่งวัน</th> --}}
             <th>ผู้อนุมัติเอกสาร</th>
             <th>สถานะ</th>
             <th class="text-right">เพิ่มเติม</th>
@@ -60,11 +59,13 @@
                 @endif
             </td>
             <td class="text-right">
+                @if ($leave->status !== '1')
                 <a class="btn btn-info btn-sm approve_leave" data-id="{{$leave->id}}"
                     data-name="{{$leave->user->name}} {{$leave->user->lastname}}" data-user_id="{{$leave->user->id}}"
                     data-approver_id="{{$approver->id}}">
                     <i class="fas fa-stamp"></i>
                 </a>
+                @endif
             </td>
         </tr>
         @endforeach

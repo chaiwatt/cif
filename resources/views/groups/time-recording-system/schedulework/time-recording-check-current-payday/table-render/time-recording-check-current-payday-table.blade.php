@@ -21,7 +21,16 @@
                 <i class="fas fa-check-circle text-success"></i>
                 @endif
             </td>
-            <td>{{$user->getPaydayWithToday()->name}}</td>
+            <td>
+                <ul>
+                    @foreach ($user->getPaydayWithTodays() as $getPaydayWithToday)
+                    <li>{{$getPaydayWithToday->name}}</li>
+                    @endforeach
+                </ul>
+
+
+                {{-- {{$user->getPaydayWithToday()->name}} --}}
+            </td>
             <td>
                 @if (count($user->getErrorDate()) > 0)
                 <ul>

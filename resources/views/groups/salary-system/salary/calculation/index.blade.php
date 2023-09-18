@@ -11,12 +11,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการจ่ายเงินเดือนรอบปัจจุบัน
+                    <h1 class="m-0">รายการบันทึกเวลา
                     </h1>
                     <ul class="mt-2">
                         @foreach ($paydayDetails as $paydayDetail)
                         <li>
-                            <h4>{{$paydayDetail->payday->name}} (รอบงาน {{date('d/m/Y',
+                            <h4>{{$paydayDetail->payday->name}} (รอบเงินเดือน {{date('d/m/Y',
                                 strtotime($paydayDetail->start_date))}}
                                 -
                                 {{date('d/m/Y', strtotime($paydayDetail->end_date))}})</h4>
@@ -59,17 +59,15 @@
                                     <table class="table table-bordered table-striped dataTable dtr-inline">
                                         <thead>
                                             <tr>
-                                                {{-- <th class="text-center" style="width: 150px">ตรวจสอบเวลา</th> --}}
-
                                                 <th>รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
-                                                {{-- <th>รอบเงินเดือน</th> --}}
-                                                <th>ชม.งาน</th>
-                                                <th>มาสาย</th>
-                                                <th>กลับก่อน</th>
-                                                <th>วันลา</th>
-                                                <th>ขาดงาน</th>
-                                                <th>ล่วงเวลา</th>
+                                                <th class="text-center">ชม.งาน</th>
+                                                <th class="text-center">มาสาย(ชม.)</th>
+                                                <th class="text-center">กลับก่อน(ชม.)</th>
+                                                <th class="text-center">วันลา</th>
+                                                <th class="text-center">ขาดงาน</th>
+                                                <th class="text-center">ล่วงเวลา</th>
+                                                <th class="text-center">เบี้ยขยัน</th>
                                                 <th class="text-right" style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
@@ -77,19 +75,18 @@
                                             @foreach ($users as $user)
                                             @php
                                             $paydayDetailWithToday = $user->getPaydayDetailWithToday();
+                                            $userSummary = $user->userSummary();
                                             @endphp
                                             <tr>
-                                                {{-- <td class="text-center">
 
+                                                <td>
                                                     @if (count($user->getErrorDate()) > 0)
                                                     <i class="fas fa-times-circle text-danger"></i>
                                                     @else
                                                     <i class="fas fa-check-circle text-success"></i>
                                                     @endif
-                                                </td> --}}
-
-                                                <td>{{ $user->employee_no }}
-                                                    @php
+                                                    {{ $user->employee_no }}
+                                                    {{-- @php
                                                     $isvalidTimeInOuts =
                                                     $user->IsvalidTimeInOut($paydayDetailWithToday->start_date,$paydayDetailWithToday->end_date)
 
@@ -97,19 +94,21 @@
 
                                                     @if (count($isvalidTimeInOuts) != 0)
                                                     <i class="fas fa-times-circle text-danger"></i>
-                                                    @endif
+                                                    @endif --}}
 
                                                 </td>
                                                 <td>{{ $user->prefix->name }}{{
                                                     $user->name }} {{
                                                     $user->lastname }}</td>
                                                 {{-- <td>{{$user->getPaydayWithToday()->name}}</td> --}}
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td class="text-center">{{$userSummary['workHour']}}</td>
+                                                <td class="text-center">{{$userSummary['lateHour']}}</td>
+                                                <td class="text-center">{{$userSummary['earlyHour']}}</td>
+                                                <td class="text-center">{{$userSummary['leaveCountSum']}}</td>
+                                                <td class="text-center">{{$userSummary['absentCountSum']}}</td>
+                                                <td class="text-center">{{$userSummary['overTime']}}</td>
+                                                <td class="text-center">{{$userSummary['deligenceAllowance']}}
+                                                </td>
                                                 <td class="text-right">
 
                                                     <a class="btn btn-sm btn-info btn-user" data-id="{{$user->id}}"
@@ -148,18 +147,12 @@
 </div>
 @push('scripts')
 
-<script type="module"
-    src="{{ asset('assets/js/helpers/time-recording-system/schedulework/time-recording-check-current-payday/index.js?v=1') }}">
+<script type="module" src="{{ asset('assets/js/helpers/salary-system/salary/calculation/index.js?v=1') }}">
 </script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {
-        // searchRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.search') }}',        
-        // viewUserRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.view-user') }}',
-        // updateRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.update') }}',
-        // getImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.get-image') }}',
-        // uploadImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.upload-image') }}',
-        // deleteImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check-current-payday.delete-image') }}',
+        searchRoute: '{{ route('groups.salary-system.salary.calculation.search') }}',        
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

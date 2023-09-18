@@ -135,7 +135,7 @@ import * as RequestApi from '../../request-api.js';
         if (missingEvents.length > 0)
         {
             Swal.fire(
-                'ฟิดพลาด',
+                'ผิดพลาด',
                 'กรุณากรอกกะการทำงานให้ครบทุกวัน',
                 'warning'
             )

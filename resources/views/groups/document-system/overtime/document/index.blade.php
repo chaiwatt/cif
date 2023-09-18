@@ -61,10 +61,10 @@
                                                             href="{{ route('groups.document-system.overtime.approval.assignment', ['id' => $overtime->id]) }}">
                                                             <i class="fas fa-link"></i>
                                                         </a>
-                                                        <a class="btn btn-info btn-sm"
+                                                        {{-- <a class="btn btn-info btn-sm"
                                                             href="{{route('groups.document-system.overtime.document.view',['id' => $overtime->id])}}">
                                                             <i class="fas fa-pencil-alt"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         <a class="btn btn-danger btn-sm"
                                                             data-confirm='ลบรายการล่วงเวลา "{{$overtime->name}}" หรือไม่?'
                                                             href="#" data-id="{{$overtime->id}}"

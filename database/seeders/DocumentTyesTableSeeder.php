@@ -18,9 +18,6 @@ class DocumentTyesTableSeeder extends Seeder
         DB::table('document_types')->insert([
             [
                 'name' => 'เอกสารลางาน'
-            ],
-            [
-                'name' => 'ล่วงเวลา'
             ]
         ]);
     }

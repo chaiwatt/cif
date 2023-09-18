@@ -22,7 +22,7 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->char('status',1)->nullable();
-            $table->string('approved_list')->nullable();
+            // $table->string('approved_list')->nullable();
             $table->timestamps();
         });
     }

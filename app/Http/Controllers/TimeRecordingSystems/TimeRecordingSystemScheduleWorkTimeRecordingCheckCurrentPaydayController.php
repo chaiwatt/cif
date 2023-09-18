@@ -24,7 +24,6 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
     }
     public function index()
     {
-
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -38,8 +37,14 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
         $date = Carbon::now();
         $monthId = intval(Carbon::now()->month);
         $currentDate = $date->format('Y-m-d');
-        $paydayDetails = PaydayDetail::where('month_id', $monthId)
-            ->whereDate('end_date', '<=', Carbon::parse($currentDate))
+        // $paydayDetails = PaydayDetail::whereDate('end_date', '<=', Carbon::parse($currentDate))
+        //     ->whereDate('payment_date', '>=', Carbon::parse($currentDate))
+        //     ->get();
+        $type =1;
+        $paydayDetails = PaydayDetail::whereDate('end_date', '<=', Carbon::parse($currentDate))
+            ->whereHas('payday', function ($query) use ($type) {
+                $query->where('type', '=', $type);
+            })
             ->whereDate('payment_date', '>=', Carbon::parse($currentDate))
             ->get();
 
@@ -144,8 +149,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
         $date = Carbon::now();
         $monthId = intval(Carbon::now()->month);
         $currentDate = $date->format('Y-m-d');
-        $paydayDetails = PaydayDetail::where('month_id', $monthId)
-            ->whereDate('end_date', '<=', Carbon::parse($currentDate))
+        $paydayDetails = PaydayDetail::whereDate('end_date', '<=', Carbon::parse($currentDate))
             ->whereDate('payment_date', '>=', Carbon::parse($currentDate))
             ->get();
         $paydayUserIds = [];
@@ -233,9 +237,9 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
         $searchInput = $request->data['searchInput'];
         $filter = $request->data['filter'];
 
-        if ($timeInValue == null && $timeOutValue == null) {
-            $timeInValue = $timeOutValue = '00:00:00';
-        }
+        // if ($timeInValue == null && $timeOutValue == null) {
+        //     $timeInValue = $timeOutValue = '00:00:00';
+        // }
 
         WorkScheduleAssignmentUser::find($workScheduleAssignmentUserId)->update([
             'time_in' => $timeInValue,
@@ -246,8 +250,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
         $date = Carbon::now();
         $monthId = intval(Carbon::now()->month);
         $currentDate = $date->format('Y-m-d');
-        $paydayDetails = PaydayDetail::where('month_id', $monthId)
-            ->whereDate('end_date', '<=', Carbon::parse($currentDate))
+        $paydayDetails = PaydayDetail::whereDate('end_date', '<=', Carbon::parse($currentDate))
             ->whereDate('payment_date', '>=', Carbon::parse($currentDate))
             ->get();
         $paydayUserIds = [];
@@ -306,7 +309,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
 
             }
 
-        return view('groups.time-recording-system.schedulework.time-recording-check-current-payday.table-render.time-recording-check-current-payday-table-render',[
+        return view('groups.time-recording-system.schedulework.time-recording-check-current-payday.table-render.time-recording-check-current-payday-table',[
             'users' => $users
             ])->render();
 

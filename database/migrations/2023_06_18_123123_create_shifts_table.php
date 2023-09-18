@@ -34,6 +34,8 @@ return new class extends Migration
             $table->char('year', 4)->default(Carbon::now()->year)->nullable();
             $table->string('color')->nullable();
             $table->timestamps();
+
+            $table->index('code');
         });
     }
 

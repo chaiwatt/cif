@@ -848,13 +848,56 @@ $(document).on('click', '.btn-delete-user-attachment', function (e) {
                 'userId': userId,
                 'attachmentId': attachmentId
             }
-            console.log(data);
+            
             RequestApi.postRequest(data, deleteAttachmentUrl, token).then(response => {
                 $('#user-attachment-container').html(response);
             }).catch(error => { })
         }
     });
 
+});
+
+$(document).on('click', '.btn-update-user-diligence-allowance', function (e) {
+    e.preventDefault();
+    var getDiligenceAllowanceClassifyUrl = window.params.getDiligenceAllowanceClassifyRoute;
+    var userDiligenceAllowanceId = $(this).data('id');
+
+    var data = {
+        'userId': userId,
+        'userDiligenceAllowanceId': userDiligenceAllowanceId
+    }
+
+    RequestApi.postRequest(data, getDiligenceAllowanceClassifyUrl, token).then(response => {
+        $('#user-diligence-allowance-id').val(userDiligenceAllowanceId);
+        $('#update-user-diligence-allowance-modal-container').html(response);
+        $('#modal-update-user-diligence-allowance').modal('show');
+    }).catch(error => { })
+    
+    
+});
+
+$(document).on('click', '#save-update-user-diligence-allowance', function (e) {
+    e.preventDefault();
+    var updateDiligenceAllowanceClassifyUrl = window.params.updateDiligenceAllowanceClassifyRoute;
+    var userDiligenceAllowanceId = $('#user-diligence-allowance-id').val();
+    var diligenceAllowanceClassifyId = $('#diligence-allowance-classify').val();
+
+    
+
+    var data = {
+        'userId': userId,
+        'userDiligenceAllowanceId': userDiligenceAllowanceId,
+        'diligenceAllowanceClassifyId': diligenceAllowanceClassifyId
+    }
+
+    RequestApi.postRequest(data, updateDiligenceAllowanceClassifyUrl, token).then(response => {
+        
+        $('#dilegence-allowance-container').html(response);
+        $('#modal-update-user-diligence-allowance').modal('hide');
+
+    }).catch(error => { })
+
+    
 });
 
 

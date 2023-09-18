@@ -76,17 +76,35 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.time-recording-system.report.index',
         ]);
         Job::create([
-            'code' => 'SALARY-CALCULATION',
-            'name' => 'คำนวนเงินเดือน',
-            'route' => 'groups.salary-system.salary.calculation',
-            'view' => 'groups.salary-system.salary.calculation.index'
+            'code' => 'CALCULATION-LIST',
+            'name' => 'เงินเดือนงวดปกติ',
+            'route' => 'groups.salary-system.salary.calculation-list',
+            'view' => 'groups.salary-system.salary.calculation-list.index'
         ]);
         Job::create([
-            'code' => 'INCOME-DEDUCT-ASSIGNMENT',
-            'name' => 'เพิ่มเงินได้ / เงินหัก',
-            'route' => 'groups.salary-system.salary.income-deduct-assignment',
-            'view' => 'groups.salary-system.salary.income-deduct-assignment.index'
+            'code' => 'CALCULATION-EXTRA-LIST',
+            'name' => 'เงินเดือนงวดพิเศษ',
+            'route' => 'groups.salary-system.salary.calculation-extra-list',
+            'view' => 'groups.salary-system.salary.calculation-extra-list.index'
         ]);
+        // Job::create([
+        //     'code' => 'INCOME-DEDUCT-ASSIGNMENT',
+        //     'name' => 'เพิ่มเงินได้ / เงินหัก',
+        //     'route' => 'groups.salary-system.salary.income-deduct-assignment',
+        //     'view' => 'groups.salary-system.salary.income-deduct-assignment.index'
+        // ]);
+        // Job::create([
+        //     'code' => 'SALARY-CALCULATION',
+        //     'name' => 'รายการบันทึกเวลา',
+        //     'route' => 'groups.salary-system.salary.calculation',
+        //     'view' => 'groups.salary-system.salary.calculation.index'
+        // ]);
+        // Job::create([
+        //     'code' => 'SALARY-SUMMARY',
+        //     'name' => 'รายการเงินเดือน',
+        //     'route' => 'groups.salary-system.salary.summary',
+        //     'view' => 'groups.salary-system.salary.summary.index'
+        // ]);
         Job::create([
             'code' => 'SALARY-PAYDAY',
             'name' => 'รอบคำนวนเงินเดือน',
@@ -146,6 +164,54 @@ class JobsTableSeeder extends Seeder
             'name' => 'ข้อมูลพนักงาน',
             'route' => 'groups.user-management-system.setting.userinfo',
             'view' => 'groups.user-management-system.setting.userinfo.index'
+        ]);
+        Job::create([
+            'code' => 'USER-LEAVE',
+            'name' => 'วันลา',
+            'route' => 'groups.user-management-system.setting.userleave',
+            'view' => 'groups.user-management-system.setting.userleave.index'
+        ]);
+        Job::create([
+            'code' => 'ASSESSMENT',
+            'name' => 'การประเมิน',
+            'route' => 'groups.assessment-system.assessment.assessment',
+            'view' => 'groups.assessment-system.assessment.assessment.index'
+        ]);
+        Job::create([
+            'code' => 'ASSESSMENT-GROUP',
+            'name' => 'กลุ่มการประเมิน',
+            'route' => 'groups.assessment-system.setting.assessment-group',
+            'view' => 'groups.assessment-system.setting.assessment-group.index'
+        ]);
+        Job::create([
+            'code' => 'ASSESSMENT-CRITERIA',
+            'name' => 'เกณฑ์การประเมิน',
+            'route' => 'groups.assessment-system.setting.criteria',
+            'view' => 'groups.assessment-system.setting.criteria.index'
+        ]);
+        Job::create([
+            'code' => 'ASSESSMENT-SCORE',
+            'name' => 'คะแนนเกณฑ์การประเมิน',
+            'route' => 'groups.assessment-system.setting.score',
+            'view' => 'groups.assessment-system.setting.score.index'
+        ]);
+        Job::create([
+            'code' => 'ASSESSMENT-SCORE-MULTIPLICATION',
+            'name' => 'ตัวคูณคะแนน',
+            'route' => 'groups.assessment-system.setting.multiplication',
+            'view' => 'groups.assessment-system.setting.multiplication.index'
+        ]);
+        Job::create([
+            'code' => 'ANNOUNCEMENT-CATEGORY',
+            'name' => 'หมวดหมู่',
+            'route' => 'groups.announcement-system.setting.category',
+            'view' => 'groups.announcement-system.setting.category.index'
+        ]);
+        Job::create([
+            'code' => 'JOB-APPLICATION-CATEGORY',
+            'name' => 'หมวดหมู่',
+            'route' => 'groups.job-application-system.setting.category',
+            'view' => 'groups.job-application-system.setting.category.index'
         ]);
     }
 }

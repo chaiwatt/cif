@@ -40,12 +40,11 @@ $(document).on('click', '#leave_check', function (e) {
         'endTime': endTime,
         'userId': userId,
         'leaveType': leaveType,
-        // 'haftDayLeave': haftDayLeave,
-        // 'haftDayLeaveType': haftDayLeaveType
     }
     var checkLeaveUrl = window.params.checkLeaveRoute
 
     RequestApi.postRequest(data, checkLeaveUrl, token).then(response => {
+        // console.log(response);
         $('#modal_container').html(response);
         $('#modal-leave-info').modal('show');
     }).catch(error => {
@@ -88,10 +87,20 @@ $(document).on('click', '#save_leave', function (e) {
         return;
     }
 
-    console.log(selectedFile)
+    // console.log(selectedFile)
 
     var storeUrl = window.params.storeRoute
     RequestApi.postRequestFormData(formData, storeUrl, token).then(response => {
+        
+        if (response.error != null) {
+            console.log(response);
+            Swal.fire(
+                'ผิดพลาด!',
+                response.error,
+                'error'
+            );
+            return;
+        }
         $('#modal-leave-info').modal('hide');
         var url = window.params.url + '/groups/document-system/leave/document'
         window.location.href = url; // Redirect to the generated URL

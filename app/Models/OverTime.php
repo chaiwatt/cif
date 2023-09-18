@@ -15,7 +15,9 @@ class OverTime extends Model
         'to_date',
         'start_time',
         'end_time',
-        'code'
+        'code',
+        'approved_list',
+        'type',
     ];
 
     public function overtimeDetails()

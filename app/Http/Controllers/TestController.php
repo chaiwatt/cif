@@ -8,14 +8,17 @@ use App\Models\Leave;
 use App\Models\Shift;
 use App\Models\Payday;
 use App\Models\Approver;
+use App\Models\LeaveType;
+use App\Models\UserLeave;
+use App\Models\LeaveDetail;
 use App\Models\ApproverUser;
 use App\Models\PaydayDetail;
+use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\WorkScheduleAssignment;
 use App\Helpers\PayDaySameMonthGenerator;
 use App\Helpers\PayDayCrossMonthGenerator;
-use App\Models\WorkSchedule;
 use App\Models\WorkScheduleAssignmentUser;
 
 class TestController extends Controller
@@ -148,8 +151,8 @@ class TestController extends Controller
         // $user = User::where('employee_no',170107)->first();
         // $approvers = $user->approvers->first();
         
-        // $user = User::where('employee_no',170107)->first();
-        // $holidays = $user->getHolidayDates('2023-05-01','2023-05-15');
+        // $user = User::where('employee_no',900038)->first();
+        // $holidays = $user->getHolidayDates('2023-08-12','2023-08-12');
         // dd($holidays);
 
         // $data = [
@@ -427,28 +430,124 @@ class TestController extends Controller
 
         // dd(intval((52 / 60)),(52 % 60)/100);
 
-$originalHours = 8;
-$minutesToSubtract = 52;
+        // $originalHours = 8;
+        // $minutesToSubtract = 52;
 
-// Convert minutes to decimal hours
-$decimalHoursToSubtract = $minutesToSubtract / 60;
+        // // Convert minutes to decimal hours
+        // $decimalHoursToSubtract = $minutesToSubtract / 60;
 
-// Subtract decimal hours from original hours
-$remainingHours = $originalHours - $decimalHoursToSubtract;
+        // // Subtract decimal hours from original hours
+        // $remainingHours = $originalHours - $decimalHoursToSubtract;
 
-// Calculate the remaining minutes
-$remainingMinutes = round(($remainingHours - floor($remainingHours)) * 60);
+        // // Calculate the remaining minutes
+        // $remainingMinutes = round(($remainingHours - floor($remainingHours)) * 60);
 
-echo "Original Hours: $originalHours\n";
-echo "Minutes to Subtract: $minutesToSubtract\n";
-echo "Remaining Hours: " . floor($remainingHours) . " hours\n";
-echo "Remaining Minutes: $remainingMinutes minutes\n";
+        // echo "Original Hours: $originalHours\n";
+        // echo "Minutes to Subtract: $minutesToSubtract\n";
+        // echo "Remaining Hours: " . floor($remainingHours) . " hours\n";
+        // echo "Remaining Minutes: $remainingMinutes minutes\n";
+
+        // $shiftStartDate = '2023-08-01 07:00:00';
+        // $shiftEndDate = '2023-08-01 16:00:00';
+        // $user = User::find(777);
+
+        
+        // $leaveDetail = LeaveDetail::join('leaves', 'leave_details.leave_id', '=', 'leaves.id')
+        //     ->where('leaves.user_id', $user->id)
+        //     ->where(function ($query) use ($shiftStartDate, $shiftEndDate) {
+        //         $query->whereBetween('leave_details.from_date', [$shiftStartDate, $shiftEndDate])
+        //             ->orWhereBetween('leave_details.to_date', [$shiftStartDate, $shiftEndDate])
+        //             ->orWhere(function ($subquery) use ($shiftStartDate, $shiftEndDate) {
+        //                 $subquery->where('leave_details.from_date', '<=', $shiftStartDate)
+        //                         ->where('leave_details.to_date', '>=', $shiftEndDate);
+        //             });
+        //     })
+        //     ->get(['leave_details.*'])->first();
+        
+        // if ($leaveDetail != null){
+
+        //     $fromDate = Carbon::parse($leaveDetail->from_date);
+        //     $toDate = Carbon::parse($leaveDetail->to_date);
+            
+        //     $hourDifference = intval($fromDate->diffInHours($toDate));
+        //     if ( $hourDifference > 4 ){
+        //         $hourDifference = intval($fromDate->diffInHours($toDate))-1;
+        //     }
+        //     $diffInWorkHour = $hourDifference / 8 ;
+        //     dd($diffInWorkHour);
+
+        // }    
+
+        // dd($leaveDetail);
+
+        // $workScheduleAssignmentUser = WorkScheduleAssignmentUser::find(7);
+        // dd($workScheduleAssignmentUser->getOvertimeInfo());
+        //         $users = User::all();
+        //         foreach($users as $user)
+        //         {
+        // UserLeave::create([
+        //             'user_id' => $user->id,
+        //             'business_leave' => 3,
+        //             'sick_leave' => 30,
+        //             'annual_leave' => 7,
+        //             'odd_even_month' => rand(1, 2),
+        //         ]);
+        //         }
 
 
+        
 
+            // $paydayDetails = User::where('employee_no','900038')->first()->getPaydayDetailWithTodays();
+            // $minStartDate = $paydayDetails->min('start_date');
+            // $maxEndDate = $paydayDetails->max('end_date');
 
+            // $minStartDateStartOfDay = Carbon::createFromFormat('Y-m-d', $minStartDate)->startOfDay();
+            // $maxEndDateEndOfDay = Carbon::createFromFormat('Y-m-d', $maxEndDate)->endOfDay();
+            // dd($minStartDate,$minStartDateStartOfDay,$maxEndDate,$maxEndDateEndOfDay);
+            // $noDeductLeaveType = LeaveType::where('diligence_allowance_deduct',0)->pluck('id')->toArray();
+            // dd($noDeductLeaveType);
+
+        //    $decimal = 88.52;
+
+        //     $hours = floor($decimal); // Extract the integer part as hours
+        //     $minutes = ($decimal - $hours) * 100; // Extract the decimal part as minutes
+        //     dd($hours,$minutes);
+        $date ='2023-08-06';
+        $userId = 765;
+        $user = User::find($userId);
+
+        // $holidayShift = $this->isHolidayShift($date,$userId);
+        // dd($holidayShift);
+        $paytdayDetail = $user->getPaydayDetailWithTodays();
+        dd($paytdayDetail);
+        // $hourDifference = 1;    
+        // $hourDifference = min($hourDifference, 12);
+        // dd($hourDifference);
 
     }
+
+    public function isHolidayShift($date,$userId)
+    {      
+        $workScheduleAssignmentUser = WorkScheduleAssignmentUser::where('user_id',$userId)
+            ->where('date_in',$date)
+            ->where('date_out',$date)
+            ->whereHas('workScheduleAssignment', function ($query) use ($date) {
+                    $query->where('short_date',$date)
+                        ->whereHas('shift', function ($subQuery) {
+                            $subQuery->where('code', 'LIKE', '%_H')
+                            ->orWhere('code', 'LIKE', '%_TH');
+                        });
+                });
+        $shifId = $workScheduleAssignmentUser->get()->pluck('workScheduleAssignment.shift_id');
+        return $shifId;
+    }
+
+    function splitDecimalToHoursMinutes($decimal) {
+    $hours = floor($decimal); // Extract the integer part as hours
+    $minutes = ($decimal - $hours) * 60; // Extract the decimal part as minutes
+
+    return [$hours, $minutes];
+}
 
     public function getAuthorizedUserIdsForLeave()
     {

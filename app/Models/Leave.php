@@ -17,8 +17,7 @@ class Leave extends Model
         'from_date',
         'to_date',
         'status',
-        'half_day',
-        'half_day_type',
+        'duration',
         'approved_list',
         'attachment'
     ];

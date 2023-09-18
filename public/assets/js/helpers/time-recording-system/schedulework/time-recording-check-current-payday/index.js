@@ -71,7 +71,7 @@ $(document).on('click', '#user', function (e) {
         $('#table_modal_container').html(response);
         $('#startDate').val(startDate);
         $('#endDate').val(endDate);
-
+        $('.input-time-format').inputmask('99:99:99');
         $('#modal-user-time-record').modal('show');
     }).catch(error => {
 
@@ -105,18 +105,25 @@ $(document).on('click', '.btnSaveBtn', function (e) {
         'searchInput': searchInput
     }
 
-    console.log(data)
+    if (timeInValue === '' || timeOutValue === '') {
+        Swal.fire(
+            'ผิดพลาด!',
+            'กรุณากรอกเวลาให้ครบ',
+            'error'
+        );
+        return;
+    }
 
     RequestApi.postRequest(data, updateUrl, token).then(response => {
         $('#table_container').html(response);
         $('#error_' + workScheduleAssignmentUserId).hide();
-        if (timeInValue === '' && timeOutValue === '') {
-            var timeInInput = row.find('input[id^="time_in"]');
-            var timeOutInput = row.find('input[id^="time_out"]');
+        // if (timeInValue === '' && timeOutValue === '') {
+        //     var timeInInput = row.find('input[id^="time_in"]');
+        //     var timeOutInput = row.find('input[id^="time_out"]');
 
-            timeInInput.val('00:00:00');
-            timeOutInput.val('00:00:00');
-        }
+        //     timeInInput.val('00:00:00');
+        //     timeOutInput.val('00:00:00');
+        // }
         Toast.fire({
             icon: 'success',
             title: 'แก้ไขรายการสำเร็จ เวลาเข้า ' + timeInValue + ' เวลาออก ' + timeOutValue

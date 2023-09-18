@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\DiligenceAllowance;
+use App\Models\UserDiligenceAllowance;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,10 +15,10 @@ class DiligenceAllowanceClassify extends Model
         'level',
         'cost'
     ];
-
-    public function diligenceAllowance()
+    
+    public function diligenceAllowances()
     {
-        return $this->belongsTo(DiligenceAllowance::class, 'diligence_allowance_id');
+        return $this->hasMany(UserDiligenceAllowance::class, 'diligence_allowance_classify_id');
     }
 
 }

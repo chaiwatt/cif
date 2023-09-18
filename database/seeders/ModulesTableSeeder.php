@@ -65,5 +65,25 @@ class ModulesTableSeeder extends Seeder
             'name' => 'ตั้งค่า',
             'icon' => 'fa-cog'
         ]);
+        Module::create([
+            'code' => 'ASSESSMENT-MODULE',
+            'name' => 'การประเมิน',
+            'icon' => 'fa-medal'
+        ]);
+        Module::create([
+            'code' => 'ASSESSMENT-MODULE-SETTING',
+            'name' => 'ตั้งค่า',
+            'icon' => 'fa-cog'
+        ]);
+        Module::create([
+            'code' => 'ANNOUNCEMENT-MODULE-SETTING',
+            'name' => 'ตั้งค่า',
+            'icon' => 'fa-cog'
+        ]);
+        Module::create([
+            'code' => 'JOB-APPLICATION-MODULE-SETTING',
+            'name' => 'ตั้งค่า',
+            'icon' => 'fa-cog'
+        ]);
     }
 }

@@ -19,7 +19,7 @@ class UserManagementSystemSettingUserInfoSalaryController extends Controller
         SalaryRecord::create([
             'user_id' => $userId,
             'salary' => $salary,
-            'record_date' => Carbon::createFromFormat('m/d/Y', $salaryAdjustDate)->format('Y-m-d'), 
+            'record_date' => Carbon::createFromFormat('d/m/Y', $salaryAdjustDate)->format('Y-m-d'), 
         ]);
         $user = User::find($userId);
         return view('groups.user-management-system.setting.userinfo.table-render.salary-table-render',[
@@ -43,7 +43,7 @@ class UserManagementSystemSettingUserInfoSalaryController extends Controller
         $salaryAdjustDate = $request->data['salaryAdjustDate'];
         SalaryRecord::find($salaryRecordId)->update([
             'salary' => $salary,
-            'record_date' => Carbon::createFromFormat('m/d/Y', $salaryAdjustDate)->format('Y-m-d'), 
+            'record_date' => Carbon::createFromFormat('d/m/Y', $salaryAdjustDate)->format('Y-m-d'), 
         ]);
         $user = User::find($userId);
         return view('groups.user-management-system.setting.userinfo.table-render.salary-table-render',[

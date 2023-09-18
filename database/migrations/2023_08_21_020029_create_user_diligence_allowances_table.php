@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('diligence_allowance_id');
-            $table->foreign('diligence_allowance_id')->references('id')->on('diligence_allowances')->onDelete('cascade');
-            $table->char('level',1)->default(1);
+            $table->unsignedBigInteger('payday_detail_id');
+            $table->foreign('payday_detail_id')->references('id')->on('payday_details')->onDelete('cascade');
+            $table->unsignedBigInteger('diligence_allowance_classify_id')->nullable();
+            $table->foreign('diligence_allowance_classify_id', 'fk_wsa_user_diligence_allowances_classify_id')->references('id')->on('diligence_allowance_classifies')->onDelete('cascade');
             $table->timestamps();
         });
-    }
 
+    }
     /**
      * Reverse the migrations.
      */

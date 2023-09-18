@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
+use App\Models\OverTimeDetail;
 use App\Services\UpdatedRoleGroupCollectionService;
 use Illuminate\Support\Facades\Validator;
 
@@ -88,9 +89,10 @@ class DocumentSystemOvertimeDocumentController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+        $userIds = $request->userId;
         $startDateTime = $request->startDate;
         $endDateTime = $request->endDate;
+        $type = $request->type;
 
         // Parse the startDate using Carbon
         $carbonStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime);
@@ -103,12 +105,18 @@ class DocumentSystemOvertimeDocumentController extends Controller
 
         $name = $request->name;
 
+        $approvedList = collect($userIds)->map(function ($userId) {
+                return ['user_id' => $userId, 'status' => 0];
+            });
+
         OverTime::create([
             'name' => $name,
             'from_date' => $startDate,
             'to_date' => $endDate,
             'start_time' => $time_start,
-            'end_time' => $time_end
+            'end_time' => $time_end,
+            'approved_list' => $approvedList->toJson(),
+            'type' => $type
         ]);
         return redirect()->route('groups.document-system.overtime.document');
     }
@@ -125,11 +133,17 @@ class DocumentSystemOvertimeDocumentController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $overtime = OverTime::find($id);
+        $approvedList = json_decode($overtime->approved_list, true);
+        $userIds = array_column($approvedList, 'user_id');
+
+        $users = User::whereIn('id',$userIds)->get();
+
         return view('groups.document-system.overtime.document.view', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
-            'overtime' => $overtime
+            'overtime' => $overtime,
+            'users' => $users
         ]);
     }
 
@@ -141,7 +155,7 @@ class DocumentSystemOvertimeDocumentController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-
+        $userIds = $request->userId;
         $startDateTime = $request->startDate;
         $endDateTime = $request->endDate;
 
@@ -156,20 +170,48 @@ class DocumentSystemOvertimeDocumentController extends Controller
 
         $overtimeId = $id;
         $name = $request->name;
-        // $startDate = Carbon::createFromFormat('d/m/Y', $request->startDate)->format('Y-m-d');
-        // $endDate = Carbon::createFromFormat('d/m/Y', $request->endDate)->format('Y-m-d');
-        // $time_start = $request->timepicker_start;
-        // $time_end = $request->timepicker_end;
 
-        // dd($startDate,$time_start,$endDate,$time_end);
+        $overTime = OverTime::find($overtimeId);
+
+        // $userIds = $request->userId; // Example incoming user IDs
+        $approvedList = json_decode($overTime->approved_list, true);
+        $existingUserIds = array_column($approvedList, 'user_id');
+
+        // Calculate the new list of user IDs
+        $newUserIds = array_diff($userIds, $existingUserIds);
+        
+        // Remove user IDs that need to be removed
+        $approvedList = array_filter($approvedList, function ($item) use ($userIds) {
+            return in_array($item['user_id'], $userIds);
+        });
+
+        $newUserItems = collect($newUserIds)->map(function ($newUserId) {
+            return ['user_id' => $newUserId, 'status' => 0];
+        })->all();
+
+        $approvedList = collect(array_merge($approvedList, $newUserItems));
+
+        // $approvedList = array_merge($approvedList, $newUserItems);
+
+
 
         OverTime::find($overtimeId)->update([
             'name' => $name,
             'from_date' => $startDate,
             'to_date' => $endDate,
             'start_time' => $time_start,
-            'end_time' => $time_end
+            'end_time' => $time_end,
+            'approved_list' => $approvedList->toJson(),
         ]);
+
+        $overtime = OverTime::find($overtimeId);
+
+        // OverTimeDetail::where('over_time_id',$overtime->id)->update([
+        //     'from_date' => $startDate,
+        //     'to_date' => $endDate,
+        //     'start_time' => $time_start,
+        //     'end_time' => $time_end
+        // ]);
         return redirect()->route('groups.document-system.overtime.document');
     }
 
@@ -188,9 +230,16 @@ class DocumentSystemOvertimeDocumentController extends Controller
             'name' => 'required',
             'startDate' => 'required|date_format:d/m/Y H:i',
             'endDate' => 'required|date_format:d/m/Y H:i|after_or_equal:startDate',
+            'userId' => 'required|array|min:1'
         ]);
 
         return $validator;
+    }
+
+    public function getUsers(Request $request)
+    {
+        $users = User::where('nationality_id', 1)->where('ethnicity_id', 1)->get();
+        return view('groups.document-system.overtime.document.modal-user-render.modal-user',['users' => $users])->render();
     }
 
 }

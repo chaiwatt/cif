@@ -377,19 +377,19 @@ function combineData(fileResultsArray, selectedEmployeeNos) {
             // Perform actions based on startDate and endDate existence
             if (!startDateExists) {
                 Swal.fire(
-                    'ฟิดพลาด',
+                    'ผิดพลาด',
                     'กำหนดวันเริ่มต้นไม่ถูกต้อง',
                     'warning'
                 )
             } else if (!endDateExists) {
                 Swal.fire(
-                    'ฟิดพลาด',
+                    'ผิดพลาด',
                     'กำหนดวันที่สิ้นสุดไม่ถูกต้อง',
                     'warning'
                 )
             } else if (!isDateRangeValid) {
                 Swal.fire(
-                    'ฟิดพลาด',
+                    'ผิดพลาด',
                     'กำหนดวันที่เริ่มต้นและสิ้นสุดไม่ถูกต้อง',
                     'warning'
                 )

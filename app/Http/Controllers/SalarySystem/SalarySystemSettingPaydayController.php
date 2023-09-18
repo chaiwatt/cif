@@ -76,11 +76,14 @@ class SalarySystemSettingPaydayController extends Controller
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
 
+        $paydays = Payday::where('year',$currentYear)->where('type',1)->get();
+
         return view('groups.salary-system.setting.payday.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
-            'years' => $years
+            'years' => $years,
+            'paydays' => $paydays
         ]);
     }
     public function store(Request $request)
@@ -92,6 +95,8 @@ class SalarySystemSettingPaydayController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // dd('pass');
+
         // ดึงข้อมูลจากแบบฟอร์ม
         $name = $request->name;
         $year = $request->year;
@@ -100,6 +105,20 @@ class SalarySystemSettingPaydayController extends Controller
         $duration = $request->duration;
         $startDay = $request->startDay;
         $endDay = $request->endDay;
+        $type = $request->paydayType;
+        $firstPayday = $request->firstPayday;
+        $secondPayday = $request->secondPayday;
+
+        if ($type == 2){
+            if ($firstPayday == $secondPayday){
+                $payday = Payday::find($firstPayday);
+                $startDay = $payday->start_day;
+                $endDay = $payday->end_day;
+            }else{
+                $startDay = Payday::find($firstPayday)->start_day;
+                $endDay = Payday::find($secondPayday)->end_day;
+            }
+        }
 
         $payday=Payday::create([
             'name' => $name,
@@ -108,7 +127,10 @@ class SalarySystemSettingPaydayController extends Controller
             'start_day' => $startDay,
             'end_day' => $endDay,
             'payment_type' => $paymentType,
+            'first_payday_id' => $firstPayday,
+            'second_payday_id' => $secondPayday,
             'duration' => $duration,
+            'type' => $type,
         ]);
 
         $this->assignMonth($payday->id,$paymentType,$duration,$crossMonth,$startDay,$endDay,$year);
@@ -182,6 +204,7 @@ class SalarySystemSettingPaydayController extends Controller
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
         $years = collect([$currentYear, $nextYear]);
+        $paydays = Payday::where('year',$currentYear)->where('type',1)->get();
         
 
         return view('groups.salary-system.setting.payday.view', [
@@ -189,7 +212,8 @@ class SalarySystemSettingPaydayController extends Controller
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'payDay' => $payDay,
-            'years' => $years
+            'years' => $years,
+            'paydays' => $paydays
         ]);
     }
 
@@ -209,6 +233,20 @@ class SalarySystemSettingPaydayController extends Controller
         $duration = $request->duration;
         $startDay = $request->startDay;
         $endDay = $request->endDay;
+        $type = $request->paydayType;
+        $firstPayday = $request->firstPayday;
+        $secondPayday = $request->secondPayday;
+
+        if ($type == 2){
+            if ($firstPayday == $secondPayday){
+                $payday = Payday::find($firstPayday);
+                $startDay = $payday->start_day;
+                $endDay = $payday->end_day;
+            }else{
+                $startDay = Payday::find($firstPayday)->start_day;
+                $endDay = Payday::find($secondPayday)->end_day;
+            }
+        }
 
         Payday::find($id)->update([
             'name' => $name,
@@ -217,6 +255,8 @@ class SalarySystemSettingPaydayController extends Controller
             'start_day' => $startDay,
             'end_day' => $endDay,
             'payment_type' => $paymentType,
+            'first_payday_id' => $firstPayday,
+            'second_payday_id' => $secondPayday,
             'duration' => $duration
         ]);
 
@@ -246,16 +286,31 @@ class SalarySystemSettingPaydayController extends Controller
 
     public function validateFormData($request)
     {
-        // ตรวจสอบความถูกต้องของข้อมูลในฟอร์ม
-        $validator = Validator::make($request->all(), [
+        // Define the common validation rules
+        $rules = [
             'name' => 'required|max:255',
             'year' => 'required',
             'duration' => 'required|numeric|min:1',
-            'startDay' => 'required|numeric|max:31', // Validation rules for startDay
-            'endDay' => 'required|numeric|max:31',   // Validation rules for endDay
-        ]);
+        ];
 
-        // ส่งกลับตัว validator
+        // Conditionally add validation rules for startDay and endDay if type is 1
+        if ($request->paydayType == 1) {
+            $rules['startDay'] = 'required|numeric|max:31';
+            $rules['endDay'] = 'required|numeric|max:31';
+        } elseif ($request->paydayType == 2) {
+            $rules['firstPayday'] = 'required';
+            $rules['secondPayday'] = 'required';
+        }
+
+        $messages = [
+            'firstPayday.required' => 'The First Payday field is required.',
+            'secondPayday.required' => 'The Second Payday field is required.',
+        ];
+
+        // Create a new validator with custom error messages
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        // Return the validator instance
         return $validator;
     }
 }

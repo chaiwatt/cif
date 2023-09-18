@@ -25,6 +25,9 @@ return new class extends Migration
             $table->char('year',4)->nullable(); 
             $table->date('short_date')->nullable(); 
             $table->timestamps();
+
+            // Use a composite index
+            $table->index(['work_schedule_id', 'shift_id']);
         });
     }
 

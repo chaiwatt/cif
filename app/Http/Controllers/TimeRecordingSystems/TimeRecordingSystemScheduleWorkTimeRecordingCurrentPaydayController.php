@@ -21,7 +21,6 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCurrentPaydayController extend
     }
     public function index()
     {
-
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -35,10 +34,13 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCurrentPaydayController extend
         $date = Carbon::now();
         $monthId = intval(Carbon::now()->month);
         $currentDate = $date->format('Y-m-d');
-        $paydayDetails = PaydayDetail::where('month_id', $monthId)
-            ->whereDate('end_date', '<=', Carbon::parse($currentDate))
-            ->whereDate('payment_date', '>=', Carbon::parse($currentDate))
-            ->get();
+        $type = 1;
+        $paydayDetails = PaydayDetail::whereDate('end_date', '<=', Carbon::parse($currentDate))
+                    ->whereHas('payday', function ($query) use ($type) {
+                        $query->where('type', '=', $type);
+                    })
+                    ->whereDate('payment_date', '>=', Carbon::parse($currentDate))
+                    ->get();
 
         if (count($paydayDetails) === 0)   
         {
@@ -47,6 +49,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCurrentPaydayController extend
         }
 
         $userIds = [];
+        
         foreach($paydayDetails as $paydayDetail)
         {
             $payday = Payday::find($paydayDetail->payday_id);
@@ -61,7 +64,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCurrentPaydayController extend
         $users = User::whereIn('id',$userIds)->get();
 
         $paydayIds = $paydayDetails->pluck('payday_id')->toArray();
-        // dd($paydayIds);
+        
         $paydays = Payday::whereIn('id',$paydayIds)->get();
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.time-recording.import.index'
         return view('groups.time-recording-system.schedulework.time-recording-current-payday.index', [

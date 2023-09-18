@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('to_date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
+            $table->string('approved_list')->nullable();
+            $table->char('type',1)->default(1);
             $table->timestamps();
         });
     }

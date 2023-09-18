@@ -23,18 +23,18 @@ class GroupsTableSeeder extends Seeder
             'dashboard' => 'groups.dashboard.time-recording-system'
         ]);
         Group::create([
-            'code' => 'SALARY-MANAGEMENT',
-            'name' => 'ระบบเงินเดือน',
-            'description' => 'รายละเอียดระบบเงินเดือน',
-            'icon' => 'fa-wallet',
-            'dashboard' => 'groups.dashboard.salary-system'
-        ]);
-        Group::create([
             'code' => 'DOCUMENT',
             'name' => 'ระบบเอกสาร',
             'description' => 'รายละเอียดระบบเอกสาร',
             'icon' => 'fa-book',
             'dashboard' => 'groups.dashboard.document-system'
+        ]);
+        Group::create([
+            'code' => 'SALARY-MANAGEMENT',
+            'name' => 'ระบบเงินเดือน',
+            'description' => 'รายละเอียดระบบเงินเดือน',
+            'icon' => 'fa-wallet',
+            'dashboard' => 'groups.dashboard.salary-system'
         ]);
         Group::create([
             'code' => 'USER-MANAGEMENT',
@@ -45,10 +45,31 @@ class GroupsTableSeeder extends Seeder
         ]);
         Group::create([
             'code' => 'TRAINING',
-            'name' => 'ระบบฝึกอบรม',
-            'description' => 'รายละเอียดระบบฝึกอบรม',
-            'icon' => 'fa-user',
+            'name' => 'ระบบจัดการการเรียนรู้',
+            'description' => 'รายละเอียดระบบจัดการการเรียนรู้',
+            'icon' => 'fa-user-graduate',
             'dashboard' => 'groups.dashboard.training-system'
+        ]);
+        Group::create([
+            'code' => 'ASSESSMENT',
+            'name' => 'ระบบประเมินพนักงาน',
+            'description' => 'รายละเอียดระบบประเมินพนักงาน',
+            'icon' => 'fa-medal',
+            'dashboard' => 'groups.dashboard.assessment-system'
+        ]);
+        Group::create([
+            'code' => 'ANNOUNCEMENT',
+            'name' => 'ระบบข่าวประกาศ',
+            'description' => 'รายละเอียดระบบข่าวประกาศ',
+            'icon' => 'fa-bullhorn',
+            'dashboard' => 'groups.dashboard.announcement-system'
+        ]);
+        Group::create([
+            'code' => 'JOB-APPLICATION',
+            'name' => 'ระบบสมัครงาน',
+            'description' => 'รายละเอียดระบบสมัครงาน',
+            'icon' => 'fa-user-tie',
+            'dashboard' => 'groups.dashboard.job-application-system'
         ]);
     }
 }

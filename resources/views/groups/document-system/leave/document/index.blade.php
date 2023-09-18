@@ -45,6 +45,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>สายอนุมัติ</th>
+                                                    <th>รหัสพนักงาน</th>
                                                     <th>ชื่อสกุล</th>
                                                     <th>แผนก</th>
                                                     <th>ประเภทการลา</th>
@@ -63,6 +64,7 @@
                                                 @endphp
                                                 <tr>
                                                     <td>{{$approver->code}}</td>
+                                                    <td>{{$leave->user->employee_no}}</td>
                                                     <td>{{$leave->user->name}} {{$leave->user->lastname}}</td>
                                                     <td>{{$leave->user->company_department->name}}</td>
                                                     <td>{{$leave->leaveType->name}}</td>
@@ -89,13 +91,14 @@
                                                     </td>
 
                                                     <td class="text-right">
+
                                                         @if (!empty($leave->attachment))
                                                         <a class="btn btn-primary btn-sm show-attachment"
                                                             data-id="{{$leave->id}}">
                                                             <i class="fas fa-link"></i>
                                                         </a>
                                                         @endif
-
+                                                        @if ($leave->status === null)
                                                         <a class="btn btn-info btn-sm"
                                                             href="{{route('groups.document-system.leave.document.view',['id' => $leave->id])}}">
                                                             <i class="fas fa-pencil-alt"></i>
@@ -107,6 +110,8 @@
                                                             data-message="รายการลา">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
+                                                        @endif
+
                                                     </td>
                                                 </tr>
                                                 @endforeach

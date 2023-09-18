@@ -17,35 +17,54 @@ use App\Http\Controllers\settings\SettingOrganizationCompanyController;
 use App\Http\Controllers\settings\SettingAccessAssignmentRoleController;
 use App\Http\Controllers\settings\SettingOrganizationApproverController;
 use App\Http\Controllers\settings\SettingOrganizationEmployeeController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalarySummaryController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
 use App\Http\Controllers\settings\SettingGeneralCompanyDepartmentController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingIncomeDuctController;
 use App\Http\Controllers\settings\SettingOrganizationEmployeeImportController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemAssessmentController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveApprovalController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveDocumentController;
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
+use App\Http\Controllers\AnnounceSystem\AnnounceSystemSettingCategoryController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingScoreController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeDocumentController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingSkillBasedCostController;
 use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemReportController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingCriteriaController;
+use App\Http\Controllers\AssessmentSystemSettingAssessmentGroupAssignmentController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayAssignmentController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingAssessmentController;
+use App\Http\Controllers\JobApplication\JobApplicationSystemSettingCategoryController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingDiligenceAllowanceController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayAssignmentUserController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemAssessmentAssignmentController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationInformationController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationListSummaryController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryIncomeDeductAssignmentController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingMultiplicationController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingAssessmentGroupController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalAssignmentController;
 use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserInfoController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationListCalculationController;
+use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserLeaveController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListSummaryController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftYearlyHolidayController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftTimeattendanceController;
+use App\Http\Controllers\AssessmentSystem\AssessmentSystemAssessmentAssignmentScoringController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingDiligenceAllowanceAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentAssignmentController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListCalculationController;
 use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserInfoSalaryController;
 use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserInfoPositionController;
 use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserInfoTrainingController;
@@ -59,8 +78,10 @@ use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkSch
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingCheckController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingImportController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListCalculationInformationController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleAssignmentUserController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingCurrentPaydayController;
+use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserInfDiligenceAllowanceClassifyController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController;
 
 
@@ -145,6 +166,7 @@ Route::middleware('auth')->group(function () {
                     Route::group(['prefix' => 'import'], function () {
                         Route::get('{workScheduleId}/year/{year}/month/{month}', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'index'])->name('groups.time-recording-system.schedulework.time-recording.import');
                         Route::post('batch', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'batch'])->name('groups.time-recording-system.schedulework.time-recording.import.batch');
+                        Route::post('batch-auto-detect', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'batchAutoDetect'])->name('groups.time-recording-system.schedulework.time-recording.import.batch-auto-detect');
                         Route::post('single', [TimeRecordingSystemScheduleWorkTimeRecordingImportController::class, 'single'])->name('groups.time-recording-system.schedulework.time-recording.import.single');
                     });
                 });
@@ -200,6 +222,77 @@ Route::middleware('auth')->group(function () {
                 Route::get('', [TimeRecordingSystemReportController::class, 'index'])->name('groups.time-recording-system.report');
             });
         });
+        Route::group(['prefix' => 'assessment-system'], function () {
+            Route::group(['prefix' => 'assessment'], function () {
+                Route::group(['prefix' => 'assessment'], function () {
+                    Route::get('', [AssessmentSystemAssessmentController::class, 'index'])->name('groups.assessment-system.assessment.assessment');
+                    Route::get('create', [AssessmentSystemAssessmentController::class, 'create'])->name('groups.assessment-system.assessment.assessment.create');
+                    Route::post('store', [AssessmentSystemAssessmentController::class, 'store'])->name('groups.assessment-system.assessment.assessment.store');
+                    Route::group(['prefix' => 'assignment'], function () {
+                        Route::get('{id}', [AssessmentSystemAssessmentAssignmentController::class, 'index'])->name('groups.assessment-system.assessment.assessment.assignment');
+                        Route::post('import-user', [AssessmentSystemAssessmentAssignmentController::class, 'importUser'])->name('groups.assessment-system.assessment.assessment.assignment.import-user');
+                        Route::group(['prefix' => 'scoring'], function () {
+                            Route::get('{user_id}/{id}', [AssessmentSystemAssessmentAssignmentScoringController::class, 'index'])->name('groups.assessment-system.assessment.assessment.assignment.scoring');
+                        });
+                    });
+                });
+            });
+            Route::group(['prefix' => 'setting'], function () {
+                Route::group(['prefix' => 'assessment-group'], function () {
+                    Route::get('', [AssessmentSystemSettingAssessmentGroupController::class, 'index'])->name('groups.assessment-system.setting.assessment-group');
+                    Route::get('create', [AssessmentSystemSettingAssessmentGroupController::class, 'create'])->name('groups.assessment-system.setting.assessment-group.create');
+                    Route::post('store', [AssessmentSystemSettingAssessmentGroupController::class, 'store'])->name('groups.assessment-system.setting.assessment-group.store');
+                    Route::get('{id}', [AssessmentSystemSettingAssessmentGroupController::class, 'view'])->name('groups.assessment-system.setting.assessment-group.view');
+                    Route::put('{id}', [AssessmentSystemSettingAssessmentGroupController::class, 'update'])->name('groups.assessment-system.setting.assessment-group.update');
+                    Route::delete('{id}', [AssessmentSystemSettingAssessmentGroupController::class, 'delete'])->name('groups.assessment-system.setting.assessment-group.delete');
+                    Route::group(['prefix' => 'assignment'], function () {
+                        Route::get('{id}', [AssessmentSystemSettingAssessmentGroupAssignmentController::class, 'index'])->name('groups.assessment-system.setting.assessment-group.assignment');
+                        Route::get('create/{id}', [AssessmentSystemSettingAssessmentGroupAssignmentController::class, 'create'])->name('groups.assessment-system.setting.assessment-group.assignment.create');
+                        Route::post('store', [AssessmentSystemSettingAssessmentGroupAssignmentController::class, 'store'])->name('groups.assessment-system.setting.assessment-group.assignment.store');
+                        Route::delete('{id}', [AssessmentSystemSettingAssessmentGroupAssignmentController::class, 'delete'])->name('groups.assessment-system.setting.assessment-group.assignment.delete');
+                    });
+                });
+                Route::group(['prefix' => 'criteria'], function () {
+                    Route::get('', [AssessmentSystemSettingCriteriaController::class, 'index'])->name('groups.assessment-system.setting.criteria');
+                    Route::get('create', [AssessmentSystemSettingCriteriaController::class, 'create'])->name('groups.assessment-system.setting.criteria.create');
+                    Route::post('store', [AssessmentSystemSettingCriteriaController::class, 'store'])->name('groups.assessment-system.setting.criteria.store');
+                    Route::get('{id}', [AssessmentSystemSettingCriteriaController::class, 'view'])->name('groups.assessment-system.setting.criteria.view');
+                    Route::put('{id}', [AssessmentSystemSettingCriteriaController::class, 'update'])->name('groups.assessment-system.setting.criteria.update');
+                    Route::delete('{id}', [AssessmentSystemSettingCriteriaController::class, 'delete'])->name('groups.assessment-system.setting.criteria.delete');
+                });
+                Route::group(['prefix' => 'score'], function () {
+                    Route::get('', [AssessmentSystemSettingScoreController::class, 'index'])->name('groups.assessment-system.setting.score');
+                    Route::get('create', [AssessmentSystemSettingScoreController::class, 'create'])->name('groups.assessment-system.setting.score.create');
+                    Route::post('store', [AssessmentSystemSettingScoreController::class, 'store'])->name('groups.assessment-system.setting.score.store');
+                    Route::get('{id}', [AssessmentSystemSettingScoreController::class, 'view'])->name('groups.assessment-system.setting.score.view');
+                    Route::put('{id}', [AssessmentSystemSettingScoreController::class, 'update'])->name('groups.assessment-system.setting.score.update');
+                    Route::delete('{id}', [AssessmentSystemSettingScoreController::class, 'delete'])->name('groups.assessment-system.setting.score.delete');
+                });
+                Route::group(['prefix' => 'multiplication'], function () {
+                    Route::get('', [AssessmentSystemSettingMultiplicationController::class, 'index'])->name('groups.assessment-system.setting.multiplication');
+                    Route::get('create', [AssessmentSystemSettingMultiplicationController::class, 'create'])->name('groups.assessment-system.setting.multiplication.create');
+                    Route::post('store', [AssessmentSystemSettingMultiplicationController::class, 'store'])->name('groups.assessment-system.setting.multiplication.store');
+                    Route::get('{id}', [AssessmentSystemSettingMultiplicationController::class, 'view'])->name('groups.assessment-system.setting.multiplication.view');
+                    Route::put('{id}', [AssessmentSystemSettingMultiplicationController::class, 'update'])->name('groups.assessment-system.setting.multiplication.update');
+                    Route::delete('{id}', [AssessmentSystemSettingMultiplicationController::class, 'delete'])->name('groups.assessment-system.setting.multiplication.delete');
+                });
+            });
+        });
+        Route::group(['prefix' => 'announcement-system'], function () {
+            Route::group(['prefix' => 'setting'], function () {
+                Route::group(['prefix' => 'category'], function () {
+                    Route::get('', [AnnounceSystemSettingCategoryController::class, 'index'])->name('groups.announcement-system.setting.category');
+                });
+            });
+        });
+        Route::group(['prefix' => 'job-application-system'], function () {
+            Route::group(['prefix' => 'setting'], function () {
+                Route::group(['prefix' => 'category'], function () {
+                    Route::get('', [JobApplicationSystemSettingCategoryController::class, 'index'])->name('groups.job-application-system.setting.category');
+                });
+            });
+        });
+
         Route::group(['prefix' => 'salary-system'], function () {
             Route::group(['prefix' => 'setting'], function () {
                 Route::group(['prefix' => 'payday'], function () {
@@ -250,6 +343,31 @@ Route::middleware('auth')->group(function () {
                 });
             });
             Route::group(['prefix' => 'salary'], function () {
+                Route::group(['prefix' => 'calculation-list'], function () {
+                    Route::get('', [SalarySystemSalaryCalculationListController::class, 'index'])->name('groups.salary-system.salary.calculation-list');
+                    Route::group(['prefix' => 'calculation'], function () {
+                        Route::get('{id}', [SalarySystemSalaryCalculationListCalculationController::class, 'index'])->name('groups.salary-system.salary.calculation-list.calculation');
+                        Route::post('import-income-deduct', [SalarySystemSalaryCalculationListCalculationController::class, 'importIncomeDeduct'])->name('groups.salary-system.salary.calculation-list.calculation.import-income-deduct');
+                        Route::group(['prefix' => 'information'], function () {
+                            Route::get('{start_date}/{end_date}/{user_id}/{payday_detail_id}', [SalarySystemSalaryCalculationExtraListCalculationInformationController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list.calculation.information');
+                        });
+                    });
+                    Route::group(['prefix' => 'summary'], function () {
+                        Route::get('{id}', [SalarySystemSalaryCalculationListSummaryController::class, 'index'])->name('groups.salary-system.salary.calculation-list.summary');
+                        
+                    });
+                });
+                
+                Route::group(['prefix' => 'calculation-extra-list'], function () {
+                    Route::get('', [SalarySystemSalaryCalculationExtraListController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list');
+                    Route::group(['prefix' => 'calculation'], function () {
+                        Route::get('{id}', [SalarySystemSalaryCalculationExtraListCalculationController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list.calculation');
+                    });
+                    Route::group(['prefix' => 'summary'], function () {
+                        Route::get('{id}', [SalarySystemSalaryCalculationExtraListSummaryController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list.summary');
+                    });
+                });
+                
                 Route::group(['prefix' => 'calculation'], function () {
                     Route::get('', [SalarySystemSalaryCalculationController::class, 'index'])->name('groups.salary-system.salary.calculation');
                     Route::get('create', [SalarySystemSalaryCalculationController::class, 'create'])->name('groups.salary-system.salary.calculation.create');
@@ -257,6 +375,7 @@ Route::middleware('auth')->group(function () {
                     Route::get('{id}', [SalarySystemSalaryCalculationController::class, 'view'])->name('groups.salary-system.salary.calculation.view');
                     Route::put('{id}', [SalarySystemSalaryCalculationController::class, 'update'])->name('groups.salary-system.salary.calculation.update');
                     Route::delete('{id}', [SalarySystemSalaryCalculationController::class, 'delete'])->name('groups.salary-system.salary.calculation.delete');
+                    Route::post('search', [SalarySystemSalaryCalculationController::class, 'search'])->name('groups.salary-system.salary.calculation.search');
                     Route::group(['prefix' => 'information'], function () {
                         Route::get('{start_date}/{end_date}/{user_id}', [SalarySystemSalaryCalculationInformationController::class, 'index'])->name('groups.salary-system.salary.calculation.information');
                     });
@@ -266,6 +385,10 @@ Route::middleware('auth')->group(function () {
                     Route::post('store', [SalarySystemSalaryIncomeDeductAssignmentController::class, 'store'])->name('groups.salary-system.salary.income-deduct-assignment.store');
                     Route::post('delete', [SalarySystemSalaryIncomeDeductAssignmentController::class, 'delete'])->name('groups.salary-system.salary.income-deduct-assignment.delete');
                     Route::post('search', [SalarySystemSalaryIncomeDeductAssignmentController::class, 'search'])->name('groups.salary-system.salary.income-deduct-assignment.search');
+                });
+                Route::group(['prefix' => 'summary'], function () {
+                    Route::get('', [SalarySystemSalarySummaryController::class, 'index'])->name('groups.salary-system.salary.summary');
+                    
                 });
             });
         });
@@ -318,6 +441,7 @@ Route::middleware('auth')->group(function () {
                     Route::get('{id}', [DocumentSystemOvertimeDocumentController::class, 'view'])->name('groups.document-system.overtime.document.view');
                     Route::put('{id}', [DocumentSystemOvertimeDocumentController::class, 'update'])->name('groups.document-system.overtime.document.update');
                     Route::delete('{id}', [DocumentSystemOvertimeDocumentController::class, 'delete'])->name('groups.document-system.overtime.document.delete');
+                    Route::post('get-users', [DocumentSystemOvertimeDocumentController::class, 'getUsers'])->name('groups.document-system.overtime.document.get-users');
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('{id}', [DocumentSystemOvertimeApprovalAssignmentController::class, 'index'])->name('groups.document-system.overtime.approval.assignment');
                         Route::get('create/{id}', [DocumentSystemOvertimeApprovalAssignmentController::class, 'create'])->name('groups.document-system.overtime.approval.assignment.create');
@@ -381,6 +505,14 @@ Route::middleware('auth')->group(function () {
                         Route::post('store', [UserManagementSystemSettingUserInfAttachmentController::class, 'store'])->name('groups.user-management-system.setting.userinfo.attachment.store');
                         Route::post('delete', [UserManagementSystemSettingUserInfAttachmentController::class, 'delete'])->name('groups.user-management-system.setting.userinfo.attachment.delete');
                     });
+                    Route::group(['prefix' => 'diligence-allowance-classify'], function () {
+                        Route::post('get-diligence-allowance-classify', [UserManagementSystemSettingUserInfDiligenceAllowanceClassifyController::class, 'getDiligenceAllowanceClassify'])->name('groups.user-management-system.setting.userinfo.get-diligence-allowance-classify');
+                        Route::post('update-diligence-allowance-classify', [UserManagementSystemSettingUserInfDiligenceAllowanceClassifyController::class, 'updateDiligenceAllowanceClassify'])->name('groups.user-management-system.setting.userinfo.update-diligence-allowance-classify');
+                    });
+                });
+                Route::group(['prefix' => 'userleave'], function () {
+                    Route::get('', [UserManagementSystemSettingUserLeaveController::class, 'index'])->name('groups.user-management-system.setting.userleave');
+                    
                 });
             });
         });  

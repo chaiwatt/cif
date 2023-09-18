@@ -4,9 +4,11 @@ namespace App\Http\Controllers\SalarySystem;
 
 use App\Models\User;
 use App\Models\Payday;
+use App\Models\UserPayday;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
+use App\Models\UserDiligenceAllowance;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
 use App\Services\UpdatedRoleGroupCollectionService;
@@ -71,7 +73,7 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
 
     public function store(Request $request)
     {
-                // กำหนดเงื่อนไขการตรวจสอบข้อมูล
+        // กำหนดเงื่อนไขการตรวจสอบข้อมูล
         $validator = Validator::make($request->all(), [
             'paydayId' => 'required',
             'users' => 'required|array',
@@ -94,6 +96,12 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
             foreach ($users as $user) {
                 $user->paydays()->attach($paydayId);
             }
+            // $userPaydays = UserPayday::where('payday_id',$paydayId)->get();
+            // foreach ($userPaydays as $userPayday) {
+            //     UserDiligenceAllowance::create([
+            //         'user_payday_id' => $userPayday->id
+            //     ]);
+            // }
         }
         // กำหนด URL สำหรับ redirect
         $url = "groups/salary-system/setting/payday/assignment-user/{$paydayId}";
@@ -130,6 +138,13 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         foreach ($users as $user) {
             $user->paydays()->attach($paydayId);
         }
+
+        // $userPaydays = UserPayday::where('payday_id',$paydayId)->get();
+        // foreach ($userPaydays as $userPayday) {
+        //     UserDiligenceAllowance::create([
+        //         'user_payday_id' => $userPayday->id
+        //     ]);
+        // }
         return;
     }
 }

@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\LeaveType;
+use App\Models\UserLeave;
 use App\Models\SalaryRecord;
+use App\Models\PositionHistory;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -23847,13 +23850,22 @@ class UsersTableSeeder extends Seeder
         foreach ($chunks as $key => $chunk) {
             User::insert($chunk);
         }
-
+        $leaveTypes = LeaveType::all();
         foreach (User::all() as $user) {
          SalaryRecord::create([
                 'user_id' => $user->id,
-                'salary' => 1000,
+                'salary' => 354,
                 'record_date' => Carbon::today(),
             ]);
+        foreach($leaveTypes as $leaveType)
+        {
+            UserLeave::create([
+                'user_id' => $user->id,
+                'leave_type_id' => $leaveType->id,
+                'count' => rand(3, 10)
+            ]);
+        }    
+        
         }
 
     }

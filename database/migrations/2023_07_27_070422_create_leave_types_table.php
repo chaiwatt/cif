@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('leave_types', function (Blueprint $table) {
             $table->id();
             $table->string('name',100)->nullable();
+            $table->char('diligence_allowance_deduct',1)->nullable();
             $table->timestamps();
         });
     }

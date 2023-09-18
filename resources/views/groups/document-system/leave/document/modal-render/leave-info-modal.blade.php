@@ -28,8 +28,10 @@
                     @else
                     -
                     @endif</dd>
-                <dt class="col-sm-4">วันลาที่เหลือ</dt>
-                <dd class="col-sm-8">ลากิจ(xx) ลาป่วย(xx) พักร้อน(xx)</dd>
+                {{-- <dt class="col-sm-4">วันลาที่เหลือ</dt>
+                <dd class="col-sm-8">ลากิจ <strong>{{$userLeave->business_leave}}</strong><br>
+                    ลาป่วย <strong>{{$userLeave->sick_leave}}</strong><br>
+                    พักร้อน <strong>{{$userLeave->annual_leave}}</strong></dd> --}}
                 <dt class="col-sm-4">ผู้อนุมัติ</dt>
                 <dd class="col-sm-8" id="approver" data-approver="{{ json_encode($approver) }}">
                     @if ($approver !== null && $approver->authorizedUsers->isNotEmpty())

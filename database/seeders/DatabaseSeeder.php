@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-  $this->call(EmployeeTypesTableSeeder::class);
+        $this->call(EmployeeTypesTableSeeder::class);
         $this->call(UserPositionsTableSeeder::class);
         $this->call(EthnicitiesTableSeeder::class);
         $this->call(NationalitiesTableSeeder::class);
@@ -29,7 +29,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ScheduleTypesTableSeeder::class);
         $this->call(LeaveTypesTableSeeder::class);
         $this->call(SkillBasedCostsTableSeeder::class);
-        // $this->call(PaydaysTableSeeder::class);
+        $this->call(AssessmentScoresTableSeeder::class);
+        $this->call(AssessmentScoreMultiplicationsTableSeeder::class);
+        $this->call(AssessmentCriteriasTableSeeder::class);
         $this->call(CompaniesTableSeeder::class);
         $this->call(ShiftColorsTableSeeder::class);
         $this->call(MonthsTableSeeder::class);
@@ -38,11 +40,11 @@ class DatabaseSeeder extends Seeder
         $this->call(YearlyHolidaysTableSeeder::class);
         $this->call(SearchFieldsTableSeeder::class);
         $this->call(AgreementUnitsTableSeeder::class);
-        $this->call(AgreementsTableSeeder::class);
+        $this->call(AssessmentPurposesTableSeeder::class);
         $this->call(DiligenceAllowancesTableSeeder::class);
         $this->call(DiligenceAllowanceClassifiesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(UserDiligenceAllowancesTableSeeder::class);
+        $this->call(PositionHistoriesTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(RoleUsersTableSeeder::class);
         $this->call(GroupsTableSeeder::class);

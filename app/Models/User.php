@@ -14,7 +14,9 @@ use App\Models\Approver;
 use App\Models\Training;
 use App\Models\Education;
 use App\Models\Ethnicity;
+use App\Models\LeaveType;
 use App\Models\UserGroup;
+use App\Models\UserLeave;
 use App\Models\Punishment;
 use App\Models\LeaveDetail;
 use App\Models\Nationality;
@@ -29,8 +31,11 @@ use App\Models\IncomeDeductUser;
 use App\Models\CompanyDepartment;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\DiligenceAllowance;
+use App\Models\AssessmentGroupUser;
+use App\Models\UserDiligenceAllowance;
 use App\Models\WorkScheduleAssignment;
 use Illuminate\Notifications\Notifiable;
+use App\Models\DiligenceAllowanceClassify;
 use App\Models\WorkScheduleAssignmentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,7 +70,7 @@ class User extends Authenticatable
         'email',
         'password',
         'tax',
-        // 'education_level',
+        'diligence_allowance_id',
         'time_record_require',
         'bank',
         'bank_account',
@@ -303,6 +308,18 @@ class User extends Authenticatable
         return $this->hasMany(WorkScheduleAssignmentUser::class);
     }
 
+    // public function getWorkScheduleUserByMonthYear($month, $year)
+    // {
+    //     $workScheduleUser = $this->workScheduleAssignmentUsers()
+    //         ->whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
+    //             $query->where('month_id', $month)
+    //                 ->where('year', $year);
+    //         })
+    //         ->get();
+
+    //     return $workScheduleUser;
+    // }
+
     public function getWorkScheduleUserByMonthYear($month, $year)
     {
         $workScheduleUser = $this->workScheduleAssignmentUsers()
@@ -310,10 +327,25 @@ class User extends Authenticatable
                 $query->where('month_id', $month)
                     ->where('year', $year);
             })
+            ->with('workScheduleAssignment') // Eager load the 'workScheduleAssignment' relationship
             ->get();
 
         return $workScheduleUser;
     }
+
+
+    // public function getWorkScheduleAssignmentUserByConditions($day, $month, $year)
+    // {
+    //     $workScheduleAssignmentUser = $this->workScheduleAssignmentUsers()
+    //         ->whereHas('workScheduleAssignment', function ($query) use ($day, $month, $year) {
+    //             $query->where('day', $day)
+    //                 ->where('month_id', $month)
+    //                 ->where('year', $year);
+    //         })
+    //         ->get();
+
+    //     return $workScheduleAssignmentUser;
+    // }
 
     public function getWorkScheduleAssignmentUserByConditions($day, $month, $year)
     {
@@ -323,54 +355,204 @@ class User extends Authenticatable
                     ->where('month_id', $month)
                     ->where('year', $year);
             })
+            ->with('workScheduleAssignment') // Eager load the 'workScheduleAssignment' relationship
             ->get();
 
         return $workScheduleAssignmentUser;
     }
 
+    // public function getWorkScheduleAssignmentUsersByConditions($startDate, $endDate, $year)
+    // {
+    //     $startDate = date('Y-m-d', strtotime($startDate));
+    //     $endDate = date('Y-m-d', strtotime($endDate));
+    //     $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+    //         ->whereHas('workScheduleAssignment', function ($query) use ($year) {
+    //             $query->where('year', $year);
+    //         })
+    //         ->whereBetween('date_in', [$startDate, $endDate])
+    //         ->orderBy('date_in') 
+    //         ->get();
+
+    //     return $workScheduleAssignmentUsers;
+    // }
+
     public function getWorkScheduleAssignmentUsersByConditions($startDate, $endDate, $year)
-    {
-        $startDate = date('Y-m-d', strtotime($startDate));
-        $endDate = date('Y-m-d', strtotime($endDate));
-        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
-            // ->whereHas('workScheduleAssignment', function ($query) use ($month, $year) {
-            ->whereHas('workScheduleAssignment', function ($query) use ($year) {
-                // $query->where('month_id', $month)
-                $query->where('year', $year);
-            })
-            ->whereBetween('date_in', [$startDate, $endDate])
-            ->orderBy('date_in') 
-            ->get();
-
-        return $workScheduleAssignmentUsers;
-    }
-
-    public function getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year)
     {
         $startDate = date('Y-m-d', strtotime($startDate));
         $endDate = date('Y-m-d', strtotime($endDate));
         
         $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
             ->whereHas('workScheduleAssignment', function ($query) use ($year) {
-                $query->where('year', $year)
-                    ->whereHas('shift', function ($subQuery) {
-                        $subQuery->where('code', 'NOT LIKE', '%_H')
-                                ->where('code', 'NOT LIKE', '%_TH');
-                    });
+                $query->where('year', $year);
             })
             ->whereBetween('date_in', [$startDate, $endDate])
-            ->where(function ($query) {
-                $query->whereNull('time_in')
-                    ->orWhereNull('time_out');
-            })
-            ->whereDoesntHave('user.leaves', function ($subQuery) {
-                $subQuery->where('status', 1)
-                ->orWhere('status', 2);
-            })
             ->orderBy('date_in')
+            ->with('workScheduleAssignment') // Eager load the 'workScheduleAssignment' relationship
             ->get();
 
         return $workScheduleAssignmentUsers;
+    }
+
+
+    public function getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year)
+    {
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+        
+        $notNullworkScheduleAssignmentUserDateIns = $this->workScheduleAssignmentUsers()
+        ->whereHas('workScheduleAssignment', function ($query) use ($year) {
+            $query->where('year', $year)
+                ->whereHas('shift', function ($subQuery) {
+                    $subQuery->where('code', 'NOT LIKE', '%_H')
+                            ->where('code', 'NOT LIKE', '%_TH');
+                });
+        })
+        ->whereBetween('date_in', [$startDate, $endDate])
+        ->where(function ($query) {
+            $query->whereNull('time_in')
+                ->orWhereNull('time_out');
+        })
+        ->orderBy('date_in')
+        ->pluck('date_in')->toArray();
+        
+        $shiftId = $this->isShiftAssignment($startDate);
+        $workShift = Shift::find($shiftId)->first();
+        $shiftStartDate = "$startDate $workShift->start";
+        $shiftEndDate = "$endDate $workShift->end";
+
+        $leaveDetails = LeaveDetail::join('leaves', 'leave_details.leave_id', '=', 'leaves.id')
+            ->where('leaves.user_id', $this->id)
+            ->where(function ($query) use ($shiftStartDate, $shiftEndDate) {
+                $query->whereBetween('leave_details.from_date', [$shiftStartDate, $shiftEndDate])
+                    ->orWhereBetween('leave_details.to_date', [$shiftStartDate, $shiftEndDate])
+                    ->orWhere(function ($subquery) use ($shiftStartDate, $shiftEndDate) {
+                        $subquery->where('leave_details.from_date', '<=', $shiftStartDate)
+                                ->where('leave_details.to_date', '>=', $shiftEndDate);
+                    });
+            })
+            ->get(['leave_details.*'])
+            ->pluck('from_date')
+            ->toArray();
+
+        $dateArray = array_map(function ($datetime) {
+            return Carbon::parse($datetime)->toDateString();
+        }, $leaveDetails);
+        
+        $datesNotInWorkSchedule = array_diff($notNullworkScheduleAssignmentUserDateIns, $dateArray);
+
+        $workScheduleAssignmentUsers = WorkScheduleAssignmentUser::whereIn('date_in',$datesNotInWorkSchedule)
+            ->where('user_id',$this->id)
+            ->get();
+
+        return $workScheduleAssignmentUsers;
+    }
+
+    public function getWorkScheduleAssignmentUsersInformationWithHolidayCheck($startDate, $endDate, $year)
+    {
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+        
+        $notNullworkScheduleAssignmentUserDateIns = $this->workScheduleAssignmentUsers()
+        ->whereHas('workScheduleAssignment', function ($query) use ($year) {
+            $query->where('year', $year)
+                ->whereHas('shift', function ($subQuery) {
+                    $subQuery->where('code', 'NOT LIKE', '%_H')
+                            ->where('code', 'NOT LIKE', '%_TH');
+                });
+        })
+        ->whereBetween('date_in', [$startDate, $endDate])
+        ->where(function ($query) {
+            $query->whereNull('time_in')
+                ->orWhereNull('time_out');
+        })
+        ->orderBy('date_in')
+        ->pluck('date_in')->toArray();
+        
+        $shiftId = $this->isShiftAssignment($startDate);
+        $workShift = Shift::find($shiftId)->first();
+        $shiftStartDate = "$startDate $workShift->start";
+        $shiftEndDate = "$endDate $workShift->end";
+
+        $leaveDetails = LeaveDetail::join('leaves', 'leave_details.leave_id', '=', 'leaves.id')
+            ->where('leaves.user_id', $this->id)
+            ->where(function ($query) use ($shiftStartDate, $shiftEndDate) {
+                $query->whereBetween('leave_details.from_date', [$shiftStartDate, $shiftEndDate])
+                    ->orWhereBetween('leave_details.to_date', [$shiftStartDate, $shiftEndDate])
+                    ->orWhere(function ($subquery) use ($shiftStartDate, $shiftEndDate) {
+                        $subquery->where('leave_details.from_date', '<=', $shiftStartDate)
+                                ->where('leave_details.to_date', '>=', $shiftEndDate);
+                    });
+            })
+            ->get(['leave_details.*'])
+            ->pluck('from_date')
+            ->toArray();
+
+        $dateArray = array_map(function ($datetime) {
+            return Carbon::parse($datetime)->toDateString();
+        }, $leaveDetails);
+        
+        $datesNotInWorkSchedule = array_diff($notNullworkScheduleAssignmentUserDateIns, $dateArray);
+
+        $workScheduleAssignmentUserIds = WorkScheduleAssignmentUser::whereIn('date_in',$datesNotInWorkSchedule)
+            ->where('user_id',$this->id)
+            ->pluck('id')->toArray();
+
+        $notNullHolidayworkScheduleAssignmentUserDateInIds = $this->workScheduleAssignmentUsers()
+        ->whereHas('workScheduleAssignment', function ($query) use ($year) {
+            $query->where('year', $year)
+                ->whereHas('shift', function ($subQuery) {
+                    $subQuery->where('code', 'LIKE', '%_H')
+                            ->orWhere('code', 'LIKE', '%_TH');
+                });
+        })
+        ->whereBetween('date_in', [$startDate, $endDate])
+        ->where(function ($query) {
+            $query->where(function ($subquery) {
+                $subquery->whereNull('time_in')
+                        ->whereNotNull('time_out');
+            })
+            ->orWhere(function ($subquery) {
+                $subquery->whereNotNull('time_in')
+                        ->whereNull('time_out');
+            });
+        })
+        ->orderBy('date_in')
+        ->pluck('id')->toArray();
+
+        $combinedArray = array_merge($workScheduleAssignmentUserIds, $notNullHolidayworkScheduleAssignmentUserDateInIds);
+
+        $workScheduleAssignmentUsers = WorkScheduleAssignmentUser::whereIn('id',$combinedArray)->get();
+
+        return $workScheduleAssignmentUsers;
+    }
+
+    public function getHolidayDateByType($startDate, $endDate, $holidayType)
+    {
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        $holidayDatesQuery = $this->workScheduleAssignmentUsers()
+            ->with('workScheduleAssignment.shift') 
+            ->whereHas('workScheduleAssignment', function ($query) use ($startDate, $endDate, $holidayType) {
+                $query->whereBetween('short_date', [$startDate, $endDate]);
+                if ($holidayType === 1) {
+                    $query->whereHas('shift', function ($subQuery) {
+                        $subQuery->where('code', 'LIKE', '%_H');
+                    });
+                }else if ($holidayType === 2){
+                    $query->whereHas('shift', function ($subQuery) {
+                        $subQuery->where('code', 'LIKE', '%_TH');
+                    });
+                }else if($holidayType === 3){
+                    $query->whereHas('shift', function ($subQuery) {
+                        $subQuery->where('code', 'LIKE', '%_H')
+                        ->orWhere('code', 'LIKE', '%_TH');
+                    });
+                }
+            });
+
+        $holidayDates = $holidayDatesQuery->get()->pluck('workScheduleAssignment.short_date');
+        return $holidayDates;
     }
 
     public function getHolidayDates($startDate, $endDate)
@@ -389,6 +571,7 @@ class User extends Authenticatable
             ->pluck('workScheduleAssignment.short_date');
         return $holidayDates;
     }
+
 
     public function getWorkScheduleByCurrentMonth()
     {
@@ -537,11 +720,37 @@ class User extends Authenticatable
         {
             $startDate = $paydayDetail->start_date;
             $endDate = $paydayDetail->end_date;
-            $workScheduleAssignmentUsers = $this->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
+       
+            $workScheduleAssignmentUsers = $this->getWorkScheduleAssignmentUsersInformationWithHolidayCheck($startDate, $endDate, $year);
+
             $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
             return $dateInList;
         }
         
+    }
+
+    public function getMissingDate($id)
+    {
+        $today = Carbon::today();
+        $year = $today->year;
+        $paydayDetail = PaydayDetail::find($id);
+        
+        if($paydayDetail)
+        {
+            $startDate = $paydayDetail->start_date;
+            $endDate = $paydayDetail->end_date;
+       
+            $workScheduleAssignmentUsers = $this->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
+
+            $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
+            return $dateInList;
+        }
+        
+    }
+
+    public function getPaydayDetailFromId($id)
+    {
+        return PaydayDetail::find($id);
     }
 
     public function getPaydayDetailWithToday()
@@ -559,13 +768,56 @@ class User extends Authenticatable
         return $paydayDetail;
     }
 
+    // public function getPaydayDetailWithTodays()
+    // {       
+    //     $today = Carbon::today();
+    //     $paydayDetail = PaydayDetail::whereDate('end_date', '<=', $today)
+    //         ->whereDate('payment_date', '>=', $today)
+    //         ->whereHas('payday', function ($query) {
+    //             $query->whereHas('users', function ($subQuery) {
+    //                 $subQuery->where('user_id', $this->id);
+    //             })
+    //             ->where('type',1);
+    //         })
+    //         ->get();
+
+    //     return $paydayDetail;
+    // }
+    public function getPaydayDetailWithTodays()
+    {
+        $today = Carbon::today();
+        $paydayDetail = PaydayDetail::whereDate('end_date', '<=', $today)
+            ->whereDate('payment_date', '>=', $today)
+            ->whereHas('payday', function ($query) {
+                $query->whereHas('users', function ($subQuery) {
+                    $subQuery->where('user_id', $this->id);
+                })
+                ->where('type', 1);
+            })
+            ->with('payday.users') // Eager load the 'payday' and 'users' relationships
+            ->get();
+
+        return $paydayDetail;
+    }
+
+
     public function getPaydayWithToday()
     {       
         $today = Carbon::today();
-        $paydayWithToday = $this->paydays()->whereHas('paydayDetails', function ($query) use ($today) {
+        $paydayWithToday = $this->paydays()->where('type',1)->whereHas('paydayDetails', function ($query) use ($today) {
             $query->whereDate('end_date', '<=', $today)
                 ->whereDate('payment_date', '>=', $today);
         })->first();
+        return $paydayWithToday;
+    }
+
+    public function getPaydayWithTodays()
+    {       
+        $today = Carbon::today();
+        $paydayWithToday = $this->paydays()->where('type',1)->whereHas('paydayDetails', function ($query) use ($today) {
+            $query->whereDate('end_date', '<=', $today)
+                ->whereDate('payment_date', '>=', $today);
+        })->get();
         return $paydayWithToday;
     }
 
@@ -589,6 +841,68 @@ class User extends Authenticatable
         }
         return null;
     }
+
+    public function getIncomeDeductUsers($id)
+    {
+        $paydayDetail = PaydayDetail::find($id);
+        // dd($paydayDetail);
+        if ($paydayDetail != null)
+        {
+           
+            $incomeDeductUsers = IncomeDeductUser::where('user_id',$this->id)->where('payday_detail_id',$paydayDetail->id)->get();
+            //  dd($incomeDeductUsers);
+            if ($incomeDeductUsers != null)
+            {
+                return $incomeDeductUsers;
+            }else{
+                return null;
+            }
+        }
+        return null;
+    }
+
+    // public function getSummaryIncomeDeductByUsers($type)
+    // {
+    //     $paydayDetail = $this->getPaydayDetailWithToday();
+    //     if ($paydayDetail != null)
+    //     {
+    //         $incomeDeductUsers = IncomeDeductUser::where('user_id', $this->id)
+    //             ->where('payday_detail_id', $paydayDetail->id)
+    //             ->whereHas('incomeDeduct', function ($query) use ($type) {
+    //                 $query->where('assessable_type_id', $type);
+    //             })
+    //             ->get();
+    //         if ($incomeDeductUsers != null)
+    //         {
+    //             return $incomeDeductUsers;
+    //         }else{
+    //             return null;
+    //         }
+    //     }
+    //     return null;
+    // }
+
+    public function getSummaryIncomeDeductByUsers($type,$paydayDetailId)
+    {
+        $paydayDetail = PaydayDetail::find($paydayDetailId);
+        if ($paydayDetail != null) {
+            $incomeDeductUsers = IncomeDeductUser::where('user_id', $this->id)
+                ->where('payday_detail_id', $paydayDetail->id)
+                ->whereHas('incomeDeduct', function ($query) use ($type) {
+                    $query->where('assessable_type_id', $type);
+                })
+                ->with('incomeDeduct') // Eager load the 'incomeDeduct' relationship
+                ->get();
+
+            if ($incomeDeductUsers != null) {
+                return $incomeDeductUsers;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
 
     public function IsvalidTimeInOut($startDate,$endDate)
     {
@@ -632,6 +946,512 @@ class User extends Authenticatable
             }
         }
        
+    }
+    public function diligenceAllowances()
+    {
+        return $this->hasMany(UserDiligenceAllowance::class, 'user_id');
+    }
+
+    public function userSummary()
+    {
+        $paydayDetail = $this->getPaydayDetailWithToday();
+        $startDate = $paydayDetail->start_date;
+        $endDate = $paydayDetail->end_date;
+
+        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->get();
+
+        $absentCountSum = 0;
+        $leaveCountSum = 0;
+        $earlyMinuteCountSum = 0;
+        $lateMinuteCountSum = 0;
+        $workHourCountSum = 0;
+        $overTimeCountSum = 0;
+        $leaveType = [];
+        $noDeductLeaveType = LeaveType::where('diligence_allowance_deduct',0)->pluck('id')->toArray();
+        $commonLeaveTypes = [];
+        $sumTraditionalHoliday = 0;
+        $overTime = [];
+        $workHourCountSum_Hour = 0;
+        $workHourCountSum_Minute = 0;
+        foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser){
+
+            $traditionalHoliday = $this->getHolidayDateByType($workScheduleAssignmentUser->date_in, $workScheduleAssignmentUser->date_out,2)->toArray();
+            
+            if(count($traditionalHoliday) != 0)
+            {
+                $sumTraditionalHoliday++;
+            }
+
+            $workHour = $workScheduleAssignmentUser->getWorkHour();
+            
+            if ($workHour['workHour'] !== null) {
+                // $workHourCountSum += $workHour['workHour'];
+                $workHourCountSum_Hour += floor($workHour['workHour']); 
+                $workHourCountSum_Minute += ($workHour['workHour'] -floor($workHour['workHour'])) * 100;
+            }
+            if ($workHour['absentCount'] !== null) {
+                $absentCountSum += $workHour['absentCount'];
+            }
+
+            if ($workHour['leaveCount'] !== null) {
+                $leaveCountSum += $workHour['leaveCount']['count'];
+                $leaveType[] = $workHour['leaveCount']['leaveType'];
+            }
+
+            if ($workHour['earlyMinute'] !== null) {
+                $earlyMinuteCountSum += $workHour['earlyMinute'];
+            }
+
+            if ($workHour['lateMinute'] !== null) {
+                $lateMinuteCountSum += $workHour['lateMinute'];
+               
+            }
+
+            if ($workHour['overTime'] !== null) {
+                $overTimeCountSum += $workHour['overTime']['hourDifference'];
+                 $overTime[] = [
+                    "hourDifference"=> $workHour['overTime']['hourDifference'],
+                    "isHoliday"=> $workHour['overTime']['isHoliday']
+                 ];
+            }
+        }
+        if(count($leaveType) > 0)
+        {
+            $commonLeaveTypes = array_intersect($leaveType, $noDeductLeaveType);
+        }
+        $allowance = 1;
+        $earlyHour = $this->minutesToHoursAndMinutes($earlyMinuteCountSum);
+        $lateHour = $this->minutesToHoursAndMinutes($lateMinuteCountSum);
+        $workHourCountSum  = $workHourCountSum_Hour*60 + $workHourCountSum_Minute;
+
+
+        $earlyHourHour = floor($earlyHour); 
+        $earlyHourMinute = ($earlyHour - $earlyHourHour) * 100;
+
+        $lateHourHour = floor($lateHour); 
+        $lateHourMinute = ($lateHour - $lateHourHour) * 100;
+
+        $totalWorkMinute = ($earlyHourHour + $lateHourHour)*60 + $workHourCountSum + $earlyHourMinute + $lateHourMinute;
+
+        $sararyRecord = SalaryRecord::where('user_id',$this->id)
+                        ->latest('id')
+                        ->first();
+       
+        $sumWorkingHour = $this->minutesToHoursAndMinutes($totalWorkMinute);
+
+
+        $totalWorkDay = $sumWorkingHour/8 +  $sumTraditionalHoliday + $leaveCountSum ;                
+        
+        // if($this->employee_no == '900163'){
+        //     dd($totalWorkDay);
+        // } 
+        
+        $totalOvertime = 0;
+
+        foreach ($overTime as $overtimeItem) {
+            $hourDifference = $overtimeItem['hourDifference'];
+            $isHoliday = $overtimeItem['isHoliday'];
+
+            // Apply the multiplication based on isHoliday
+            if ($isHoliday) {
+                $totalOvertime += ($hourDifference * 3); 
+            } else {
+                $totalOvertime += ($hourDifference * 1.5); 
+            }
+        }
+
+        if ($absentCountSum !=0 || $earlyMinuteCountSum > 60 || $lateMinuteCountSum > 60 || (count($leaveType) > 0 && count($commonLeaveTypes) == 0)){
+            $allowance = 0;
+        }
+
+        $workHourCountSum = intVal($workHourCountSum/60) + intVal($workHourCountSum % 60)/100 ;
+        
+        return collect([
+            'workHour' => $workHourCountSum !== 0 ? number_format($workHourCountSum, 2) : null,
+            'absentCountSum' => $absentCountSum !== 0 ? $absentCountSum : null,
+            'leaveCountSum' => $leaveCountSum !== 0 ? $leaveCountSum : null,
+            'earlyHour' => $earlyHour !== 0 ? number_format($earlyHour, 2) : null,
+            'lateHour' => $lateHour !== 0 ? number_format($lateHour, 2) : null,
+            'overTime' => $overTimeCountSum !== 0 ?  $overTimeCountSum : null,
+            'deligenceAllowance' => number_format($this->getdiligenceAllowance($allowance,null), 2) ,
+            'salary' => number_format(round($totalWorkDay*$sararyRecord->salary, 0), 2),
+            'overTimeCost' => number_format(round($totalOvertime*$sararyRecord->salary/8, 0), 2),
+        ]);
+    }
+
+    public function salarySummary($id)
+    {
+        $paydayDetail = PaydayDetail::find($id);
+        $startDate = $paydayDetail->start_date;
+        $endDate = $paydayDetail->end_date;
+
+        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->get();
+
+        $absentCountSum = 0;
+        $leaveCountSum = 0;
+        $earlyMinuteCountSum = 0;
+        $lateMinuteCountSum = 0;
+        $workHourCountSum = 0;
+        $overTimeCountSum = 0;
+        $leaveType = [];
+        $noDeductLeaveType = LeaveType::where('diligence_allowance_deduct',0)->pluck('id')->toArray();
+        $commonLeaveTypes = [];
+        $sumTraditionalHoliday = 0;
+        $overTime = [];
+        $workHourCountSum_Hour = 0;
+        $workHourCountSum_Minute = 0;
+        foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser){
+            $traditionalHoliday = $this->getHolidayDateByType($workScheduleAssignmentUser->date_in, $workScheduleAssignmentUser->date_out,2)->toArray();
+            
+            if(count($traditionalHoliday) != 0)
+            {
+                $sumTraditionalHoliday++;
+            }
+
+            $workHour = $workScheduleAssignmentUser->getWorkHour();
+            
+            if ($workHour['workHour'] !== null) {
+                $workHourCountSum_Hour += floor($workHour['workHour']); 
+                $workHourCountSum_Minute += ($workHour['workHour'] -floor($workHour['workHour'])) * 100;
+            }
+            if ($workHour['absentCount'] !== null) {
+                $absentCountSum += $workHour['absentCount'];
+            }
+
+            if ($workHour['leaveCount'] !== null) {
+                $leaveCountSum += $workHour['leaveCount']['count'];
+                $leaveType[] = $workHour['leaveCount']['leaveType'];
+            }
+
+            if ($workHour['earlyMinute'] !== null) {
+                $earlyMinuteCountSum += $workHour['earlyMinute'];
+            }
+
+            if ($workHour['lateMinute'] !== null) {
+                $lateMinuteCountSum += $workHour['lateMinute'];
+               
+            }
+
+            if ($workHour['overTime'] !== null) {
+                $overTimeCountSum += $workHour['overTime']['hourDifference'];
+                 $overTime[] = [
+                    "hourDifference"=> $workHour['overTime']['hourDifference'],
+                    "isHoliday"=> $workHour['overTime']['isHoliday']
+                 ];
+            }
+        }
+        // dd($overTimeCountSum);
+        if(count($leaveType) > 0)
+        {
+            $commonLeaveTypes = array_intersect($leaveType, $noDeductLeaveType);
+        }
+        $allowance = 1;
+        $earlyHour = $this->minutesToHoursAndMinutes($earlyMinuteCountSum);
+        $lateHour = $this->minutesToHoursAndMinutes($lateMinuteCountSum);
+        $workHourCountSum  = $workHourCountSum_Hour*60 + $workHourCountSum_Minute;
+
+        $earlyHourHour = floor($earlyHour); 
+        $earlyHourMinute = ($earlyHour - $earlyHourHour) * 100;
+
+        $lateHourHour = floor($lateHour); 
+        $lateHourMinute = ($lateHour - $lateHourHour) * 100;
+
+        $totalWorkMinute = ($earlyHourHour + $lateHourHour)*60 + $workHourCountSum + $earlyHourMinute + $lateHourMinute;
+
+        $sararyRecord = SalaryRecord::where('user_id',$this->id)
+                        ->latest('id')
+                        ->first();
+       
+        $sumWorkingHour = $this->minutesToHoursAndMinutes($totalWorkMinute);
+
+
+        $totalWorkDay = $sumWorkingHour/8 +  $sumTraditionalHoliday + $leaveCountSum ;                
+
+        if ($absentCountSum !=0 || $earlyMinuteCountSum > 60 || $lateMinuteCountSum > 60 || (count($leaveType) > 0 && count($commonLeaveTypes) == 0)){
+            $allowance = 0;
+        }
+        // 
+        $workHourCountSum = intVal($workHourCountSum/60) + intVal($workHourCountSum % 60)/100 ;
+        $socialSecurity = 0.00;
+        $totalSalary= number_format(round($totalWorkDay*$sararyRecord->salary, 0), 2);
+
+        $socialSecurity = round($totalWorkDay*$sararyRecord->salary, 0);
+        $incomes = $this->getSummaryIncomeDeductByUsers(1,$id);
+        
+        $incomeDeductSum = 0;
+        if(count($incomes) > 0)
+        {
+            
+            $incomeDeductIds = $incomes->whereIn('income_deduct_id',[1,2])->pluck('income_deduct_id')->toArray();
+            // if($this->employee_no == '900225')
+            // {
+            //     dd(IncomeDeductUser::where('user_id',$this->id)->where('payday_detail_id',$id)->whereIn('income_deduct_id',$incomeDeductIds)->get());
+            //     dd($this->name,$this->employee_no,$this->id,$incomeDeductIds);
+            // }
+            $sum = IncomeDeductUser::where('user_id',$this->id)->where('payday_detail_id',$id)->whereIn('income_deduct_id',$incomeDeductIds)->sum('value');
+            $socialSecurity += $sum;
+            
+
+        }
+            
+        $socialSecurityFivePercent = number_format(round($socialSecurity * .05), 2) ;
+
+        if ($overTimeCountSum > 24) {
+            $exceedOvertime = $overTimeCountSum - 24;
+            $overTimeCountSum = 24;
+        } else {
+            $exceedOvertime = 0;
+        }
+        $diligene_allowance_cost = null;
+        if($this->diligence_allowance_id != null){
+            $diligene_allowance_cost = number_format($this->getdiligenceAllowance($allowance,$id), 2) ;
+        }
+        return collect([
+            'workHour' => $workHourCountSum !== 0 ? number_format($workHourCountSum, 2) : null,
+            'absentCountSum' => $absentCountSum !== 0 ? $absentCountSum : null,
+            'leaveCountSum' => $leaveCountSum !== 0 ? $leaveCountSum : null,
+            'earlyHour' => $earlyHour !== 0 ? number_format($earlyHour, 2) : null,
+            'lateHour' => $lateHour !== 0 ? number_format($lateHour, 2) : null,
+            'overTime' => $overTimeCountSum !== 0 ? $overTimeCountSum  : null,
+            'deligenceAllowance' => $diligene_allowance_cost ,
+            'salary' => $totalSalary,
+            'overTimeCost' => number_format(round($overTimeCountSum*1.5*$sararyRecord->salary/8, 0), 2),
+            'socialSecurityFivePercent' => $socialSecurityFivePercent,
+            'exceedOvertime' => $exceedOvertime,
+        ]);
+    }
+
+    public function getExtraOvertime($id)
+    {
+
+        $paydayDetail = PaydayDetail::find($id);
+
+        $payday = $paydayDetail->payday;
+        $firstPaydayId = $payday->first_payday_id;
+        $secondPaydayId = $payday->second_payday_id;
+
+
+        $startDate = $paydayDetail->start_date;
+        $endDate = $paydayDetail->end_date;
+
+        $firstPadayDetail = PaydayDetail::where('payday_id',$firstPaydayId)->where('start_date',$paydayDetail->start_date)->first();
+        $secondPadayDetail = PaydayDetail::where('payday_id',$secondPaydayId)->where('end_date',$paydayDetail->end_date)->first();
+        // dd($firstPadayDetail,$secondPadayDetail);
+
+
+        $exceedOvertimeFirstPaydayDetail = 0; 
+
+        $workScheduleAssignmentUsersForFirstPaydayDetails = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$firstPadayDetail->start_date, $firstPadayDetail->end_date])
+            ->get();
+
+        foreach($workScheduleAssignmentUsersForFirstPaydayDetails as $workScheduleAssignmentUser){
+            $hourDifference = $workScheduleAssignmentUser->getOvertimeInfo();
+            if($hourDifference != null){
+                $exceedOvertimeFirstPaydayDetail += $hourDifference['hourDifference'];
+            }            
+        } 
+
+        $exceedOvertimeFirstPaydayDetail = ($exceedOvertimeFirstPaydayDetail > 24) ? ($exceedOvertimeFirstPaydayDetail - 24) : 0;
+
+        // dd($exceedOvertimeFirstPaydayDetail);
+
+        $exceedOvertimeSecondPaydayDetail = 0; 
+
+        $workScheduleAssignmentUsersForSecondPaydayDetails = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$secondPadayDetail->start_date, $secondPadayDetail->end_date])
+            ->get();
+
+        foreach($workScheduleAssignmentUsersForSecondPaydayDetails as $workScheduleAssignmentUser){
+            $hourDifference = $workScheduleAssignmentUser->getOvertimeInfo();
+            if($hourDifference != null){
+                $exceedOvertimeSecondPaydayDetail += $hourDifference['hourDifference'];
+            }            
+        } 
+      
+
+        $exceedOvertimeSecondPaydayDetail = ($exceedOvertimeSecondPaydayDetail > 24) ? ($exceedOvertimeSecondPaydayDetail - 24) : 0;
+
+        $exceedOvertime = $exceedOvertimeFirstPaydayDetail + $exceedOvertimeSecondPaydayDetail;
+        // dd($exceedOvertime);
+        
+        $holidayWorkScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->whereHas('workScheduleAssignment', function ($query) {
+                    $query->whereHas('shift', function ($subQuery) {
+                            $subQuery->where('code', 'LIKE', '%_H')
+                            ->where('code', 'NOT LIKE', '%_TH');
+                        });
+                })
+            ->whereNotNull('time_in')
+            ->whereNotNull('time_out')
+            ->get();
+
+        $traditionalHolidayWorkScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->whereHas('workScheduleAssignment', function ($query) {
+                    $query->whereHas('shift', function ($subQuery) {
+                            $subQuery->where('code', 'LIKE', '%_TH');
+                        });
+                })
+            ->whereNotNull('time_in')
+            ->whereNotNull('time_out')
+            ->get();    
+        
+        $workHoureHoliday = 0;
+        $workHourTraditionalHoliday = 0;
+        foreach($holidayWorkScheduleAssignmentUsers as $holidayWorkScheduleAssignmentUser)
+        {
+            $workHoureHoliday += $holidayWorkScheduleAssignmentUser->getWorkHourHoliday();
+        }
+        foreach($traditionalHolidayWorkScheduleAssignmentUsers as $traditionalHolidayWorkScheduleAssignmentUser)
+        {
+           $workHourTraditionalHoliday += $traditionalHolidayWorkScheduleAssignmentUser->getWorkHourHoliday();
+        }
+
+        
+        $exceedOvertimeCost = 0;
+        $holidayOvertimeCost = 0;
+        $traditionalHolidayOvertimeCost=0;
+
+        if($this->employee_type_id == 1){
+            $hourSalary = ((SalaryRecord::where('user_id',$this->id)->latest()->first()->salary)/30)/8;
+            $exceedOvertimeCost = 1.5*$exceedOvertime*$hourSalary;
+            if($workHoureHoliday <= 8){
+                $holidayOvertimeCost = 1*$workHoureHoliday*$hourSalary;
+            }elseif($workHoureHoliday > 8)
+            {
+                $holidayOvertimeCost = 1*8*$hourSalary + 3*($workHoureHoliday-8)*$hourSalary;
+            }
+            if($workHourTraditionalHoliday <= 8){
+                $traditionalHolidayOvertimeCost = 1*$workHourTraditionalHoliday*$hourSalary;
+            }elseif($workHourTraditionalHoliday > 8)
+            {
+                $traditionalHolidayOvertimeCost = 1*8*$hourSalary + 3*($workHourTraditionalHoliday-8)*$hourSalary;
+            }
+        }else if($this->employee_type_id == 2){
+            $hourSalary = (SalaryRecord::where('user_id',$this->id)->latest()->first()->salary)/8;
+            $exceedOvertimeCost = 1.5*$exceedOvertime*$hourSalary;
+            $holidayOvertimeCost = 1.5*$workHoureHoliday*$hourSalary;
+            $traditionalHolidayOvertimeCost = 1.5*$workHourTraditionalHoliday*$hourSalary;
+        }
+        $totalOvertimeCost = $exceedOvertimeCost+$holidayOvertimeCost+$traditionalHolidayOvertimeCost;
+        
+        return collect([
+            'exceedOvertime' => $exceedOvertime,
+            'holidayOvertime' => $workHoureHoliday,
+            'traditionalHolidayOvertime' => $workHourTraditionalHoliday,
+            'exceedOvertimeCost' => $exceedOvertimeCost,
+            'holidayOvertimeCost' => $holidayOvertimeCost,
+            'traditionalHolidayOvertimeCost' => number_format(round($traditionalHolidayOvertimeCost, 0), 2),
+            'totalOvertimeCost' => number_format(round($totalOvertimeCost, 0), 2),
+        ]);   
+    }
+
+    function minutesToHoursAndMinutes($minutes) {
+        $hours = intval($minutes / 60);
+        $minutes %= 60;
+        return $hours + ($minutes / 100);
+    }
+
+    public function getdiligenceAllowance($allowance,$id)
+    {
+        // $paydayDetail = $this->getPaydayDetailWithToday();
+        $diligenceAllowanceClassifyId = DiligenceAllowanceClassify::where('diligence_allowance_id',$this->diligence_allowance_id)->first()->id;
+        // dd($diligenceAllowanceClassifyId);
+        $paydayDetail = PaydayDetail::find($id);
+        
+        $diligenceAllowances = $this->diligenceAllowances;
+
+        $userDiligenceAllowance =  $diligenceAllowances->where('payday_detail_id', $paydayDetail->id);
+
+        $previousUserDiligenceAllowanceId =  $diligenceAllowances->max('id');
+        $previousUserDiligenceAllowance = $diligenceAllowances->where('id', $previousUserDiligenceAllowanceId)->first();
+        $diligenceAllowanceId= $previousUserDiligenceAllowance->diligenceAllowanceClassify->diligence_allowance_id;
+        $maxDiligenceAllowanceClassifyLevel = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->max('id');
+
+        if(count($userDiligenceAllowance) == 0){
+            $diligenceAllowanceClassifyLevel = UserDiligenceAllowance::where('user_id',$this->id)
+                                    ->latest('id')
+                                    ->first()
+                                    ->diligence_allowance_classify_id;
+            if($allowance == 1)
+            {
+                $diligenceAllowanceClassifyLevel ++;
+                if($diligenceAllowanceClassifyLevel > $maxDiligenceAllowanceClassifyLevel)
+                {
+                    $diligenceAllowanceClassifyLevel = $maxDiligenceAllowanceClassifyLevel;
+                }
+            }else if($allowance == 0){
+                $diligenceAllowanceClassifyLevel = 1;
+            }   
+            UserDiligenceAllowance::create([
+                    'user_id' => $this->id,
+                    'payday_detail_id' => $paydayDetail->id,
+                    'diligence_allowance_classify_id' => $diligenceAllowanceClassifyLevel,
+                ]);  
+            $userDiligenceAllowance = UserDiligenceAllowance::where('user_id', $this->id)
+                                    ->where('payday_detail_id', $paydayDetail->id)
+                                    ->orderBy('id', 'desc') // Change 'asc' to 'desc' if you want to order in descending order
+                                    ->first();        
+            return $userDiligenceAllowance->diligenceAllowanceClassify->cost;
+        }else{
+
+            if($allowance == 0)
+            {
+                $diligenceAllowanceClassifyId = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->min('id');
+                UserDiligenceAllowance::where('user_id', $this->id)
+                                    ->where('payday_detail_id', $paydayDetail->id)
+                                    ->orderBy('id', 'desc') // Change 'asc' to 'desc' if you want to order in descending order
+                                    ->first()->update(['diligence_allowance_classify_id' => $diligenceAllowanceClassifyId]);  
+            }elseif($allowance == 1){
+
+                $currentUserDiligenceAllowance = UserDiligenceAllowance::where('user_id', $this->id)
+                                ->where('payday_detail_id', $paydayDetail->id)
+                                ->latest()
+                                ->first();
+
+                $previousMaxUserDiligenceAllowanceId = UserDiligenceAllowance::where('user_id', $this->id)
+                ->where('id','<', $currentUserDiligenceAllowance->id)->max('id');
+
+                $diligenceAllowanceId = DiligenceAllowanceClassify::find(UserDiligenceAllowance::where('user_id', $this->id)
+                ->where('id','<', $currentUserDiligenceAllowance->id)->first()->diligence_allowance_classify_id)->diligence_allowance_id;
+
+                $diligenceAllowanceClassifyId = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->max('id');    
+
+                $previousMaxUserDiligenceAllowanceValue = UserDiligenceAllowance::find($previousMaxUserDiligenceAllowanceId)->diligence_allowance_classify_id;
+
+                if ($previousMaxUserDiligenceAllowanceValue < $diligenceAllowanceClassifyId ){
+                    $previousMaxUserDiligenceAllowanceValue ++;
+                }else{
+                    $previousMaxUserDiligenceAllowanceValue = $diligenceAllowanceClassifyId;
+                }
+
+                UserDiligenceAllowance::find($currentUserDiligenceAllowance->id)->update([
+                    'diligence_allowance_classify_id' => $previousMaxUserDiligenceAllowanceValue
+                ]);
+            }
+
+            $userDiligenceAllowance = UserDiligenceAllowance::where('user_id', $this->id)
+                        ->where('payday_detail_id', $paydayDetail->id)
+                        ->orderBy('id', 'desc') // Change 'asc' to 'desc' if you want to order in descending order
+                        ->first();    
+            return $userDiligenceAllowance->diligenceAllowanceClassify->cost;
+        }
+        
+        return $userDiligenceAllowance;
+    }
+    public function leave()
+    {
+        return $this->hasMany(UserLeave::class);
+    }
+    public function assessmentGroupUsers()
+    {
+        return $this->hasMany(AssessmentGroupUser::class, 'user_id');
     }
 }
 

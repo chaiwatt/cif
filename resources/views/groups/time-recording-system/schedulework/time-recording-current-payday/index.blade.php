@@ -16,7 +16,7 @@
                     <ul class="mt-2">
                         @foreach ($paydayDetails as $paydayDetail)
                         <li>
-                            <h4>{{$paydayDetail->payday->name}} (รอบงาน {{date('d/m/Y',
+                            <h4>{{$paydayDetail->payday->name}} (รอบเงินเดือน {{date('d/m/Y',
                                 strtotime($paydayDetail->start_date))}}
                                 -
                                 {{date('d/m/Y', strtotime($paydayDetail->end_date))}})</h4>
@@ -85,7 +85,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <button type="submit" class="btn bg-gradient-success btn-flat float-right"
-                                        id="show_modal">นำเข้า</button>
+                                        id="show_file_open">นำเข้า</button>
                                 </div>
                             </div>
                         </div>
@@ -104,63 +104,12 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <div class="bs-stepper linear">
-                                <div class="bs-stepper-header" role="tablist">
-                                    <div class="step active" data-target="#logins-part">
-                                        <button type="button" class="step-trigger" role="tab"
-                                            aria-controls="logins-part" id="logins-part-trigger" aria-selected="true">
-                                            <span class="bs-stepper-circle">1</span>
-                                            <span class="bs-stepper-label">รอบวันที่</span>
-                                        </button>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="step" data-target="#information-part">
-                                        <button type="button" class="step-trigger" role="tab"
-                                            aria-controls="information-part" id="information-part-trigger"
-                                            aria-selected="false" disabled="disabled">
-                                            <span class="bs-stepper-circle">2</span>
-                                            <span class="bs-stepper-label">เพิ่มไฟล์สแกน</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="bs-stepper-content">
-                                    <div id="logins-part" class="content active dstepper-block" role="tabpanel"
-                                        aria-labelledby="logins-part-trigger">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                    <label for="startDate">เริ่มวันที่ (วดป. คศ)<span
-                                                            class="small text-danger">*</span></label>
-                                                    <input type="text" class="form-control input-date-format"
-                                                        id="startDate" value="{{date('d/m/Y',
-                                strtotime($paydayDetail->start_date))}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                    <label for="endDate">ถึงวันที่ (วดป. คศ)<span
-                                                            class="small text-danger">*</span></label>
-                                                    <input type="text" class="form-control input-date-format"
-                                                        id="endDate" value="{{date('d/m/Y',
-                                strtotime($paydayDetail->end_date))}}" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-primary" id="nextButton">ต่อไป<i
-                                                class="fas fa-angle-double-right ml-1"></i></button>
-                                    </div>
-                                    <div id="information-part" class="content" role="tabpanel"
-                                        aria-labelledby="information-part-trigger">
-                                        <div class="form-group">
-                                            <input type="file" id="file-inputs" style="display: none;" multiple>
-                                        </div>
-                                        <button class="btn btn-primary" onclick="stepper.previous()"><i
-                                                class="fas fa-angle-double-left mr-1"></i>กลับ</button>
-                                        <button type="button" class="btn btn-success"
-                                            id="import_file_inputs">เลือกไฟล์และนำเข้า</button>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <input type="file" id="file-inputs" style="display: none;" multiple>
                             </div>
+
+                            <button type="button" class="btn btn-success"
+                                id="import_file_inputs">เลือกไฟล์และนำเข้า</button>
                         </div>
                     </div>
                 </div>
@@ -181,15 +130,12 @@
     integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="module"
-    src="{{ asset('assets/js/helpers/time-recording-system/schedule/assignment/import-finger-print.js?v=1') }}">
+    src="{{ asset('assets/js/helpers/time-recording-system/schedulework/time-recording-check-current-payday/view.js?v=1') }}">
 </script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
-    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-
-    window.params = {
-        searchRoute: '{{ route('groups.time-recording-system.shift.timeattendance.search') }}',        
-        batchImportRoute: '{{ route('groups.time-recording-system.schedulework.time-recording.import.batch') }}',
+    window.params = {       
+        batchImportRoute: '{{ route('groups.time-recording-system.schedulework.time-recording.import.batch-auto-detect') }}',
         singleImportRoute: '{{ route('groups.time-recording-system.schedulework.time-recording.import.single') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')

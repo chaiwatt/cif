@@ -22,7 +22,13 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <input type="text" id="leaveId" value="" hidden>
+            @if ($errors->has('userId'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> ผิดพลาด</h5>
+                กรุณาเลือกผู้อนุมัติเอกสารอย่างน้อย 1 คน
+            </div>
+            @endif
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -46,7 +52,16 @@
                                                 class="form-control  @error('name') is-invalid @enderror">
                                         </div>
                                     </div>
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ประเภท<span class="small text-danger">*</span></label>
+                                            <select name="type" id="type" class="form-control select2"
+                                                style="width: 100%;">
+                                                <option value="1">วันทำงานปกติ</option>
+                                                <option value="2">วันหยุด</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>วันที่เริ่ม (วดป. คศ)<span class="small text-danger">*</span></label>
@@ -62,8 +77,26 @@
                                                 class="form-control input-datetime-format @error('endDate') is-invalid @enderror">
                                         </div>
                                     </div>
+                                    <hr>
+                                    <div class="col-12">
+                                        <div class="card-body p-0">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ผู้อนุมัติเอกสาร <a href="" class="btn btn-sm btn-primary"
+                                                                id="get_authorized_user"><i class="fas fa-plus"></i></a>
+                                                        </th>
+                                                        <th style="width:100px" class="text-right">ลบ</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="sortableRows">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                     <div class="col-12 text-right">
-                                        <button class="btn bg-success">บันทึก</button>
+                                        <button class="btn bg-success mt-2">บันทึก</button>
                                     </div>
                                 </div>
                             </form>
@@ -73,17 +106,37 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-users">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12" id="modal-user-wrapper">
 
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-primary" id="save_authorized_user">เพิ่มรายการ</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @push('scripts')
-
+<script type="module" src="{{asset('assets/js/helpers/document-system/overtime/document/create.js?v=1')}}">
+</script>
 <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
 <script>
     $('.select2').select2()
-    const timepickerConfig = {
-        format: 'HH:mm'
+    window.params = {
+    
+    getUsersRoute: '{{ route('groups.document-system.overtime.document.get-users') }}',
+    
+    url: '{{ url('/') }}',
+    token: $('meta[name="csrf-token"]').attr('content')
     };
-    $('#timepicker_start, #timepicker_end').datetimepicker(timepickerConfig);  
 
 </script>
 @endpush

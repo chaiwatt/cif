@@ -9,6 +9,7 @@ use App\Models\Month;
 use App\Models\Shift;
 use App\Models\Approver;
 use App\Models\LeaveType;
+use App\Models\UserLeave;
 use App\Models\LeaveDetail;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
@@ -176,6 +177,7 @@ class DocumentSystemLeaveDocumentController extends Controller
         if ($approvers->isNotEmpty()) {
             $approver = $approvers->first();
         } 
+        $userLeave = UserLeave::where('user_id',$userId)->first();
         return view('groups.document-system.leave.document.modal-render.leave-info-modal',[
             'dayCount' => $dayCount,
             'startDate' => $request->data['startDate'],
@@ -188,7 +190,8 @@ class DocumentSystemLeaveDocumentController extends Controller
             'takeLeaveDates' => $takeLeaveDates,
             'approver' => $approver,
             'workShifts' => $workShifts,
-            'notFoundShiftAssignments' => $notFoundShiftAssignments
+            'notFoundShiftAssignments' => $notFoundShiftAssignments,
+            'userLeave' =>$userLeave
             ])->render();
 
     }
@@ -219,8 +222,13 @@ class DocumentSystemLeaveDocumentController extends Controller
         }, $holidays);
 
         $takeLeaveDates = array_diff($dateLists, $formattedDates);
-        $dayCount = count($takeLeaveDates);
 
+        $duration = $this->getLeaveDuration($takeLeaveDates,$startDate,$startTime,$endDate,$endTime,$user);
+        $userLeave = UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveType)->first();
+
+        if($userLeave->count < $duration){
+            return response()->json(['error' => 'วันลาคงเหลือไม่เพียงพอ']);
+        }
         if (!isset($leaveId)) {
             $approver = User::find($userId)->approvers->first();
             $authorizedUserIds = $approver->authorizedUsers->pluck('id')->toArray();
@@ -238,7 +246,7 @@ class DocumentSystemLeaveDocumentController extends Controller
                 'leave_type_id' => $leaveType,
                 'from_date' => $startDate . ' ' . $startTime,
                 'to_date' => $endDate . ' ' . $endTime,
-                'duration' => $dayCount,
+                'duration' => $duration,
                 'attachment' => $filePath,
                 'approved_list' => $approvedList->toJson(),
             ]);
@@ -313,8 +321,6 @@ class DocumentSystemLeaveDocumentController extends Controller
             $leave = Leave::find($leaveId);
             $filePath = $leave->attachment;
              if ($request->hasFile('file')) {
-                // dd('here');
-                // Storage::disk('attachments')->delete($filePath);
                 if ($filePath !== null) {
                     Storage::disk('attachments')->delete($filePath);
                 }
@@ -326,7 +332,7 @@ class DocumentSystemLeaveDocumentController extends Controller
                 'leave_type_id' => $leaveType,
                 'from_date' => $startDate . ' ' . $startTime,
                 'to_date' => $endDate . ' ' . $endTime,
-                'duration' => $dayCount,
+                'duration' => $duration,
                 'attachment' => $filePath,
                 'approved_list' => $approvedList->toJson(),
             ]);
@@ -391,6 +397,77 @@ class DocumentSystemLeaveDocumentController extends Controller
         return;
     }
 
+    public function getLeaveDuration($takeLeaveDates,$startDate,$startTime,$endDate,$endTime,$user)
+    { 
+        $collections = collect();
+        if (count($takeLeaveDates) == 1)
+        {
+             $collections->push([
+                'from_date' => $startDate . ' ' . $startTime,
+                'to_date' => $endDate . ' ' . $endTime
+            ]);
+        }else if(count($takeLeaveDates) == 2)
+        {
+            $startDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDates[0])->format('Y-m-d');
+            $endDate = Carbon::createFromFormat('d/m/Y', $takeLeaveDates[1])->format('Y-m-d');
+            $shiftId = $user->isShiftAssignment($startDate)->first();
+            $shift = Shift::find($shiftId);
+            $collections->push([
+                'from_date' => $startDate . ' ' . $startTime,
+                'to_date' => $startDate . ' ' . $shift->end
+            ]);
+            $collections->push([
+                'from_date' => $endDate . ' ' . $shift->start,
+                'to_date' => $endDate . ' ' . $endTime
+            ]);
+        }else if(count($takeLeaveDates) > 2)
+        {
+            $firstItem = reset($takeLeaveDates);
+            $lastItem = end($takeLeaveDates);
+            $datesWithoutFirstLasts = array_slice($takeLeaveDates, 1, -1);
+
+            $date = Carbon::createFromFormat('d/m/Y', $firstItem)->format('Y-m-d');
+            $shiftId = $user->isShiftAssignment($date)->first();
+            $shift = Shift::find($shiftId);
+
+            $collections->push([
+                'from_date' => $date . ' ' . $startTime,
+                'to_date' => $date . ' ' . $shift->end
+            ]);
+            
+            foreach($datesWithoutFirstLasts as $datesWithoutFirstLast)
+            {
+                $date = Carbon::createFromFormat('d/m/Y', $datesWithoutFirstLast)->format('Y-m-d');
+                $shiftId = $user->isShiftAssignment($date)->first();
+                $shift = Shift::find($shiftId);
+                $collections->push([
+                    'from_date' => $date . ' ' . $shift->start,
+                    'to_date' => $date . ' ' . $shift->end
+                ]);
+            }
+            $date = Carbon::createFromFormat('d/m/Y', $lastItem)->format('Y-m-d');
+            $shiftId = $user->isShiftAssignment($date)->first();
+            $shift = Shift::find($shiftId);
+
+            $collections->push([
+                    'from_date' => $date . ' ' . $shift->start,
+                    'to_date' => $date . ' ' . $endTime
+                ]);
+        }
+
+       $diffInHour = [];
+        foreach ($collections as $collection) {
+            $fromDate = Carbon::parse($collection['from_date']);
+            $toDate = Carbon::parse($collection['to_date']);
+            
+            $diffInHours = $fromDate->diffInHours($toDate) - 1;
+        
+            $diffInHour[] = $diffInHours;
+        }
+        $duration = intval(array_sum($diffInHour)/8) + (array_sum($diffInHour) % 8)/8;
+        return $duration;
+    }
+
     public function getAttachment(Request $request)
     {
         $leaveId = $request->data['leaveId'];
@@ -417,6 +494,7 @@ class DocumentSystemLeaveDocumentController extends Controller
     {
 
         $searchString =$request->data;
+        
 
         $leaves = Leave::whereHas('user', function ($query) use ($searchString) {
             $query->where('employee_no', 'like', '%' . $searchString . '%')
@@ -431,7 +509,6 @@ class DocumentSystemLeaveDocumentController extends Controller
                 });
         })
         ->paginate(50);
-
 
         return view('groups.document-system.leave.document.table-render.leave-table-render',[
             'leaves' => $leaves

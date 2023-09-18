@@ -11,23 +11,23 @@
     @endif
     <div class="row">
         @foreach ($groups as $group)
-        <div class="col-lg-6">
-            <div class="card  card-success card-outline">
+        <div class="col-lg-4">
+            <div class="card  card-primary card-outline">
                 <div class="card-header">
                     <h5 class="card-title m-0"><i class="fas {{ $group->icon }} mr-2 text-gray"></i>{{ $group->name
                         }}</h5>
                 </div>
                 <div class="card-body">
                     <p class="card-text">{{ $group->description }}</p>
-                    <a href="{{ route('group.index', $group->id) }}" class="btn btn-primary"><i
+                    <a href="{{ route('group.index', $group->id) }}" class="btn btn-info"><i
                             class="fas fa-angle-double-right mr-2"></i>เข้าสู่ระบบงาน</a>
                 </div>
             </div>
         </div>
         @endforeach
         @can('is_admin')
-        <div class="col-lg-6">
-            <div class="card  card-info card-outline">
+        <div class="col-lg-4">
+            <div class="card  card-warning card-outline">
                 <div class="card-header">
                     <h5 class="card-title m-0"><i class="fas fa-cog mr-2 text-gray"></i>ตั้งค่าระบบ</h5>
                 </div>
@@ -41,14 +41,5 @@
         @endcan
     </div>
 </div>
-
-{{-- @foreach ($htmlcolors as $htmlcolor)
-<div class=" font-weight-normal mt-2"
-    style="background-color: {{$htmlcolor->color}}; color: rgb(255, 255, 255); position: relative;height:35px"
-    data-id="1">
-    {{$htmlcolor->color}}
-</div>
-@endforeach --}}
-
 
 @endsection

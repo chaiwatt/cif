@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class LeaveType extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'diligence_allowance_deduct'
+    ];
 }
