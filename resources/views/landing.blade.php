@@ -432,6 +432,7 @@
                         @endforeach
                     </ul>
                 </div>
+                <hr>
                 <div class="col-12">
                     ข่าวสมัครงาน
                     <ul>
