@@ -425,7 +425,7 @@
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="row">
                 <div class="col-12">
-                    ระบบข่าวประกาศ
+                   <strong>ระบบข่าวประกาศ</strong> 
                     <ul>
                         @foreach ($announcements as $announcement)
                         <li>{{$announcement->title}}</li>
@@ -434,7 +434,7 @@
                 </div>
                 <hr>
                 <div class="col-12">
-                    ข่าวสมัครงาน
+                    <strong>ข่าวสมัครงาน</strong>
                     <ul>
                         @foreach ($pplicationNews as $pplicationNew)
                         <li>{{$pplicationNew->title}}</li>
