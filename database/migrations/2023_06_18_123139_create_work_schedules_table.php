@@ -19,6 +19,8 @@ return new class extends Migration
             $table->char('year',4)->comment('ปีตารางการทำงาน');
             $table->string('description')->nullable()->comment('คำอธิบายตารางทำงาน');
             $table->unsignedBigInteger('schedule_type_id')->default(1)->comment('ประเภทตารางทำงาน เต็มเดือน 0 เวียนกะ 1');
+            // $table->char('auto_overtime',1)->default(1)->comment('1 = ไม่ , 2 = ใช่');
+            // $table->char('duration',2)->default(3)->comment('จำนวนชั่วโมงล่วงเวลา');
             $table->timestamps();
         });
     }

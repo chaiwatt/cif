@@ -134,6 +134,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
     {
         $startDate = Carbon::createFromFormat('d/m/Y', $request->data['startDate'])->format('Y-m-d');
         $endDate = Carbon::createFromFormat('d/m/Y', $request->data['endDate'])->format('Y-m-d');
+        
         $monthId = $request->data['monthId'];
         $year = $request->data['year'];
         $workScheduleId = $request->data['workScheduleId'];
@@ -145,7 +146,9 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $usersWithWorkScheduleAssignments = [];
         foreach($users as $user)
         {
+            // dd($startDate,$endDate);
             $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
+            
             $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
             
             // Apply filtering based on the selected filter option or show all if filter is not set

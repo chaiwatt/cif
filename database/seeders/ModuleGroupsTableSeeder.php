@@ -62,17 +62,26 @@ class ModuleGroupsTableSeeder extends Seeder
         ]);
 
         $announcement = Group::where('code','ANNOUNCEMENT')->first();
-        $announcementModuleSetting = Module::where('code','ANNOUNCEMENT-MODULE-SETTING')->first();
+        $announcementModule = Module::where('code','ANNOUNCEMENT-MODULE')->first();
 
         $announcement->modules()->attach([
-            $announcementModuleSetting->id
+            $announcementModule->id
         ]);
 
         $jobApplication = Group::where('code','JOB-APPLICATION')->first();
-        $jobApplicationModuleSetting = Module::where('code','JOB-APPLICATION-MODULE-SETTING')->first();
+        $jobApplicationModule = Module::where('code','JOB-APPLICATION-MODULE')->first();
 
         $jobApplication->modules()->attach([
-            $jobApplicationModuleSetting->id
+            $jobApplicationModule->id
+        ]);
+
+        $learning = Group::where('code','LEARNING')->first();
+        $learningModuleSetting = Module::where('code','LEARNING-SETTING')->first();
+        $learningModule = Module::where('code','LEARNING')->first();
+
+        $learning->modules()->attach([
+            $learningModule->id,
+            $learningModuleSetting->id
         ]);
     }
 }

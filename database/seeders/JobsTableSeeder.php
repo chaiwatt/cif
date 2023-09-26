@@ -87,6 +87,18 @@ class JobsTableSeeder extends Seeder
             'route' => 'groups.salary-system.salary.calculation-extra-list',
             'view' => 'groups.salary-system.salary.calculation-extra-list.index'
         ]);
+        Job::create([
+            'code' => 'LEARNING-SETTING',
+            'name' => 'รายการเรียนรู้',
+            'route' => 'groups.learning-system.setting.learning-list',
+            'view' => 'groups.learning-system.setting.learning-list.index'
+        ]);
+        Job::create([
+            'code' => 'LEARNING-LIST',
+            'name' => 'รายการเรียนรู้',
+            'route' => 'groups.learning-system.learning.learning-list',
+            'view' => 'groups.learning-system.learning.learning-list.index'
+        ]);
         // Job::create([
         //     'code' => 'INCOME-DEDUCT-ASSIGNMENT',
         //     'name' => 'เพิ่มเงินได้ / เงินหัก',
@@ -202,16 +214,16 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.assessment-system.setting.multiplication.index'
         ]);
         Job::create([
-            'code' => 'ANNOUNCEMENT-CATEGORY',
-            'name' => 'หมวดหมู่',
-            'route' => 'groups.announcement-system.setting.category',
-            'view' => 'groups.announcement-system.setting.category.index'
+            'code' => 'ANNOUNCEMENT-LIST',
+            'name' => 'รายการประกาศ',
+            'route' => 'groups.announcement-system.announcement.list',
+            'view' => 'groups.announcement-system.announcement.list.index'
         ]);
         Job::create([
-            'code' => 'JOB-APPLICATION-CATEGORY',
-            'name' => 'หมวดหมู่',
-            'route' => 'groups.job-application-system.setting.category',
-            'view' => 'groups.job-application-system.setting.category.index'
+            'code' => 'JOB-APPLICATION-LIST',
+            'name' => 'รายการข่าวสมัครงาน',
+            'route' => 'groups.job-application-system.job-application.list',
+            'view' => 'groups.job-application-system.job-application.list.index'
         ]);
     }
 }

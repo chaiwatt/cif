@@ -886,8 +886,14 @@
                                                         <td>{{$user_attachment->name}}</td>
                                                         {{-- <td>{{$user_attachment->file}}</td> --}}
                                                         <td class="text-right">
-                                                            <a class="btn btn-primary btn-sm"
-                                                                href="{{url('/storage/uploads/attachment')}}/{{$user_attachment->file}}">
+                                                            @php
+                                                            $path = $user_attachment->file;
+                                                            if ($user_attachment->type == 1){
+                                                            $path = url('/storage/uploads/attachment') .'/'.
+                                                            $user_attachment->file;
+                                                            }
+                                                            @endphp
+                                                            <a class="btn btn-primary btn-sm" href="{{$path}}">
                                                                 <i class="fas fa-download"></i>
                                                             </a>
                                                             <a class="btn btn-danger btn-sm btn-delete-user-attachment"
@@ -1249,13 +1255,36 @@
                                 <input type="text" class="form-control" id="attachment">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-12">
+                            <div class="form-group clearfix">
+
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" id="radFile" name="r1" checked>
+                                    <label for="radFile">แนบไฟล์
+                                    </label>
+                                </div>
+
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" id="radLink" name="r1">
+                                    <label for="radLink">ลิงก์ไฟล์
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="file_wrapper">
                             <div class="form-group">
                                 <button type="button" class="btn btn-info" id="btn-add-attachment">เพิ่มไฟล์แนบ <span
                                         id="attachment-file" class="text-dark"></span></button>
                                 <div class="form-group">
                                     <input type="file" accept="" id="file-input" style="display: none;">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-12" id="link_wrapper" style="display: none">
+                            <div class="form-group">
+                                <label>ลิงก์ไฟล์<span class="small text-danger">*</span></label>
+                                <input type="text" class="form-control" id="link">
                             </div>
                         </div>
 
@@ -1323,6 +1352,9 @@
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };
+
+
+
 </script>
 
 @endpush

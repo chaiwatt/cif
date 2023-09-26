@@ -8,6 +8,7 @@ use App\Models\AssessmentGroup;
 use App\Models\AssessmentScore;
 use App\Models\AssessmentCriteria;
 use App\Models\AssessmentGroupCriteria;
+use App\Models\AssessmentScoreMultiplication;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class AssessmentSystemSettingAssessmentGroupAssignmentController extends Controller
@@ -60,7 +61,7 @@ class AssessmentSystemSettingAssessmentGroupAssignmentController extends Control
         $assessmentCriterias = AssessmentCriteria::all();
         $assessmentGroup = AssessmentGroup::find($id);
         $assessmentGroupCriterias = AssessmentGroupCriteria::where('assessment_group_id',$id)->get();
-        $assessmentScores = AssessmentScore::all();
+        $assessmentScoreMultiplications = AssessmentScoreMultiplication::all();
 
         return view('groups.assessment-system.setting.assessment-group.assignment.create', [
             'groupUrl' => $groupUrl,
@@ -69,7 +70,7 @@ class AssessmentSystemSettingAssessmentGroupAssignmentController extends Control
             'assessmentCriterias' => $assessmentCriterias,
             'assessmentGroup' => $assessmentGroup,
             'assessmentGroupCriterias' => $assessmentGroupCriterias,
-            'assessmentScores' => $assessmentScores
+            'assessmentScoreMultiplications' => $assessmentScoreMultiplications
         ]);
     }
     public function store(Request $request){
@@ -77,7 +78,7 @@ class AssessmentSystemSettingAssessmentGroupAssignmentController extends Control
         $assessmentGroupId = $request->assessmentGroupId;
 
         foreach ($selectedIds as $index => $assessmentCriteriaId) {
-            $assessmentScoreId = $request->assessmentScore[$index];
+            $assessmentScoreMultiplicationId = $request->assessmentScoreMultiplication[$index];
 
             AssessmentGroupCriteria::updateOrCreate(
             [
@@ -87,7 +88,7 @@ class AssessmentSystemSettingAssessmentGroupAssignmentController extends Control
             ],
             [
                 // Add any other fields you want to update or create
-                'accessment_score_id' => $assessmentScoreId,
+                'assessment_score_multiplication_id' => $assessmentScoreMultiplicationId,
             ]
         );
 

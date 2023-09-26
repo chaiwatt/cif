@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\settings\SettingController;
 use App\Http\Controllers\settings\SettingReportLogController;
 use App\Http\Controllers\settings\SettingAccessRoleController;
@@ -29,7 +30,6 @@ use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveApprovalController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveDocumentController;
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
-use App\Http\Controllers\AnnounceSystem\AnnounceSystemSettingCategoryController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingScoreController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeDocumentController;
@@ -39,19 +39,23 @@ use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentControlle
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemReportController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingCriteriaController;
 use App\Http\Controllers\AssessmentSystemSettingAssessmentGroupAssignmentController;
+use App\Http\Controllers\LearningSystem\LearningSystemSettingLearningListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayAssignmentController;
-use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingAssessmentController;
-use App\Http\Controllers\JobApplication\JobApplicationSystemSettingCategoryController;
+use App\Http\Controllers\AnnouncementSystem\AnnounceSystemAnnouncementListController;
+use App\Http\Controllers\LearningSystem\LearningSystemLearningLearningListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingDiligenceAllowanceController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentController;
+
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayAssignmentUserController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemAssessmentAssignmentController;
+use App\Http\Controllers\JobApplication\JobApplicationSystemJobApplicationListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationInformationController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationListSummaryController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryIncomeDeductAssignmentController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingMultiplicationController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingAssessmentGroupController;
+use App\Http\Controllers\LearningSystem\LearningSystemSettingLearningListChapterController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalAssignmentController;
 use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserInfoController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationListCalculationController;
@@ -60,6 +64,7 @@ use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListSumm
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftYearlyHolidayController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemShiftTimeattendanceController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemAssessmentAssignmentScoringController;
+use App\Http\Controllers\LearningSystem\LearningSystemSettingLearningListChapterTopicController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingDiligenceAllowanceAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupController;
@@ -87,9 +92,11 @@ use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkTim
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('landing');
-});
+// Route::get('/', function () {
+//     return view('landing');
+// });
+Route::get('', [LandingController::class, 'index'])->name('landing');
+
 Route::get('isdatevalid', [TestController::class, 'isDateValid'])->name('isDateValid');
 Route::get('clear-db', [TestController::class, 'clearDB'])->name('clear-db');
 Route::get('test', [TestController::class, 'testRoute'])->name('test');
@@ -233,6 +240,8 @@ Route::middleware('auth')->group(function () {
                         Route::post('import-user', [AssessmentSystemAssessmentAssignmentController::class, 'importUser'])->name('groups.assessment-system.assessment.assessment.assignment.import-user');
                         Route::group(['prefix' => 'scoring'], function () {
                             Route::get('{user_id}/{id}', [AssessmentSystemAssessmentAssignmentScoringController::class, 'index'])->name('groups.assessment-system.assessment.assessment.assignment.scoring');
+                            Route::post('update-score', [AssessmentSystemAssessmentAssignmentScoringController::class, 'updateScore'])->name('groups.assessment-system.assessment.assessment.assignment.update-scoring');
+                            Route::get('summary/{user_id}/{id}', [AssessmentSystemAssessmentAssignmentScoringController::class, 'summary'])->name('groups.assessment-system.assessment.assessment.assignment.summary');
                         });
                     });
                 });
@@ -279,16 +288,28 @@ Route::middleware('auth')->group(function () {
             });
         });
         Route::group(['prefix' => 'announcement-system'], function () {
-            Route::group(['prefix' => 'setting'], function () {
-                Route::group(['prefix' => 'category'], function () {
-                    Route::get('', [AnnounceSystemSettingCategoryController::class, 'index'])->name('groups.announcement-system.setting.category');
+            Route::group(['prefix' => 'announcement'], function () {
+                Route::group(['prefix' => 'list'], function () {
+                    Route::get('', [AnnounceSystemAnnouncementListController::class, 'index'])->name('groups.announcement-system.announcement.list');
+                    Route::get('create', [AnnounceSystemAnnouncementListController::class, 'create'])->name('groups.announcement-system.announcement.list.create');
+                    Route::post('store', [AnnounceSystemAnnouncementListController::class, 'store'])->name('groups.announcement-system.announcement.list.store');
+                    Route::get('{id}', [AnnounceSystemAnnouncementListController::class, 'view'])->name('groups.announcement-system.announcement.list.view');
+                    Route::post('update', [AnnounceSystemAnnouncementListController::class, 'update'])->name('groups.announcement-system.announcement.list.update');
+                    Route::delete('{id}', [AnnounceSystemAnnouncementListController::class, 'delete'])->name('groups.announcement-system.announcement.list.delete');
+                    Route::post('delete-attachment', [AnnounceSystemAnnouncementListController::class, 'deleteAttachment'])->name('groups.announcement-system.announcement.list.delete-attachment');
                 });
             });
         });
         Route::group(['prefix' => 'job-application-system'], function () {
-            Route::group(['prefix' => 'setting'], function () {
-                Route::group(['prefix' => 'category'], function () {
-                    Route::get('', [JobApplicationSystemSettingCategoryController::class, 'index'])->name('groups.job-application-system.setting.category');
+            Route::group(['prefix' => 'job-application'], function () {
+                Route::group(['prefix' => 'list'], function () {
+                    Route::get('', [JobApplicationSystemJobApplicationListController::class, 'index'])->name('groups.job-application-system.job-application.list');
+                    Route::get('create', [JobApplicationSystemJobApplicationListController::class, 'create'])->name('groups.job-application-system.job-application.list.create');
+                    Route::post('store', [JobApplicationSystemJobApplicationListController::class, 'store'])->name('groups.job-application-system.job-application.list.store');
+                    Route::get('{id}', [JobApplicationSystemJobApplicationListController::class, 'view'])->name('groups.job-application-system.job-application.list.view');
+                    Route::post('update', [JobApplicationSystemJobApplicationListController::class, 'update'])->name('groups.job-application-system.job-application.list.update');
+                    Route::delete('{id}', [JobApplicationSystemJobApplicationListController::class, 'delete'])->name('groups.job-application-system.job-application.list.delete');
+                    Route::post('delete-attachment', [JobApplicationSystemJobApplicationListController::class, 'deleteAttachment'])->name('groups.job-application-system.job-application.list.delete-attachment');
                 });
             });
         });
@@ -516,6 +537,42 @@ Route::middleware('auth')->group(function () {
                 });
             });
         });  
+        Route::group(['prefix' => 'learning-system'], function () {
+            Route::group(['prefix' => 'learning'], function () {
+                Route::group(['prefix' => 'learning-list'], function () {
+                    Route::get('', [LearningSystemLearningLearningListController::class, 'index'])->name('groups.learning-system.learning.learning-list');
+                    Route::get('{id}', [LearningSystemLearningLearningListController::class, 'view'])->name('groups.learning-system.learning.learning-list.view');
+                    Route::post('content', [LearningSystemLearningLearningListController::class, 'content'])->name('groups.learning-system.learning.learning-list.content');
+                });
+            });
+            Route::group(['prefix' => 'setting'], function () {
+                Route::group(['prefix' => 'learning-list'], function () {
+                    Route::get('', [LearningSystemSettingLearningListController::class, 'index'])->name('groups.learning-system.setting.learning-list');
+                    Route::get('create', [LearningSystemSettingLearningListController::class, 'create'])->name('groups.learning-system.setting.learning-list.create');
+                    Route::post('store', [LearningSystemSettingLearningListController::class, 'store'])->name('groups.learning-system.setting.learning-list.store');
+                    Route::get('{id}', [LearningSystemSettingLearningListController::class, 'view'])->name('groups.learning-system.setting.learning-list.view');
+                    Route::put('{id}', [LearningSystemSettingLearningListController::class, 'update'])->name('groups.learning-system.setting.learning-list.update');
+                    Route::delete('{id}', [LearningSystemSettingLearningListController::class, 'delete'])->name('groups.learning-system.setting.learning-list.delete');
+                    Route::group(['prefix' => 'chapter'], function () {
+                        Route::get('{id}', [LearningSystemSettingLearningListChapterController::class, 'index'])->name('groups.learning-system.setting.learning-list.chapter');
+                        Route::get('create/{id}', [LearningSystemSettingLearningListChapterController::class, 'create'])->name('groups.learning-system.setting.learning-list.chapter.create');
+                        Route::post('store', [LearningSystemSettingLearningListChapterController::class, 'store'])->name('groups.learning-system.setting.learning-list.chapter.store');
+                        Route::get('view/{id}', [LearningSystemSettingLearningListChapterController::class, 'view'])->name('groups.learning-system.setting.learning-list.chapter.view');
+                        Route::put('{id}', [LearningSystemSettingLearningListChapterController::class, 'update'])->name('groups.learning-system.setting.learning-list.chapter.update');
+                        Route::delete('{id}', [LearningSystemSettingLearningListChapterController::class, 'delete'])->name('groups.learning-system.setting.learning-list.chapter.delete');
+                        Route::group(['prefix' => 'topic'], function () {
+                            Route::get('{id}', [LearningSystemSettingLearningListChapterTopicController::class, 'index'])->name('groups.learning-system.setting.learning-list.chapter.topic');
+                            Route::get('create/{id}', [LearningSystemSettingLearningListChapterTopicController::class, 'create'])->name('groups.learning-system.setting.learning-list.chapter.topic.create');
+                            Route::post('store', [LearningSystemSettingLearningListChapterTopicController::class, 'store'])->name('groups.learning-system.setting.learning-list.chapter.topic.store');
+                            Route::get('view/{id}', [LearningSystemSettingLearningListChapterTopicController::class, 'view'])->name('groups.learning-system.setting.learning-list.chapter.topic.view');
+                            Route::post('update', [LearningSystemSettingLearningListChapterTopicController::class, 'update'])->name('groups.learning-system.setting.learning-list.chapter.topic.update');
+                            Route::delete('{id}', [LearningSystemSettingLearningListChapterTopicController::class, 'delete'])->name('groups.learning-system.setting.learning-list.chapter.topic.delete');
+                            Route::post('delete-attachment', [LearningSystemSettingLearningListChapterTopicController::class, 'deleteAttachment'])->name('groups.learning-system.setting.learning-list.chapter.topic.delete-attachment');
+                        });
+                    });
+                });
+            });
+        });
     });
 
     Route::group(['prefix' => 'setting', 'middleware' => 'admin'], function () {

@@ -13,7 +13,8 @@ class AssessmentGroupUserCriteria extends Model
     protected $fillable = [
         'assessment_group_id',
         'user_id',
-        'accessment_criteria_id'
+        'accessment_criteria_id',
+        'score',
     ];
 
     public function assessmentCriteria()
@@ -26,7 +27,7 @@ class AssessmentGroupUserCriteria extends Model
         $assessmentGroupCriteria = AssessmentGroupCriteria::where('accessment_criteria_id',$assessmentCriteriaId)
         ->where('assessment_group_id',$assessmentGroupId)->first();
         if ($assessmentGroupCriteria != null){
-            return $assessmentGroupCriteria->accessment_score_id;
+            return $assessmentGroupCriteria->assessmentScoreMultiplication->multiplication;
         }else{
             return null;
         }

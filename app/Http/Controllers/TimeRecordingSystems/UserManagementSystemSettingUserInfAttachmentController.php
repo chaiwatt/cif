@@ -12,18 +12,22 @@ class UserManagementSystemSettingUserInfAttachmentController extends Controller
 {
     public function store(Request $request)
     {
-
         $file = $request->file('file');
         $userId = $request->userId;
         $name = $request->name;
+        $type = $request->type;
+        $link = $request->link;
 
-        // Store the file in the 'attachments' disk
-        $filePath = $file->store('', 'attachments'); 
-
+        $filePath = $link;
+        if ($type == 1){
+            $filePath = $file->store('', 'attachments'); 
+        }
+        
         UserAttachment::create([
             'user_id' => $userId,
             'name' => $name,
-            'file' => $filePath
+            'file' => $filePath,
+            'type' => $type
         ]);
         $user = User::find($userId);
         return view('groups.user-management-system.setting.userinfo.table-render.attachment-table-render',[

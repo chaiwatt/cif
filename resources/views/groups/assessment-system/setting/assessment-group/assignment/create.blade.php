@@ -91,12 +91,16 @@
                                                         <td>{{$assessmentCriteria->name}}</td>
                                                         <td>
                                                             <div class="form-group mb-0">
-                                                                <select name="assessmentScore[]"
-                                                                    class="form-control select2 @error('assessmentScore') is-invalid @enderror"
+                                                                <select name="assessmentScoreMultiplication[]"
+                                                                    class="form-control select2 @error('assessmentScoreMultiplication') is-invalid @enderror"
                                                                     style="width: 100%;">
-                                                                    @foreach ($assessmentScores as $assessmentScore)
-                                                                    <option value="{{ $assessmentScore->id }}">
-                                                                        {{ $assessmentScore->score }}
+                                                                    @foreach ($assessmentScoreMultiplications
+                                                                    as $assessmentScoreMultiplication)
+                                                                    <option
+                                                                        value="{{ $assessmentScoreMultiplication->id }}">
+                                                                        {{
+                                                                        $assessmentScoreMultiplication->multiplication
+                                                                        }}
                                                                     </option>
                                                                     @endforeach
                                                                 </select>

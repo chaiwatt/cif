@@ -17,6 +17,7 @@ class AddDefaultWorkScheduleAssignment
             
             if (!WorkScheduleAssignment::where('work_schedule_id', $workSchedule->id)->where('month_id', $month)->where('year', $year)->exists()) {
                 foreach ($days as $day) {
+                    // dd(Carbon::create($year, $month, $day['day'])->format('Y-m-d'));
                     WorkScheduleAssignment::create([
                         'work_schedule_id' => $workSchedule->id,
                         'week_day' => $day['dayOfWeek'],

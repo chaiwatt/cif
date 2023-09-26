@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\AssessmentScore;
 use App\Models\AssessmentCriteria;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\AssessmentScoreMultiplication;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AssessmentGroupCriteria extends Model
@@ -12,7 +13,7 @@ class AssessmentGroupCriteria extends Model
     use HasFactory;
     protected $fillable = [
         'assessment_group_id',
-        'accessment_score_id',
+        'assessment_score_multiplication_id',
         'accessment_criteria_id',
         
     ];
@@ -20,9 +21,9 @@ class AssessmentGroupCriteria extends Model
     {
         return $this->belongsTo(AssessmentCriteria::class, 'accessment_criteria_id');
     }
-    public function assessmentScore()
+    public function assessmentScoreMultiplication()
     {
-        return $this->belongsTo(AssessmentScore::class, 'accessment_score_id');
+        return $this->belongsTo(AssessmentScoreMultiplication::class, 'assessment_score_multiplication_id');
     }
     public function assessmentGroup()
     {

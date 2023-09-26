@@ -192,6 +192,9 @@ class WorkScheduleAssignmentUser extends Model
                     $query->where('type', '=', $type);
                 })
             ->first();
+        if($overtimeDetail == null){
+            return 0;
+        }    
 
         $startOvertime = Carbon::parse("$overtimeDetail->from_date $overtimeDetail->start_time");
         $endOverTime = Carbon::parse("$overtimeDetail->to_date $overtimeDetail->end_time");

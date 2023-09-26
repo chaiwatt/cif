@@ -775,6 +775,8 @@ $(document).on('click', '.btn-delete-punishment', function (e) {
 
 $(document).on('click', '#btn-add-user-attachment', function (e) {
     e.preventDefault();
+    $('#attachment').val('');
+    $('#attachment-file').text('');
     $('#modal-add-attachment').modal('show');
 });
 
@@ -796,8 +798,20 @@ $(document).on('change', '#file-input', function (event) {
 $(document).on('click', '#save-add-attachment', function (e) {
     e.preventDefault();
     var storeAttachmentUrl = window.params.storeAttachmentRoute;
-    var name = $('#attachment').val();
+    var attachment = $('#attachment').val();
     var selectedFile = $('#file-input')[0].files[0];
+    var link = $('#link').val();
+    var selection;
+    if ($('#radFile').is(':checked')) {
+        selection = 1;
+        $('#file_wrapper').show();
+        $('#link_wrapper').hide();
+    } else if ($('#radLink').is(':checked')) {
+        selection = 2;
+        $('#file_wrapper').hide();
+        $('#link_wrapper').show();
+    }
+
 
     if (attachment === '') {
         Swal.fire({
@@ -808,19 +822,33 @@ $(document).on('click', '#save-add-attachment', function (e) {
         return false; // Prevent form submission
     }
 
-    if (!selectedFile) {
-        Swal.fire({
-            title: 'ข้อผิดพลาด',
-            text: 'กรุณาเลือกไฟล์แนบ',
-            icon: 'error'
-        });
-        return false; // Prevent form submission
+    if (selection == 1) {
+        if (!selectedFile) {
+            Swal.fire({
+                title: 'ข้อผิดพลาด',
+                text: 'กรุณาเลือกไฟล์แนบ',
+                icon: 'error'
+            });
+            return false; // Prevent form submission
+        }
+    } else if (selection == 2) {
+        if (link === '') {
+            Swal.fire({
+                title: 'ข้อผิดพลาด',
+                text: 'กรุณากรอกลิงก์ไฟล์',
+                icon: 'error'
+            });
+            return false; // Prevent form submission
+        }
     }
+
 
     var formData = new FormData();
     formData.append('file', selectedFile);
     formData.append('userId', userId);
-    formData.append('name', name);
+    formData.append('name', attachment);
+    formData.append('link', link);
+    formData.append('type', selection);
 
     RequestApi.postRequestFormData(formData, storeAttachmentUrl, token).then(response => {
         $('#user-attachment-container').html(response);
@@ -898,6 +926,22 @@ $(document).on('click', '#save-update-user-diligence-allowance', function (e) {
     }).catch(error => { })
 
     
+});
+
+$(document).on('click', '#radFile, #radLink', function () {
+    var selection = 0;
+
+    if ($('#radFile').is(':checked')) {
+        selection = 1;
+        $('#file_wrapper').show();
+        $('#link_wrapper').hide();
+    } else if ($('#radLink').is(':checked')) {
+        selection = 2;
+        $('#file_wrapper').hide();
+        $('#link_wrapper').show();
+    }
+
+    // console.log('Selection:', selection);
 });
 
 

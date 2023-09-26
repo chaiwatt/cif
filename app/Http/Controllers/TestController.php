@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\WorkScheduleAssignment;
 use App\Helpers\PayDaySameMonthGenerator;
 use App\Helpers\PayDayCrossMonthGenerator;
+use App\Models\UserPayday;
 use App\Models\WorkScheduleAssignmentUser;
 
 class TestController extends Controller
@@ -512,17 +513,52 @@ class TestController extends Controller
         //     $hours = floor($decimal); // Extract the integer part as hours
         //     $minutes = ($decimal - $hours) * 100; // Extract the decimal part as minutes
         //     dd($hours,$minutes);
-        $date ='2023-08-06';
-        $userId = 765;
-        $user = User::find($userId);
+        // $date ='2023-08-06';
+        // $userId = 765;
+        // $user = User::find($userId);
 
         // $holidayShift = $this->isHolidayShift($date,$userId);
         // dd($holidayShift);
-        $paytdayDetail = $user->getPaydayDetailWithTodays();
-        dd($paytdayDetail);
+        // $paytdayDetail = $user->getPaydayDetailWithTodays();
+        // dd($paytdayDetail);
         // $hourDifference = 1;    
         // $hourDifference = min($hourDifference, 12);
         // dd($hourDifference);
+
+        // $workScheduleAssignmentUsers = WorkScheduleAssignmentUser::where('user_id', 765)
+        //     ->whereYear('date_in', 2023)
+        //     ->pluck('work_schedule_assignment_id')->toArray();
+        // dd (array_unique($workScheduleAssignmentUsers))    ;
+        $year = 2023;
+        $paydayIds = UserPayday::where('user_id', 765)
+        ->whereHas('payday', function ($query) use ($year) {
+            $query->where('year',$year)
+                    ->where('type',1);
+                        
+        })
+        ->pluck('payday_id')->toArray();
+
+        $user = User::find(782);
+        $datas = [];
+        foreach ($paydayIds as $paydayId){
+            $paydayDetails = PaydayDetail::where('payday_id',$paydayId)->orderBy('start_date')->get();
+            foreach($paydayDetails as $paydayDetail ){
+                $userSummary = $user->salarySummary($paydayDetail->id);
+                // if ($userSummary['workHour'] != null || $userSummary['absentCountSum'] != null ||$userSummary['leaveCountSum'] != null || $userSummary['earlyHour'] != null || $userSummary['lateHour'] != null){
+                    $data = [
+                        'paydayDetail' => $paydayDetail,
+                        'workHours' => $userSummary['workHour'],
+                        'absentCounts' => $userSummary['absentCountSum'],
+                        'leaveCounts' => $userSummary['leaveCountSum'],
+                        'earlyHours' => $userSummary['earlyHour'],
+                        'lateHours' => $userSummary['lateHour']
+                    ];
+                    $datas[] = $data;
+                // }    
+            }
+        }
+
+        dd($datas);
 
     }
 

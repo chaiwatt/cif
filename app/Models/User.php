@@ -398,7 +398,7 @@ class User extends Authenticatable
     {
         $startDate = date('Y-m-d', strtotime($startDate));
         $endDate = date('Y-m-d', strtotime($endDate));
-        
+
         $notNullworkScheduleAssignmentUserDateIns = $this->workScheduleAssignmentUsers()
         ->whereHas('workScheduleAssignment', function ($query) use ($year) {
             $query->where('year', $year)
@@ -414,12 +414,16 @@ class User extends Authenticatable
         })
         ->orderBy('date_in')
         ->pluck('date_in')->toArray();
+       
         
         $shiftId = $this->isShiftAssignment($startDate);
+        // dd($shiftId);
         $workShift = Shift::find($shiftId)->first();
+        
         $shiftStartDate = "$startDate $workShift->start";
         $shiftEndDate = "$endDate $workShift->end";
 
+            
         $leaveDetails = LeaveDetail::join('leaves', 'leave_details.leave_id', '=', 'leaves.id')
             ->where('leaves.user_id', $this->id)
             ->where(function ($query) use ($shiftStartDate, $shiftEndDate) {
@@ -437,6 +441,8 @@ class User extends Authenticatable
         $dateArray = array_map(function ($datetime) {
             return Carbon::parse($datetime)->toDateString();
         }, $leaveDetails);
+
+         
         
         $datesNotInWorkSchedule = array_diff($notNullworkScheduleAssignmentUserDateIns, $dateArray);
 
@@ -608,6 +614,8 @@ class User extends Authenticatable
     {
         $startDate = date('Y-m-d', strtotime($startDate));
         $endDate = date('Y-m-d', strtotime($endDate));
+
+        
 
         $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
             ->whereBetween('date_in', [$startDate, $endDate])
@@ -1371,6 +1379,9 @@ class User extends Authenticatable
 
         $previousUserDiligenceAllowanceId =  $diligenceAllowances->max('id');
         $previousUserDiligenceAllowance = $diligenceAllowances->where('id', $previousUserDiligenceAllowanceId)->first();
+        if($previousUserDiligenceAllowance == null){
+            return null;
+        }
         $diligenceAllowanceId= $previousUserDiligenceAllowance->diligenceAllowanceClassify->diligence_allowance_id;
         $maxDiligenceAllowanceClassifyLevel = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->max('id');
 
@@ -1418,6 +1429,11 @@ class User extends Authenticatable
                 $previousMaxUserDiligenceAllowanceId = UserDiligenceAllowance::where('user_id', $this->id)
                 ->where('id','<', $currentUserDiligenceAllowance->id)->max('id');
 
+                if(DiligenceAllowanceClassify::find(UserDiligenceAllowance::where('user_id', $this->id)
+                ->where('id','<', $currentUserDiligenceAllowance->id)->first() == null)){
+                    return null;
+                };
+
                 $diligenceAllowanceId = DiligenceAllowanceClassify::find(UserDiligenceAllowance::where('user_id', $this->id)
                 ->where('id','<', $currentUserDiligenceAllowance->id)->first()->diligence_allowance_classify_id)->diligence_allowance_id;
 
@@ -1438,7 +1454,7 @@ class User extends Authenticatable
 
             $userDiligenceAllowance = UserDiligenceAllowance::where('user_id', $this->id)
                         ->where('payday_detail_id', $paydayDetail->id)
-                        ->orderBy('id', 'desc') // Change 'asc' to 'desc' if you want to order in descending order
+                        ->orderBy('id', 'desc') 
                         ->first();    
             return $userDiligenceAllowance->diligenceAllowanceClassify->cost;
         }

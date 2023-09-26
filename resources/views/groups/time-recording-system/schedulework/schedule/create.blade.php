@@ -104,6 +104,23 @@
                                             </select>
                                         </div>
                                     </div>
+                                    {{-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ล่วงเวลาอัตโนมัติ</label>
+                                            <select name="auto_overtime" id="auto_overtime"
+                                                class="form-control select2 @error('auto_overtime') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="1">ไม่</option>
+                                                <option value="2">ใช่</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" id="cantain_wrapper" style="display: none;">
+                                        <div class="form-group">
+                                            <label>จำนวนชั่วโมงล่วงเวลา</label>
+                                            <input type="text" name="duration" value="3" class="form-control ">
+                                        </div>
+                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -128,6 +145,14 @@
 
 <script>
     $('.select2').select2()
+    // $(document).on('change', '#auto_overtime', function (e) {
+    //     var selectedValue = $(this).val();
+    //     if (selectedValue === '2') {
+    //     $('#cantain_wrapper').show();
+    //     } else if (selectedValue === '1') {
+    //     $('#cantain_wrapper').hide();
+    //     }
+    //     });
 </script>
 @endpush
 @endsection

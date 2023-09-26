@@ -46,6 +46,7 @@
                                     <table class="table table-bordered table-striped dataTable dtr-inline">
                                         <thead>
                                             <tr>
+                                                <th>รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
                                                 <th>แผนก</th>
                                                 <th class="text-right" style="width: 120px">ประเมิน</th>
@@ -53,12 +54,17 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($users as $user)
+                                            <td>{{$user->employee_no}}</td>
                                             <td>{{$user->name}} {{$user->lastname}}</td>
                                             <td>{{$user->company_department->name}}</td>
                                             <td class="text-right">
+                                                <a class="btn btn-success btn-sm"
+                                                    href="{{route('groups.assessment-system.assessment.assessment.assignment.summary',['user_id' => $user->id,'id' => $assessmentGroup->id])}}">
+                                                    <i class="fas fa-award"></i>
+                                                </a>
                                                 <a class="btn btn-info btn-sm"
                                                     href="{{route('groups.assessment-system.assessment.assessment.assignment.scoring',['user_id' => $user->id,'id' => $assessmentGroup->id])}}">
-                                                    <i class="fas fa-medal"></i>
+                                                    <i class="fas fa-user"></i>
                                                 </a>
                                             </td>
 

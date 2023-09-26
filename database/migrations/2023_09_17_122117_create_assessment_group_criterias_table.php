@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('assessment_group_id');
             $table->unsignedBigInteger('accessment_criteria_id');
-            $table->unsignedBigInteger('accessment_score_id');
+            $table->unsignedBigInteger('assessment_score_multiplication_id');
             $table->timestamps();
         });
     }

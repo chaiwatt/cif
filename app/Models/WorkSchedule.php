@@ -55,23 +55,31 @@ class WorkSchedule extends Model
         $targetDate = Carbon::create($year, $monthId, 1)->endOfMonth();
         
         // Check if the target date is older than the current date
-        if ($targetDate->lt($currentDate)) {
-            return 'หมดเวลา';
-        }
+        // if ($targetDate->lt($currentDate)) {
+        //     return 'หมดเวลา';
+        // }
         
         // Retrieve the assignments for the given month and year
-        $assignments = $this->workScheduleAssignments()
+        $workScheduleAssignments = $this->workScheduleAssignments()
             ->where('work_schedule_id', $this->id)
             ->where('month_id', $monthId)
             ->where('year', $year)
+            ->whereNotNull('shift_id')
             ->get();
-        
-        foreach ($assignments as $assignment) {
-            if ($assignment->shift_id === null) {
-                return false;
-            }
+        // dd($workScheduleAssignments);  
+        if (count($workScheduleAssignments) != 0)  
+        {
+            return response()->json(['assigned' => true, 'expired' => $targetDate->lt($currentDate)]);
+        }else{
+            return response()->json(['assigned' => false, 'expired' => $targetDate->lt($currentDate)]);
         }
-        return true;
+        
+        // foreach ($assignments as $assignment) {
+        //     if ($assignment->shift_id === null) {
+        //         return false;
+        //     }
+        // }
+        // return true;
     }
 
     public function monthName($month)

@@ -57,7 +57,8 @@
                                             <tr>
                                                 <td>{{$key +1}}</td>
                                                 <td>{{$assessmentGroupCriteria->assessmentCriteria->name}}</td>
-                                                <td>{{$assessmentGroupCriteria->assessmentScore->score}}</td>
+                                                <td>{{$assessmentGroupCriteria->assessmentScoreMultiplication->multiplication}}
+                                                </td>
                                                 <td class="text-right">
                                                     <a class="btn btn-danger btn-sm"
                                                         data-confirm='ลบเกณฑ์การประเมิน "{{$assessmentGroupCriteria->name}}" หรือไม่?'

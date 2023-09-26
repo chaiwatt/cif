@@ -119,6 +119,8 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $workSchedule->description = $request->description;
         $workSchedule->year = $request->year;
         $workSchedule->schedule_type_id = $request->schedule_type;
+        // $workSchedule->auto_overtime = $request->auto_overtime;
+        // $workSchedule->duration = $request->duration;
         $workSchedule->save();
 
         // ดึง shiftIds จากข้อมูลที่ส่งมา
@@ -200,6 +202,8 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
         $description = $request->description ?? null;
         $year = $request->year;
         $shiftIds = $request->shift; 
+        // $auto_overtime = $request->auto_overtime; 
+        // $duration = $request->duration; 
 
         $result = [];
 
@@ -225,7 +229,9 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
             'name' => $name,
             'description' => $description,
             'year' => $year,
-            'schedule_type_id' => $request->schedule_type
+            'schedule_type_id' => $request->schedule_type,
+            // 'auto_overtime' => $auto_overtime,
+            // 'duration' => $duration,
         ]);
 
         // ทำการ redirect ไปยัง route 'groups.time-recording-system.schedulework.schedule'
@@ -280,7 +286,8 @@ class TimeRecordingSystemScheduleWorkScheduleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'shift' => 'required|array|min:1'
+            'shift' => 'required|array|min:1',
+            // 'duration' => 'required',
         ]);
         $validator->messages()->add('shift.required', 'กรุณาเลือกกะการทำงาน');
         return $validator;

@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">การประเมิน
+                    <h1 class="m-0">รายการการประเมิน
                     </h1>
                 </div>
                 <div class="col-sm-6">
@@ -23,11 +23,11 @@
                 </div>
             </div>
 
-            <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
+            {{-- <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
                 href="{{route('groups.assessment-system.assessment.assessment.create')}}">
                 <i class="fas fa-plus mr-1"></i>
                 เพิ่มการประเมิน
-            </a>
+            </a> --}}
         </div>
     </div>
     <div class="content">

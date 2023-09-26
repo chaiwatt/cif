@@ -26,6 +26,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $assessmentGroup = Group::where('code','ASSESSMENT')->first();
         $announcementGroup = Group::where('code','ANNOUNCEMENT')->first();
         $jobApplicationGroup = Group::where('code','JOB-APPLICATION')->first();
+        $learningGroup = Group::where('code','LEARNING')->first();
         // Module
         $shiftModule = Module::where('code','SHIFT')->first();
         $workScheduleModule = Module::where('code','WORK-SCHEDULE')->first();
@@ -39,8 +40,12 @@ class GroupModuleJobsTableSeeder extends Seeder
         $userManagementModuleSetting = Module::where('code','USER-MANAGEMENT-MODULE-SETTING')->first();
         $assessmentModule = Module::where('code','ASSESSMENT-MODULE')->first();
         $assessmentModuleSetting = Module::where('code','ASSESSMENT-MODULE-SETTING')->first();
-        $announcementModuleSetting = Module::where('code','ANNOUNCEMENT-MODULE-SETTING')->first();
-        $jobApplicationModuleSetting = Module::where('code','JOB-APPLICATION-MODULE-SETTING')->first();
+        $announcementModule = Module::where('code','ANNOUNCEMENT-MODULE')->first();
+        $jobApplicationModule = Module::where('code','JOB-APPLICATION-MODULE')->first();
+        $learningModuleSetting = Module::where('code','LEARNING-SETTING')->first();
+        $learningModule = Module::where('code','LEARNING')->first();
+        
+        
         
         // Job
         $shiftManagementJob = Job::where('code','SHIFT-MANAGEMENT')->first();
@@ -72,12 +77,14 @@ class GroupModuleJobsTableSeeder extends Seeder
         $assessmentCriteria = Job::where('code','ASSESSMENT-CRITERIA')->first();
         $assessmentScore = Job::where('code','ASSESSMENT-SCORE')->first();
         $assessmentScoreMultiplication = Job::where('code','ASSESSMENT-SCORE-MULTIPLICATION')->first();
-        $announcementCategory = Job::where('code','ANNOUNCEMENT-CATEGORY')->first();
-        $jobApplicationCategory = Job::where('code','JOB-APPLICATION-CATEGORY')->first();
+        $announcementList = Job::where('code','ANNOUNCEMENT-LIST')->first();
+        $jobApplicationList = Job::where('code','JOB-APPLICATION-LIST')->first();
         $calculationList = Job::where('code','CALCULATION-LIST')->first();
         $calculationExtraList = Job::where('code','CALCULATION-EXTRA-LIST')->first();
-        
-        
+        $learningSetting = Job::where('code','LEARNING-SETTING')->first();
+        $learning = Job::where('code','LEARNING-LIST')->first();
+
+
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
             'module_id' => $shiftModule->id,
@@ -235,13 +242,23 @@ class GroupModuleJobsTableSeeder extends Seeder
         ]);
         GroupModuleJob::create([
             'group_id' => $announcementGroup->id,
-            'module_id' => $announcementModuleSetting->id,
-            'job_id' => $announcementCategory->id,
+            'module_id' => $announcementModule->id,
+            'job_id' => $announcementList->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $jobApplicationGroup->id,
-            'module_id' => $jobApplicationModuleSetting->id,
-            'job_id' => $jobApplicationCategory->id,
+            'module_id' => $jobApplicationModule->id,
+            'job_id' => $jobApplicationList->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $learningGroup->id,
+            'module_id' => $learningModule->id,
+            'job_id' => $learning->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $learningGroup->id,
+            'module_id' => $learningModuleSetting->id,
+            'job_id' => $learningSetting->id,
         ]);
     }
 }

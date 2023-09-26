@@ -12,7 +12,8 @@ class UserAttachment extends Model
        protected $fillable = [
         'user_id',
         'name',
-        'file'
+        'file',
+        'type'
     ];
 
     public function user()

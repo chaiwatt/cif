@@ -76,12 +76,22 @@ class ModulesTableSeeder extends Seeder
             'icon' => 'fa-cog'
         ]);
         Module::create([
-            'code' => 'ANNOUNCEMENT-MODULE-SETTING',
-            'name' => 'ตั้งค่า',
-            'icon' => 'fa-cog'
+            'code' => 'ANNOUNCEMENT-MODULE',
+            'name' => 'ข่าวประกาศ',
+            'icon' => 'fa-bullhorn'
         ]);
         Module::create([
-            'code' => 'JOB-APPLICATION-MODULE-SETTING',
+            'code' => 'JOB-APPLICATION-MODULE',
+            'name' => 'ข่าวสมัครงาน',
+            'icon' => 'fa-user-tie'
+        ]);
+        Module::create([
+            'code' => 'LEARNING',
+            'name' => 'การเรียนรู้',
+            'icon' => 'fa-user-graduate'
+        ]);
+        Module::create([
+            'code' => 'LEARNING-SETTING',
             'name' => 'ตั้งค่า',
             'icon' => 'fa-cog'
         ]);

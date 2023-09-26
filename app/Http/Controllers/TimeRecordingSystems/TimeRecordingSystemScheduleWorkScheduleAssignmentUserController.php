@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TimeRecordingSystems;
 
 use App\Models\User;
+use App\Models\Shift;
 use App\Models\UserGroup;
 use App\Models\SearchField;
 use App\Models\WorkSchedule;
@@ -116,6 +117,20 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
             $selectedUsers = $request->users;
 
             $users = User::whereIn('id', $selectedUsers)->get();
+
+            // $shiftIds = WorkScheduleAssignment::where('work_schedule_id', $workScheduleId)
+            //         ->where('month_id', $month)
+            //         ->where('year', $year)
+            //     ->whereHas('shift', function ($subQuery) {
+            //         $subQuery->where('code', 'NOT LIKE', '%_H')
+            //                 ->where('code', 'NOT LIKE', '%_TH');
+            //     })->pluck('shift_id')->toArray();
+
+            // $uniqueShiftIds = array_unique($shiftIds); 
+              
+            // $shifts = Shift::whereIn('id',$uniqueShiftIds)->get();
+            // dd($shifts); 
+
 
             foreach ($users as $user) {
                 // ค้นหา WorkScheduleAssignment ที่ตรงกับ workScheduleId, month, year และเก็บในตัวแปร $workScheduleAssignments

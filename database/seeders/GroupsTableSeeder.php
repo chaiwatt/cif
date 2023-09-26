@@ -44,11 +44,11 @@ class GroupsTableSeeder extends Seeder
             'dashboard' => 'groups.dashboard.user-management-system'
         ]);
         Group::create([
-            'code' => 'TRAINING',
-            'name' => 'ระบบจัดการการเรียนรู้',
-            'description' => 'รายละเอียดระบบจัดการการเรียนรู้',
+            'code' => 'LEARNING',
+            'name' => 'ระบบจัดการเรียนรู้',
+            'description' => 'รายละเอียดระบบจัดการเรียนรู้',
             'icon' => 'fa-user-graduate',
-            'dashboard' => 'groups.dashboard.training-system'
+            'dashboard' => 'groups.dashboard.learning-system'
         ]);
         Group::create([
             'code' => 'ASSESSMENT',
