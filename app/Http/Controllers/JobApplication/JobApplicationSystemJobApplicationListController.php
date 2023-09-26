@@ -34,7 +34,7 @@ class JobApplicationSystemJobApplicationListController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
-        $applicationNews = ApplicationNew::all();
+        $applicationNews = ApplicationNew::orderBy('id', 'desc')->get();
         
         return view($viewName, [
             'groupUrl' => $groupUrl,
@@ -73,12 +73,14 @@ class JobApplicationSystemJobApplicationListController extends Controller
         $description = $request->description;
         $body = $request->summernoteContent;
         $attachments = $request->attachments;
+        $status = $request->status;
 
          
         $applicationNew = ApplicationNew::create([
             'title' => $title,
             'description' => $description,
             'body' => $body,
+            'status' => $status,
         ]);
         
 
@@ -136,11 +138,13 @@ class JobApplicationSystemJobApplicationListController extends Controller
         $description = $request->description;
         $body = $request->summernoteContent;
         $attachments = $request->attachments;
+        $status = $request->status;
 
         ApplicationNew::find($applicationNewId)->update([
             'title' => $title,
             'description' => $description,
             'body' => $body,
+            'status' => $status,
         ]);
         
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {

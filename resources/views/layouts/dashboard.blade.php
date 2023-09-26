@@ -79,7 +79,7 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
-                ระบบ HRM บริษัท ฉวีวรรณอินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด
+                บริษัท ฉวีวรรณอินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด
             </div>
             @php
             $currentYear = date('Y');

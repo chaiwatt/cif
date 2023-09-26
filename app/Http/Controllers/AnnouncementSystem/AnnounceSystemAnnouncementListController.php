@@ -34,7 +34,7 @@ class AnnounceSystemAnnouncementListController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
-        $announcements = Announcement::all();
+        $announcements = Announcement::orderBy('id', 'desc')->get();
         
         return view($viewName, [
             'groupUrl' => $groupUrl,
@@ -74,12 +74,13 @@ class AnnounceSystemAnnouncementListController extends Controller
         $description = $request->description;
         $body = $request->summernoteContent;
         $attachments = $request->attachments;
-
+        $status = $request->status;
          
         $announcement = Announcement::create([
             'title' => $title,
             'description' => $description,
             'body' => $body,
+            'status' => $status,
         ]);
         
 
@@ -137,11 +138,13 @@ class AnnounceSystemAnnouncementListController extends Controller
         $description = $request->description;
         $body = $request->summernoteContent;
         $attachments = $request->attachments;
+        $status = $request->status;
 
         Announcement::find($announcementId)->update([
             'title' => $title,
             'description' => $description,
             'body' => $body,
+            'status' => $status
         ]);
         
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {

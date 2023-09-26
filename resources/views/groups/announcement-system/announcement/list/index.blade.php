@@ -56,6 +56,7 @@
                                                 <th>ข่าวประกาศ</th>
                                                 <th>คำอธิบาย</th>
                                                 <th>วันที่เพิ่ม</th>
+                                                <th>สถานะ</th>
                                                 <th class="text-right" style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
@@ -67,6 +68,13 @@
                                                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
                                                     $announcement->created_at)->format('d/m/Y')
                                                     }}</td>
+                                                <td>
+                                                    @if ($announcement->status == 1)
+                                                    แสดง
+                                                    @elseif($announcement->status == 2)
+                                                    ไม่แสดง
+                                                    @endif
+                                                </td>
                                                 <td class="text-right">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{route('groups.announcement-system.announcement.list.view',['id' => $announcement->id ])}}"><i

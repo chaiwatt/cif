@@ -50,6 +50,17 @@
                                 <textarea id="summernote" class="form-control">{{$applicationNew->body}}</textarea>
                             </div>
                             <div class="form-group">
+                                <label>สถานะ</label>
+                                <select name="status" id="status" class="form-control select2" style="width: 100%;">
+                                    <option value="1" @if ($applicationNew->status == 1)
+                                        selected
+                                        @endif>แสดง</option>
+                                    <option value="2" @if ($applicationNew->status == 2)
+                                        selected
+                                        @endif>ไม่แสดง</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <div class="btn btn-default btn-file">
                                     <i class="fas fa-paperclip"></i> เอกสารแนบ
                                     <input type="file" name="attachment" id="attachment" multiple>

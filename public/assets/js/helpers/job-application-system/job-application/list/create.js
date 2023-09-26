@@ -21,12 +21,14 @@ $(document).on('click', '#btn-add-application-news', function (e) {
     var formData = new FormData(); 
     var title = $('#title').val();
     var description = $('#description').val();
+    var status = $('#status').val();
     var summernoteContent = $('#summernote').summernote('code');
     for (var i = 0; i < attachments.length; i++) {
         formData.append('attachments[]', attachments[i]);
     }
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('status', status);
     formData.append('summernoteContent', summernoteContent);
 
     var storeUrl = window.params.storeRoute

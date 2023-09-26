@@ -96,6 +96,8 @@ Auth::routes();
 //     return view('landing');
 // });
 Route::get('', [LandingController::class, 'index'])->name('landing');
+Route::get('post-announcement/{id}', [LandingController::class, 'postAnnouncement'])->name('post-announcement');
+Route::get('post-job-application-news/{id}', [LandingController::class, 'postJobApplicationNews'])->name('post-job-application-news');
 
 Route::get('isdatevalid', [TestController::class, 'isDateValid'])->name('isDateValid');
 Route::get('clear-db', [TestController::class, 'clearDB'])->name('clear-db');

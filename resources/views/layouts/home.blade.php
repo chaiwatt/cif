@@ -90,7 +90,7 @@
         </div>
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
-                Anything you want
+                บริษัท ฉวีวรรณอินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด
             </div>
             @php
             $currentYear = date('Y');

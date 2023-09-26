@@ -22,6 +22,7 @@ $(document).on('click', '#btn-update-announcement', function (e) {
     var title = $('#title').val();
     var description = $('#description').val();
     var announcementId = $('#announcementId').val();
+    var status = $('#status').val();
     var summernoteContent = $('#summernote').summernote('code');
     for (var i = 0; i < attachments.length; i++) {
         formData.append('attachments[]', attachments[i]);
@@ -29,6 +30,7 @@ $(document).on('click', '#btn-update-announcement', function (e) {
     formData.append('title', title);
     formData.append('description', description);
     formData.append('announcementId', announcementId);
+    formData.append('status', status);
     formData.append('summernoteContent', summernoteContent);
 
     var updateUrl = window.params.updateRoute
