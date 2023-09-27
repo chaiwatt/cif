@@ -1,5 +1,4 @@
 @extends('layouts.dashboard')
-
 @section('content')
 @include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
 <div class="content-wrapper">
@@ -7,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการรอบคำนวนเงินเดือน</h1>
+                    <h1 class="m-0">รอบคำนวนเงินเดือน</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">รายการรอบคำนวนเงินเดือน</li>
+                        <li class="breadcrumb-item active">รอบคำนวนเงินเดือน</li>
                     </ol>
                 </div>
             </div>
@@ -50,6 +49,7 @@
                                 <thead>
                                     <tr>
                                         <th>กลุ่มพนักงาน</th>
+                                        <th>จำนวนพนักงาน</th>
                                         <th>ปี</th>
                                         <th class="text-right">เพิ่มเติม</th>
                                     </tr>
@@ -58,8 +58,8 @@
                                     @foreach ($paydays as $payday)
                                     <tr>
                                         <td>{{$payday->name}}</td>
+                                        <td>{{$payday->users->count()}}</td>
                                         <td>{{$payday->year}}</td>
-
                                         <td class="text-right">
                                             <a class="btn btn-success btn-sm"
                                                 href="{{ route('groups.salary-system.setting.payday.assignment-user', ['id' => $payday->id]) }}">
@@ -69,10 +69,14 @@
                                                 href="{{ route('groups.salary-system.setting.payday.assignment', ['id' => $payday->id]) }}">
                                                 <i class="fas fa-link"></i>
                                             </a>
+                                            @if ($permission->update)
                                             <a class="btn btn-info btn-sm"
                                                 href="{{route('groups.salary-system.setting.payday.view',['id' => $payday->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
+                                            @endif
+
+                                            @if ($permission->delete)
                                             <a class="btn btn-danger btn-sm"
                                                 data-confirm='ลบรอบคำนวนเงินเดือน "{{$payday->name}}" หรือไม่?' href="#"
                                                 data-id="{{$payday->id}}"
@@ -80,9 +84,10 @@
                                                 data-message="รอบคำนวนเงินเดือน">
                                                 <i class="fas fa-trash"></i>
                                             </a>
+                                            @endif
+
                                         </td>
                                     </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>
@@ -91,12 +96,18 @@
                 </div>
             </div>
             @endif
-
         </div>
     </div>
 </div>
 @push('scripts')
+<script type="module" src="{{asset('assets/js/helpers/salary-system/setting/payday/index.js?v=1')}}"></script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
-
+<script>
+    window.params = {
+        searchRoute: '{{ route('groups.salary-system.setting.payday.search') }}',        
+        url: '{{ url('/') }}',
+        token: $('meta[name="csrf-token"]').attr('content')
+    };
+</script>
 @endpush
 @endsection

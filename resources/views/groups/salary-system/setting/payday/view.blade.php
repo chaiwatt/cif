@@ -7,14 +7,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มรอบคำนวนเงินเดือน</h1>
+                    <h1 class="m-0">รอบคำนวนเงินเดือน: {{$payDay->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.salary-system.setting.payday')}}">รอบคำนวนเงินเดือน</a>
                         </li>
-                        <li class="breadcrumb-item active">เพิ่มรอบคำนวนเงินเดือน</li>
+                        <li class="breadcrumb-item active">{{$payDay->name}}</li>
                     </ol>
                 </div>
             </div>
@@ -26,12 +26,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดรอบคำนวนเงินเดือน</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                            <h3 class="card-title">รายละเอียด</h3>
                         </div>
                         <div class="card-body">
                             <form
@@ -102,7 +97,6 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-
                                                     <label>รอบคำนวนต้น<span class="small text-danger">*</span></label>
                                                     <select name="firstPayday" id="firstPayday"
                                                         class="form-control select2" style="width: 100%;">
@@ -116,9 +110,7 @@
                                                     @error('firstPayday') <span
                                                         class="text-sm mb-0 text-danger">*กรุณาเลือกรอบคำนวนต้น</span>
                                                     @enderror
-
                                                 </div>
-
                                             </div>
 
                                             <div class="col-md-6">
@@ -140,9 +132,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>รอบจ่าย<span class="small text-danger">*</span></label>
@@ -178,10 +167,12 @@
                                                 class="form-control numericInputInt" inputmode="text">
                                         </div>
                                     </div>
+                                    @if ($permission->update)
                                     <div class="col-12">
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn bg-gradient-success btn-flat float-right">บันทึกแก้ไข</button>
                                     </div>
+                                    @endif
                                 </div>
                             </form>
                         </div>

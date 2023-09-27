@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการค่าทักษะ</h1>
+                    <h1 class="m-0">ค่าทักษะ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">รายการค่าทักษะ</li>
+                        <li class="breadcrumb-item active">ค่าทักษะ</li>
                     </ol>
                 </div>
             </div>
@@ -49,10 +49,14 @@
                                         <td>{{$skillBasedCost->name}}</td>
                                         <td>{{$skillBasedCost->cost}}</td>
                                         <td class="text-right">
+                                            @if ($permission->update)
                                             <a class="btn btn-info btn-sm"
                                                 href="{{route('groups.salary-system.setting.skill-based-cost.view',['id' => $skillBasedCost->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
+                                            @endif
+
+                                            @if ($permission->delete)
                                             <a class="btn btn-danger btn-sm"
                                                 data-confirm='ลบค่าทักษะ "{{$skillBasedCost->name}}" หรือไม่?' href="#"
                                                 data-id="{{$skillBasedCost->id}}"
@@ -60,9 +64,9 @@
                                                 data-message="ค่าทักษะ">
                                                 <i class="fas fa-trash"></i>
                                             </a>
+                                            @endif
                                         </td>
                                     </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>

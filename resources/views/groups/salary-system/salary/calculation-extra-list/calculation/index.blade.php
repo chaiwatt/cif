@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการบันทึกเวลา
+                    <h1 class="m-0">รายการบันทึกเวลางวดพิเศษ
                     </h1>
                     <ul class="mt-2">
                         <li>
@@ -25,9 +25,9 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.time-recording-system.schedulework.time-recording')}}">ตารางทำงาน</a>
+                                href="{{route('groups.salary-system.salary.calculation-list')}}">รอบเงินเดือนงวดปกติ</a>
                         </li>
-                        <li class="breadcrumb-item active">นำเข้าไฟล์เวลา</li>
+                        <li class="breadcrumb-item active">รายการบันทึกเวลางวดพิเศษ</li>
                     </ol>
                 </div>
             </div>

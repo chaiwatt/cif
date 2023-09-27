@@ -51,7 +51,6 @@
                             <table class="table table-striped text-nowrap">
                                 <thead>
                                     <tr>
-                                        {{-- <th>#</th> --}}
                                         <th>ชื่อกะการทำงาน</th>
                                         <th>เวลาเริ่มงาน</th>
                                         <th>เวลาเลิกงาน</th>

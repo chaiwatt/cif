@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row ">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รอบจ่ายเงินเดือน: {{$payday->name}}</h1>
+                    <h1 class="m-0">รอบคำนวนเงินเดือน: {{$payday->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.setting.payday.assignment-user',['id' => $payday->id])}}">รอบจ่ายเงินเดือน</a>
+                                href="{{route('groups.salary-system.setting.payday')}}">รอบคำนวนเงินเดือน</a>
                         </li>
                         <li class="breadcrumb-item active">{{$payday->name}}</li>
                     </ol>
@@ -22,39 +22,44 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div>
-                <div class="d-flex align-items-center mt-2">
-                    <div class="form-group mr-2">
-                        <a class="btn btn-primary mb-2"
-                            href="{{route('groups.salary-system.setting.payday.assignment-user.create',['id' => $payday->id])}}">
-                            <i class="fas fa-plus mr-1">
-                            </i>
-                            เพิ่มพนักงาน
-                        </a>
-                    </div>
-                    <div>
-                        <span>หรือนำเข้าจากรหัสพนักงาน</span>
-                    </div>
-                    <div class="form-group ml-2 mr-2">
-                        <a class="btn btn-primary " href="" id="import-employee-code">
-                            <i class="fas fa-plus mr-1"></i>
-                            รหัสพนักงาน
-                        </a>
-                    </div>
+            @if ($permission->create)
+            <div class="d-flex align-items-center mt-2">
+                <div class="form-group mr-2">
+                    <a class="btn btn-primary"
+                        href="{{route('groups.salary-system.setting.payday.assignment-user.create',['id' => $payday->id])}}">
+                        <i class="fas fa-plus mr-1">
+                        </i>
+                        เพิ่มพนักงาน
+                    </a>
+                </div>
+                <div>
+                    <span>หรือนำเข้าจากรหัสพนักงาน</span>
+                </div>
+                <div class="form-group ml-2 mr-2">
+                    <a class="btn btn-primary " href="" id="import-employee-code">
+                        <i class="fas fa-plus mr-1"></i>
+                        รหัสพนักงาน
+                    </a>
                 </div>
             </div>
-
+            @endif
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">รายการพนักงาน</h3>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="search_query" id="search_query"
+                                        class="form-control float-right" placeholder="ค้นหา">
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <input name="paydayId" id="paydayId" value="{{$payday->id}}" type="text" hidden>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12" id="table_container">
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
@@ -65,13 +70,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (optional($payday)->users ?? [] as $key => $user)
+                                                @foreach ($users as $key => $user)
                                                 <tr>
                                                     <td>{{$user->employee_no}}</td>
                                                     <td>{{$user->name}}
                                                         {{$user->lastname}}</td>
                                                     <td>{{$user->company_department->name}}</td>
                                                     <td class="text-right">
+                                                        @if ($permission->delete)
                                                         <form
                                                             action="{{ route('groups.salary-system.setting.payday.assignment-user.delete', ['payday_id' => $payday->id, 'user_id' => $user->id]) }}"
                                                             method="POST">
@@ -80,11 +86,13 @@
                                                             <button class="btn btn-danger btn-sm" type="submit"><i
                                                                     class="fas fa-trash"></i></button>
                                                         </form>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        {{$users->links()}}
                                     </div>
                                 </div>
                             </div>
@@ -126,6 +134,7 @@
     window.params = {
         url: '{{ url('/') }}',
         importEmployeeNoRoute: '{{ route('groups.salary-system.setting.payday.assignment-user.import-employee-no') }}',
+        searchRoute: '{{ route('groups.salary-system.setting.payday.assignment-user.search') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };
 </script>

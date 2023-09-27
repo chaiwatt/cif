@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{$payday->name}} ปี {{$payday->year}}</h1>
+                    <h1 class="m-0">รอบคำนวนเงินเดือน:{{$payday->name}} ปี {{$payday->year}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.setting.payday')}}">รายการรอบคำนวนเงินเดือน</a></li>
+                                href="{{route('groups.salary-system.setting.payday')}}">รอบคำนวนเงินเดือน</a></li>
                         <li class="breadcrumb-item active">{{$payday->name}}</li>
                     </ol>
                 </div>
@@ -55,15 +55,15 @@
                                         </td>
                                         <td>{{\Carbon\Carbon::createFromFormat('Y-m-d',$paydayDetail->payment_date)->format('d/m/Y')}}
                                         </td>
-
+                                        @if ($permission->update)
                                         <td class="text-right">
                                             <a class="btn btn-info btn-sm update-payday" href="#"
                                                 data-id="{{$paydayDetail->id}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                         </td>
+                                        @endif
                                     </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>
@@ -143,6 +143,5 @@
         token: $('meta[name="csrf-token"]').attr('content')
     };
 </script>
-
 @endpush
 @endsection

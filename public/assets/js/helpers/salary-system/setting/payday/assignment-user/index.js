@@ -39,3 +39,36 @@ $(document).on('click', '#btn-import-employee-code', function (e) {
     }).catch(error => { })
 
 });
+
+$(document).on('keyup', 'input[name="search_query"]', function () {
+    var searchInput = $(this).val();
+    var url = window.params.searchRoute
+    var paydayId = $('#paydayId').val();
+
+    var data = {
+        'searchInput': searchInput,
+        'paydayId': paydayId
+    }
+
+    RequestApi.postRequest(data, url, token).then(response => {
+        $('#table_container').html(response);
+    }).catch(error => { })
+});
+
+$(document).on('click', '.pagination a', function (e) {
+    e.preventDefault();
+    var searchInput = $('#search_query').val();
+    var page = $(this).attr('href').split('page=')[1];
+    var paydayId = $('#paydayId').val();
+    var url = "/groups/salary-system/setting/payday/assignment-user/search?page=" + page
+
+    var data = {
+        'searchInput': searchInput,
+        'paydayId': paydayId
+    }
+
+    RequestApi.postRequest(data, url, token).then(response => {
+        $('#table_container').html(response);
+    }).catch(error => { })
+});
+

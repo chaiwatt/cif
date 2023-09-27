@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{$diligenceAllowance->name}}</h1>
+                    <h1 class="m-0">เบี้ยขยัน: {{$diligenceAllowance->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.setting.diligence-allowance')}}">รายการเบี้ยขยัน</a>
+                                href="{{route('groups.salary-system.setting.diligence-allowance')}}">เบี้ยขยัน</a>
                         </li>
                         <li class="breadcrumb-item active">{{$diligenceAllowance->name}}</li>
                     </ol>
@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการเบี้ยขยัน</h3>
+                            <h3 class="card-title">รายละเอียด</h3>
                         </div>
                         <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
@@ -44,15 +44,18 @@
                                         <td>{{$diligenceAllowanceClassify->level}}</td>
                                         <td>{{$diligenceAllowanceClassify->cost}}</td>
                                         <td class="text-right">
+                                            @if ($permission->update)
                                             <a class="btn btn-info btn-sm" href="">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
+                                            @endif
+                                            @if ($permission->delete)
                                             <a class="btn btn-danger btn-sm">
                                                 <i class="fas fa-trash"></i>
                                             </a>
+                                            @endif
                                         </td>
                                     </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>
@@ -67,6 +70,5 @@
 </div>
 @push('scripts')
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
-
 @endpush
 @endsection

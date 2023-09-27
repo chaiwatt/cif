@@ -325,6 +325,7 @@ Route::middleware('auth')->group(function () {
                     Route::get('{id}', [SalarySystemSettingPaydayController::class, 'view'])->name('groups.salary-system.setting.payday.view');
                     Route::put('{id}', [SalarySystemSettingPaydayController::class, 'update'])->name('groups.salary-system.setting.payday.update');
                     Route::delete('{id}', [SalarySystemSettingPaydayController::class, 'delete'])->name('groups.salary-system.setting.payday.delete');
+                    Route::post('search', [SalarySystemSettingPaydayController::class, 'search'])->name('groups.salary-system.setting.payday.search');
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('{id}', [SalarySystemSettingPaydayAssignmentController::class, 'index'])->name('groups.salary-system.setting.payday.assignment');
                         Route::post('store', [SalarySystemSettingPaydayAssignmentController::class, 'store'])->name('groups.salary-system.setting.payday.assignment.store');
@@ -336,6 +337,7 @@ Route::middleware('auth')->group(function () {
                         Route::get('{id}', [SalarySystemSettingPaydayAssignmentUserController::class, 'index'])->name('groups.salary-system.setting.payday.assignment-user');
                         Route::get('create/{id}', [SalarySystemSettingPaydayAssignmentUserController::class, 'create'])->name('groups.salary-system.setting.payday.assignment-user.create');
                         Route::post('store', [SalarySystemSettingPaydayAssignmentUserController::class, 'store'])->name('groups.salary-system.setting.payday.assignment-user.store');
+                        Route::post('search', [SalarySystemSettingPaydayAssignmentUserController::class, 'search'])->name('groups.salary-system.setting.payday.assignment-user.search');
                         Route::post('import-employee-no', [SalarySystemSettingPaydayAssignmentUserController::class, 'importEmployeeNo'])->name('groups.salary-system.setting.payday.assignment-user.import-employee-no');
                         Route::delete('paydays/{payday_id}/users/{user_id}', [SalarySystemSettingPaydayAssignmentUserController::class, 'delete'])->name('groups.salary-system.setting.payday.assignment-user.delete');
                     });

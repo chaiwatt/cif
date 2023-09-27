@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SalarySystem;
 use App\Models\User;
 use App\Models\Payday;
 use App\Models\UserPayday;
+use App\Models\SearchField;
 use Illuminate\Http\Request;
 use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
@@ -37,14 +38,15 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $payday = Payday::find($id);
-        
+        $userIds = $payday->users->pluck('id')->toArray();
+        $users = User::whereIn('id',$userIds)->paginate(20);
 
         return view('groups.salary-system.setting.payday.assignment-user.index', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'payday' => $payday,
-            // 'users' => $users
+            'users' => $users
         ]);
     }
     public function create($id)
@@ -59,7 +61,7 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $payday = Payday::find($id);
-        $users = User::paginate(50);
+        $users = User::paginate(30);
         
 
         return view('groups.salary-system.setting.payday.assignment-user.create', [
@@ -138,13 +140,51 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         foreach ($users as $user) {
             $user->paydays()->attach($paydayId);
         }
-
-        // $userPaydays = UserPayday::where('payday_id',$paydayId)->get();
-        // foreach ($userPaydays as $userPayday) {
-        //     UserDiligenceAllowance::create([
-        //         'user_payday_id' => $userPayday->id
-        //     ]);
-        // }
         return;
+    }
+
+    public function search(Request $request)
+    {
+        $action = 'show';
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $permission = $roleGroupCollection['permission'];
+
+        $queryInput = $request->data['searchInput'];
+        $paydayId = $request->data['paydayId'];
+        // ค้นหา searchFields จากตาราง SearchField ที่เกี่ยวข้องกับตาราง users และมีสถานะเป็น 1
+        $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
+
+        // สร้าง query ของตาราง users
+        $query = User::query();
+
+        foreach ($searchFields as $field) {
+            $fieldName = $field['field'];
+            $fieldType = $field['type'];
+
+            if ($fieldType === 'foreign') {
+                $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
+                    $query->where('name', 'like', "%{$queryInput}%");
+                });
+            } else {
+                // ค้นหาข้อมูลในฟิลด์ของตาราง users และตรวจสอบว่ามีค่าตรงกับ queryInput หรือไม่
+                $query->orWhere($fieldName, 'like', "%{$queryInput}%");
+            }
+        }
+        $searchUserIds = $query->pluck('id')->toArray();
+
+        $payday = Payday::find($paydayId);
+        $paydayUserIds = $payday->users->pluck('id')->toArray();
+
+        // Get common user IDs
+        $commonUserIds = array_intersect($searchUserIds, $paydayUserIds);
+
+        // If you need the details of the common users (e.g., user objects)
+        $commonUsers = User::whereIn('id', $commonUserIds)->paginate(20);
+
+        return view('groups.salary-system.setting.payday.assignment-user.table-render.user-table', [
+            'users' => $commonUsers,
+            'permission' => $permission,
+            'payday' => $payday
+            ])->render();
     }
 }

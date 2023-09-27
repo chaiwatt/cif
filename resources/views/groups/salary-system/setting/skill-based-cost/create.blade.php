@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.setting.skill-based-cost')}}">รายการค่าทักษะ</a>
+                                href="{{route('groups.salary-system.setting.skill-based-cost')}}">ค่าทักษะ</a>
                         </li>
                         <li class="breadcrumb-item active">เพิ่มค่าทักษะ</li>
                     </ol>
@@ -26,7 +26,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดค่าทักษะ</h3>
+                            <h3 class="card-title">รายละเอียด</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                     <i class="fas fa-minus"></i>
@@ -52,11 +52,12 @@
                                                 class="form-control numericInputInt @error('cost') is-invalid @enderror">
                                         </div>
                                     </div>
-
+                                    @if ($permission->create)
                                     <div class="col-12">
                                         <button type="submit"
                                             class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
                                     </div>
+                                    @endif
                                 </div>
                             </form>
                         </div>
@@ -68,8 +69,5 @@
 </div>
 @push('scripts')
 <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
-<script>
-    $('.select2').select2()
-</script>
 @endpush
 @endsection

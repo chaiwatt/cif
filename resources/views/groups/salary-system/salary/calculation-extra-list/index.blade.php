@@ -11,25 +11,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการบันทึกเวลา
+                    <h1 class="m-0">รอบเงินเดือนงวดพิเศษ
                     </h1>
-                    {{-- <ul class="mt-2">
-                        @foreach ($paydayDetails as $paydayDetail)
-                        <li>
-                            <h4>{{$paydayDetail->payday->name}} (รอบเงินเดือน {{date('d/m/Y',
-                                strtotime($paydayDetail->start_date))}}
-                                -
-                                {{date('d/m/Y', strtotime($paydayDetail->end_date))}})</h4>
-                        </li>
-                        @endforeach
-                    </ul> --}}
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a
-                                href="{{route('groups.time-recording-system.schedulework.time-recording')}}">ตารางทำงาน</a>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
-                        <li class="breadcrumb-item active">นำเข้าไฟล์เวลา</li>
+                        <li class="breadcrumb-item active">รอบเงินเดือนงวดพิเศษ</li>
                     </ol>
                 </div>
             </div>

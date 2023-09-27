@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการเบี้ยขยัน</h1>
+                    <h1 class="m-0">เบี้ยขยัน</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">รายการเบี้ยขยัน</li>
+                        <li class="breadcrumb-item active">เบี้ยขยัน</li>
                     </ol>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการเบี้ยขยัน</h3>
+                            <h3 class="card-title">รายละเอียด</h3>
                         </div>
                         <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
@@ -46,10 +46,13 @@
                                                 href="{{route('groups.salary-system.setting.diligence-allowance.assignment',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-link"></i>
                                             </a>
+                                            @if ($permission->update)
                                             <a class="btn btn-info btn-sm"
                                                 href="{{route('groups.salary-system.salary.diligence-allowance.view',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
+                                            @endif
+                                            @if ($permission->delete)
                                             <a class="btn btn-danger btn-sm"
                                                 data-confirm='ลบรายการเบี้ยขยัน "{{$diligenceAllowance->name}}" หรือไม่?'
                                                 href="#" data-id="{{$diligenceAllowance->id}}"
@@ -57,9 +60,9 @@
                                                 data-message="รายการเบี้ยขยัน">
                                                 <i class="fas fa-trash"></i>
                                             </a>
+                                            @endif
                                         </td>
                                     </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>

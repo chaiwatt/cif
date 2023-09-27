@@ -54,8 +54,6 @@ class SalarySystemSettingPaydayController extends Controller
             'payDayRanges' => $payDayRanges,
             'paydays' => $paydays,
             'years' => $years
-
-            
         ]);
     }
 
@@ -281,6 +279,21 @@ class SalarySystemSettingPaydayController extends Controller
         $payDay->delete();
 
         return response()->json(['message' => 'รอบคำนวนเงินเดือนได้ถูกลบออกเรียบร้อยแล้ว']);
+    }
+
+    public function search(Request $request)
+    {
+        $action = 'show';
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $permission = $roleGroupCollection['permission'];
+
+        $selectedYear = $request->data;
+
+        $paydays = Payday::where('year', $selectedYear)->get();
+        return view('groups.salary-system.setting.payday.table-render.payday-table', [
+            'paydays' => $paydays,
+            'permission' => $permission
+            ])->render();
     }
 
 
