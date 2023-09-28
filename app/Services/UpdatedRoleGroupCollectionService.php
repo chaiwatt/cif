@@ -69,6 +69,7 @@ class UpdatedRoleGroupCollectionService
 
                 $moduleModel = Module::find($module->module_id);
                 $module->module_icon = $moduleModel->icon;
+                $module->module_prefix = $moduleModel->prefix;
                 return $module;
             });
 

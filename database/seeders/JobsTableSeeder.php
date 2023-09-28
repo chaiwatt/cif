@@ -69,12 +69,12 @@ class JobsTableSeeder extends Seeder
             'route' => 'groups.time-recording-system.setting.work-schedule-visibility',  
             'view' => 'groups.time-recording-system.setting.work-schedule-visibility.index',
         ]);
-        Job::create([
-            'code' => 'WORK-SCHEDULR-REPORT',
-            'name' => 'รายงาน',
-            'route' => 'groups.time-recording-system.report',  
-            'view' => 'groups.time-recording-system.report.index',
-        ]);
+        // Job::create([
+        //     'code' => 'WORK-SCHEDULR-REPORT',
+        //     'name' => 'รายงาน',
+        //     'route' => 'groups.time-recording-system.report',  
+        //     'view' => 'groups.time-recording-system.report.index',
+        // ]);
         Job::create([
             'code' => 'CALCULATION-LIST',
             'name' => 'เงินเดือนงวดปกติ',
@@ -87,36 +87,6 @@ class JobsTableSeeder extends Seeder
             'route' => 'groups.salary-system.salary.calculation-extra-list',
             'view' => 'groups.salary-system.salary.calculation-extra-list.index'
         ]);
-        Job::create([
-            'code' => 'LEARNING-SETTING',
-            'name' => 'รายการเรียนรู้',
-            'route' => 'groups.learning-system.setting.learning-list',
-            'view' => 'groups.learning-system.setting.learning-list.index'
-        ]);
-        Job::create([
-            'code' => 'LEARNING-LIST',
-            'name' => 'รายการเรียนรู้',
-            'route' => 'groups.learning-system.learning.learning-list',
-            'view' => 'groups.learning-system.learning.learning-list.index'
-        ]);
-        // Job::create([
-        //     'code' => 'INCOME-DEDUCT-ASSIGNMENT',
-        //     'name' => 'เพิ่มเงินได้ / เงินหัก',
-        //     'route' => 'groups.salary-system.salary.income-deduct-assignment',
-        //     'view' => 'groups.salary-system.salary.income-deduct-assignment.index'
-        // ]);
-        // Job::create([
-        //     'code' => 'SALARY-CALCULATION',
-        //     'name' => 'รายการบันทึกเวลา',
-        //     'route' => 'groups.salary-system.salary.calculation',
-        //     'view' => 'groups.salary-system.salary.calculation.index'
-        // ]);
-        // Job::create([
-        //     'code' => 'SALARY-SUMMARY',
-        //     'name' => 'รายการเงินเดือน',
-        //     'route' => 'groups.salary-system.salary.summary',
-        //     'view' => 'groups.salary-system.salary.summary.index'
-        // ]);
         Job::create([
             'code' => 'SALARY-PAYDAY',
             'name' => 'รอบคำนวนเงินเดือน',
@@ -224,6 +194,18 @@ class JobsTableSeeder extends Seeder
             'name' => 'รายการข่าวสมัครงาน',
             'route' => 'groups.job-application-system.job-application.list',
             'view' => 'groups.job-application-system.job-application.list.index'
+        ]);
+        Job::create([
+            'code' => 'LEARNING-LIST',
+            'name' => 'รายการเรียนรู้',
+            'route' => 'groups.learning-system.learning.learning-list',
+            'view' => 'groups.learning-system.learning.learning-list.index'
+        ]);
+        Job::create([
+            'code' => 'LEARNING-SETTING',
+            'name' => 'รายการเรียนรู้',
+            'route' => 'groups.learning-system.setting.learning-list',
+            'view' => 'groups.learning-system.setting.learning-list.index'
         ]);
     }
 }

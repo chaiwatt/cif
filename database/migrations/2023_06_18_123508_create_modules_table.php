@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
+            $table->string('prefix')->nullable()->comment('เมนู prefix');
             $table->string('code')->nullable()->comment('โค้ด');
             $table->string('name')->nullable()->comment('ชื่อโมดูล(เมนูหลัก)');
             $table->string('icon')->nullable()->comment('ไอคอน');

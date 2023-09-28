@@ -21,14 +21,14 @@ class ModuleGroupsTableSeeder extends Seeder
         $shift = Module::where('code','SHIFT')->first();
         $workSchedule = Module::where('code','WORK-SCHEDULE')->first();
         $timeRecordingSetting = Module::where('code','TIME-RECORDING-SETTING')->first();
-        $timeRecordingReport = Module::where('code','TIME-RECORDING-REPORT')->first();
+        // $timeRecordingReport = Module::where('code','TIME-RECORDING-REPORT')->first();
 
         // Assign modules to group
         $timeRecord->modules()->attach([
             $shift->id, 
             $workSchedule->id,
             $timeRecordingSetting->id,
-            $timeRecordingReport->id
+            // $timeRecordingReport->id
         ]);
 
         $salaryManagement = Group::where('code','SALARY-MANAGEMENT')->first();
