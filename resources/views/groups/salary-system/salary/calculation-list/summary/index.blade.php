@@ -43,9 +43,18 @@
                             <h3 class="card-title">พนักงาน</h3>
                             @if (count($users) !=0)
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
+                                {{-- <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
                                         class="form-control float-right" placeholder="ค้นหา">
+                                </div> --}}
+                                <div class="input-group input-group-sm">
+                                    <input type="search" class="form-control " name="search_query" id="search_query"
+                                        placeholder="ค้นหา">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-lg btn-default" id="btn-search">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             @endif
@@ -53,6 +62,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
+                                <input type="text" id="paydayDetailId" value="{{$paydayDetail->id}}" hidden>
                                 <div class="col-sm-12" id="table_container">
                                     <table class="table table-bordered table-striped dataTable dtr-inline">
                                         <thead>
@@ -69,6 +79,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             @foreach ($users as $user)
                                             @php
                                             $userSummary = $user->salarySummary($paydayDetail->id);
@@ -144,22 +155,15 @@
     </div>
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
-    <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 @push('scripts')
 
-<script type="module" src="{{ asset('assets/js/helpers/salary-system/salary/calculation/index.js?v=1') }}">
+<script type="module" src="{{ asset('assets/js/helpers/salary-system/salary/calculation-list/summary/index.js?v=1') }}">
 </script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {
-        searchRoute: '{{ route('groups.salary-system.salary.calculation.search') }}',        
+        searchRoute: '{{ route('groups.salary-system.salary.calculation-list.summary.search') }}',        
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

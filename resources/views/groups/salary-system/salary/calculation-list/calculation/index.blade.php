@@ -58,9 +58,18 @@
                             <h3 class="card-title">พนักงาน</h3>
                             @if (count($users) !=0)
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
+                                {{-- <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
                                         class="form-control float-right" placeholder="ค้นหา">
+                                </div> --}}
+                                <div class="input-group input-group-sm">
+                                    <input type="search" class="form-control " name="search_query" id="search_query"
+                                        placeholder="ค้นหา">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-lg btn-default" id="btn-search">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             @endif
@@ -80,7 +89,6 @@
                                                 <th class="text-center">วันลา</th>
                                                 <th class="text-center">ขาดงาน</th>
                                                 <th class="text-center">OT(ชม.)</th>
-                                                {{-- <th class="text-center">เบี้ยขยัน</th> --}}
                                                 <th class="text-right" style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
@@ -108,10 +116,8 @@
                                                 <td class="text-center">{{$userSummary['leaveCountSum']}}</td>
                                                 <td class="text-center">{{$userSummary['absentCountSum']}}</td>
                                                 <td class="text-center">{{$userSummary['overTime']}}</td>
-                                                {{-- <td class="text-center">{{$userSummary['deligenceAllowance']}} --}}
                                                 </td>
                                                 <td class="text-right">
-
                                                     <a class="btn btn-sm btn-info btn-user" data-id="{{$user->id}}"
                                                         data-startDate="{{$paydayDetail->start_date}}"
                                                         data-endDate="{{$paydayDetail->end_date}}"
@@ -129,11 +135,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
             @endif
-
         </div>
     </div>
     <div class="modal fade" id="modal-income-deduct-assignment">
@@ -171,16 +174,8 @@
             </div>
         </div>
     </div>
+</div>
 
-</div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
-    <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
-</div>
-</div>
-</div>
-</div>
-</div>
 @push('scripts')
 
 <script type="module"
@@ -189,7 +184,9 @@
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {
-        importIncomeDeductRoute: '{{ route('groups.salary-system.salary.calculation-list.calculation.import-income-deduct') }}',        
+        importIncomeDeductRoute: '{{ route('groups.salary-system.salary.calculation-list.calculation.import-income-deduct') }}',    
+        searchRoute: '{{ route('groups.salary-system.salary.calculation-list.calculation.search') }}',
+            
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

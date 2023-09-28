@@ -25,8 +25,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.salary.calculation-list')}}">รอบเงินเดือนงวดปกติ</a>
-                        </li>
+                                href="{{route('groups.salary-system.salary.calculation-extra-list')}}">รอบเงินเดือนงวดพิเศษ</a>
                         <li class="breadcrumb-item active">รายการบันทึกเวลางวดพิเศษ</li>
                     </ol>
                 </div>
@@ -113,51 +112,10 @@
 
         </div>
     </div>
-    <div class="modal fade" id="modal-income-deduct-assignment">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>เงินได้ / เงินหัก<span class="small text-danger">*</span></label>
-                                <select id="incomeDeduct" class="form-control select2 " style="width: 100%;">
-                                    <option value="">==เลือกรายการเงินได้ / เงินหัก==</option>
-                                    @foreach ($incomeDeducts as $incomeDeduct)
-                                    <option value="{{ $incomeDeduct->id }}">
-                                        {{ $incomeDeduct->name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="employee-code">รหัสพนักงานแถวละ 1 รายการ</label>
-                                <textarea class="form-control" id="employee-code" rows="10"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
-                                id="btn-import-employee-code">เพิ่มรายการ</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
-    <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 @push('scripts')
 
 <script type="module"

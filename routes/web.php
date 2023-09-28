@@ -326,6 +326,7 @@ Route::middleware('auth')->group(function () {
                     Route::put('{id}', [SalarySystemSettingPaydayController::class, 'update'])->name('groups.salary-system.setting.payday.update');
                     Route::delete('{id}', [SalarySystemSettingPaydayController::class, 'delete'])->name('groups.salary-system.setting.payday.delete');
                     Route::post('search', [SalarySystemSettingPaydayController::class, 'search'])->name('groups.salary-system.setting.payday.search');
+                    Route::post('get-payday', [SalarySystemSettingPaydayController::class, 'getPayday'])->name('groups.salary-system.setting.payday.get-payday');
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('{id}', [SalarySystemSettingPaydayAssignmentController::class, 'index'])->name('groups.salary-system.setting.payday.assignment');
                         Route::post('store', [SalarySystemSettingPaydayAssignmentController::class, 'store'])->name('groups.salary-system.setting.payday.assignment.store');
@@ -370,21 +371,24 @@ Route::middleware('auth')->group(function () {
             Route::group(['prefix' => 'salary'], function () {
                 Route::group(['prefix' => 'calculation-list'], function () {
                     Route::get('', [SalarySystemSalaryCalculationListController::class, 'index'])->name('groups.salary-system.salary.calculation-list');
+                    Route::post('search', [SalarySystemSalaryCalculationListController::class, 'search'])->name('groups.salary-system.salary.calculation-list.search');
                     Route::group(['prefix' => 'calculation'], function () {
                         Route::get('{id}', [SalarySystemSalaryCalculationListCalculationController::class, 'index'])->name('groups.salary-system.salary.calculation-list.calculation');
                         Route::post('import-income-deduct', [SalarySystemSalaryCalculationListCalculationController::class, 'importIncomeDeduct'])->name('groups.salary-system.salary.calculation-list.calculation.import-income-deduct');
+                        Route::post('search', [SalarySystemSalaryCalculationListCalculationController::class, 'search'])->name('groups.salary-system.salary.calculation-list.calculation.search');
                         Route::group(['prefix' => 'information'], function () {
                             Route::get('{start_date}/{end_date}/{user_id}/{payday_detail_id}', [SalarySystemSalaryCalculationExtraListCalculationInformationController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list.calculation.information');
                         });
                     });
                     Route::group(['prefix' => 'summary'], function () {
                         Route::get('{id}', [SalarySystemSalaryCalculationListSummaryController::class, 'index'])->name('groups.salary-system.salary.calculation-list.summary');
-                        
+                        Route::post('search', [SalarySystemSalaryCalculationListSummaryController::class, 'search'])->name('groups.salary-system.salary.calculation-list.summary.search');
                     });
                 });
                 
                 Route::group(['prefix' => 'calculation-extra-list'], function () {
                     Route::get('', [SalarySystemSalaryCalculationExtraListController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list');
+                    Route::post('search', [SalarySystemSalaryCalculationExtraListController::class, 'search'])->name('groups.salary-system.salary.calculation-extra-list.search');
                     Route::group(['prefix' => 'calculation'], function () {
                         Route::get('{id}', [SalarySystemSalaryCalculationExtraListCalculationController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list.calculation');
                     });

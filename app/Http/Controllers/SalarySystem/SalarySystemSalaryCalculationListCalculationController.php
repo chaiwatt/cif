@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SalarySystem;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\SearchField;
 use App\Models\IncomeDeduct;
 use App\Models\PaydayDetail;
 use Illuminate\Http\Request;
@@ -38,17 +39,11 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
-        $viewName = $roleGroupCollection['viewName'];
         
-        $date = Carbon::now();
-        $monthId = intval(Carbon::now()->month);
-        $currentDate = $date->format('Y-m-d');
-        $type = 1;
         $paydayDetail = PaydayDetail::find($id);
 
         $userIds = [];
-        // foreach($paydayDetails as $paydayDetail)
-        // { 
+
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
@@ -71,9 +66,7 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
                 {
                     $user = User::find($userId);
                     $diligenceAllowanceId = $user->diligence_allowance_id;
-                    // dd($user->id,$diligenceAllowanceId);
                     if($diligenceAllowanceId != null){
-                        
                         $diligenceAllowanceClassifyId = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->min('id');
                         UserDiligenceAllowance::create([
                             'user_id' => $userId,
@@ -81,18 +74,15 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
                             'diligence_allowance_classify_id' => $diligenceAllowanceClassifyId,
                         ]);
                     }
-
                 }
             }
             
         } 
         $userIds = array_merge($userIds, $ids);
-        // }  
         $userIds = array_unique($userIds);
-
         $users = User::whereIn('id', $userIds)->paginate(20);
-        $incomeDeducts = IncomeDeduct::all();
 
+        $incomeDeducts = IncomeDeduct::all();
         return view('groups.salary-system.salary.calculation-list.calculation.index', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
@@ -138,6 +128,82 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
         })->get();
 
         return $users;
+
+    }
+    public function search(Request $request)
+    {
+        $queryInput = $request->data['searchInput'];
+        $paydayDetailId = $request->data['paydayDetailId'];
+   
+        // ค้นหา searchFields จากตาราง SearchField ที่เกี่ยวข้องกับตาราง users และมีสถานะเป็น 1
+        $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
+
+        // สร้าง query ของตาราง users
+        $query = User::query();
+
+        foreach ($searchFields as $field) {
+            $fieldName = $field['field'];
+            $fieldType = $field['type'];
+
+            if ($fieldType === 'foreign') {
+                // ค้นหาข้อมูลที่เกี่ยวข้องจากตาราง foreign และตรวจสอบว่ามีชื่อตรงกับ queryInput หรือไม่
+                $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
+                    $query->where('name', 'like', "%{$queryInput}%");
+                });
+            } else {
+                // ค้นหาข้อมูลในฟิลด์ของตาราง users และตรวจสอบว่ามีค่าตรงกับ queryInput หรือไม่
+                $query->orWhere($fieldName, 'like', "%{$queryInput}%");
+            }
+        }
+        $searchUserIds = $query->pluck('id')->toArray();
+
+        $userIds = [];
+        $paydayDetail = PaydayDetail::find($paydayDetailId);
+        $startDate = $paydayDetail->start_date;
+        $endDate = $paydayDetail->end_date;
+        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        
+        $paydayDetailWithMaxEndDate = PaydayDetail::where('end_date', '<', $startDate)
+            ->where('end_date', function ($query) use ($startDate) {
+                $query->selectRaw('MAX(end_date)')
+                    ->from('payday_details')
+                    ->where('end_date', '<', $startDate);
+            })
+            ->first();
+            
+        if ($paydayDetailWithMaxEndDate) {
+            $paydayDetailWithMaxEndDateId= $paydayDetailWithMaxEndDate->id;
+            foreach ($ids as $userId)
+            {
+                $userDiligenceAllowance = UserDiligenceAllowance::where('user_id',$userId)->where('payday_detail_id',$paydayDetailWithMaxEndDateId)->first();
+                
+                if(!$userDiligenceAllowance)
+                {
+                    $user = User::find($userId);
+                    $diligenceAllowanceId = $user->diligence_allowance_id;
+                    if($diligenceAllowanceId != null){
+                        
+                        $diligenceAllowanceClassifyId = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->min('id');
+                        UserDiligenceAllowance::create([
+                            'user_id' => $userId,
+                            'payday_detail_id' => $paydayDetailWithMaxEndDateId,
+                            'diligence_allowance_classify_id' => $diligenceAllowanceClassifyId,
+                        ]);
+                    }
+                }
+            }
+            
+        } 
+        $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($userIds);
+        $commonUserIds = array_intersect($userIds, $searchUserIds);
+
+        $users = User::whereIn('id',$commonUserIds)->paginate(20);
+
+        return view('groups.salary-system.salary.calculation-list.calculation.table-render.user-table',[
+            'users' => $users,
+            'paydayDetail' => $paydayDetail,
+            ])->render();
 
     }
 

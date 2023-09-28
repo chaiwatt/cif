@@ -25,7 +25,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.salary.calculation-list')}}">รอบเงินเดือนงวดปกติ</a>
+                                href="{{route('groups.salary-system.salary.calculation-extra-list')}}">รอบเงินเดือนงวดพิเศษ</a>
                         </li>
                         <li class="breadcrumb-item active">รายการเงินเดือนงวดพิเศษ</li>
                     </ol>
@@ -157,14 +157,8 @@
     </div>
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
-    <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+
 @push('scripts')
 
 <script type="module"

@@ -323,7 +323,14 @@ class SalarySystemSettingPaydayController extends Controller
         // Create a new validator with custom error messages
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        // Return the validator instance
         return $validator;
+    }
+    public function getPayday(Request $request)
+    {
+        $year = $request->data['year'];
+        $paydays = Payday::where('year', $year)->where('type',1)->get();
+        return view('groups.salary-system.setting.payday.select-option-render.select-option', [
+            'paydays' => $paydays,
+            ])->render();
     }
 }

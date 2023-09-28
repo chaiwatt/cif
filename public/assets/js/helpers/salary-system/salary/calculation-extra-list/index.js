@@ -8,7 +8,7 @@ $(document).on('change', '#year', function (e) {
     var searchUrl = window.params.searchRoute
 
     RequestApi.postRequest(searchInput, searchUrl, token).then(response => {
-        $('#table_container').html(response);
+        $('#content_wrapper').html(response);
     }).catch(error => {
 
     })

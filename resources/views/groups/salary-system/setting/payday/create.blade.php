@@ -36,7 +36,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ปี<span class="small text-danger">*</span></label>
-                                            <select name="year"
+                                            <select name="year" id="year"
                                                 class="form-control select2 @error('year') is-invalid @enderror"
                                                 style="width: 100%;">
                                                 @foreach ($years as $year)
@@ -84,10 +84,9 @@
                                     </div>
 
                                     <div class="col-md-6" id="cantain_wrapper2" style="display:none">
-                                        <div class="row">
+                                        <div class="row" id="select_option_wrapper">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-
                                                     <label>รอบคำนวนต้น<span class="small text-danger">*</span></label>
                                                     <select name="firstPayday" id="firstPayday"
                                                         class="form-control select2" style="width: 100%;">
@@ -166,6 +165,7 @@
     </div>
 </div>
 @push('scripts')
+<script type="module" src="{{asset('assets/js/helpers/salary-system/setting/payday/create.js?v=1')}}"></script>
 <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
 <script>
     $('.select2').select2()
@@ -178,18 +178,14 @@
         }
     });
 
-    $(document).on('change', '#paydayType', function (e) {
-        var selectedValue = $(this).val();
-        if (selectedValue === '1') {
-            $('#cantain_wrapper1').show();
-            $('#cantain_wrapper2').hide();
-        } else if (selectedValue === '2') {
-            $('#cantain_wrapper1').hide();
-            $('#cantain_wrapper2').show();
-        }
-    });
 
+    window.params = {
+    getPaydayRoute: '{{ route('groups.salary-system.setting.payday.get-payday') }}',
+    url: '{{ url('/') }}',
+    token: $('meta[name="csrf-token"]').attr('content')
+    };
     
 </script>
+
 @endpush
 @endsection
