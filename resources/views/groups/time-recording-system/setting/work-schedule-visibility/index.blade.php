@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">ตารางทำงาน</li>
+                        <li class="breadcrumb-item active">การมองเห็นตารางทำงาน</li>
                     </ol>
                 </div>
             </div>

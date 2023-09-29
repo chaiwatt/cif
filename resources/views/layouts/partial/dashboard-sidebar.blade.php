@@ -4,9 +4,7 @@
             <a href="{{url($groupUrl)}}"
                 class="nav-link {{ Route::currentRouteName() == 'group.index' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                    แดชบอร์ด
-                </p>
+                <p>แดชบอร์ด</p>
             </a>
         </li>
     </ul>
