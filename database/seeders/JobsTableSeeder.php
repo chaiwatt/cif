@@ -129,12 +129,12 @@ class JobsTableSeeder extends Seeder
             'route' => 'groups.document-system.overtime.document',
             'view' => 'groups.document-system.overtime.document.index'
         ]);
-        Job::create([
-            'code' => 'DOCUMENT-OVERTIME-APPROVAL',
-            'name' => 'อนุมัติล่วงเวลา',
-            'route' => 'groups.document-system.overtime.approval',
-            'view' => 'groups.document-system.overtime.approval.index'
-        ]);
+        // Job::create([
+        //     'code' => 'DOCUMENT-OVERTIME-APPROVAL',
+        //     'name' => 'อนุมัติล่วงเวลา',
+        //     'route' => 'groups.document-system.overtime.approval',
+        //     'view' => 'groups.document-system.overtime.approval.index'
+        // ]);
         Job::create([
             'code' => 'DOCUMENT-APPROVE',
             'name' => 'การอนุมัติ',
