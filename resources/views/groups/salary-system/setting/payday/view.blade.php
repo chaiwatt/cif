@@ -134,7 +134,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>รอบจ่าย<span class="small text-danger">*</span></label>
+                                            <label>รอบคำนวน<span class="small text-danger">*</span></label>
                                             <select name="crossMonth" id="crossMonth" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1" @if ($payDay->cross_month == 1) selected
@@ -152,7 +152,7 @@
                                                 <option value="1" @if ($payDay->payment_type == 1) selected
                                                     @endif>จ่ายสิ้นเดือน</option>
                                                 <option value="2" @if ($payDay->payment_type == 2) selected
-                                                    @endif>จ่ายหลังวันสุดท้ายของรอบทำงาน</option>
+                                                    @endif>จ่ายปลายงวด</option>
                                             </select>
                                         </div>
                                     </div>
@@ -160,8 +160,7 @@
                                         style="display:none"
                                         @endif >
                                         <div class="form-group">
-                                            <label>จ่ายหลังวันสุดท้ายของรอบทำงาน<span
-                                                    class="small text-danger">*</span></label>
+                                            <label>หลังปลายงวด (วัน)<span class="small text-danger">*</span></label>
                                             <input type="text" id="duration"
                                                 value="{{old('duration') ?? $payDay->duration}}" name="duration"
                                                 class="form-control numericInputInt" inputmode="text">

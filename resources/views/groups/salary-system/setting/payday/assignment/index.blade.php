@@ -101,13 +101,13 @@
                                 <select name="paymentType" id="paymentType" class="form-control select2"
                                     style="width: 100%;">
                                     <option value="1">จ่ายสิ้นเดือน</option>
-                                    <option value="2">จ่ายหลังวันสุดท้ายของรอบทำงาน</option>
+                                    <option value="2">จ่ายปลายงวด</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12" id="duration_wrapper" style="display: none;">
                             <div class="form-group">
-                                <label>จ่ายหลังวันสุดท้ายของรอบทำงาน<span class="small text-danger">*</span></label>
+                                <label>หลังปลายงวด (วัน)<span class="small text-danger">*</span></label>
                                 <input type="text" id="duration" value="7" class="form-control numericInputInt">
                             </div>
                         </div>

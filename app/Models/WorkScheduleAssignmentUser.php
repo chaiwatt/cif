@@ -167,7 +167,6 @@ class WorkScheduleAssignmentUser extends Model
             $absentCount = 1;
         }
         $totalOvertime = $this->getOvertimeInfo();
-        // dd($totalOvertime,$this->user_id);
         return collect([
             'workHour' => $totalWorkHour !== 0 ? $totalWorkHour : null,
             'leaveCount' => $this->getLeaveInfo(),
@@ -335,26 +334,39 @@ class WorkScheduleAssignmentUser extends Model
 
     public function getOvertimeInfo()
     {
-        // dd($this->date_in);
         $userId = $this->user_id;
-        
         $shift = $this->workScheduleAssignment->shift;
         $shiftType = $shift->shift_type_id;
         $scheduleAssignmentDate = ($shiftType == 2) ? $this->date_out : $this->date_in;
         $type = 1;
+        
         $overtimeDetail = OverTimeDetail::where('user_id',$userId)
-            ->whereDate('from_date',$scheduleAssignmentDate)
+            ->whereDate('from_date',$this->date_in)
             ->whereHas('overtime', function ($query) use ($type) {
                     $query->where('type', '=', $type);
                 })
             ->first();
-        
+
         $holidayShift = $this->isHolidayShift();
-        
+
         if ($overtimeDetail != null && ($this->time_in != null && $this->time_out != null) && count($holidayShift) == 0){
+            $overtime = OverTime::find($overtimeDetail->over_time_id);  
+
+            if($overtime->manual_time == "1" && $overtimeDetail->start_time == "00:00:00"  && $overtimeDetail->end_time == "00:00:00"){
+                $overtimeDetail->update([
+                    'start_time' => $shift->end,
+                    'end_time' => Carbon::parse("$scheduleAssignmentDate $shift->end")->addHours($overtime->hour_duration)->format('H:i:s')
+                ]);
+
+                $overtimeDetail = OverTimeDetail::where('user_id',$userId)
+                ->whereDate('from_date',$this->date_in)
+                ->whereHas('overtime', function ($query) use ($type) {
+                        $query->where('type', '=', $type);
+                    })
+                ->first();
+            }  
             $startOvertime = Carbon::parse("$overtimeDetail->from_date $overtimeDetail->start_time");
             $endOverTime = Carbon::parse("$overtimeDetail->to_date $overtimeDetail->end_time");
-            
 
             $isHoliday = false;
             $user = User::find($userId);
@@ -366,8 +378,8 @@ class WorkScheduleAssignmentUser extends Model
             }
 
             $overtimeHourDifference = $startOvertime->diffInHours($endOverTime);
-            
-            $scheduleAssignmentDateTime = Carbon::parse("$scheduleAssignmentDate $this->time_out")->addMinutes(5);
+
+            $scheduleAssignmentDateTime = Carbon::parse("$overtimeDetail->to_date $this->time_out")->addMinutes(5);
 
             if ($scheduleAssignmentDateTime > $startOvertime) {
                 $hourDifference = $startOvertime->diffInHours($scheduleAssignmentDateTime);
@@ -384,7 +396,6 @@ class WorkScheduleAssignmentUser extends Model
                     return null;
                 }
             } else {
-                
                 return null;
             }
         }

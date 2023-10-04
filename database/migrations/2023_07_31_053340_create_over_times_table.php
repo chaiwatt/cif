@@ -21,6 +21,8 @@ return new class extends Migration
             $table->time('end_time')->nullable();
             $table->string('approved_list')->nullable();
             $table->char('type',1)->default(1);
+            $table->char('manual_time',1)->default(1);
+            $table->char('hour_duration',2)->default(4);
             $table->timestamps();
         });
     }

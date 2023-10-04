@@ -123,7 +123,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>รอบจ่าย<span class="small text-danger">*</span></label>
+                                            <label>รอบคำนวน<span class="small text-danger">*</span></label>
                                             <select name="crossMonth" id="crossMonth" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1">คร่อมเดือน</option>
@@ -137,14 +137,13 @@
                                             <select name="paymentType" id="paymentType" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1">จ่ายสิ้นเดือน</option>
-                                                <option value="2">จ่ายหลังวันสุดท้ายของรอบทำงาน</option>
+                                                <option value="2">จ่ายปลายงวด</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6" id="duration_wrapper" style="display:none">
                                         <div class="form-group">
-                                            <label>จ่ายหลังวันสุดท้ายของรอบทำงาน<span
-                                                    class="small text-danger">*</span></label>
+                                            <label>หลังปลายงวด (วัน)<span class="small text-danger">*</span></label>
                                             <input type="text" id="duration" value="7" name="duration"
                                                 class="form-control numericInputInt" inputmode="text">
                                         </div>

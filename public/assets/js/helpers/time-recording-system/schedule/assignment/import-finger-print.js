@@ -36,7 +36,6 @@ $(document).on('change', '.user-checkbox', function (e) {
 
 
 $(document).on('click', '#show_modal', function (e) {
-    console.log('ok');
     $('#modal-date-range').modal('show')
 });
 
@@ -327,6 +326,8 @@ function combineData(fileResultsArray, selectedEmployeeNos) {
             // Update the isDateRangeValid flag based on the existence of startDate and endDate
             isDateRangeValid = startDateExists && endDateExists;
 
+            // console.log(finalResults)
+
             // Perform actions based on startDate and endDate existence
             if (!startDateExists) {
                 Swal.fire(
@@ -337,7 +338,7 @@ function combineData(fileResultsArray, selectedEmployeeNos) {
             } else if (!endDateExists) {
                 Swal.fire(
                     'ผิดพลาด',
-                    'กำหนดวันที่สิ้นสุดไม่ถูกต้อง',
+                    'กำหนดวันที่สิ้นสุดไม่ถูกต้องหรือไม่พบวันที่สิ้นสุด',
                     'warning'
                 )
             } else if (!isDateRangeValid) {

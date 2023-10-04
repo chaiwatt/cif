@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.setting.payday')}}">รายการลา</a>
+                                href="{{route('groups.document-system.overtime.document')}}">ล่วงเวลา</a>
                         </li>
                         <li class="breadcrumb-item active">เพิ่มรายการลา</li>
                     </ol>
@@ -44,7 +44,7 @@
                             <form action="{{route('groups.document-system.overtime.document.store')}}" method="POST">
                                 @csrf
                                 <div class="row">
-
+                                    <input type="text" name="manual_time" id="manual_time" value="1" hidden>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ชื่อรายการล่วงเวลา<span class="small text-danger">*</span></label>
@@ -62,19 +62,55 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>วันที่เริ่ม (วดป. คศ)<span class="small text-danger">*</span></label>
-                                            <input type="text" name="startDate" id="startDate"
-                                                value="{{old('startDate')}}"
-                                                class="form-control input-datetime-format @error('startDate') is-invalid @enderror">
+                                    <div class="col-12 mt-2">
+                                        <div class="form-group clearfix">
+
+                                            <div class="icheck-primary d-inline mr-2 ">
+                                                <input type="radio" id="radFixHour" name="rad" checked>
+                                                <label for="radFixHour">กำหนดชั่วโมง
+                                                </label>
+                                            </div>
+                                            <div class="icheck-primary d-inline">
+                                                <input type="radio" id="radManualHour" name="rad">
+                                                <label for="radManualHour">กำหนดเวลาเอง
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>ถึงวันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
-                                            <input type="text" name="endDate" id="endDate" value="{{old('endDate')}}"
-                                                class="form-control input-datetime-format @error('endDate') is-invalid @enderror">
+                                    {{-- <div class="col-lg-12" id="content_wrapper_1"> --}}
+                                        {{-- <div class="row"> --}}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>วันที่เริ่ม (วดป. คศ)<span
+                                                            class="small text-danger">*</span></label>
+                                                    <input type="text" name="startDate" id="startDate"
+                                                        value="{{old('startDate')}}"
+                                                        class="form-control input-date-format @error('startDate') is-invalid @enderror">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>ถึงวันที่ (วดป. คศ)<span
+                                                            class="small text-danger">*</span></label>
+                                                    <input type="text" name="endDate" id="endDate"
+                                                        value="{{old('endDate')}}"
+                                                        class="form-control input-date-format @error('endDate') is-invalid @enderror">
+                                                </div>
+                                            </div>
+                                            {{--
+                                        </div> --}}
+
+                                        {{--
+                                    </div> --}}
+                                    <div class="col-lg-12" id="content_wrapper">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>จำนวนชั่วโมง<span class="small text-danger">*</span></label>
+                                                    <input type="text" name="hour_duration" id="hour_duration" value="4"
+                                                        class="form-control integer @error('hour_duration') is-invalid @enderror">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr>
@@ -94,7 +130,6 @@
                                             </table>
                                         </div>
                                     </div>
-
                                     <div class="col-12 text-right">
                                         <button class="btn bg-success mt-2">บันทึก</button>
                                     </div>
@@ -137,6 +172,26 @@
     url: '{{ url('/') }}',
     token: $('meta[name="csrf-token"]').attr('content')
     };
+
+    $(document).on('click', '#radFixHour, #radManualHour', function () {
+    var selection = 0;
+    
+    if ($('#radFixHour').is(':checked')) {
+    selection = 1;
+    $('#manual_time').val(1);
+    // $('#content_wrapper_1').show();
+    $('#content_wrapper').show();
+    $('#startDate, #endDate').removeClass('input-datetime-format').addClass('input-date-format').inputmask('99/99/9999');
+    } else if ($('#radManualHour').is(':checked')) {
+    selection = 2;
+    // $('#content_wrapper_1').show();
+    $('#manual_time').val(2);
+    $('#content_wrapper').hide();
+    $('#startDate, #endDate').removeClass('input-date-format').addClass('input-datetime-format').inputmask('99/99/9999 99:99');
+    }
+    
+    console.log('Selection:', selection);
+    });
 
 </script>
 @endpush

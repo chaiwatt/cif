@@ -63,10 +63,11 @@
                                     <table class="table table-bordered table-striped dataTable dtr-inline">
                                         <thead>
                                             <tr>
-                                                <th>ตารางทำงาน</th>
-                                                <th>จำนวนขาด</th>
-                                                <th>จำนวนมาสาย</th>
-                                                <th>จำนวนกลับก่อน</th>
+                                                <th style="width: 25%">ตารางทำงาน</th>
+                                                <th style="width: 25%">รอบเงินเดือน</th>
+                                                <th style="width: 17%">จำนวนขาด</th>
+                                                <th style="width: 17%">จำนวนมาสาย</th>
+                                                <th style="width: 17%">จำนวนกลับก่อน</th>
                                             </tr>
                                         </thead>
                                         <tbody>

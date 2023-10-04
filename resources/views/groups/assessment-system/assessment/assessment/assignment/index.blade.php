@@ -19,7 +19,7 @@
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.assessment-system.assessment.assessment')}}">การประเมิน</a>
                         </li>
-                        <li class="breadcrumb-item active">การประเมิน</li>
+                        <li class="breadcrumb-item active">{{$assessmentGroup->name}}</li>
                     </ol>
                 </div>
             </div>

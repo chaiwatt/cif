@@ -18,9 +18,9 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.time-recording-system.schedulework.time-recording')}}">ตารางทำงาน</a>
+                                href="{{route('groups.salary-system.salary.calculation-list.calculation',['id' => $paydayDetail->id])}}">รายการบันทึกเวลางวดปกติ</a>
                         </li>
-                        <li class="breadcrumb-item active">นำเข้าไฟล์เวลา</li>
+                        <li class="breadcrumb-item active">{{$user->name}}</li>
                     </ol>
                 </div>
             </div>

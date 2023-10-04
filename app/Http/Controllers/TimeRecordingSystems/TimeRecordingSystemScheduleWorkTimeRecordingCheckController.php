@@ -141,7 +141,8 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $page = optional($request->data)['page'];
         $filter = optional($request->data)['filter'];
 
-        $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
+        // $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
+        $users = $this->getUsersByWorkScheduleAssignmentWithWorkscheduleId($startDate,$endDate,$workScheduleId);
         
         $usersWithWorkScheduleAssignments = [];
         foreach($users as $user)
@@ -223,7 +224,8 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $year = $request->data['year'];
         $workScheduleId = $request->data['workScheduleId'];
 
-        $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
+        // $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
+        $users = $this->getUsersByWorkScheduleAssignmentWithWorkscheduleId($startDate,$endDate,$workScheduleId);
 
         $usersWithWorkScheduleAssignments = [];
         foreach($users as $user)
@@ -292,9 +294,26 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
             $query->whereNotNull('date_in')
                 ->whereBetween('date_in', [$startDate, $endDate]);
         })->get();
-
         return $users;
+    }
 
+    public function getUsersByWorkScheduleAssignmentWithWorkscheduleId($startDate,$endDate,$workScheduleId)
+    {
+        // Convert the start and end date to the correct format
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        // ค้นหาผู้ใช้ที่มีการกำหนดงานเรียกงานใน workScheduleId และ date_in อยู่ในช่วง startDate ถึง endDate
+        $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($startDate, $endDate,$workScheduleId) {
+            $query->whereNotNull('date_in')
+                ->whereBetween('date_in', [$startDate, $endDate])
+                ->whereHas('workScheduleAssignment', function ($subQuery) use ($workScheduleId) {
+                    $subQuery->where('work_schedule_id', $workScheduleId);
+                });
+        })
+        
+        ->get();
+        return $users;
     }
 
     public function getImage(Request $request)

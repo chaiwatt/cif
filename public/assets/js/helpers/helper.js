@@ -31,6 +31,12 @@ $(document).ready(function () {
         regex: "^\\d+(\\.\\d)?$",
         placeholder: '0'
     });
+
+    $('.integer').inputmask('integer', {
+        allowMinus: false,  // Remove this line if you want to allow negative numbers
+        radixPoint: '',      // Remove this line if you want to allow decimal points
+        rightAlign: false
+    });
 });
     // 
 

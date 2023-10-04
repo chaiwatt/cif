@@ -18,6 +18,8 @@ class OverTime extends Model
         'code',
         'approved_list',
         'type',
+        'manual_time',
+        'hour_duration'
     ];
 
     public function overtimeDetails()

@@ -55,6 +55,40 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">ระบบเอกสาร</h3>
+                        <div class="card-tools mr-1">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <div id="searchWrapper" class="d-flex"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-striped dataTable dtr-inline">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 25%">รอบเงินเดือน</th>
+                                                <th style="width: 25%">แผนก</th>
+                                                <th style="width: 17%">ลาป่วย</th>
+                                                <th style="width: 17%">พักร้อน</th>
+                                                <th style="width: 17%">ลาอื่น ๆ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

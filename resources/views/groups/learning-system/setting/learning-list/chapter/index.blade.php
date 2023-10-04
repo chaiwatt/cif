@@ -17,7 +17,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.learning-system.setting.learning-list')}}">หัวข้อการเรียนรู้</a>
+                                href="{{route('groups.learning-system.setting.learning-list')}}">รายการจัดการเรียนรู้</a>
                         </li>
                         <li class="breadcrumb-item active">{{$lesson->name}}</li>
                     </ol>

@@ -17,9 +17,9 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
-                                href="{{route('groups.assessment-system.assessment.assessment')}}">การประเมิน</a>
+                                href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">{{$assessmentGroup->name}}</a>
                         </li>
-                        <li class="breadcrumb-item active">การประเมิน</li>
+                        <li class="breadcrumb-item active">{{$user->name}} {{$user->lastname}}</li>
                     </ol>
                 </div>
             </div>

@@ -1152,7 +1152,7 @@ class User extends Authenticatable
                  ];
             }
         }
-        // dd($overTimeCountSum);
+
         if(count($leaveType) > 0)
         {
             $commonLeaveTypes = array_intersect($leaveType, $noDeductLeaveType);

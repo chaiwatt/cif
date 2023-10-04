@@ -84,6 +84,8 @@ class DocumentSystemOvertimeDocumentController extends Controller
 
     public function store(Request $request)
     {
+        
+        // dd($selectedValue);
         $validator = $this->validateFormData($request);
 
         if ($validator->fails()) {
@@ -93,15 +95,32 @@ class DocumentSystemOvertimeDocumentController extends Controller
         $startDateTime = $request->startDate;
         $endDateTime = $request->endDate;
         $type = $request->type;
+        $selectedValue = $request->manual_time;
 
         // Parse the startDate using Carbon
-        $carbonStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime);
-        $startDate = $carbonStartDate->format('Y-m-d');
-        $time_start = $carbonStartDate->format('H:i');
+        if ($selectedValue == 1){
+            $carbonStartDate = Carbon::createFromFormat('d/m/Y', $startDateTime);
+            $startDate = $carbonStartDate->format('Y-m-d');
+            $time_start = "00:00";
+            $carbonEndDate = Carbon::createFromFormat('d/m/Y', $endDateTime);
+            $endDate = $carbonEndDate->format('Y-m-d');
+            $time_end = "00:00";
+        }else if($selectedValue == 2){
+            $carbonStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime);
+            $startDate = $carbonStartDate->format('Y-m-d');
+            $time_start = $carbonStartDate->format('H:i');
 
-        $carbonEndDate = Carbon::createFromFormat('d/m/Y H:i', $endDateTime);
-        $endDate = $carbonEndDate->format('Y-m-d');
-        $time_end = $carbonEndDate->format('H:i');
+            $carbonEndDate = Carbon::createFromFormat('d/m/Y H:i', $endDateTime);
+            $endDate = $carbonEndDate->format('Y-m-d');
+            $time_end = $carbonEndDate->format('H:i');
+        }
+        // $carbonStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime);
+        // $startDate = $carbonStartDate->format('Y-m-d');
+        // $time_start = $carbonStartDate->format('H:i');
+
+        // $carbonEndDate = Carbon::createFromFormat('d/m/Y H:i', $endDateTime);
+        // $endDate = $carbonEndDate->format('Y-m-d');
+        // $time_end = $carbonEndDate->format('H:i');
 
         $name = $request->name;
 
@@ -226,14 +245,23 @@ class DocumentSystemOvertimeDocumentController extends Controller
 
     public function validateFormData($request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'startDate' => 'required|date_format:d/m/Y H:i',
-            'endDate' => 'required|date_format:d/m/Y H:i|after_or_equal:startDate',
-            'userId' => 'required|array|min:1'
-        ]);
+        $rules = [
+        'name' => 'required',
+        'userId' => 'required|array|min:1',
+        'startDate' => '',
+        'endDate' => '',
+        'manual_time' => ''
+        ];
 
-        return $validator;
+        if ($rules['manual_time'] == "1") {
+            $rules['startDate'] = 'required|date_format:d/m/Y';
+            $rules['endDate'] = 'required|date_format:d/m/Y|after_or_equal:startDate';
+        } elseif ($rules['manual_time'] == "2") {
+            $rules['startDate'] = 'required|date_format:d/m/Y H:i';
+            $rules['endDate'] = 'required|date_format:d/m/Y H:i|after_or_equal:startDate';
+        } 
+
+        return Validator::make($request->all(), $rules);
     }
 
     public function getUsers(Request $request)
