@@ -19,7 +19,8 @@ class Leave extends Model
         'status',
         'duration',
         'approved_list',
-        'attachment'
+        'attachment',
+        'manager_approve'
     ];
 
     public function leaveDetails()
@@ -35,7 +36,7 @@ class Leave extends Model
     {
         return $this->belongsTo(LeaveType::class);
     }
-    public function getApprovalStatusForUser($userId)
+    public function getLeaderApprovalStatus($userId)
     {
         $approvedList = json_decode($this->approved_list, true);
         if (is_array($approvedList)) {

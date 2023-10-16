@@ -77,13 +77,41 @@ class DocumentSystemLeaveApprovalController extends Controller
         $authId = auth()->user()->id;
         $authorizedUserIds =$approver->authorizedUsers->pluck('id')->toArray();
 
-        if (!in_array($authId, $authorizedUserIds)) {
+        $leave = Leave::find($leaveId);
+        $approvedList = json_decode($leave->approved_list, true);
+        if ($approver->user_id == $authId){
+            $leave->update(['manager_approve' => $value ]);
+            $atLeastOneStatusIsOne = collect($approvedList)->pluck('status')->some(function ($status) {
+                return $status == 1;
+            });
+   
+            $hasStatusTwo = collect($approvedList)->pluck('status')->contains(2);
+            if ($atLeastOneStatusIsOne) {
+                $leave = Leave::find($leaveId);
+                $duration = $leave->duration;
+                $leaveTypeId = $leave->leave_type_id;
+                $userLeave = UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveTypeId)->first();
+                $leaveCount = $userLeave->count - $duration;
+                $leave = Leave::find($leaveId);
+                if($leave->status != 1 && $leave->manager_approve == 1)
+                {
+                    UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveTypeId)->first()->update(['count' => $leaveCount]);
+                    $leave->update(['status' => 1]);
+                }
+
+            } elseif ($hasStatusTwo) {
+                $leave->update(['status' => 2]);
+            }  
+        }
+        // 
+        $leave = Leave::find($leaveId);
+
+        if (!in_array($authId, $authorizedUserIds) && $approver->user_id != $authId) {
             return response()->json(['error' => 'คุณไม่ได้รับอนุญาติให้ทำรายการ']);
         }
 
-        $leave = Leave::find($leaveId);
-
-        $approvedList = json_decode($leave->approved_list, true);
+    
+        
 
         $userIndex = null;
         foreach ($approvedList as $index => $item) {
@@ -92,25 +120,20 @@ class DocumentSystemLeaveApprovalController extends Controller
                 break;
             }
         }
-        
-        if ($userIndex !== null) {
-            // Update the status of the user in the approved_list
-            $approvedList[$userIndex]['status'] = $value;
 
-            // Encode the updated approved_list back to JSON
+        if ($userIndex !== null) {
+            $approvedList[$userIndex]['status'] = $value;
             $updatedApprovedList = json_encode($approvedList);
 
-            // Update the approved_list in the Leave model
             $leave->update(['approved_list' => $updatedApprovedList]);
-            // Check if all statuses in approved_list are 1
-            $allStatusesAreOne = collect($approvedList)->pluck('status')->every(function ($status) {
+
+            $atLeastOneStatusIsOne = collect($approvedList)->pluck('status')->some(function ($status) {
                 return $status == 1;
             });
 
-            // Check if there is at least one status with value 2
             $hasStatusTwo = collect($approvedList)->pluck('status')->contains(2);
-
-            if ($allStatusesAreOne) {
+            
+            if ($atLeastOneStatusIsOne) {
                 // Update the status field of the Leave model to 1
                 $leave = Leave::find($leaveId);
                 $duration = $leave->duration;
@@ -118,19 +141,17 @@ class DocumentSystemLeaveApprovalController extends Controller
                 $userLeave = UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveTypeId)->first();
                 $leaveCount = $userLeave->count - $duration;
                 $leave = Leave::find($leaveId);
-                if($leave->status != 1)
+                if($leave->status != 1 && $leave->manager_approve == 1)
                 {
+                    
                     UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveTypeId)->first()->update(['count' => $leaveCount]);
                     $leave->update(['status' => 1]);
                 }
                 
-                
+            
             } elseif ($hasStatusTwo) {
                 // Update the status field of the Leave model to 2
                 $leave->update(['status' => 2]);
-            } else {
-                // Update the status field of the Leave model to 0
-                $leave->update(['status' => 0]);
             }
 
         } 

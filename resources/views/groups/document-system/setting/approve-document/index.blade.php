@@ -45,7 +45,8 @@
                                                     <th>สายอนุมัติ</th>
                                                     <th>แผนก</th>
                                                     <th>ประเภทเอกสาร</th>
-                                                    <th>ผู้อนุมัติ</th>
+                                                    <th>ผู้จัดการ</th>
+                                                    <th>หัวหน้างาน</th>
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
@@ -56,6 +57,7 @@
                                                     <td>{{$approver->name}}</td>
                                                     <td>{{$approver->company_department->name}}</td>
                                                     <td>{{$approver->document_type->name}}</td>
+                                                    <td>{{$approver->user->name}} {{$approver->user->lastname}}</td>
                                                     <td>
                                                         @foreach ($approver->authorizedUsers as $user)
                                                         {{$user->name}} {{$user->lastname}} <br>

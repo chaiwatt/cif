@@ -5,14 +5,15 @@ namespace App\Http\Controllers\DocumentSystems;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Month;
+use App\Models\Approver;
 use App\Models\OverTime;
 use Illuminate\Http\Request;
+use App\Models\OverTimeDetail;
 use App\Helpers\ActivityLogger;
 use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
-use App\Models\OverTimeDetail;
-use App\Services\UpdatedRoleGroupCollectionService;
 use Illuminate\Support\Facades\Validator;
+use App\Services\UpdatedRoleGroupCollectionService;
 
 class DocumentSystemOvertimeDocumentController extends Controller
 {
@@ -72,12 +73,15 @@ class DocumentSystemOvertimeDocumentController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $users = User::all();
+        $approvers = Approver::where('document_type_id',2)->get();
+        
 
         return view('groups.document-system.overtime.document.create', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'users' => $users,
+            'approvers' => $approvers
     
         ]);
     }
@@ -85,13 +89,15 @@ class DocumentSystemOvertimeDocumentController extends Controller
     public function store(Request $request)
     {
         
-        // dd($selectedValue);
+        // dd($request->approver);
         $validator = $this->validateFormData($request);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $userIds = $request->userId;
+        $approver = Approver::find($request->approver);
+        // dd($approver->authorizedUsers->pluck('id')->toArray());
+        $userIds = $approver->authorizedUsers->pluck('id')->toArray();
         $startDateTime = $request->startDate;
         $endDateTime = $request->endDate;
         $type = $request->type;
@@ -130,10 +136,12 @@ class DocumentSystemOvertimeDocumentController extends Controller
 
         OverTime::create([
             'name' => $name,
+            'approver_id' => $approver->id,
             'from_date' => $startDate,
             'to_date' => $endDate,
             'start_time' => $time_start,
             'end_time' => $time_end,
+            // 'manager_approve' => $approver->user_id,
             'approved_list' => $approvedList->toJson(),
             'type' => $type
         ]);
@@ -247,7 +255,7 @@ class DocumentSystemOvertimeDocumentController extends Controller
     {
         $rules = [
         'name' => 'required',
-        'userId' => 'required|array|min:1',
+        // 'userId' => 'required|array|min:1',
         'startDate' => '',
         'endDate' => '',
         'manual_time' => ''

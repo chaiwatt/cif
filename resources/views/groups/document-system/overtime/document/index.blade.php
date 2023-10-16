@@ -41,7 +41,7 @@
                                                     <th>#</th>
                                                     <th>รายการล่วงเวลา</th>
                                                     <th>วันที่</th>
-                                                    <th>เวลา</th>
+                                                    {{-- <th>เวลา</th> --}}
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
@@ -54,8 +54,8 @@
                                                         $overtime->from_date)->format('d/m/Y') }}
                                                         - {{ \Carbon\Carbon::createFromFormat('Y-m-d',
                                                         $overtime->to_date)->format('d/m/Y') }}</td>
-                                                    <td>{{ substr($overtime->start_time, 0, 5) }} - {{
-                                                        substr($overtime->end_time, 0, 5) }}</td>
+                                                    {{-- <td>{{ substr($overtime->start_time, 0, 5) }} - {{
+                                                        substr($overtime->end_time, 0, 5) }}</td> --}}
                                                     <td class="text-right">
                                                         <a class="btn btn-primary btn-sm"
                                                             href="{{ route('groups.document-system.overtime.approval.assignment', ['id' => $overtime->id]) }}">

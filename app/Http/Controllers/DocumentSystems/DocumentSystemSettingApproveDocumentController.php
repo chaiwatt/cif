@@ -60,6 +60,8 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         
         $documentTypes = DocumentType::all();
         $companyDepartments = CompanyDepartment::all();
+        $users = User::where('employee_type_id',1)->get();
+       
 
         return view('groups.document-system.setting.approve-document.create', [
             'groupUrl' => $groupUrl,
@@ -67,6 +69,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
             'permission' => $permission,
             'documentTypes' => $documentTypes,
             'companyDepartments' => $companyDepartments,
+            'users' => $users
         ]);
     }
     public function store(Request $request)
@@ -76,7 +79,9 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $userIds = $request->userId;
+        $userIds = $request->leader;
+        $managerId = $request->manager;
+        // dd($managerId,$userIds);
         $approveName = $request->name;
         $companyDepartmentId = $request->company_department;
         $code = $request->code;
@@ -84,6 +89,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
 
         $approver = new Approver();
         $approver->name = $approveName;
+        $approver->user_id = $managerId;
         $approver->code = $code;
         $approver->document_type_id = $documentType;
         $approver->company_department_id = $companyDepartmentId;
@@ -116,6 +122,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         $documentTypes = DocumentType::all();
         $companyDepartments = CompanyDepartment::all();
         $approvers = User::where('nationality_id', 1)->where('ethnicity_id', 1)->get();
+        $users = User::where('employee_type_id',1)->get();
 
         return view('groups.document-system.setting.approve-document.view', [
             'groupUrl' => $groupUrl,
@@ -124,7 +131,8 @@ class DocumentSystemSettingApproveDocumentController extends Controller
             'approver' => $approver,
             'documentTypes' => $documentTypes,
             'companyDepartments' => $companyDepartments,
-            'approvers' => $approvers
+            'approvers' => $approvers,
+            'users' => $users
         ]);
     }
 
@@ -137,8 +145,8 @@ class DocumentSystemSettingApproveDocumentController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // dd($request->userId);
-        $userIds = $request->userId;
+        $userIds = $request->leader;
+        $managerId = $request->manager;
         $approveName = $request->name;
         $companyDepartmentId = $request->company_department;
         $code = $request->code;
@@ -152,6 +160,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         $approver->update([
             'name' => $approveName,
             'code' => $code,
+            'user_id' => $managerId,
             'document_type_id' => $documentType,
             'company_department_id' => $companyDepartmentId,
         ]);
@@ -270,7 +279,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
             'code' => 'required',
             'company_department.*' => 'required',
             'document_type.*' => 'required',
-            'userId' => 'required|array|min:1',
+            'leader' => 'required|array|min:1',
         ]);
 
         return $validator;

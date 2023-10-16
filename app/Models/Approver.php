@@ -16,7 +16,7 @@ class Approver extends Model
         'document_type_id',
         'company_department_id',
         'code',
-        // 'approver_two_id'
+        'user_id'
     ];
     /**
      * ความสัมพันธ์กับโมเดล CompanyDepartment (บริษัทและแผนก)
@@ -60,5 +60,11 @@ class Approver extends Model
             ->where('user_id', $userId)
             ->first();
     }
+
+     public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 
 }

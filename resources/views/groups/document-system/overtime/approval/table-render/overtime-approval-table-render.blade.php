@@ -1,18 +1,110 @@
 <table class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
         <tr>
-            <th>กลุ่มอนุมัติ</th>
-            <th>ชื่อสกุล</th>
-            <th>แผนก</th>
+            <th>รายการล่วงเวลา</th>
             <th>วันที่</th>
-            <th>เวลา</th>
+            {{-- <th>แผนก</th>
+            <th>วันที่</th>
+            <th>เวลา</th> --}}
             <th>ผู้อนุมัติเอกสาร</th>
             <th>สถานะ</th>
             <th class="text-right">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($overtimeDetails as $key=> $overtimeDetail)
+        @foreach ($overtimes as $overtime)
+        <tr>
+
+            <td>{{$overtime->name}}</td>
+            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                $overtime->from_date)->format('d/m/Y') }}
+                - {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                $overtime->to_date)->format('d/m/Y') }}</td>
+            {{-- <td>{{$overtime->user->name}}</td> --}}
+            {{-- <td>
+                @php
+
+                $approvedLists=$overtime->approver->authorizedUsers;
+
+
+                @endphp
+
+                @foreach ($approvedLists as $user)
+
+                @php
+                $approvalStatus =$overtime->getLeaderApprovalStatus($user->id)
+
+                @endphp
+                {{$user->name}} {{$approvalStatus}} <br>
+                @if ($approvalStatus === null)
+                <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                @elseif ($approvalStatus == 1)
+                <span class="badge bg-success" style="font-weight: normal;">อนุมัติแล้ว</span>
+                @elseif ($approvalStatus == 2)
+                <span class="badge bg-danger" style="font-weight: normal;">ไม่อนุมัติ</span>
+                @elseif ($approvalStatus == 0)
+                <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                @else
+                <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                @endif
+                @endforeach
+            </td> --}}
+            <td>
+                สายอนุมัติ {{$overtime->approver->name}}
+                <br>
+                <span class="ml-3">
+                    - {{$overtime->approver->user->name}} {{$overtime->approver->user->lastname}}
+                    (ผู้จัดการ)
+                    @if ($overtime->manager_approve == 0)
+                    <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                    @elseif ($overtime->manager_approve == 1)
+                    <span class="badge bg-success" style="font-weight: normal;">อนุมัติแล้ว</span>
+                    @elseif ($overtime->manager_approve == 2)
+                    <span class="badge bg-danger" style="font-weight: normal;">ไม่อนุมัติ</span>
+                    @endif
+                    @foreach ($overtime->approver->authorizedUsers as $user)
+                    <br>
+
+                    <span class="ml-3">
+                        - {{$user->name}} {{$user->lastname}}
+
+                        @php
+                        $approvalStatus=$overtime->getLeaderApprovalStatus($user->id);
+                        @endphp
+                        {{-- {{$approvalStatus}} --}}
+                        @if ($approvalStatus === null)
+                        <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                        @elseif ($approvalStatus == 1)
+                        <span class="badge bg-success" style="font-weight: normal;">อนุมัติแล้ว</span>
+                        @elseif ($approvalStatus == 2)
+                        <span class="badge bg-danger" style="font-weight: normal;">ไม่อนุมัติ</span>
+                        @elseif ($approvalStatus == 0)
+                        <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                        @endif
+                    </span>
+                    @endforeach
+
+            </td>
+            <td>@if ($overtime->status === null || $overtime->status === '0')
+                <span class="badge bg-primary">รออนุมัติ</span>
+                @elseif ($overtime->status === '1')
+                <span class="badge bg-success">อนุมัติแล้ว</span>
+                @elseif ($overtime->status === '2')
+                <span class="badge bg-danger">ไม่อนุมัติ</span>
+                @endif
+            </td>
+            <td class="text-right">
+
+                @if ($overtime->status !== '1')
+                <a class="btn btn-info btn-sm approve_overtime" data-id="{{$overtime->id}}"
+                    data-approver_id="{{$overtime->approver->id}}">
+                    <i class="fas fa-stamp"></i>
+                </a>
+                @endif
+            </td>
+        </tr>
+        @endforeach
+        {{-- @foreach ($overtimeDetails as $key=> $overtimeDetail)
         @php
         $approver =
         $overtimeDetail->user->approvers->where('document_type_id',2)->first()
@@ -37,7 +129,7 @@
 
                     @php
                     $approvalStatus
-                    =$overtimeDetail->getApprovalStatusForUser($user->id);
+                    =$overtimeDetail->getLeaderApprovalStatus($user->id);
 
                     @endphp
                     @if ($approvalStatus === null)
@@ -72,6 +164,6 @@
                 </a>
             </td>
         </tr>
-        @endforeach
+        @endforeach --}}
     </tbody>
 </table>

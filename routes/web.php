@@ -383,6 +383,8 @@ Route::middleware('auth')->group(function () {
                     Route::group(['prefix' => 'summary'], function () {
                         Route::get('{id}', [SalarySystemSalaryCalculationListSummaryController::class, 'index'])->name('groups.salary-system.salary.calculation-list.summary');
                         Route::post('search', [SalarySystemSalaryCalculationListSummaryController::class, 'search'])->name('groups.salary-system.salary.calculation-list.summary.search');
+                        Route::get('single/{user_id}/{payday_detail_id}', [SalarySystemSalaryCalculationListSummaryController::class, 'downloadSingle'])->name('groups.salary-system.salary.calculation-list.summary.download-single');
+                        Route::get('all/{payday_detail_id}', [SalarySystemSalaryCalculationListSummaryController::class, 'downloadAll'])->name('groups.salary-system.salary.calculation-list.summary.download-report');
                     });
                 });
                 

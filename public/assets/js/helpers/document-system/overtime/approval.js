@@ -86,17 +86,17 @@ $(document).on('click', '.approve_overtime', function (e) {
 $(document).on('click', '#search_overtime', function (e) {
     e.preventDefault();
     
-    var selectedCompanyDepartment = $('#companyDepartment').val();
-    var startDate = $('#startDate').val();
-    var endDate = $('#endDate').val();
-    var search_string = $('#search_string').val();
+    // var selectedCompanyDepartment = $('#companyDepartment').val();
+    var month = $('#month').val();
+    var year = $('#year').val();
+    // var search_string = $('#search_string').val();
     var searchUrl = window.params.searchRoute
 
     var data = {
-        'selectedCompanyDepartment': selectedCompanyDepartment,
-        'startDate': startDate,
-        'endDate': endDate,
-        'searchString': search_string,
+        'month': month,
+        'year': year,
+        // 'endDate': endDate,
+        // 'searchString': search_string,
     }
     RequestApi.postRequest(data, searchUrl, token).then(response => {
         $('#table_container').html(response);

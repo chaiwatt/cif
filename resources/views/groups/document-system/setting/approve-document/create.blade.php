@@ -107,10 +107,38 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ผู้จัดการ<span class="small text-danger">*</span></label>
+                                            <select name="manager"
+                                                class="form-control select2 @error('manager') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">
+                                                    {{ $user->name }} {{ $user->lastname }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>หัวหน้างาน<span class="small text-danger">*</span></label>
+                                            <select name="leader[]"
+                                                class="form-control select2 @error('leader') is-invalid @enderror"
+                                                style="width: 100%;" multiple>
+                                                @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">
+                                                    {{ $user->name }} {{ $user->lastname }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <hr>
 
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-12">
                                         <div class="card-body p-0">
                                             <table class="table table-sm">
@@ -127,7 +155,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-12">
                                         <button type="submit"

@@ -167,6 +167,7 @@ class WorkScheduleAssignmentUser extends Model
             $absentCount = 1;
         }
         $totalOvertime = $this->getOvertimeInfo();
+        // dd($totalOvertime);
         return collect([
             'workHour' => $totalWorkHour !== 0 ? $totalWorkHour : null,
             'leaveCount' => $this->getLeaveInfo(),
@@ -188,7 +189,8 @@ class WorkScheduleAssignmentUser extends Model
         $overtimeDetail = OverTimeDetail::where('user_id',$userId)
             ->whereDate('from_date',$scheduleAssignmentDate)
             ->whereHas('overtime', function ($query) use ($type) {
-                    $query->where('type', '=', $type);
+                    $query->where('status', 1)
+                    ->where('type', '=', $type);
                 })
             ->first();
         if($overtimeDetail == null){
@@ -343,7 +345,8 @@ class WorkScheduleAssignmentUser extends Model
         $overtimeDetail = OverTimeDetail::where('user_id',$userId)
             ->whereDate('from_date',$this->date_in)
             ->whereHas('overtime', function ($query) use ($type) {
-                    $query->where('type', '=', $type);
+                    $query->where('status', 1)
+                        ->where('type', '=', $type);
                 })
             ->first();
 
@@ -361,7 +364,8 @@ class WorkScheduleAssignmentUser extends Model
                 $overtimeDetail = OverTimeDetail::where('user_id',$userId)
                 ->whereDate('from_date',$this->date_in)
                 ->whereHas('overtime', function ($query) use ($type) {
-                        $query->where('type', '=', $type);
+                        $query->where('status', 1)
+                        ->where('type', '=', $type);
                     })
                 ->first();
             }  

@@ -6,7 +6,7 @@
             <th>แผนก</th>
             <th>ประเภทการลา</th>
             <th>ช่วงวันที่</th>
-            <th>ผู้อนุมัติเอกสาร</th>
+            <th>หัวหน้างาน</th>
             <th>สถานะ</th>
             <th class="text-right">เพิ่มเติม</th>
         </tr>
@@ -26,15 +26,27 @@
                 date_create_from_format('Y-m-d H:i:s',
                 $leave->to_date)->format('d/m/Y H:i') }}</td>
             <td>
-                {{$approver->name}}
+                สายอนุมัติ {{$approver->name}}
+                <br>
+                <span class="ml-3">
+                    - {{$approver->user->name}} {{$approver->user->lastname}} (ผู้จัดการ)
+                    @if ($leave->manager_approve == 0)
+                    <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                    @elseif ($leave->manager_approve == 1)
+                    <span class="badge bg-success" style="font-weight: normal;">อนุมัติแล้ว</span>
+                    @elseif ($leave->manager_approve == 2)
+                    <span class="badge bg-danger" style="font-weight: normal;">ไม่อนุมัติ</span>
+                    @endif
+                </span>
                 @foreach ($approver->authorizedUsers as $user)
                 <br>
+
                 <span class="ml-3">
                     - {{$user->name}} {{$user->lastname}}
 
                     @php
                     $approvalStatus
-                    =$leave->getApprovalStatusForUser($user->id);
+                    =$leave->getLeaderApprovalStatus($user->id);
                     @endphp
                     {{-- {{$approvalStatus}} --}}
                     @if ($approvalStatus === null)

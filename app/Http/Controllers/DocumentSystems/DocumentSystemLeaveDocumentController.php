@@ -67,6 +67,7 @@ class DocumentSystemLeaveDocumentController extends Controller
 
     public function create()
     {
+
         // กำหนดค่าตัวแปร $action ให้เป็น 'create'
         $action = 'create';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ

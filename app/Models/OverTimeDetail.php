@@ -28,7 +28,7 @@ class OverTimeDetail extends Model
     {
         return $this->belongsTo(OverTime::class);
     }
-    public function getApprovalStatusForUser($userId)
+    public function getLeaderApprovalStatus($userId)
     {
         $approvedList = json_decode($this->approved_list, true);
         if (is_array($approvedList)) {

@@ -15,6 +15,7 @@ return [
 	'author'               => '',
 	'watermark'            => '',
 	'show_watermark'       => false,
+	'use_kw' => true,
 	'watermark_font'       => 'kanit',
 	'keep_table_proportions'       => true,
 	'shrink_tables_to_fit'       => 1,

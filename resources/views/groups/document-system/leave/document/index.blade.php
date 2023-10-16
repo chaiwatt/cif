@@ -50,7 +50,7 @@
                                                     <th>แผนก</th>
                                                     <th>ประเภทการลา</th>
                                                     <th>ช่วงวันที่</th>
-                                                    <th>ผู้อนุมัติเอกสาร</th>
+                                                    <th>หัวหน้างาน</th>
                                                     <th>สถานะ</th>
 
                                                     <th class="text-right">เพิ่มเติม</th>
@@ -74,6 +74,9 @@
                                                         $leave->to_date)->format('d/m/Y H:i') }}</td>
                                                     <td>
                                                         {{$approver->name}}
+                                                        <br>
+                                                        <span class="ml-3">-{{$approver->user->name}}
+                                                            {{$approver->user->lastname}} (ผู้จัดการ)</span>
                                                         @foreach ($approver->authorizedUsers as $user)
                                                         <br>
                                                         <span class="ml-3">-{{$user->name}}

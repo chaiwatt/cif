@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('document_type_id');
             $table->unsignedBigInteger('company_department_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

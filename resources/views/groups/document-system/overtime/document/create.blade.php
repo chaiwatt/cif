@@ -22,13 +22,13 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            @if ($errors->has('userId'))
+            {{-- @if ($errors->has('userId'))
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h5><i class="icon fas fa-ban"></i> ผิดพลาด</h5>
                 กรุณาเลือกผู้อนุมัติเอกสารอย่างน้อย 1 คน
             </div>
-            @endif
+            @endif --}}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -62,8 +62,28 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>สายอนุมัติ<span class="small text-danger">*</span></label>
+                                            <select name="approver" id="approver" class="form-control select2"
+                                                style="width: 100%;">
+                                                @foreach ($approvers as $approver)
+                                                <option value="{{$approver->id}}">{{$approver->name}}</option>
+                                                @endforeach
+
+                                                {{-- <option value="2">วันหยุด</option> --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-b">
+                                        <hr>
+                                    </div>
                                     <div class="col-12 mt-2">
-                                        <div class="form-group clearfix">
+                                        {{--
+                                        <hr class="mt-2"> --}}
+                                        {{--
+                                        <hr> --}}
+                                        <div class="form-group clearfix mt-2">
 
                                             <div class="icheck-primary d-inline mr-2 ">
                                                 <input type="radio" id="radFixHour" name="rad" checked>
@@ -113,6 +133,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    {{--
                                     <hr>
                                     <div class="col-12">
                                         <div class="card-body p-0">
@@ -129,7 +151,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 text-right">
                                         <button class="btn bg-success mt-2">บันทึก</button>
                                     </div>

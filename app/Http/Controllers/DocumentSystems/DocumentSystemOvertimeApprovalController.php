@@ -63,141 +63,233 @@ class DocumentSystemOvertimeApprovalController extends Controller
 
     public function overTimeApproval(Request $request)
     {
-        $userId = $request->data['userId'];
+        // $userId = $request->data['userId'];
         $overtimeId = $request->data['overtimeId'];
         $value = $request->data['value'];
         $approverId = $request->data['approverId'];
-        $approver = Approver::find($approverId);
+
+        // $month = $request->data['month'];
+        // $year = $request->data['year'];
+
+        $overtime = Overtime::find($overtimeId);
+        $approver = $overtime->approver;
+
+
+       
+        $date = Carbon::parse($overtime->from_date);
+        $year = $date->year;
+        $month = $date->month;
+
 
         $authId = auth()->user()->id;
-        $authorizedUserIds =$approver->authorizedUsers->pluck('id')->toArray();
 
-        if (!in_array($authId, $authorizedUserIds)) {
+
+        $approvedList = json_decode($overtime->approved_list, true);
+        $authorizedUserIds =$approver->authorizedUsers->pluck('id')->toArray();
+        
+        if ($approver->user_id == $authId){
+            $overtime->update(['manager_approve' => $value ]);
+            $atLeastOneStatusIsOne = collect($approvedList)->pluck('status')->some(function ($status) {
+                return $status == 1;
+            });
+            
+            $hasStatusTwo = collect($approvedList)->pluck('status')->contains(2);
+            if ($atLeastOneStatusIsOne) {
+                $overtime = Overtime::find($overtimeId);
+                if($overtime->status != 1 && $overtime->manager_approve == 1)
+                { 
+                    $overtime->update(['status' => 1]);
+                }
+
+                // dd($overtime->name,$approver->user->name,$approvedList,$value,$atLeastOneStatusIsOne );
+
+            } elseif ($hasStatusTwo) {
+                $overtime->update(['status' => 2]);
+            }  
+        }
+
+        if (!in_array($authId, $authorizedUserIds) && $approver->user_id != $authId) {
             return response()->json(['error' => 'คุณไม่ได้รับอนุญาติให้ทำรายการ']);
         }
 
-        $overtimeDetail = OverTimeDetail::find($overtimeId);
-
-
-        $approvedList = json_decode($overtimeDetail->approved_list, true);
-
         $userIndex = null;
         foreach ($approvedList as $index => $item) {
-            if ($item['user_id'] === $authId) {
+            if ($item['user_id'] == $authId) {
                 $userIndex = $index;
                 break;
             }
         }
-        
+
+       
+
         if ($userIndex !== null) {
             $approvedList[$userIndex]['status'] = $value;
             $updatedApprovedList = json_encode($approvedList);
-            $overtimeDetail->update(['approved_list' => $updatedApprovedList]);
-            $allStatusesAreOne = collect($approvedList)->pluck('status')->every(function ($status) {
+            
+
+            $overtime->update(['approved_list' => $updatedApprovedList]);
+
+            $atLeastOneStatusIsOne = collect($approvedList)->pluck('status')->some(function ($status) {
                 return $status == 1;
             });
 
             $hasStatusTwo = collect($approvedList)->pluck('status')->contains(2);
-
-            if ($allStatusesAreOne) {
-                $overtimeDetail->update(['status' => 1]);
+            if ($atLeastOneStatusIsOne) {
+                $overtime = OverTime::find($overtimeId);
+                if($overtime->status != 1 && $overtime->manager_approve == 1)
+                {
+                    $overtime->update(['status' => 1]);
+                }
+            
             } elseif ($hasStatusTwo) {
-                $overtimeDetail->update(['status' => 2]);
-            } else {
-                $overtimeDetail->update(['status' => 0]);
+                // Update the status field of the Leave model to 2
+                $overtime->update(['status' => 2]);
             }
-
-        } 
-
-        if (isset($request->data['selectedCompanyDepartment'])) {
-            $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
-        } else {
-            $companyDepartmentIds = [];
         }
-   
-        $startDate = null;
-        $endDate = null;
-
-        if ($request->data['startDate'] !== null && $request->data['endDate'] !== null) {
-            $startDate = date('Y-m-d', strtotime($request->data['startDate']));
-            $endDate = date('Y-m-d', strtotime($request->data['endDate']));
-        }
-
-        $searchString = $request->data['searchString'];
-
-        $query = OverTimeDetail::whereHas('user', function ($query) use ($searchString, $companyDepartmentIds) {
-            $query->where(function ($query) use ($searchString) {
-                $query->where('employee_no', 'like', '%' . $searchString . '%')
-                    ->orWhere('name', 'like', '%' . $searchString . '%')
-                    ->orWhere('lastname', 'like', '%' . $searchString . '%')
-                    ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
-                        $subQuery->where('name', 'like', '%' . $searchString . '%')
-                            ->orWhere('code', 'like', '%' . $searchString . '%');
-                    });
-            });
-            if (!empty($companyDepartmentIds)) {
-                $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
-                    $subQuery->whereIn('id', $companyDepartmentIds);
-                });
-            }
-        });
-
-        if ($startDate !== null && $endDate !== null) {
-            $query->whereBetween('from_date', [$startDate, $endDate]);
-        }
-
-        $overtimeDetails = $query->get();
+       
+        $overtimes = Overtime::whereMonth('from_date',$month)->whereYear('from_date',$year)->get();
 
         return view('groups.document-system.overtime.approval.table-render.overtime-approval-table-render',[
-            'overtimeDetails' => $overtimeDetails
+            'overtimes' => $overtimes
             ])->render();
+
+
+        // $authorizedUserIds =$approver->authorizedUsers->pluck('id')->toArray();
+
+        // if (!in_array($authId, $authorizedUserIds)) {
+        //     return response()->json(['error' => 'คุณไม่ได้รับอนุญาติให้ทำรายการ']);
+        // }
+
+        // $overtimeDetail = OverTimeDetail::find($overtimeId);
+
+        // $approvedList = json_decode($overtimeDetail->approved_list, true);
+
+        // $userIndex = null;
+        // foreach ($approvedList as $index => $item) {
+        //     if ($item['user_id'] === $authId) {
+        //         $userIndex = $index;
+        //         break;
+        //     }
+        // }
+        
+        // if ($userIndex !== null) {
+        //     $approvedList[$userIndex]['status'] = $value;
+        //     $updatedApprovedList = json_encode($approvedList);
+        //     $overtimeDetail->update(['approved_list' => $updatedApprovedList]);
+        //     $allStatusesAreOne = collect($approvedList)->pluck('status')->every(function ($status) {
+        //         return $status == 1;
+        //     });
+
+        //     $hasStatusTwo = collect($approvedList)->pluck('status')->contains(2);
+
+        //     if ($allStatusesAreOne) {
+        //         $overtimeDetail->update(['status' => 1]);
+        //     } elseif ($hasStatusTwo) {
+        //         $overtimeDetail->update(['status' => 2]);
+        //     } else {
+        //         $overtimeDetail->update(['status' => 0]);
+        //     }
+
+        // } 
+
+        // if (isset($request->data['selectedCompanyDepartment'])) {
+        //     $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
+        // } else {
+        //     $companyDepartmentIds = [];
+        // }
+   
+        // $startDate = null;
+        // $endDate = null;
+
+        // if ($request->data['startDate'] !== null && $request->data['endDate'] !== null) {
+        //     $startDate = date('Y-m-d', strtotime($request->data['startDate']));
+        //     $endDate = date('Y-m-d', strtotime($request->data['endDate']));
+        // }
+
+        // $searchString = $request->data['searchString'];
+
+        // $query = OverTimeDetail::whereHas('user', function ($query) use ($searchString, $companyDepartmentIds) {
+        //     $query->where(function ($query) use ($searchString) {
+        //         $query->where('employee_no', 'like', '%' . $searchString . '%')
+        //             ->orWhere('name', 'like', '%' . $searchString . '%')
+        //             ->orWhere('lastname', 'like', '%' . $searchString . '%')
+        //             ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
+        //                 $subQuery->where('name', 'like', '%' . $searchString . '%')
+        //                     ->orWhere('code', 'like', '%' . $searchString . '%');
+        //             });
+        //     });
+        //     if (!empty($companyDepartmentIds)) {
+        //         $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
+        //             $subQuery->whereIn('id', $companyDepartmentIds);
+        //         });
+        //     }
+        // });
+
+        // if ($startDate !== null && $endDate !== null) {
+        //     $query->whereBetween('from_date', [$startDate, $endDate]);
+        // }
+
+        // $overtimeDetails = $query->get();
+
+        // return view('groups.document-system.overtime.approval.table-render.overtime-approval-table-render',[
+        //     'overtimeDetails' => $overtimeDetails
+        //     ])->render();
     }
 
 
     public function search(Request $request)
     {
-        if (isset($request->data['selectedCompanyDepartment'])) {
-            $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
-        } else {
-            $companyDepartmentIds = [];
-        }
-   
-        $startDate = null;
-        $endDate = null;
+        $month = $request->data['month'];
+        $year = $request->data['year'];
+       
+        $overtimes = Overtime::whereMonth('from_date',$month)->whereYear('from_date',$year)->get();
 
-        if ($request->data['startDate'] !== null && $request->data['endDate'] !== null) {
-            $startDate = date('Y-m-d', strtotime($request->data['startDate']));
-            $endDate = date('Y-m-d', strtotime($request->data['endDate']));
-        }
-
-        $searchString = $request->data['searchString'];
-
-        $query = OverTimeDetail::whereHas('user', function ($query) use ($searchString, $companyDepartmentIds) {
-            $query->where(function ($query) use ($searchString) {
-                $query->where('employee_no', 'like', '%' . $searchString . '%')
-                    ->orWhere('name', 'like', '%' . $searchString . '%')
-                    ->orWhere('lastname', 'like', '%' . $searchString . '%')
-                    ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
-                        $subQuery->where('name', 'like', '%' . $searchString . '%')
-                            ->orWhere('code', 'like', '%' . $searchString . '%');
-                    });
-            });
-            if (!empty($companyDepartmentIds)) {
-                $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
-                    $subQuery->whereIn('id', $companyDepartmentIds);
-                });
-            }
-        });
-
-        if ($startDate !== null && $endDate !== null) {
-            $query->whereBetween('from_date', [$startDate, $endDate]);
-        }
-
-        $overtimeDetails = $query->get();
-
-
+        //  dd($month,$year,$overtimes);
         return view('groups.document-system.overtime.approval.table-render.overtime-approval-table-render',[
-            'overtimeDetails' => $overtimeDetails
+            'overtimes' => $overtimes
             ])->render();
+        // if (isset($request->data['selectedCompanyDepartment'])) {
+        //     $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
+        // } else {
+        //     $companyDepartmentIds = [];
+        // }
+   
+        // $startDate = null;
+        // $endDate = null;
+
+        // if ($request->data['startDate'] !== null && $request->data['endDate'] !== null) {
+        //     $startDate = date('Y-m-d', strtotime($request->data['startDate']));
+        //     $endDate = date('Y-m-d', strtotime($request->data['endDate']));
+        // }
+
+        // $searchString = $request->data['searchString'];
+
+        // $query = OverTimeDetail::whereHas('user', function ($query) use ($searchString, $companyDepartmentIds) {
+        //     $query->where(function ($query) use ($searchString) {
+        //         $query->where('employee_no', 'like', '%' . $searchString . '%')
+        //             ->orWhere('name', 'like', '%' . $searchString . '%')
+        //             ->orWhere('lastname', 'like', '%' . $searchString . '%')
+        //             ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
+        //                 $subQuery->where('name', 'like', '%' . $searchString . '%')
+        //                     ->orWhere('code', 'like', '%' . $searchString . '%');
+        //             });
+        //     });
+        //     if (!empty($companyDepartmentIds)) {
+        //         $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
+        //             $subQuery->whereIn('id', $companyDepartmentIds);
+        //         });
+        //     }
+        // });
+
+        // if ($startDate !== null && $endDate !== null) {
+        //     $query->whereBetween('from_date', [$startDate, $endDate]);
+        // }
+
+        // $overtimeDetails = $query->get();
+
+
+        // return view('groups.document-system.overtime.approval.table-render.overtime-approval-table-render',[
+        //     'overtimeDetails' => $overtimeDetails
+        //     ])->render();
     }
 }

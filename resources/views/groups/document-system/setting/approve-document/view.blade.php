@@ -92,68 +92,104 @@
                                             </select>
                                         </div>
                                     </div>
-
-                                </div>
-                                <hr>
-
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card-body p-0">
-                                            <table class="table table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ผู้อนุมัติเอกสาร <a href="" class="btn btn-sm btn-primary"
-                                                                id="get_authorized_user"><i class="fas fa-plus"></i></a>
-                                                        </th>
-                                                        <th style="width:100px" class="text-right">ลบ</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="sortableRows">
-                                                    @foreach ($approver->authorizedUsers as $name)
-                                                    <tr>
-                                                        <td>{{$name->name}} {{$name->lastname}}<input type="text"
-                                                                name="userId[]" value="{{$name->id}}" hidden></td>
-                                                        <td class="text-right"><a href=""
-                                                                class="btn btn-sm btn-danger delete-row"><i
-                                                                    class="fas fa-trash"></i></a></td>
-                                                    </tr>
-
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ผู้จัดการ<span class="small text-danger">*</span></label>
+                                            <select name="manager"
+                                                class="form-control select2 @error('manager') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                @foreach ($users as $user)
+                                                <option value="{{ $user->id }}" @if ($approver->user_id == $user->id)
+                                                    selected
+                                                    @endif>
+                                                    {{ $user->name }} {{ $user->lastname }}
+                                                </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right mt-2">บันทึก</button>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>หัวหน้างาน<span class="small text-danger">*</span></label>
+                                            <select name="leader[]"
+                                                class="form-control select2 @error('leader') is-invalid @enderror"
+                                                style="width: 100%;" multiple>
+                                                @foreach ($users as $user)
+                                                {{-- {{$user->approveAuthorities}} --}}
+                                                @php
+                                                $isApprover = $user->isApprover($approver->id,$user->id);
+                                                @endphp
+                                                <option value="{{ $user->id }}" @if ($isApprover!=null) selected @endif>
+                                                    {{ $user->name }} {{ $user->lastname }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal-users">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12" id="modal-user-wrapper">
 
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit"
+                                        class="btn bg-gradient-success btn-flat float-right mt-2">บันทึก</button>
+                                </div>
                         </div>
+                        <hr>
+
+                        {{-- <div class="row">
+                            <div class="col-12">
+                                <div class="card-body p-0">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>ผู้อนุมัติเอกสาร <a href="" class="btn btn-sm btn-primary"
+                                                        id="get_authorized_user"><i class="fas fa-plus"></i></a>
+                                                </th>
+                                                <th style="width:100px" class="text-right">ลบ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="sortableRows">
+                                            @foreach ($approver->authorizedUsers as $name)
+                                            <tr>
+                                                <td>{{$name->name}} {{$name->lastname}}<input type="text"
+                                                        name="userId[]" value="{{$name->id}}" hidden></td>
+                                                <td class="text-right"><a href=""
+                                                        class="btn btn-sm btn-danger delete-row"><i
+                                                            class="fas fa-trash"></i></a></td>
+                                            </tr>
+
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> --}}
+                        {{-- <div class="row">
+
+                        </div> --}}
+                        </form>
                     </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="button" class="btn btn-primary" id="save_authorized_user">เพิ่มรายการ</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="modal-users">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12" id="modal-user-wrapper">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                <button type="button" class="btn btn-primary" id="save_authorized_user">เพิ่มรายการ</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 @push('scripts')
 <script type="module" src="{{asset('assets/js/helpers/document-system/setting/approve-document/view.js?v=1')}}">

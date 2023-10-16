@@ -297,6 +297,10 @@ class User extends Authenticatable
         return $this->belongsToMany(ApproveAuthority::class, 'approve_authorities', 'user_id', 'approver_id');
     }
 
+    public function isApprover($approverId,$userId){
+        return ApproveAuthority::where('approver_id',$approverId)->where('user_id',$userId)->first();
+    }
+
     /**
      * ความสัมพันธ์กับโมเดล WorkScheduleAssignmentUser (ผู้ใช้งานที่ได้รับการกำหนดตารางเวลางาน)
      * ผ่านการเชื่อมโยงกับโมเดล WorkScheduleAssignmentUser (ผู้ใช้งานที่ได้รับการกำหนดตารางเวลางาน)

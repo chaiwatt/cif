@@ -9,7 +9,7 @@
     @include('layouts.partial.loading')
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-0">
                 <div class="col-sm-6">
                     <h1 class="m-0">รายการเงินเดือนงวดปกติ
                     </h1>
@@ -34,19 +34,28 @@
         </div>
     </div>
     <div class="content">
-        <div class="container-fluid">
+
+        <div class="container-fluid mt-0">
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-primary float-right mb-2"
+                        href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
+                        <i class="fas fa-download mr-1"></i>
+                        ดาวน์โหลด
+                    </a>
+                </div>
+            </div>
+
             @if ($permission->show)
             <div class="row">
+
                 <div class="col-12">
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">พนักงาน</h3>
                             @if (count($users) !=0)
                             <div class="card-tools">
-                                {{-- <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
-                                </div> --}}
                                 <div class="input-group input-group-sm">
                                     <input type="search" class="form-control " name="search_query" id="search_query"
                                         placeholder="ค้นหา">
@@ -74,24 +83,23 @@
                                                 <th class="text-center" style="width: 10%">เบี้ยขยัน</th>
                                                 <th class="text-center" style="width: 15%">เงินได้อื่นๆ</th>
                                                 <th class="text-center" style="width: 15%">เงินหักอื่นๆ</th>
-                                                <th class="text-center" style="width: 10%">เงินปกสค.</th>
+                                                <th class="text-center" style="width: 8%">ปกสค.</th>
                                                 <th class="text-center" style="width: 10%">สุทธิ</th>
+                                                <th class="text-right">ดาวน์โหลด</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             @foreach ($users as $user)
                                             @php
                                             $userSummary = $user->salarySummary($paydayDetail->id);
                                             $netIncome = round(str_replace(',', '', $userSummary['salary'])) +
                                             round(str_replace(',', '', $userSummary['overTimeCost'])) +
                                             round(str_replace(',', '', $userSummary['deligenceAllowance']));
+
                                             @endphp
                                             <tr>
-
                                                 <td>
                                                     {{ $user->employee_no }}
-
                                                 </td>
                                                 <td>{{ $user->prefix->name }}{{
                                                     $user->name }} {{
@@ -135,6 +143,11 @@
                                                 $userSummary['socialSecurityFivePercent']));
                                                 @endphp
                                                 <td class="text-center">{{number_format($netIncome, 2)}}
+                                                </td>
+                                                <td class="text-right">
+                                                    <a href="{{route('groups.salary-system.salary.calculation-list.summary.download-single',['user_id' => $user->id,'payday_detail_id' => $paydayDetail->id])}}"
+                                                        class="btn btn-sm btn-primary"><i
+                                                            class="fas fa-download"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach

@@ -26,6 +26,79 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        {{-- <div class="col-md-3">
+                            <div class="form-group">
+                                <label>แผนก</label>
+                                <select name="companyDepartment" id="companyDepartment"
+                                    class="form-control select2 @error('companyDepartment') is-invalid @enderror"
+                                    style="width: 100%;" multiple>
+                                    @foreach ($companyDepartments as $companyDepartment)
+                                    <option value="{{ $companyDepartment->id }}" {{
+                                        old('companyDepartment')==$companyDepartment->id
+                                        ?
+                                        'selected' : '' }}>
+                                        {{ $companyDepartment->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>เดือน</label>
+                                <select name="month" id="month"
+                                    class="form-control select2 @error('month') is-invalid @enderror"
+                                    style="width: 100%;">
+                                    @foreach ($months as $month)
+                                    <option value="{{ $month->id }}" {{ old('month')==$month->id
+                                        ?
+                                        'selected' : '' }}>
+                                        {{ $month->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>ปี</label>
+                                <select name="month" id="year"
+                                    class="form-control select2 @error('year') is-invalid @enderror"
+                                    style="width: 100%;">
+                                    @foreach ($years as $year)
+                                    <option value="{{ $year }}" {{ old('year')==$year ? 'selected' : '' }}>
+                                        {{ $year }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>อื่น ๆ </label>
+                                    <input type="text" name="search_string" id="search_string"
+                                        value="{{old('search_string')}}" class="form-control"
+                                        placeholder="รหัสพนักงาน,ชื่อ,สกุล,สายอนุมัติ">
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-end">
+                            <button class="btn btn-info mr-2" id="search_overtime"><i
+                                    class="fas fa-search mr-1"></i>ค้นหา</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {{-- <div class="card card-success card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">ค้นหา</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>แผนก</label>
@@ -76,7 +149,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -96,11 +169,11 @@
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
-                                                    <th>สายอนุมัติ</th>
-                                                    <th>ชื่อสกุล</th>
-                                                    <th>แผนก</th>
+                                                    <th>รายการล่วงเวลา</th>
                                                     <th>วันที่</th>
-                                                    <th>เวลา</th>
+                                                    {{-- <th>แผนก</th>
+                                                    <th>วันที่</th>
+                                                    <th>เวลา</th> --}}
                                                     <th>ผู้อนุมัติเอกสาร</th>
                                                     <th>สถานะ</th>
                                                     <th class="text-right">เพิ่มเติม</th>
@@ -132,7 +205,7 @@
 
                                                             @php
                                                             $approvalStatus
-                                                            =$overtimeDetail->getApprovalStatusForUser($user->id);
+                                                            =$overtimeDetail->getLeaderApprovalStatus($user->id);
 
                                                             @endphp
                                                             @if ($approvalStatus === null)

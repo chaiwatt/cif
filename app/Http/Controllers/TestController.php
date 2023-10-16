@@ -172,7 +172,7 @@ class TestController extends Controller
         // $approverUser = $approver->getApproverUserByUserId($userId);
         
         // if ($approverUser) {
-        //     $approvalStatus = $approverUser->getApprovalStatusForUser($checkId);
+        //     $approvalStatus = $approverUser->getLeaderApprovalStatus($checkId);
 
         //     if ($approvalStatus === null) {
         //         echo 'User ID not found in the approved_list';

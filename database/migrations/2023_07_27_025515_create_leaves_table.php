@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('to_date')->nullable();
             $table->char('status',1)->nullable();
             $table->float('duration')->default(1);
+            $table->char('manager_approve',1)->default(0);
             $table->string('approved_list')->nullable();
             $table->text('attachment')->nullable();
             $table->timestamps();

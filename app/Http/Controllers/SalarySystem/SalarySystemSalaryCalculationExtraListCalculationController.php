@@ -56,7 +56,8 @@ class SalarySystemSalaryCalculationExtraListCalculationController extends Contro
                 ->whereDate('from_date', '<=', $endDate);
         })
         ->whereHas('overtime', function ($query) use ($type) {
-            $query->where('type', '=', $type);
+            $query->where('status', 1)
+            ->where('type', '=', $type);
         })
         ->pluck('user_id')
         ->unique()
