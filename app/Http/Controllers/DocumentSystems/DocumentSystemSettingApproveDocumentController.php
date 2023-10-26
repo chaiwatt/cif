@@ -74,6 +74,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
     }
     public function store(Request $request)
     {
+        // dd($request->import_employee_from_dept);
         $validator = $this->validateFormData($request);
 
         if ($validator->fails()) {
@@ -101,10 +102,123 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         }
 
         $this->activityLogger->log('เพิ่ม', $approver);
+        if($request->import_employee_from_dept == 1){
+            $this->importUser($companyDepartmentId,$approver->id);
+        }
+        
 
         return redirect()->route('groups.document-system.setting.approve-document')->with([
             'message' => 'นำเข้าข้อมูลเรียบร้อยแล้ว'
         ]);
+    }
+
+    public function importUser($companyDepartmentId,$approverId){
+
+        $approver = Approver::find($approverId);
+        $authorizedUserIds = $approver->authorizedUsers->pluck('id')->toArray();
+        // dd($selectedUsers);
+        $selectedUsers = User::where('company_department_id',$companyDepartmentId)->pluck('id')->toArray();
+        foreach ($selectedUsers as $userId) {
+            $approverUsers = ApproverUser::all();
+            $existingUser = ApproverUser::where('user_id', $userId)
+            ->whereHas('approver', function ($query) use ($approver) {
+                $query->where('document_type_id', $approver->document_type_id);
+            })
+            ->first();
+            if (!$existingUser) {
+                $approver->users()->attach($userId);
+            } else {
+                $existApprover = Approver::find($existingUser->approver_id); 
+                if ($existApprover->document_type_id === $approver->document_type_id) {
+                    $existApprover->users()->detach($userId);
+                } 
+                $approver->users()->attach($userId);
+            }
+        }
+
+        if ($approver->document_type_id == '1')
+        {
+            $leaves = Leave::all();
+            $approverUsers = ApproverUser::where('approver_id',$approverId)->get();
+            
+            if (!$leaves->isEmpty()) {
+                $leaveUserIds = $leaves->pluck('user_id')->toArray();
+                $approverUserIds = $approverUsers->pluck('user_id')->toArray();
+
+                $usersToUpdates = array_intersect($leaveUserIds, $approverUserIds);
+                // dd($usersToUpdates);
+                foreach ($usersToUpdates as $usersToUpdate) {
+                    $currentLeave = Leave::where('user_id', $usersToUpdate)->first();
+                    if ($currentLeave) {
+                        $currentApprovedList = json_decode($currentLeave->approved_list, true);
+
+                        // Remove entries not in $authorizedUserIds
+                        $currentApprovedList = array_filter($currentApprovedList, function ($entry) use ($authorizedUserIds) {
+                            return in_array($entry['user_id'], $authorizedUserIds);
+                        });
+
+                        // Add missing entries from $authorizedUserIds
+                        foreach ($authorizedUserIds as $authorizedUserId) {
+                            $found = false;
+                            foreach ($currentApprovedList as $entry) {
+                                if ($entry['user_id'] == $authorizedUserId) {
+                                    $found = true;
+                                    break;
+                                }
+                            }
+                            if (!$found) {
+                                $currentApprovedList[] = ['user_id' => $authorizedUserId, 'status' => 0];
+                            }
+                        }
+
+                        // Update the approved_list field
+                        $currentLeave->update([
+                            'approved_list' => json_encode($currentApprovedList)
+                        ]);
+                    }
+                }
+            }
+        }else if($approver->document_type_id == '2')
+        {
+            $overtimeDetails = OverTimeDetail::all();
+            $approverUsers = ApproverUser::where('approver_id',$approverId)->get();
+            if (!$overtimeDetails->isEmpty()) {
+                $overtimeDetailUserIds = $overtimeDetails->pluck('user_id')->toArray();
+                $approverUserIds = $approverUsers->pluck('user_id')->toArray();
+
+                $usersToUpdates = array_intersect($overtimeDetailUserIds, $approverUserIds);
+
+                foreach ($usersToUpdates as $usersToUpdate) {
+                    $currentOvertimeDetail = OverTimeDetail::where('user_id', $usersToUpdate)->first();
+                    if ($currentOvertimeDetail) {
+                        $currentApprovedList = json_decode($currentOvertimeDetail->approved_list, true);
+
+                        $currentApprovedList = array_filter($currentApprovedList, function ($entry) use ($authorizedUserIds) {
+                            return in_array($entry['user_id'], $authorizedUserIds);
+                        });
+
+                        foreach ($authorizedUserIds as $authorizedUserId) {
+                            $found = false;
+                            foreach ($currentApprovedList as $entry) {
+                                if ($entry['user_id'] == $authorizedUserId) {
+                                    $found = true;
+                                    break;
+                                }
+                            }
+                            if (!$found) {
+                                $currentApprovedList[] = ['user_id' => $authorizedUserId, 'status' => 0];
+                            }
+                        }
+                        // Update the approved_list field
+                        $currentOvertimeDetail->update([
+                            'approved_list' => json_encode($currentApprovedList)
+                        ]);
+                    }
+
+                }
+            }
+
+        }
     }
 
     public function view($id)

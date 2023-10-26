@@ -1,4 +1,4 @@
-<nav class="mt-2">
+{{-- <nav class="mt-2">
     <ul class="nav nav-sidebar flex-column" role="menu" data-accordion="true" data-accordion="false">
         <li class="nav-item">
             <a href="{{url($groupUrl)}}"
@@ -8,7 +8,7 @@
             </a>
         </li>
     </ul>
-</nav>
+</nav> --}}
 <nav>
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         @php

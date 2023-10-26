@@ -19,6 +19,9 @@
                 @else
                 <i class="fas fa-check-circle text-success"></i>
                 @endif
+                @if (count($userWithWorkSchedule['more_than_one_hour_lates']) > 0)
+                <i class="fas fa-exclamation-circle text-warning"></i>
+                @endif
             </td>
             <td>
                 @if (count($userWithWorkSchedule['date_in_list']) > 0)

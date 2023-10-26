@@ -8,9 +8,10 @@ use App\Models\Approver;
 use App\Models\SearchField;
 use App\Models\ApproverUser;
 use Illuminate\Http\Request;
-use App\Helpers\ActivityLogger;
-use App\Http\Controllers\Controller;
 use App\Models\OverTimeDetail;
+use App\Helpers\ActivityLogger;
+use App\Models\CompanyDepartment;
+use App\Http\Controllers\Controller;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class DocumentSystemSettingApproveDocumentAssignmentController extends Controller
@@ -34,13 +35,15 @@ class DocumentSystemSettingApproveDocumentAssignmentController extends Controlle
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
+        $companyDepartments = CompanyDepartment::get();
 
         $approver = Approver::find($id);
         return view('groups.document-system.setting.approve-document.assignment.index', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
-            'approver' => $approver
+            'approver' => $approver,
+            'companyDepartments' => $companyDepartments,
         ]);
     }
 
@@ -335,9 +338,122 @@ class DocumentSystemSettingApproveDocumentAssignmentController extends Controlle
 
                 }
             }
-
         }
-
         return ;
     }
+
+    public function importEmployeeNoFromDept(Request $request)
+    {
+        // $employeeNos = $request->data['employeeNos'];
+        $companyDepartmentId = $request->data['companyDepartmentId'];
+        $approverId = $request->data['approverId'];
+        
+        $selectedUsers = User::where('company_department_id',$companyDepartmentId)->pluck('id');
+  
+        $approver = Approver::find($approverId);
+        $authorizedUserIds = $approver->authorizedUsers->pluck('id')->toArray();
+        // dd($selectedUsers);
+        foreach ($selectedUsers as $userId) {
+            $approverUsers = ApproverUser::all();
+            $existingUser = ApproverUser::where('user_id', $userId)
+            ->whereHas('approver', function ($query) use ($approver) {
+                $query->where('document_type_id', $approver->document_type_id);
+            })
+            ->first();
+            if (!$existingUser) {
+                $approver->users()->attach($userId);
+            } else {
+                $existApprover = Approver::find($existingUser->approver_id); 
+                if ($existApprover->document_type_id === $approver->document_type_id) {
+                    $existApprover->users()->detach($userId);
+                } 
+                $approver->users()->attach($userId);
+            }
+        }
+
+        if ($approver->document_type_id == '1')
+        {
+            $leaves = Leave::all();
+            $approverUsers = ApproverUser::where('approver_id',$approverId)->get();
+            
+            if (!$leaves->isEmpty()) {
+                $leaveUserIds = $leaves->pluck('user_id')->toArray();
+                $approverUserIds = $approverUsers->pluck('user_id')->toArray();
+
+                $usersToUpdates = array_intersect($leaveUserIds, $approverUserIds);
+                // dd($usersToUpdates);
+                foreach ($usersToUpdates as $usersToUpdate) {
+                    $currentLeave = Leave::where('user_id', $usersToUpdate)->first();
+                    if ($currentLeave) {
+                        $currentApprovedList = json_decode($currentLeave->approved_list, true);
+
+                        // Remove entries not in $authorizedUserIds
+                        $currentApprovedList = array_filter($currentApprovedList, function ($entry) use ($authorizedUserIds) {
+                            return in_array($entry['user_id'], $authorizedUserIds);
+                        });
+
+                        // Add missing entries from $authorizedUserIds
+                        foreach ($authorizedUserIds as $authorizedUserId) {
+                            $found = false;
+                            foreach ($currentApprovedList as $entry) {
+                                if ($entry['user_id'] == $authorizedUserId) {
+                                    $found = true;
+                                    break;
+                                }
+                            }
+                            if (!$found) {
+                                $currentApprovedList[] = ['user_id' => $authorizedUserId, 'status' => 0];
+                            }
+                        }
+
+                        // Update the approved_list field
+                        $currentLeave->update([
+                            'approved_list' => json_encode($currentApprovedList)
+                        ]);
+                    }
+                }
+            }
+        }else if($approver->document_type_id == '2')
+        {
+            $overtimeDetails = OverTimeDetail::all();
+            $approverUsers = ApproverUser::where('approver_id',$approverId)->get();
+            if (!$overtimeDetails->isEmpty()) {
+                $overtimeDetailUserIds = $overtimeDetails->pluck('user_id')->toArray();
+                $approverUserIds = $approverUsers->pluck('user_id')->toArray();
+
+                $usersToUpdates = array_intersect($overtimeDetailUserIds, $approverUserIds);
+
+                foreach ($usersToUpdates as $usersToUpdate) {
+                    $currentOvertimeDetail = OverTimeDetail::where('user_id', $usersToUpdate)->first();
+                    if ($currentOvertimeDetail) {
+                        $currentApprovedList = json_decode($currentOvertimeDetail->approved_list, true);
+
+                        $currentApprovedList = array_filter($currentApprovedList, function ($entry) use ($authorizedUserIds) {
+                            return in_array($entry['user_id'], $authorizedUserIds);
+                        });
+
+                        foreach ($authorizedUserIds as $authorizedUserId) {
+                            $found = false;
+                            foreach ($currentApprovedList as $entry) {
+                                if ($entry['user_id'] == $authorizedUserId) {
+                                    $found = true;
+                                    break;
+                                }
+                            }
+                            if (!$found) {
+                                $currentApprovedList[] = ['user_id' => $authorizedUserId, 'status' => 0];
+                            }
+                        }
+                        // Update the approved_list field
+                        $currentOvertimeDetail->update([
+                            'approved_list' => json_encode($currentApprovedList)
+                        ]);
+                    }
+
+                }
+            }
+        }
+        return ;
+    }
+
 }

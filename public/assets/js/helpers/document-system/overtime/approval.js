@@ -86,7 +86,7 @@ $(document).on('click', '.approve_overtime', function (e) {
 $(document).on('click', '#search_overtime', function (e) {
     e.preventDefault();
     
-    // var selectedCompanyDepartment = $('#companyDepartment').val();
+    var companyDepartmentId = $('#companyDepartment').val();
     var month = $('#month').val();
     var year = $('#year').val();
     // var search_string = $('#search_string').val();
@@ -95,7 +95,7 @@ $(document).on('click', '#search_overtime', function (e) {
     var data = {
         'month': month,
         'year': year,
-        // 'endDate': endDate,
+        'companyDepartmentId': companyDepartmentId,
         // 'searchString': search_string,
     }
     RequestApi.postRequest(data, searchUrl, token).then(response => {

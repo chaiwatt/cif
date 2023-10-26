@@ -219,6 +219,7 @@
     window.params = {
         timeRecordCheckRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.time-record-check') }}',        
         viewUserRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.view-user') }}',
+        updateHourRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.update-hour') }}',
         updateRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.update') }}',
         saveNoteRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.save-note') }}',
         getImageRoute: '{{ route('groups.time-recording-system.schedulework.time-recording-check.get-image') }}',

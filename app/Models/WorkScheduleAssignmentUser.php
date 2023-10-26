@@ -166,7 +166,7 @@ class WorkScheduleAssignmentUser extends Model
         }elseif ($this->time_in == "00:00:00" && $this->time_out == "00:00:00"){
             $absentCount = 1;
         }
-        $totalOvertime = $this->getOvertimeInfo();
+        $totalOvertime = $this->getOvertimeFromManual();
         // dd($totalOvertime);
         return collect([
             'workHour' => $totalWorkHour !== 0 ? $totalWorkHour : null,
@@ -243,14 +243,16 @@ class WorkScheduleAssignmentUser extends Model
             ->where('leaves.user_id', $this->user_id)
             ->where(function ($query) use ($shiftStartDate, $shiftEndDate) {
                 $query->whereBetween('leave_details.from_date', [$shiftStartDate, $shiftEndDate])
-                    ->orWhereBetween('leave_details.to_date', [$shiftStartDate, $shiftEndDate])
-                    ->orWhere(function ($subquery) use ($shiftStartDate, $shiftEndDate) {
-                        $subquery->where('leave_details.from_date', '<=', $shiftStartDate)
-                                ->where('leave_details.to_date', '>=', $shiftEndDate);
-                    });
+                    ->orWhereBetween('leave_details.to_date', [$shiftStartDate, $shiftEndDate]);
+                    // ->orWhere(function ($subquery) use ($shiftStartDate, $shiftEndDate) {
+                    //     $subquery->where('leave_details.from_date', '<=', $shiftStartDate)
+                    //             ->where('leave_details.to_date', '>=', $shiftEndDate);
+                    // });
             })
             ->get(['leave_details.*'])->first();
+       
         if($leaveDetail != null){
+            // dd($leaveDetail)    ;
 
             $fromDate = Carbon::parse($leaveDetail->from_date);
             $toDate = Carbon::parse($leaveDetail->to_date);
@@ -333,8 +335,42 @@ class WorkScheduleAssignmentUser extends Model
         return $holidayWorkScheduleAssignmentUsers;
     }
 
+    public function getOvertimeFromManual(){
+        $userId = $this->user_id;
+        $shift = $this->workScheduleAssignment->shift;
+        $shiftType = $shift->shift_type_id;
+        // $scheduleAssignmentDate = ($shiftType == 2) ? $this->date_out : $this->date_in;
+        $type = 1;
+        
+        $overtimeDetail = OverTimeDetail::where('user_id',$userId)
+            ->whereDate('from_date',$this->date_in)
+            ->whereHas('overtime', function ($query) use ($type) {
+                    $query->where('status', 1)
+                        ->where('type', '=', $type);
+                })
+            ->first();
 
-    public function getOvertimeInfo()
+        $holidayShift = $this->isHolidayShift();
+        if ($overtimeDetail != null && count($holidayShift) == 0){
+            $isHoliday = false;
+            $user = User::find($userId);
+            $holiday = $user->getHolidayDates($this->date_in, $this->date_out)->toArray();
+
+            if(count($holiday) != 0)
+            {
+                $isHoliday = true;
+            }
+            return collect([
+                    'hourDifference' => $overtimeDetail->hour,
+                    'isHoliday' => $isHoliday
+                ]); 
+        }
+        else{
+            return null;
+        }
+    }
+
+    public function getOvertimeFromScanFile()
     {
         $userId = $this->user_id;
         $shift = $this->workScheduleAssignment->shift;
@@ -404,6 +440,30 @@ class WorkScheduleAssignmentUser extends Model
             }
         }
         
+    }
+
+    public function moreThanOneHourLate()
+    {
+        $differenceInMinutes = 0;
+        $shiftId = $this->user->isShiftAssignment($this->date_in);
+        $workShift = Shift::find($shiftId)->first();
+        $shiftStartDate = "$this->date_in $workShift->start";
+        $workStartDate = "$this->date_in $this->time_in";
+        
+        $start = Carbon::parse($shiftStartDate);
+        $end = Carbon::parse($workStartDate);
+
+        if($this->time_in != null){
+            $differenceInMinutes = $start->diffInMinutes($end);
+        }
+
+        
+        return $differenceInMinutes;
+
+    }
+
+    public function getOvertimeHourFromDate(){
+        return OvertimeDetail::where('from_date',$this->date_in)->where('user_id',$this->user_id)->first();
     }
 
 }

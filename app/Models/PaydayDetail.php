@@ -30,4 +30,8 @@ class PaydayDetail extends Model
     {
         return $this->hasMany(UserDiligenceAllowance::class, 'payday_detail_id');
     }
+    public function SalarySummary()
+    {
+        return $this->hasMany(SalarySummary::class);
+    }
 }

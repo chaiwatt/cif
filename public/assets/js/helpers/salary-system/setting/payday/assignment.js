@@ -109,7 +109,7 @@ $(document).on('click', '#update_payday', function (e) {
         if (!momentPaymentDate.isSameOrAfter(momentEndDate)) {
             Swal.fire(
                 'ผิดพลาด!',
-                'กรุณากรอกวันที่ให้ถูกต้อง1',
+                'กรุณากรอกวันที่ให้ถูกต้อง',
                 'error'
             );
             return;

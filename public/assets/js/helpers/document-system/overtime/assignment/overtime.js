@@ -1,6 +1,12 @@
 import * as RequestApi from '../../../request-api.js';
 
 var token = window.params.token
+var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
 
 $(document).on('keyup', 'input[name="search_query"]', function () {
     var overtimeId = $('#overtimeId').val();
@@ -110,4 +116,24 @@ $(document).on('click', '#btn-import-employee-code', function (e) {
         window.location.reload();
     }).catch(error => { })
 
+});
+
+$(document).on('change', '#hour', function () {
+    var value = $(this).val();
+    var overtimeId = $('#overtimeId').val();
+    var userId = $(this).data('user');
+
+    var updateHourUrl = window.params.updateHourRoute
+    var dataSet = {
+        'overtimeId': overtimeId,
+        'userId': userId,
+        'val': value
+    }
+    RequestApi.postRequest(dataSet, updateHourUrl, token).then(response => {
+        console.log('ok');
+        Toast.fire({
+            icon: 'success',
+            title: 'แก้ไขชั่วโมงล่วงเวลาสำเร็จ '
+        })
+    }).catch(error => { })
 });

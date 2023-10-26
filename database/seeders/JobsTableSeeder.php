@@ -207,5 +207,11 @@ class JobsTableSeeder extends Seeder
             'route' => 'groups.learning-system.setting.learning-list',
             'view' => 'groups.learning-system.setting.learning-list.index'
         ]);
+        Job::create([
+            'code' => 'SALARY-REPORT',
+            'name' => 'รายงานระบบเงินเดือน',
+            'route' => 'groups.report-system.report.salary',
+            'view' => 'groups.report-system.report.salary.index'
+        ]);
     }
 }

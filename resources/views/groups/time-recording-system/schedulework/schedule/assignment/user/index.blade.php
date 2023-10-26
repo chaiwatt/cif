@@ -58,6 +58,21 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div>
+                            <span>หรือนำเข้าจากแผนก</span>
+                        </div>
+                        <div class="form-group ml-2 mr-2" style="width: 250px;">
+                            <select name="company_department" id="company_department"
+                                class="form-control select2 @error('company_department') is-invalid @enderror"
+                                style="width: 100%;">
+                                <option value="">==เลือกแผนก==</option>
+                                @foreach ($companyDepartments as $companyDepartment)
+                                <option value="{{ $companyDepartment->id }}">
+                                    {{ $companyDepartment->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
 

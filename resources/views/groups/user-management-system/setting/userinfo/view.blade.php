@@ -590,8 +590,6 @@
                                                 @foreach ($userDiligenceAllowances as $key
                                                 =>$userDiligenceAllowance)
                                                 <tr>
-
-                                                    {{-- <td>{{$education->level}}</td> --}}
                                                     <td>
                                                         @if ($userDiligenceAllowance->paydayDetail->start_date != null
                                                         && $userDiligenceAllowance->paydayDetail->end_date != null)
@@ -602,8 +600,6 @@
                                                         $userDiligenceAllowance->paydayDetail->end_date)->format('d/m/Y')
                                                         }}
                                                         @endif
-
-
                                                     </td>
                                                     <td>{{$userDiligenceAllowance->diligenceAllowanceClassify->cost}}
                                                     </td>

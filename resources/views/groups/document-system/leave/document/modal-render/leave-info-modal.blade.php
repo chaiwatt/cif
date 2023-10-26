@@ -19,7 +19,7 @@
                 <dd class="col-sm-8">{{$endDate}} เวลา {{$endTime}}</dd>
                 {{-- <dt class="col-sm-4">จำนวนวันที่ลา</dt>
                 <dd class="col-sm-8">{{$dayCount}} วัน</dd> --}}
-                <dt class="col-sm-4">คร่อมวันหยุด</dt>
+                {{-- <dt class="col-sm-4">คร่อมวันหยุด</dt>
                 @php
                 $holidayArrays = $holidays;
                 @endphp
@@ -27,7 +27,7 @@
                     {{ implode(', ', $holidayArrays) }}
                     @else
                     -
-                    @endif</dd>
+                    @endif</dd> --}}
                 {{-- <dt class="col-sm-4">วันลาที่เหลือ</dt>
                 <dd class="col-sm-8">ลากิจ <strong>{{$userLeave->business_leave}}</strong><br>
                     ลาป่วย <strong>{{$userLeave->sick_leave}}</strong><br>

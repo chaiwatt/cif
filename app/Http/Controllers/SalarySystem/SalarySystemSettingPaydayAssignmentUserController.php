@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\UserDiligenceAllowance;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
+use App\Models\CompanyDepartment;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class SalarySystemSettingPaydayAssignmentUserController extends Controller
@@ -40,13 +41,15 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         $payday = Payday::find($id);
         $userIds = $payday->users->pluck('id')->toArray();
         $users = User::whereIn('id',$userIds)->paginate(20);
+        $companyDepartments = CompanyDepartment::get();
 
         return view('groups.salary-system.setting.payday.assignment-user.index', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'payday' => $payday,
-            'users' => $users
+            'users' => $users,
+            'companyDepartments' => $companyDepartments
         ]);
     }
     public function create($id)
@@ -62,6 +65,7 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         $permission = $roleGroupCollection['permission'];
         $payday = Payday::find($id);
         $users = User::paginate(30);
+        
         
 
         return view('groups.salary-system.setting.payday.assignment-user.create', [
@@ -136,6 +140,28 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         
         $users = User::whereIn('employee_no', $employeeNos)->get();
         
+        Payday::find($paydayId)->users()->detach();
+        foreach ($users as $user) {
+            $user->paydays()->attach($paydayId);
+        }
+        return;
+    }
+
+    public function importEmployeeNoFromDept(Request $request){
+        $paydayId = $request->data['paydayId'];
+        $companyDepartmentId = $request->data['companyDepartmentId'];
+        $users = User::where('company_department_id',$companyDepartmentId)->get();
+        Payday::find($paydayId)->users()->detach();
+        foreach ($users as $user) {
+            $user->paydays()->attach($paydayId);
+        }
+        return;
+    }
+
+    public function importEmployeeNoFromUserType(Request $request){
+        $paydayId = $request->data['paydayId'];
+        $employeeTypeId = $request->data['employeeTypeId'];
+        $users = User::where('employee_type_id',$employeeTypeId)->get();
         Payday::find($paydayId)->users()->detach();
         foreach ($users as $user) {
             $user->paydays()->attach($paydayId);

@@ -9,6 +9,7 @@ use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use App\Models\WorkScheduleAssignmentUser;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
+use App\Models\IncomeDeductUser;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class SalarySystemSalaryCalculationExtraListCalculationInformationController extends Controller
@@ -53,4 +54,17 @@ class SalarySystemSalaryCalculationExtraListCalculationInformationController ext
             'paydayDetail' => $paydayDetail,
         ]);
     }
+    public function delete(Request $request){
+        $incomeDeductUserId = $request->data['incomeDeductUserId'];
+        $incomeDeductUser = IncomeDeductUser::find($incomeDeductUserId);
+        $user = User::find($incomeDeductUser->user_id);
+        $paydayDetail = PaydayDetail::find($incomeDeductUser->payday_detail_id);
+        // dd($user);
+        $incomeDeductUser->delete();
+
+        return view('groups.salary-system.salary.calculation-list.calculation.information.table-render.income-deduct-table',[
+                    'user' => $user,
+                    'paydayDetail' => $paydayDetail 
+                    ])->render();
+            }
 }

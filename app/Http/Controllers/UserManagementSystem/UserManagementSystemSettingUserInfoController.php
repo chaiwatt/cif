@@ -87,7 +87,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $userDiligenceAllowances = UserDiligenceAllowance::where('user_id', $id)->orderBy('id', 'desc')->get();
         $leaves = Leave::where('user_id',$id)->whereYear('from_date',$currentYear)->get();
         $userLeaves = UserLeave::where('user_id',$id)->get();
-        
+        // dd($userDiligenceAllowances);
         return view('groups.user-management-system.setting.userinfo.view', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,

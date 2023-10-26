@@ -43,8 +43,10 @@ class DocumentSystemOvertimeDocumentController extends Controller
         $currentDate = Carbon::today()->format('Y-m-d');
 
         // Retrieve OverTime records with from_date equal to or greater than today
-        // $overtimes = OverTime::where('from_date', '>=', $currentDate)->get();
-        $overtimes = OverTime::all();
+        $currentMonth = Carbon::today()->month;
+        
+        // $overtimes = OverTime::whereMonth('from_date', $currentMonth)->paginate(31);
+        $overtimes = OverTime::paginate(31);
         $months = Month::all();
 
         $currentYear = Carbon::now()->year;
@@ -89,21 +91,19 @@ class DocumentSystemOvertimeDocumentController extends Controller
     public function store(Request $request)
     {
         
-        // dd($request->approver);
         $validator = $this->validateFormData($request);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $approver = Approver::find($request->approver);
-        // dd($approver->authorizedUsers->pluck('id')->toArray());
+
         $userIds = $approver->authorizedUsers->pluck('id')->toArray();
         $startDateTime = $request->startDate;
         $endDateTime = $request->endDate;
         $type = $request->type;
         $selectedValue = $request->manual_time;
 
-        // Parse the startDate using Carbon
         if ($selectedValue == 1){
             $carbonStartDate = Carbon::createFromFormat('d/m/Y', $startDateTime);
             $startDate = $carbonStartDate->format('Y-m-d');
@@ -120,6 +120,10 @@ class DocumentSystemOvertimeDocumentController extends Controller
             $endDate = $carbonEndDate->format('Y-m-d');
             $time_end = $carbonEndDate->format('H:i');
         }
+
+        $dateRange = Carbon::parse($startDate)->daysUntil($endDate);
+
+        // dd(count($dateRange),$startDate,$endDate ,$time_start ,$time_end);
         // $carbonStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime);
         // $startDate = $carbonStartDate->format('Y-m-d');
         // $time_start = $carbonStartDate->format('H:i');
@@ -128,23 +132,25 @@ class DocumentSystemOvertimeDocumentController extends Controller
         // $endDate = $carbonEndDate->format('Y-m-d');
         // $time_end = $carbonEndDate->format('H:i');
 
-        $name = $request->name;
-
+        
         $approvedList = collect($userIds)->map(function ($userId) {
                 return ['user_id' => $userId, 'status' => 0];
             });
 
-        OverTime::create([
-            'name' => $name,
-            'approver_id' => $approver->id,
-            'from_date' => $startDate,
-            'to_date' => $endDate,
-            'start_time' => $time_start,
-            'end_time' => $time_end,
-            // 'manager_approve' => $approver->user_id,
-            'approved_list' => $approvedList->toJson(),
-            'type' => $type
-        ]);
+            foreach ($dateRange as $date) {
+                $name = $request->name . ' ' . $date->format('d/m/Y');
+                OverTime::create([
+                    'name' => $name,
+                    'approver_id' => $approver->id,
+                    'from_date' => $date->format('Y-m-d'),
+                    'to_date' => $date->format('Y-m-d'),
+                    'start_time' => $time_start,
+                    'end_time' => $time_end,
+                    'approved_list' => $approvedList->toJson(),
+                    'type' => $type
+                ]);
+            }
+
         return redirect()->route('groups.document-system.overtime.document');
     }
 
@@ -218,10 +224,6 @@ class DocumentSystemOvertimeDocumentController extends Controller
 
         $approvedList = collect(array_merge($approvedList, $newUserItems));
 
-        // $approvedList = array_merge($approvedList, $newUserItems);
-
-
-
         OverTime::find($overtimeId)->update([
             'name' => $name,
             'from_date' => $startDate,
@@ -231,14 +233,6 @@ class DocumentSystemOvertimeDocumentController extends Controller
             'approved_list' => $approvedList->toJson(),
         ]);
 
-        $overtime = OverTime::find($overtimeId);
-
-        // OverTimeDetail::where('over_time_id',$overtime->id)->update([
-        //     'from_date' => $startDate,
-        //     'to_date' => $endDate,
-        //     'start_time' => $time_start,
-        //     'end_time' => $time_end
-        // ]);
         return redirect()->route('groups.document-system.overtime.document');
     }
 
@@ -247,7 +241,6 @@ class DocumentSystemOvertimeDocumentController extends Controller
         $overtime = OverTime::findOrFail($id);
         $this->activityLogger->log('ลบ', $overtime);
         $overtime->delete();
-
         return response()->json(['message' => 'การล่วงเวลาถูกลบออกเรียบร้อยแล้ว']);
     }
 
@@ -278,4 +271,57 @@ class DocumentSystemOvertimeDocumentController extends Controller
         return view('groups.document-system.overtime.document.modal-user-render.modal-user',['users' => $users])->render();
     }
 
+    public function search(Request $request)
+    {
+        $companyDepartmentId = $request->data['companyDepartmentId'];
+        $startDate = $request->data['startDate'];
+        $endDate = $request->data['endDate'];
+
+        $overtimes = $this->searchOvertime($companyDepartmentId,$startDate,$endDate);
+
+        return view('groups.document-system.overtime.document.table-render.overtime-table', [
+            'overtimes' => $overtimes,
+        ])->render();
+
+    }
+
+    public function searchOvertime($companyDepartmentId,$startDate,$endDate){
+        $overtimes = OverTime::where(function ($query) use ($startDate, $endDate,$companyDepartmentId) {
+            if (!empty($startDate) && !empty($endDate)) {
+                $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+                $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+                $query->whereBetween('from_date', [$startDate, $endDate]);
+            } elseif (!empty($startDate)) {
+                $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+                $query->where('from_date', '>=', $startDate);
+            } elseif (!empty($endDate)) {
+                $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+                $query->where('from_date', '<=', $endDate);
+            }
+            
+            // Check if company_department_id is selected, if not, return all departments
+            if (!empty($companyDepartmentId)) {
+                $query->whereHas('approver', function ($subQuery) use ($companyDepartmentId) {
+                    $subQuery->where('company_department_id', $companyDepartmentId);
+                });
+            }
+        })->paginate(31);
+
+        return $overtimes;
+    }
+
+    public function bulkDelete(Request $request){
+        $companyDepartmentId = $request->data['companyDepartmentId'];
+        $startDate = $request->data['startDate'];
+        $endDate = $request->data['endDate'];
+
+        $selectedOvertimes = $request->data['selectedOvertime'];
+        OverTime::whereIn('id',$selectedOvertimes)->delete();
+
+        $overtimes = $this->searchOvertime($companyDepartmentId,$startDate,$endDate);
+
+        return view('groups.document-system.overtime.document.table-render.overtime-table', [
+            'overtimes' => $overtimes,
+        ])->render();
+    }
 }

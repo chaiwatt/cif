@@ -241,55 +241,16 @@ class DocumentSystemOvertimeApprovalController extends Controller
     {
         $month = $request->data['month'];
         $year = $request->data['year'];
-       
-        $overtimes = Overtime::whereMonth('from_date',$month)->whereYear('from_date',$year)->get();
+        $companyDepartmentId = $request->data['companyDepartmentId']; 
 
-        //  dd($month,$year,$overtimes);
+        $overtimes = Overtime::whereMonth('from_date',$month)
+                ->whereYear('from_date',$year)
+                ->whereHas('approver', function ($subQuery) use ($companyDepartmentId) {
+                            $subQuery->where('company_department_id', $companyDepartmentId);
+                        })->get();
+
         return view('groups.document-system.overtime.approval.table-render.overtime-approval-table-render',[
             'overtimes' => $overtimes
             ])->render();
-        // if (isset($request->data['selectedCompanyDepartment'])) {
-        //     $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
-        // } else {
-        //     $companyDepartmentIds = [];
-        // }
-   
-        // $startDate = null;
-        // $endDate = null;
-
-        // if ($request->data['startDate'] !== null && $request->data['endDate'] !== null) {
-        //     $startDate = date('Y-m-d', strtotime($request->data['startDate']));
-        //     $endDate = date('Y-m-d', strtotime($request->data['endDate']));
-        // }
-
-        // $searchString = $request->data['searchString'];
-
-        // $query = OverTimeDetail::whereHas('user', function ($query) use ($searchString, $companyDepartmentIds) {
-        //     $query->where(function ($query) use ($searchString) {
-        //         $query->where('employee_no', 'like', '%' . $searchString . '%')
-        //             ->orWhere('name', 'like', '%' . $searchString . '%')
-        //             ->orWhere('lastname', 'like', '%' . $searchString . '%')
-        //             ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
-        //                 $subQuery->where('name', 'like', '%' . $searchString . '%')
-        //                     ->orWhere('code', 'like', '%' . $searchString . '%');
-        //             });
-        //     });
-        //     if (!empty($companyDepartmentIds)) {
-        //         $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
-        //             $subQuery->whereIn('id', $companyDepartmentIds);
-        //         });
-        //     }
-        // });
-
-        // if ($startDate !== null && $endDate !== null) {
-        //     $query->whereBetween('from_date', [$startDate, $endDate]);
-        // }
-
-        // $overtimeDetails = $query->get();
-
-
-        // return view('groups.document-system.overtime.approval.table-render.overtime-approval-table-render',[
-        //     'overtimeDetails' => $overtimeDetails
-        //     ])->render();
     }
 }

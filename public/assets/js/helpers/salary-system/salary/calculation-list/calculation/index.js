@@ -16,7 +16,8 @@ var token = window.params.token
 //     }).catch(error => { })
 // });
 
-$(document).on('click', '#btn-search', function () {
+$(document).on('click', '#btn-search', function (e) {
+    e.preventDefault();
     var searchInput = $('#search_query').val();
     var searchUrl = window.params.searchRoute
     var paydayDetailId = $('#paydayDetailId').val();
@@ -51,7 +52,6 @@ $(document).on('click', '.pagination a', function (e) {
 
 $(document).on('click', '#btn-show-modal-income-deduct-assignment', function (e) {
     e.preventDefault();
-    console.log('ok');
     $('#employee-code').val('');
     $('#modal-income-deduct-assignment').modal('show');
 

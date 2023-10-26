@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\WorkScheduleUser;
 use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
+use App\Models\OverTimeDetail;
 use App\Models\WorkScheduleMonthNote;
 use Illuminate\Support\Facades\Storage;
 use App\Models\WorkScheduleAssignmentUser;
@@ -143,23 +144,27 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
 
         // $users = $this->getUsersByWorkScheduleAssignment($startDate, $endDate);
         $users = $this->getUsersByWorkScheduleAssignmentWithWorkscheduleId($startDate,$endDate,$workScheduleId);
-        
+  
         $usersWithWorkScheduleAssignments = [];
+        $moreThanOneHourLate =[];
         foreach($users as $user)
         {
-            // dd($startDate,$endDate);
             $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
-            
+            $moreThanOneHourLate = $user->moreThanOneHourLate($startDate,$endDate,$year);
+     
             $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
             
             // Apply filtering based on the selected filter option or show all if filter is not set
             if (!$filter || ($filter == 0) || ($filter == 1 && count($dateInList) == 0) || ($filter == 2 && count($dateInList) > 0)) {
                 $usersWithWorkScheduleAssignments[$user->id] = [
                     'user' => $user,
-                    'date_in_list' => $dateInList
+                    'date_in_list' => $dateInList,
+                    'more_than_one_hour_lates' => $moreThanOneHourLate
                 ]; 
             }
         }
+        // dd($moreThanOneHourLate);
+        // dd($usersWithWorkScheduleAssignments);
 
         $usersCollection = new Collection($usersWithWorkScheduleAssignments);
 
@@ -191,11 +196,17 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $endDate = Carbon::createFromFormat('d/m/Y', $request->data['endDate'])->format('Y-m-d');
         $year = $request->data['year'];
         $userId = $request->data['userId'];
+
+        $overtimeDetails = OverTimeDetail::where('user_id',$userId)->whereBetween('from_date', [$startDate, $endDate])->get();
         
         $user = User::find($userId);
         $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersByConditions($startDate,$endDate, $year);
         return view('groups.time-recording-system.schedulework.time-recording-check.table-render.work-schedule-modal-table',[
-            'workScheduleAssignmentUsers' => $workScheduleAssignmentUsers
+            'workScheduleAssignmentUsers' => $workScheduleAssignmentUsers,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'year' => $year,
+            'overtimeDetails' => $overtimeDetails
             ])->render();
 
     }
@@ -228,16 +239,19 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $users = $this->getUsersByWorkScheduleAssignmentWithWorkscheduleId($startDate,$endDate,$workScheduleId);
 
         $usersWithWorkScheduleAssignments = [];
+        $moreThanOneHourLate =[];
         foreach($users as $user)
         {
             $workScheduleAssignmentUsers = $user->getWorkScheduleAssignmentUsersInformation($startDate, $endDate, $year);
             $dateInList = $workScheduleAssignmentUsers->pluck('date_in')->toArray();
+            $moreThanOneHourLate = $user->moreThanOneHourLate($startDate,$endDate,$year);
             
             // Apply filtering based on the selected filter option or show all if filter is not set
             if (!$filter || ($filter == 0) || ($filter == 1 && count($dateInList) == 0) || ($filter == 2 && count($dateInList) > 0)) {
                 $usersWithWorkScheduleAssignments[$user->id] = [
                     'user' => $user,
-                    'date_in_list' => $dateInList
+                    'date_in_list' => $dateInList,
+                    'more_than_one_hour_lates' => $moreThanOneHourLate
                 ]; 
             }
         }
@@ -375,6 +389,14 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckController extends Contro
         $leaveAttachment = WorkScheduleAssignmentUser::find($workScheduleAssignmentUserId)->getAttachmentForDate();
         // dd($leaveAttachment);
         return response()->json($leaveAttachment);
+    }
+
+    public function updateHour(Request $request)
+    {
+        $overtimeId = $request->data['overtimeId'];
+        $userId = $request->data['userId'];
+        $val = $request->data['val'];
+        OvertimeDetail::where('over_time_id',$overtimeId)->where('user_id',$userId)->first()->update(['hour' => $val]);
     }
     
 }

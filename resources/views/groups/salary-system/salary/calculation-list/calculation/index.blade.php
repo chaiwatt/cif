@@ -58,10 +58,6 @@
                             <h3 class="card-title">พนักงาน</h3>
                             @if (count($users) !=0)
                             <div class="card-tools">
-                                {{-- <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
-                                </div> --}}
                                 <div class="input-group input-group-sm">
                                     <input type="search" class="form-control " name="search_query" id="search_query"
                                         placeholder="ค้นหา">
@@ -83,6 +79,7 @@
                                             <tr>
                                                 <th>รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
+                                                <th>แผนก</th>
                                                 <th class="text-center">ชม.งาน</th>
                                                 <th class="text-center">มาสาย(ชม.)</th>
                                                 <th class="text-center">กลับก่อน(ชม.)</th>
@@ -110,6 +107,7 @@
                                                 <td>{{ $user->prefix->name }}{{
                                                     $user->name }} {{
                                                     $user->lastname }}</td>
+                                                <td>{{$user->company_department->name}}</td>
                                                 <td class="text-center">{{$userSummary['workHour']}}</td>
                                                 <td class="text-center">{{$userSummary['lateHour']}}</td>
                                                 <td class="text-center">{{$userSummary['earlyHour']}}</td>

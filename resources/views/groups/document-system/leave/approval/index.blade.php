@@ -31,7 +31,8 @@
                                 <label>แผนก</label>
                                 <select name="companyDepartment" id="companyDepartment"
                                     class="form-control select2 @error('companyDepartment') is-invalid @enderror"
-                                    style="width: 100%;" multiple>
+                                    style="width: 100%;">
+                                    <option value="">==เลือกแผนก==</option>
                                     @foreach ($companyDepartments as $companyDepartment)
                                     <option value="{{ $companyDepartment->id }}" {{
                                         old('companyDepartment')==$companyDepartment->id
@@ -49,6 +50,7 @@
                                 <select name="month" id="month"
                                     class="form-control select2 @error('month') is-invalid @enderror"
                                     style="width: 100%;">
+                                    <option value="">==เลือกเดือน==</option>
                                     @foreach ($months as $month)
                                     <option value="{{ $month->id }}" {{ old('month')==$month->id
                                         ?

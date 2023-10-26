@@ -11,7 +11,9 @@
         <div class="container-fluid">
             <div class="row mb-0">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการเงินเดือนงวดปกติ
+                    <h1 class="m-0">รายการเงินเดือนงวดปกติ @if (count($salarySummaries) != 0)
+                        <span class="text-danger">(ปิดงวด)</span>
+                        @endif
                     </h1>
                     <ul class="mt-2">
                         <li>
@@ -38,11 +40,26 @@
         <div class="container-fluid mt-0">
             <div class="row">
                 <div class="col-md-12">
-                    <a class="btn btn-primary float-right mb-2"
-                        href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
-                        <i class="fas fa-download mr-1"></i>
-                        ดาวน์โหลด
-                    </a>
+                    <div class="form-group">
+                        <a class="btn btn-primary float-right mb-2 ml-2"
+                            href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
+                            <i class="fas fa-download mr-1"></i>
+                            ดาวน์โหลด
+                        </a>
+
+                        @if (count($salarySummaries) == 0)
+                        <a class="btn btn-success float-right mb-2"
+                            href="{{route('groups.salary-system.salary.calculation-list.summary.finish',['payday_detail_id' => $paydayDetail->id])}}">
+                            <i class="fas fa-check mr-1"></i>
+                            ปิดงวด
+                        </a>
+                        @endif
+
+
+                    </div>
+
+
+
                 </div>
             </div>
 
@@ -77,12 +94,13 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 8%">รหัสพนักงาน</th>
-                                                <th style="width: 15%">ชื่อ-สกุล</th>
-                                                <th class="text-center" style="width: 10%">เงินเดือน</th>
-                                                <th class="text-center" style="width: 10%">ล่วงเวลา</th>
-                                                <th class="text-center" style="width: 10%">เบี้ยขยัน</th>
-                                                <th class="text-center" style="width: 15%">เงินได้อื่นๆ</th>
-                                                <th class="text-center" style="width: 15%">เงินหักอื่นๆ</th>
+                                                <th style="width: 14%">ชื่อ-สกุล</th>
+                                                <th style="width: 12%">แผนก</th>
+                                                <th class="text-center" style="width: 8%">เงินเดือน</th>
+                                                <th class="text-center" style="width: 8%">ล่วงเวลา</th>
+                                                <th class="text-center" style="width: 8%">เบี้ยขยัน</th>
+                                                <th class="text-center" style="width: 13%">เงินได้อื่นๆ</th>
+                                                <th class="text-center" style="width: 13%">เงินหักอื่นๆ</th>
                                                 <th class="text-center" style="width: 8%">ปกสค.</th>
                                                 <th class="text-center" style="width: 10%">สุทธิ</th>
                                                 <th class="text-right">ดาวน์โหลด</th>
@@ -99,11 +117,17 @@
                                             @endphp
                                             <tr>
                                                 <td>
+                                                    @if (count($user->getMissingDate($paydayDetail->id)) > 0)
+                                                    <i class="fas fa-times-circle text-danger"></i>
+                                                    @else
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                    @endif
                                                     {{ $user->employee_no }}
                                                 </td>
                                                 <td>{{ $user->prefix->name }}{{
                                                     $user->name }} {{
                                                     $user->lastname }}</td>
+                                                <td>{{$user->company_department->name}}</td>
                                                 <td class="text-center">{{$userSummary['salary']}}</td>
                                                 <td class="text-center">{{$userSummary['overTimeCost']}}</td>
                                                 <td class="text-center">{{$userSummary['deligenceAllowance']}}

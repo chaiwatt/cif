@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($leaves as $key=> $leave)
+        @foreach ($leaves->where('status',0) as $key=> $leave)
         @php
         $approver = $leave->user->approvers->where('document_type_id',1)->first()
         @endphp

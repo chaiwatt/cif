@@ -18,7 +18,8 @@ class OverTimeDetail extends Model
         'start_time',
         'end_time',
         'status',
-        'approved_list'
+        'approved_list',
+        'hour'
     ];
     public function user()
     {

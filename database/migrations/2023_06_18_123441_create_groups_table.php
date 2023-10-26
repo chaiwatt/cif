@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('description')->nullable()->comment('คำอธิบายกลุ่มทำงาน');
             $table->string('icon')->nullable()->comment('ไอคอนกลุ่มทำงาน');
             $table->string('dashboard')->nullable()->comment('แดชบอร์ด');
+            $table->string('default_route')->nullable();
             $table->timestamps();
         });
     }

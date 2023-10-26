@@ -83,5 +83,12 @@ class ModuleGroupsTableSeeder extends Seeder
             $learningModule->id,
             $learningModuleSetting->id
         ]);
+
+        $report = Group::where('code','REPORT')->first();
+        $dashboardReportModule = Module::where('code','DASHBOARD-REPORT')->first();
+
+        $report->modules()->attach([
+            $dashboardReportModule->id
+        ]);
     }
 }

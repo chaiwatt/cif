@@ -8,6 +8,7 @@ use App\Models\UserGroup;
 use App\Models\SearchField;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
+use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
 use App\Models\WorkScheduleAssignment;
 use Illuminate\Support\Facades\Validator;
@@ -43,7 +44,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
         $users = $this->getUsersByWorkScheduleAssignment($scheduleId, $monthId, $year)->paginate(20);
 
         $userGroups = UserGroup::all();
-
+        $companyDepartments = CompanyDepartment::get();
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.schedule.assignment.user.index'
         return view('groups.time-recording-system.schedulework.schedule.assignment.user.index', [
             'groupUrl' => $groupUrl,
@@ -54,6 +55,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
             'year' => $year,
             'monthId' => $monthId,
             'userGroups' => $userGroups,
+            'companyDepartments' => $companyDepartments
         ]);
 
     }

@@ -68,8 +68,6 @@
                                                     @foreach ($workScheduleAssignmentUsers as $key =>
                                                     $workScheduleAssignmentUser)
                                                     @php
-                                                    // $paydayDetailWithToday =
-                                                    // $workScheduleAssignmentUser->user->getPaydayDetailWithToday();
                                                     $getWorkHour =
                                                     $workScheduleAssignmentUser->getWorkHour();
                                                     @endphp
@@ -111,8 +109,6 @@
                                                             @endif
                                                             @endif
                                                         </td>
-
-
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -128,11 +124,10 @@
                                                 <th>เงินเพิ่ม / เงินหัก</th>
                                                 <th>จำนวน</th>
                                                 <th>หน่วย</th>
+                                                <th class="text-right" style="width: 120px">ลบรายการ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- {{$user->getIncomeDeductUsers($paydayDetail->id)}} --}}
-                                            {{-- {{$paydayDetail}} --}}
                                             @foreach ($user->getIncomeDeductUsers($paydayDetail->id) as $key =>
                                             $incomeDeductByUser)
                                             <tr>
@@ -140,6 +135,11 @@
                                                 </td>
                                                 <td>{{$incomeDeductByUser->value}}</td>
                                                 <td>{{$incomeDeductByUser->incomeDeduct->unit->name}}</td>
+                                                <td class="text-right"><a
+                                                        class="btn btn-danger btn-sm delete-income-deduct"
+                                                        data-id="{{$incomeDeductByUser->id}}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a></td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -147,34 +147,22 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-                <div class="col-12">
-
-                </div>
-
             </div>
-
             @endif
-
         </div>
     </div>
+</div>
 
-</div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
-    <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
-</div>
-</div>
-</div>
-</div>
-</div>
 @push('scripts')
-
+<script type="module"
+    src="{{asset('assets/js/helpers/salary-system/salary/calculation-list/calculation/information/index.js?v=1')}}">
+</script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {
+        deleteRoute: '{{ route('groups.salary-system.salary.calculation-extra-list.calculation.information.delete') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

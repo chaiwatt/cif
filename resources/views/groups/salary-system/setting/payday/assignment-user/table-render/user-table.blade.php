@@ -3,6 +3,7 @@
         <tr>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
+            <th>ประเภท</th>
             <th>แผนก</th>
             <th class="text-right">เพิ่มเติม</th>
         </tr>
@@ -14,6 +15,7 @@
             <td>{{$user->name}}
                 {{$user->lastname}}</td>
             <td>{{$user->company_department->name}}</td>
+            <td>{{$user->employee_type->name}}</td>
             <td class="text-right">
                 @if ($permission->delete)
                 <form

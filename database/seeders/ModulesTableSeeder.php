@@ -110,5 +110,11 @@ class ModulesTableSeeder extends Seeder
             'name' => 'ตั้งค่า',
             'icon' => 'fa-cog'
         ]);
+        Module::create([
+            'prefix' => 'groups.dashboard.report',
+            'code' => 'DASHBOARD-REPORT',
+            'name' => 'รายงาน',
+            'icon' => 'fa-chart-pie'
+        ]);
     }
 }

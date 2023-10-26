@@ -190,34 +190,41 @@ class DocumentSystemLeaveApprovalController extends Controller
 
     public function search(Request $request)
     {
-        if (isset($request->data['selectedCompanyDepartment'])) {
-            $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
-        } else {
-            $companyDepartmentIds = [];
-        }
+        // if (isset($request->data['selectedCompanyDepartment'])) {
+        //     $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
+        // } else {
+        //     $companyDepartmentIds = [];
+        // }
+
+        $companyDepartmentId = $request->data['selectedCompanyDepartment'];
+
+        
 
         $year = $request->data['year'];
         $month = $request->data['month'];
         $searchString = $request->data['searchString'];
 
-        $query = Leave::whereHas('user', function ($query) use ($searchString,$companyDepartmentIds) {
+        $query = Leave::whereHas('user', function ($query) use ($searchString, $companyDepartmentId) {
             $query->where(function ($query) use ($searchString) {
                 $query->where('employee_no', 'like', '%' . $searchString . '%')
                     ->orWhere('name', 'like', '%' . $searchString . '%')
                     ->orWhere('lastname', 'like', '%' . $searchString . '%')
                     ->orWhereHas('approvers', function ($subQuery) use ($searchString) {
                         $subQuery->where('name', 'like', '%' . $searchString . '%')
-                        ->orWhere('code', 'like', '%' . $searchString . '%');
+                            ->orWhere('code', 'like', '%' . $searchString . '%');
                     });
             });
-            if (!empty($companyDepartmentIds)) {
-                $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
-                    $subQuery->whereIn('id', $companyDepartmentIds);
+            if ($companyDepartmentId != null) {
+                $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentId) {
+                    $subQuery->where('id', $companyDepartmentId);
                 });
             }
         })
-        ->whereYear('from_date', $year)
-        ->whereMonth('from_date', $month);
+        ->whereYear('from_date', $year);
+
+        if (!empty($month)) {
+            $query->whereMonth('from_date', $month);
+        }
 
         $leaves = $query->get();
 

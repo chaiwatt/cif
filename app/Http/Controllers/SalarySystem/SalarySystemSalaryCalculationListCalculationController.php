@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SalarySystem;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\UserPayday;
 use App\Models\SearchField;
 use App\Models\IncomeDeduct;
 use App\Models\PaydayDetail;
@@ -41,12 +42,15 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
         $permission = $roleGroupCollection['permission'];
         
         $paydayDetail = PaydayDetail::find($id);
+        $userPaydays = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
 
         $userIds = [];
 
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+
+        $userIddiffs = array_intersect($ids, $userPaydays);
         
         $paydayDetailWithMaxEndDate = PaydayDetail::where('end_date', '<', $startDate)
             ->where('end_date', function ($query) use ($startDate) {
@@ -58,7 +62,7 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
             
         if ($paydayDetailWithMaxEndDate) {
             $paydayDetailWithMaxEndDateId= $paydayDetailWithMaxEndDate->id;
-            foreach ($ids as $userId)
+            foreach ($userIddiffs as $userId)
             {
                 $userDiligenceAllowance = UserDiligenceAllowance::where('user_id',$userId)->where('payday_detail_id',$paydayDetailWithMaxEndDateId)->first();
                 
@@ -78,8 +82,8 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
             }
             
         } 
-        $userIds = array_merge($userIds, $ids);
-        $userIds = array_unique($userIds);
+
+        $userIds = array_unique($userIddiffs);
         $users = User::whereIn('id', $userIds)->paginate(20);
 
         $incomeDeducts = IncomeDeduct::all();
@@ -97,23 +101,33 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
         $paydayDetailId = $request->data['paydayDetailId'];
         $incomeDeductId = $request->data['incomeDeductId'];
         
+        foreach ($request->data['employeeNos'] as $pair) {
+            [$employeeNo, $value] = explode('-', $pair, 2);
 
-        foreach ($request->data['employeeNos'] as $employeeNo) {
-            [$userId, $value] = explode('-', $employeeNo, 2);
-            $userIds[] = $userId;
-            $values[] = $value;
-        }
+            $user = User::where('employee_no',$employeeNo)->first();
+            $incomeDeductUser = IncomeDeductUser::where('user_id',$user->id)
+                    ->where('payday_detail_id',$paydayDetailId)
+                    ->where('income_deduct_id',$incomeDeductId)
+                    ->first();
 
-        $users = User::whereIn('employee_no',$userIds)->get();
-        foreach($users as $index => $user)
-        {
+            if($incomeDeductUser == null){
                 IncomeDeductUser::create([
                     'user_id' => $user->id,
                     'payday_detail_id' => $paydayDetailId,
                     'income_deduct_id' => $incomeDeductId,
-                    'value' => $values[$index],
+                    'value' => $value,
                 ]);
+            }else{
+                $incomeDeductUser::update([
+                    'user_id' => $user->id,
+                    'payday_detail_id' => $paydayDetailId,
+                    'income_deduct_id' => $incomeDeductId,
+                    'value' => $value,
+                ]);
+            }
+
         }
+
     }
     public function getUsersByWorkScheduleAssignment($startDate,$endDate)
     {
@@ -137,6 +151,8 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
    
         // ค้นหา searchFields จากตาราง SearchField ที่เกี่ยวข้องกับตาราง users และมีสถานะเป็น 1
         $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
+        $paydayDetail = PaydayDetail::find($paydayDetailId);
+        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
 
         // สร้าง query ของตาราง users
         $query = User::query();
@@ -158,10 +174,12 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
         $searchUserIds = $query->pluck('id')->toArray();
 
         $userIds = [];
-        $paydayDetail = PaydayDetail::find($paydayDetailId);
+        
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
         
         $paydayDetailWithMaxEndDate = PaydayDetail::where('end_date', '<', $startDate)
             ->where('end_date', function ($query) use ($startDate) {
@@ -173,7 +191,7 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
             
         if ($paydayDetailWithMaxEndDate) {
             $paydayDetailWithMaxEndDateId= $paydayDetailWithMaxEndDate->id;
-            foreach ($ids as $userId)
+            foreach ($userIddiffs as $userId)
             {
                 $userDiligenceAllowance = UserDiligenceAllowance::where('user_id',$userId)->where('payday_detail_id',$paydayDetailWithMaxEndDateId)->first();
                 
@@ -194,8 +212,8 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
             }
             
         } 
-        $userIds = array_merge($userIds, $ids);
-        $userIds = array_unique($userIds);
+        // $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($$userIddiffs);
         $commonUserIds = array_intersect($userIds, $searchUserIds);
 
         $users = User::whereIn('id',$commonUserIds)->paginate(20);

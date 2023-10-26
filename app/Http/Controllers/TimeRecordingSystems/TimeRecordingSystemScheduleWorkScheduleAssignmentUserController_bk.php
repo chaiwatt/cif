@@ -47,6 +47,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
         $users = $this->getUsersByWorkScheduleAssignment($scheduleId, $monthId, $year)->paginate(20);
 
         $userGroups = UserGroup::all();
+        
 
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.schedule.assignment.user.index'
         return view('groups.time-recording-system.schedulework.schedule.assignment.user.index', [
@@ -64,6 +65,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
 
     public function create($scheduleId,$year,$monthId)
     {
+       
         // กำหนดค่าตัวแปร $action ให้เป็น 'create'
         $action = 'create';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ

@@ -22,13 +22,6 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            {{-- @if ($errors->has('userId'))
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-ban"></i> ผิดพลาด</h5>
-                กรุณาเลือกผู้อนุมัติเอกสารอย่างน้อย 1 คน
-            </div>
-            @endif --}}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -70,8 +63,6 @@
                                                 @foreach ($approvers as $approver)
                                                 <option value="{{$approver->id}}">{{$approver->name}}</option>
                                                 @endforeach
-
-                                                {{-- <option value="2">วันหยุด</option> --}}
                                             </select>
                                         </div>
                                     </div>
@@ -79,10 +70,6 @@
                                         <hr>
                                     </div>
                                     <div class="col-12 mt-2">
-                                        {{--
-                                        <hr class="mt-2"> --}}
-                                        {{--
-                                        <hr> --}}
                                         <div class="form-group clearfix mt-2">
 
                                             <div class="icheck-primary d-inline mr-2 ">
@@ -97,61 +84,34 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-12" id="content_wrapper_1"> --}}
-                                        {{-- <div class="row"> --}}
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>วันที่เริ่ม (วดป. คศ)<span
-                                                            class="small text-danger">*</span></label>
-                                                    <input type="text" name="startDate" id="startDate"
-                                                        value="{{old('startDate')}}"
-                                                        class="form-control input-date-format @error('startDate') is-invalid @enderror">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>ถึงวันที่ (วดป. คศ)<span
-                                                            class="small text-danger">*</span></label>
-                                                    <input type="text" name="endDate" id="endDate"
-                                                        value="{{old('endDate')}}"
-                                                        class="form-control input-date-format @error('endDate') is-invalid @enderror">
-                                                </div>
-                                            </div>
-                                            {{--
-                                        </div> --}}
 
-                                        {{--
-                                    </div> --}}
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>วันที่เริ่ม (วดป. คศ)<span class="small text-danger">*</span></label>
+                                            <input type="text" name="startDate" id="startDate"
+                                                value="{{old('startDate')}}"
+                                                class="form-control input-date-format @error('startDate') is-invalid @enderror">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ถึงวันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
+                                            <input type="text" name="endDate" id="endDate" value="{{old('endDate')}}"
+                                                class="form-control input-date-format @error('endDate') is-invalid @enderror">
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12" id="content_wrapper">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>จำนวนชั่วโมง<span class="small text-danger">*</span></label>
-                                                    <input type="text" name="hour_duration" id="hour_duration" value="4"
+                                                    <input type="text" name="hour_duration" id="hour_duration" value="6"
                                                         class="form-control integer @error('hour_duration') is-invalid @enderror">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {{--
-                                    <hr>
-                                    <div class="col-12">
-                                        <div class="card-body p-0">
-                                            <table class="table table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ผู้อนุมัติเอกสาร <a href="" class="btn btn-sm btn-primary"
-                                                                id="get_authorized_user"><i class="fas fa-plus"></i></a>
-                                                        </th>
-                                                        <th style="width:100px" class="text-right">ลบ</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="sortableRows">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> --}}
                                     <div class="col-12 text-right">
                                         <button class="btn bg-success mt-2">บันทึก</button>
                                     </div>
@@ -188,11 +148,9 @@
 <script>
     $('.select2').select2()
     window.params = {
-    
-    getUsersRoute: '{{ route('groups.document-system.overtime.document.get-users') }}',
-    
-    url: '{{ url('/') }}',
-    token: $('meta[name="csrf-token"]').attr('content')
+        getUsersRoute: '{{ route('groups.document-system.overtime.document.get-users') }}',
+        url: '{{ url('/') }}',
+        token: $('meta[name="csrf-token"]').attr('content')
     };
 
     $(document).on('click', '#radFixHour, #radManualHour', function () {
@@ -212,7 +170,7 @@
     $('#startDate, #endDate').removeClass('input-date-format').addClass('input-datetime-format').inputmask('99/99/9999 99:99');
     }
     
-    console.log('Selection:', selection);
+    // console.log('Selection:', selection);
     });
 
 </script>

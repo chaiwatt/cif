@@ -4,18 +4,20 @@ namespace App\Http\Controllers\SalarySystem;
 use PDF;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\UserPayday;
 use App\Models\SearchField;
 use App\Models\IncomeDeduct;
 use App\Models\PaydayDetail;
 use Illuminate\Http\Request;
+use App\Models\SalarySummary;
 use App\Models\OverTimeDetail;
 use App\Helpers\ActivityLogger;
 use App\Models\IncomeDeductUser;
+use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
 use App\Models\UserDiligenceAllowance;
 use App\Models\DiligenceAllowanceClassify;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
-use App\Models\CompanyDepartment;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class SalarySystemSalaryCalculationListSummaryController extends Controller
@@ -43,10 +45,14 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
         $permission = $roleGroupCollection['permission'];
 
         $paydayDetail = PaydayDetail::find($id);
+        $userPaydays = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
+        
         $userIds = [];
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydays);
+
         $paydayDetailWithMaxEndDate = PaydayDetail::where('end_date', '<', $startDate)
             ->where('end_date', function ($query) use ($startDate) {
                 $query->selectRaw('MAX(end_date)')
@@ -57,7 +63,7 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
             
         if ($paydayDetailWithMaxEndDate) {
             $paydayDetailWithMaxEndDateId= $paydayDetailWithMaxEndDate->id;
-            foreach ($ids as $userId)
+            foreach ($userIddiffs as $userId)
             {
                 $userDiligenceAllowance = UserDiligenceAllowance::where('user_id',$userId)->where('payday_detail_id',$paydayDetailWithMaxEndDateId)->first();
                 if(!$userDiligenceAllowance)
@@ -77,18 +83,20 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
             }
             
         } 
-        $userIds = array_merge($userIds, $ids);
-        $userIds = array_unique($userIds);
+        // $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($userIddiffs);
         $users = User::whereIn('id', $userIds)->paginate(20);
 
         $incomeDeducts = IncomeDeduct::all();
+        $salarySummaries = SalarySummary::where('payday_detail_id',$id)->get();
         return view('groups.salary-system.salary.calculation-list.summary.index', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'users' => $users,
             'paydayDetail' => $paydayDetail,
-            'incomeDeducts' => $incomeDeducts
+            'incomeDeducts' => $incomeDeducts,
+            'salarySummaries' => $salarySummaries
         ]);
     }
     public function importIncomeDeduct(Request $request)
@@ -122,9 +130,11 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
     {
         $queryInput = $request->data['searchInput'];
         $paydayDetailId = $request->data['paydayDetailId'];
+        $paydayDetail = PaydayDetail::find($paydayDetailId);
    
         // ค้นหา searchFields จากตาราง SearchField ที่เกี่ยวข้องกับตาราง users และมีสถานะเป็น 1
         $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
+        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
 
         // สร้าง query ของตาราง users
         $query = User::query();
@@ -145,11 +155,12 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
         }
         $searchUserIds = $query->pluck('id')->toArray();
 
-        $paydayDetail = PaydayDetail::find($paydayDetailId);
+        
         $userIds = [];
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
         $paydayDetailWithMaxEndDate = PaydayDetail::where('end_date', '<', $startDate)
             ->where('end_date', function ($query) use ($startDate) {
                 $query->selectRaw('MAX(end_date)')
@@ -160,7 +171,7 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
             
         if ($paydayDetailWithMaxEndDate) {
             $paydayDetailWithMaxEndDateId= $paydayDetailWithMaxEndDate->id;
-            foreach ($ids as $userId)
+            foreach ($userIddiffs as $userId)
             {
                 $userDiligenceAllowance = UserDiligenceAllowance::where('user_id',$userId)->where('payday_detail_id',$paydayDetailWithMaxEndDateId)->first();
                 if(!$userDiligenceAllowance)
@@ -180,8 +191,8 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
             }
             
         } 
-        $userIds = array_merge($userIds, $ids);
-        $userIds = array_unique($userIds);
+        // $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($userIddiffs);
         $commonUserIds = array_intersect($userIds, $searchUserIds);
 
         $users = User::whereIn('id',$commonUserIds)->paginate(20);
@@ -227,42 +238,16 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
-        $paydayDetailWithMaxEndDate = PaydayDetail::where('end_date', '<', $startDate)
-            ->where('end_date', function ($query) use ($startDate) {
-                $query->selectRaw('MAX(end_date)')
-                    ->from('payday_details')
-                    ->where('end_date', '<', $startDate);
-            })
-            ->first();
-            
-        if ($paydayDetailWithMaxEndDate) {
-            $paydayDetailWithMaxEndDateId= $paydayDetailWithMaxEndDate->id;
-            foreach ($ids as $userId)
-            {
-                $userDiligenceAllowance = UserDiligenceAllowance::where('user_id',$userId)->where('payday_detail_id',$paydayDetailWithMaxEndDateId)->first();
-                if(!$userDiligenceAllowance)
-                {
-                    $user = User::find($userId);
-                    $diligenceAllowanceId = $user->diligence_allowance_id;
-                    if($diligenceAllowanceId != null){
-                        
-                        $diligenceAllowanceClassifyId = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->min('id');
-                        UserDiligenceAllowance::create([
-                            'user_id' => $userId,
-                            'payday_detail_id' => $paydayDetailWithMaxEndDateId,
-                            'diligence_allowance_classify_id' => $diligenceAllowanceClassifyId,
-                        ]);
-                    }
-                }
-            }
-            
-        } 
-        $userIds = array_merge($userIds, $ids);
-        $userIds = array_unique($userIds);
+        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
+
+        // $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($userIddiffs);
+        // $userIds = array_unique($userIds);
         $users = User::whereIn('id', $userIds)->get();
         $companyDepartmentIds = array_unique($users->pluck('company_department_id')->toArray());
         $companyDepartments = CompanyDepartment::whereIn('id',$companyDepartmentIds)->get();
-        // dd($users);
+       
         $data = ['users'=>$users,'companyDepartments' => $companyDepartments,'paydayDetail' => $paydayDetail];
         $pdf = PDF::loadView('groups.salary-system.salary.calculation-list.summary.all', $data,[],[ 
           'title' => 'Certificate', 
@@ -272,5 +257,79 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
         return $pdf->stream('document.pdf');
     }
 
+    public function finish($paydayDetailId)
+    {
+        $paydayDetail = PaydayDetail::find($paydayDetailId);
+        $userIds = [];
+        $startDate = $paydayDetail->start_date;
+        $endDate = $paydayDetail->end_date;
+        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();     
+        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);      
 
+        // $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($userIddiffs);
+        $users = User::whereIn('id', $userIds)->get();
+
+        $companyDepartments = CompanyDepartment::all();
+
+        foreach($companyDepartments as $key => $companyDepartment){
+            $totalSalary = 0;
+            $totalsocialSecurityFivePercent = 0;
+            $totaloverTimeCost = 0;
+            $totaldeligenceAllowance = 0;
+            $totalLeave = 0;
+            $totalAbsence = 0;
+            $netDeduct =0;
+            $netIncome =0;
+            
+            foreach($users->where('company_department_id',$companyDepartment->id) as $user){
+                $userSummary = $user->salarySummary($paydayDetail->id);
+                $totalSalary += round(str_replace(',', '',$userSummary['salary']));
+                $totalLeave += $userSummary['leaveCountSum'];
+                $totalAbsence += $userSummary['absentCountSum'];
+                $totaloverTimeCost += round(str_replace(',', '',$userSummary['overTimeCost']));
+                $totaldeligenceAllowance += round(str_replace(',', '',$userSummary['deligenceAllowance']));
+                $totalsocialSecurityFivePercent += round(str_replace(',', '',$userSummary['socialSecurityFivePercent']));
+                foreach ($user->getSummaryIncomeDeductByUsers(2,$paydayDetail->id) as $getIncomeDeductByUser) {
+                    $netDeduct += $getIncomeDeductByUser->value;
+                }
+
+                foreach ($user->getSummaryIncomeDeductByUsers(1,$paydayDetail->id) as $getIncomeDeductByUser) {
+                    $netIncome += $getIncomeDeductByUser->value;
+                }
+            }
+            $salarySummary = SalarySummary::where('payday_detail_id',$paydayDetail->id)->where('company_department_id',$companyDepartment->id)->first();
+            if ($salarySummary == null){
+                SalarySummary::create([
+                    'employee' => count($users->where('company_department_id',$companyDepartment->id)),
+                    'payday_detail_id' => $paydayDetail->id,
+                    'company_department_id' => $companyDepartment->id,
+                    'sum_salary' => $totalSalary,
+                    'sum_overtime' => $totaloverTimeCost,
+                    'sum_allowance_diligence' => $totaldeligenceAllowance,
+                    'sum_income' => $netIncome,
+                    'sum_deduct' => $netDeduct,
+                    'sum_leave' => $totalLeave,
+                    'sum_absence' => $totalAbsence,
+                    'sum_social_security' => $totalsocialSecurityFivePercent
+                ]);
+            }else{
+                $salarySummary->update([
+                    'employee' => count($users->where('company_department_id',$companyDepartment->id)),
+                    'payday_detail_id' => $paydayDetail->id,
+                    'company_department_id' => $companyDepartment->id,
+                    'sum_salary' => $totalSalary,
+                    'sum_overtime' => $totaloverTimeCost,
+                    'sum_allowance_diligence' => $totaldeligenceAllowance,
+                    'sum_income' => $netIncome,
+                    'sum_deduct' => $netDeduct,
+                    'sum_leave' => $totalLeave,
+                    'sum_absence' => $totalAbsence,
+                    'sum_social_security' => $totalsocialSecurityFivePercent
+                ]);
+            }
+        }
+        return redirect()->back();
+    }
 }

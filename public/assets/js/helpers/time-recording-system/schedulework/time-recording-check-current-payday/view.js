@@ -36,16 +36,12 @@ $(document).on('change', '.user-checkbox', function (e) {
 
 
 $(document).on('click', '#show_modal', function (e) {
-    console.log('ok');
     $('#modal-date-range').modal('show')
 });
 
 $(document).on('click', '#show_file_open', function (e) {
     $('#file-inputs').trigger('click');
 });
-
-
-
 
 $(document).on('click', '#import_for_all', function (e) {
     $('#file-input').trigger('click');

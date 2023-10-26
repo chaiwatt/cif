@@ -36,4 +36,8 @@ class CompanyDepartment extends Model
         return $this->users_count ?? $this->users_count = $this->users_belong()->count();
     }
 
+    public function salarySummary($paydayDetailId){
+        return SalarySummary::where('payday_detail_id',$paydayDetailId)->where('company_department_id',$this->id)->first();
+    }
+
 }

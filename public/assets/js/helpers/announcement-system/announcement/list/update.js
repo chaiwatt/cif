@@ -17,7 +17,6 @@ $(document).on('change', '#attachment', function (event) {
 
 $(document).on('click', '#btn-update-announcement', function (e) {
     e.preventDefault();
-    // console.log('ok');
     var formData = new FormData(); 
     var title = $('#title').val();
     var description = $('#description').val();
@@ -45,7 +44,6 @@ $(document).on('click', '#btn-update-announcement', function (e) {
 
 $(document).on('click', '.delete-file', function (e) {
     e.preventDefault();
-    console.log('ok');
     var deleteAttachmentUrl = window.params.deleteAttachmentRoute
     var announceAttachmentId = $(this).data('id');
     var data = {

@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row ">
                 <div class="col-sm-6">
-                    <h1 class="m-0">รายการล่วงเวลา: {{$overtime->name}}</h1>
+                    <h1 class="m-0">{{$overtime->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -76,6 +76,7 @@
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>
+                                                    <th style="width: 250px">จำนวนชั่วโมง</th>
                                                     <th class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
@@ -86,6 +87,13 @@
                                                     <td>{{$user->name}}
                                                         {{$user->lastname}}</td>
                                                     <td>{{$user->company_department->name}}</td>
+                                                    <td>
+                                                        <div class="form-group mb-0">
+                                                            <input type="text" name="hour" id="hour"
+                                                                value="{{$user->getOvertimeHour($overtime->id)}}"
+                                                                class="form-control integer" data-user="{{$user->id}}">
+                                                        </div>
+                                                    </td>
                                                     <td class="text-right">
                                                         <form
                                                             action="{{ route('groups.document-system.overtime.approval.assignment.delete', ['overtime_id' => $overtime->id, 'user_id' => $user->id]) }}"
@@ -140,6 +148,7 @@
     $('.select2').select2()
     window.params = {
         importUserGroupRoute: '{{ route('groups.document-system.overtime.approval.assignment.import-user-group') }}',
+        updateHourRoute: '{{ route('groups.document-system.overtime.approval.assignment.update-hour') }}',
         importEmployeeNoRoute: '{{ route('groups.document-system.overtime.approval.assignment.import-employee-no') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')

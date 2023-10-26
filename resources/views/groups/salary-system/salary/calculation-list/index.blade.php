@@ -66,7 +66,8 @@
                                                 <th>ต้นงวด</th>
                                                 <th>ปลายงวด</th>
                                                 <th>การคำนวน</th>
-                                                <th style="width: 100px">เพิ่มเติม</th>
+                                                <th>สถานะ</th>
+                                                <th style="width: 150px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -103,11 +104,16 @@
                                                     @endif
                                                 </td>
                                                 <td>
+                                                    @if (count($paydayDetail->SalarySummary()->get()) != 0)
+                                                    <span class="badge bg-gray">ปิดงวด</span>
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.calculation',['id' => $paydayDetail->id])}}"
                                                         class="btn btn-sm btn-info"><i
                                                             class="fas fa-calculator"></i></a>
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.summary',['id' => $paydayDetail->id])}}"
-                                                        class="btn btn-sm btn-success"><i
+                                                        class="btn btn-sm btn-primary"><i
                                                             class="fas fa-chart-bar"></i></a>
                                                 </td>
                                                 </tr>

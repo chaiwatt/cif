@@ -27,13 +27,14 @@ class GroupModuleJobsTableSeeder extends Seeder
         $announcementGroup = Group::where('code','ANNOUNCEMENT')->first();
         $jobApplicationGroup = Group::where('code','JOB-APPLICATION')->first();
         $learningGroup = Group::where('code','LEARNING')->first();
+        $reportGroup = Group::where('code','REPORT')->first();
         // Module
         $shiftModule = Module::where('code','SHIFT')->first();
         $workScheduleModule = Module::where('code','WORK-SCHEDULE')->first();
         $timeRecordingSettingModule = Module::where('code','TIME-RECORDING-SETTING')->first();
         // $timeRecordingReportModule = Module::where('code','TIME-RECORDING-REPORT')->first();
-        $sararyModuleOne = Module::where('code','SALARY')->first();
-        $sararyModuleSetting = Module::where('code','SALARY-MODULE-SETTING')->first();
+        $salaryModuleOne = Module::where('code','SALARY')->first();
+        $salaryModuleSetting = Module::where('code','SALARY-MODULE-SETTING')->first();
         $approveModuleSetting = Module::where('code','DOCUMENT-APPROVE-SETTING')->first();
         $ducumentLeaveModule = Module::where('code','DOCUMENT-LEAVE')->first();
         $ducumentOvertimeModule = Module::where('code','DOCUMENT-OVERTIME')->first();
@@ -44,6 +45,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $jobApplicationModule = Module::where('code','JOB-APPLICATION-MODULE')->first();
         $learningModuleSetting = Module::where('code','LEARNING-SETTING')->first();
         $learningModule = Module::where('code','LEARNING')->first();
+        $dashboardReportModule = Module::where('code','DASHBOARD-REPORT')->first();
         
         // Job
         $shiftManagementJob = Job::where('code','SHIFT-MANAGEMENT')->first();
@@ -56,9 +58,9 @@ class GroupModuleJobsTableSeeder extends Seeder
         $workScheduleEmployeeGroup = Job::where('code','EMPLOYEE-GROUP')->first();
         $workScheduleVisibility = Job::where('code','WORK-SCHEDULR-VISIBILITY')->first();
         // $workScheduleReport = Job::where('code','WORK-SCHEDULR-REPORT')->first();
-        $sararyPayday = Job::where('code','SALARY-PAYDAY')->first();
-        $sararySkillBasedCost = Job::where('code','SALARY-SKILL-BASED-COST')->first();
-        $sararyIncomeDeduct = Job::where('code','INCOME-DEDUCT')->first();
+        $salaryPayday = Job::where('code','SALARY-PAYDAY')->first();
+        $salarySkillBasedCost = Job::where('code','SALARY-SKILL-BASED-COST')->first();
+        $salaryIncomeDeduct = Job::where('code','INCOME-DEDUCT')->first();
         $diligenceAllowance = Job::where('code','DILIGENCE-ALLOWANCE')->first();
         $documentApprove = Job::where('code','DOCUMENT-APPROVE')->first();
         $documentLeave = Job::where('code','DOCUMENT-LEAVE')->first();
@@ -78,7 +80,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $calculationExtraList = Job::where('code','CALCULATION-EXTRA-LIST')->first();
         $learningSetting = Job::where('code','LEARNING-SETTING')->first();
         $learning = Job::where('code','LEARNING-LIST')->first();
-
+        $salaryReport = Job::where('code','SALARY-REPORT')->first();
 
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
@@ -132,33 +134,33 @@ class GroupModuleJobsTableSeeder extends Seeder
         // ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleOne->id,
+            'module_id' => $salaryModuleOne->id,
             'job_id' => $calculationList->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleOne->id,
+            'module_id' => $salaryModuleOne->id,
             'job_id' => $calculationExtraList->id,
         ]);
 
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleSetting->id,
-            'job_id' => $sararyPayday->id,
+            'module_id' => $salaryModuleSetting->id,
+            'job_id' => $salaryPayday->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleSetting->id,
-            'job_id' => $sararySkillBasedCost->id,
+            'module_id' => $salaryModuleSetting->id,
+            'job_id' => $salarySkillBasedCost->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleSetting->id,
-            'job_id' => $sararyIncomeDeduct->id,
+            'module_id' => $salaryModuleSetting->id,
+            'job_id' => $salaryIncomeDeduct->id,
         ]);
         GroupModuleJob::create([
             'group_id' => $salaryManagementgroup->id,
-            'module_id' => $sararyModuleSetting->id,
+            'module_id' => $salaryModuleSetting->id,
             'job_id' => $diligenceAllowance->id,
         ]);
         GroupModuleJob::create([
@@ -240,6 +242,11 @@ class GroupModuleJobsTableSeeder extends Seeder
             'group_id' => $learningGroup->id,
             'module_id' => $learningModuleSetting->id,
             'job_id' => $learningSetting->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $reportGroup->id,
+            'module_id' => $dashboardReportModule->id,
+            'job_id' => $salaryReport->id,
         ]);
     }
 }

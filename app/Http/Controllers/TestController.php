@@ -10,17 +10,21 @@ use App\Models\Payday;
 use App\Models\Approver;
 use App\Models\LeaveType;
 use App\Models\UserLeave;
+use App\Models\UserPayday;
 use App\Models\LeaveDetail;
 use App\Models\ApproverUser;
 use App\Models\PaydayDetail;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
+use App\Exports\OvertimePS02;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\WorkScheduleAssignment;
+use PhpOffice\PhpWord\TemplateProcessor;
 use App\Helpers\PayDaySameMonthGenerator;
 use App\Helpers\PayDayCrossMonthGenerator;
-use App\Models\UserPayday;
 use App\Models\WorkScheduleAssignmentUser;
+
 
 class TestController extends Controller
 {
@@ -482,7 +486,7 @@ class TestController extends Controller
         // dd($leaveDetail);
 
         // $workScheduleAssignmentUser = WorkScheduleAssignmentUser::find(7);
-        // dd($workScheduleAssignmentUser->getOvertimeInfo());
+        // dd($workScheduleAssignmentUser->getOvertimeFromScanFile());
         //         $users = User::all();
         //         foreach($users as $user)
         //         {
@@ -529,37 +533,50 @@ class TestController extends Controller
         //     ->whereYear('date_in', 2023)
         //     ->pluck('work_schedule_assignment_id')->toArray();
         // dd (array_unique($workScheduleAssignmentUsers))    ;
-        $year = 2023;
-        $paydayIds = UserPayday::where('user_id', 765)
-        ->whereHas('payday', function ($query) use ($year) {
-            $query->where('year',$year)
-                    ->where('type',1);
+        // $year = 2023;
+        // $paydayIds = UserPayday::where('user_id', 765)
+        // ->whereHas('payday', function ($query) use ($year) {
+        //     $query->where('year',$year)
+        //             ->where('type',1);
                         
-        })
-        ->pluck('payday_id')->toArray();
+        // })
+        // ->pluck('payday_id')->toArray();
 
-        $user = User::find(782);
-        $datas = [];
-        foreach ($paydayIds as $paydayId){
-            $paydayDetails = PaydayDetail::where('payday_id',$paydayId)->orderBy('start_date')->get();
-            foreach($paydayDetails as $paydayDetail ){
-                $userSummary = $user->salarySummary($paydayDetail->id);
-                // if ($userSummary['workHour'] != null || $userSummary['absentCountSum'] != null ||$userSummary['leaveCountSum'] != null || $userSummary['earlyHour'] != null || $userSummary['lateHour'] != null){
-                    $data = [
-                        'paydayDetail' => $paydayDetail,
-                        'workHours' => $userSummary['workHour'],
-                        'absentCounts' => $userSummary['absentCountSum'],
-                        'leaveCounts' => $userSummary['leaveCountSum'],
-                        'earlyHours' => $userSummary['earlyHour'],
-                        'lateHours' => $userSummary['lateHour']
-                    ];
-                    $datas[] = $data;
-                // }    
-            }
-        }
+        // $user = User::find(782);
+        // $datas = [];
+        // foreach ($paydayIds as $paydayId){
+        //     $paydayDetails = PaydayDetail::where('payday_id',$paydayId)->orderBy('start_date')->get();
+        //     foreach($paydayDetails as $paydayDetail ){
+        //         $userSummary = $user->salarySummary($paydayDetail->id);
+        //         // if ($userSummary['workHour'] != null || $userSummary['absentCountSum'] != null ||$userSummary['leaveCountSum'] != null || $userSummary['earlyHour'] != null || $userSummary['lateHour'] != null){
+        //             $data = [
+        //                 'paydayDetail' => $paydayDetail,
+        //                 'workHours' => $userSummary['workHour'],
+        //                 'absentCounts' => $userSummary['absentCountSum'],
+        //                 'leaveCounts' => $userSummary['leaveCountSum'],
+        //                 'earlyHours' => $userSummary['earlyHour'],
+        //                 'lateHours' => $userSummary['lateHour']
+        //             ];
+        //             $datas[] = $data;
+        //         // }    
+        //     }
+        // }
 
-        dd($datas);
+        // dd($datas);
+        $month = 7;
 
+        $query = PaydayDetail::where(function ($query) use ($month) {
+            $query->whereHas('payday', function ($subQuery) use ($month) {
+                $subQuery->where('cross_month', 2);
+            })->whereMonth('start_date', $month);
+
+            $query->orWhere(function ($query) use ($month) {
+                $query->whereHas('payday', function ($subQuery) use ($month) {
+                    $subQuery->where('cross_month', 1);
+                })->whereMonth('start_date', $month - 1);
+            });
+        })->pluck('id')->toArray();
+        dd($query);
     }
 
     public function isHolidayShift($date,$userId)
@@ -627,7 +644,22 @@ class TestController extends Controller
         return $dateList;
     }
 
-
+    public function export()
+    {
+        dd(asset("assets/template/ps.docx"));
+        try {
+            $wordtemplate = new TemplateProcessor(asset("assets/template/ps.docx"));
+        } catch (\Exception $e) {
+            // Log the exception or print it to the screen for debugging
+            dd($e->getMessage());
+        }
+        
+        // $wordtemplate = new TemplateProcessor(asset("assets/template/ps.docx"));
+        // dd($wordtemplate);
+        // $wordtemplate->setValue('issue_date','21/10/2565');
+        // $wordtemplate->saveAs('OT-วิศวกรรม'.'.docx');
+        // return response()->download('OT-วิศวกรรม'.'.docx')->deleteFileAfterSend(true);
+    }
 
     
 }

@@ -19,7 +19,9 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">{{ $group->description }}</p>
-                    <a href="{{ route('group.index', $group->id) }}" class="btn btn-info"><i
+                    {{-- <a href="{{ route('group.index', $group->id) }}" class="btn btn-info"><i
+                            class="fas fa-angle-double-right mr-2"></i>เข้าสู่ระบบงาน</a> --}}
+                    <a href="{{ route($group->default_route) }}" class="btn btn-info"><i
                             class="fas fa-angle-double-right mr-2"></i>เข้าสู่ระบบงาน</a>
                 </div>
             </div>

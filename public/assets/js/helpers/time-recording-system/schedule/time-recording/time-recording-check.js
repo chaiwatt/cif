@@ -72,6 +72,7 @@ $(document).on('click', '#user', function (e) {
         'year': year,
         'userId': userId,
     }
+    
     RequestApi.postRequest(data, viewUserUrl, token).then(response => {
         $('#table_modal_container').html(response);
         $('.input-time-format').inputmask('99:99:99');
@@ -82,8 +83,27 @@ $(document).on('click', '#user', function (e) {
 
 });
 
+$(document).on('change', '#hour', function () {
+    var value = $(this).val();
+    var overtimeId = $(this).data('overtimeid');
+    var userId = $(this).data('userid');
+    console.log(value, overtimeId, userId);
+
+    var updateHourUrl = window.params.updateHourRoute
+    var dataSet = {
+        'overtimeId': overtimeId,
+        'userId': userId,
+        'val': value
+    }
+    RequestApi.postRequest(dataSet, updateHourUrl, token).then(response => {
+        Toast.fire({
+            icon: 'success',
+            title: 'แก้ไขชั่วโมงล่วงเวลาสำเร็จ '
+        })
+    }).catch(error => { })
+});
+
 $(document).on('click', '.btnSaveBtn', function (e) {
-    console.log('ok');
     // Prevent the default click behavior (if necessary)
     e.preventDefault();
     var filter = $('.btn-group-toggle input[type="radio"]:checked').attr('id').split('_')[1];
@@ -137,13 +157,6 @@ $(document).on('click', '.btnSaveBtn', function (e) {
     RequestApi.postRequest(data, updateUrl, token).then(response => {
         $('#table_container').html(response);
         $('#error_' + workScheduleAssignmentUserId).hide();
-        // if (timeInValue === '' && timeOutValue === '') {
-        //     var timeInInput = row.find('input[id^="time_in"]');
-        //     var timeOutInput = row.find('input[id^="time_out"]');
-
-        //     timeInInput.val('00:00:00');
-        //     timeOutInput.val('00:00:00');
-        // }
         Toast.fire({
             icon: 'success',
             title: 'แก้ไขรายการสำเร็จ เวลาเข้า ' + timeInValue + ' เวลาออก ' + timeOutValue

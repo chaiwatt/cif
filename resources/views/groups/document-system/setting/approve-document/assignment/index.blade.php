@@ -41,6 +41,32 @@
                         รหัสพนักงาน
                     </a>
                 </div>
+                <div>
+                    <span>หรือนำเข้าจากแผนก</span>
+                </div>
+                <div class="form-group ml-2 mr-2" style="width: 250px;">
+                    <select name="company_department" id="company_department"
+                        class="form-control select2 @error('company_department') is-invalid @enderror"
+                        style="width: 100%;">
+                        <option value="">==เลือกแผนก==</option>
+                        @foreach ($companyDepartments as $companyDepartment)
+                        <option value="{{ $companyDepartment->id }}">
+                            {{ $companyDepartment->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                {{-- <div>
+                    <span>หรือนำเข้าจากประเภท</span>
+                </div>
+                <div class="form-group ml-2 mr-2" style="width: 250px;">
+                    <select name="employee_type" id="employee_type"
+                        class="form-control select2 @error('employee_type') is-invalid @enderror" style="width: 100%;">
+                        <option value="">==เลือกประเภท==</option>
+                        <option value="1">รายเดือน</option>
+                        <option value="2">รายวัน</option>
+                    </select>
+                </div> --}}
 
             </div>
 
@@ -126,6 +152,8 @@
 <script>
     window.params = {
         importEmployeeNoRoute: '{{ route('groups.document-system.setting.approve-document.assignment.import-employee-no') }}',
+        importEmployeeNoFromDeptRoute: '{{ route('groups.document-system.setting.approve-document.assignment.import-employee-no-from-dept') }}',
+       
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

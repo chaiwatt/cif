@@ -419,15 +419,13 @@ class User extends Authenticatable
         ->orderBy('date_in')
         ->pluck('date_in')->toArray();
        
-        
         $shiftId = $this->isShiftAssignment($startDate);
-        // dd($shiftId);
+
         $workShift = Shift::find($shiftId)->first();
         
         $shiftStartDate = "$startDate $workShift->start";
         $shiftEndDate = "$endDate $workShift->end";
 
-            
         $leaveDetails = LeaveDetail::join('leaves', 'leave_details.leave_id', '=', 'leaves.id')
             ->where('leaves.user_id', $this->id)
             ->where(function ($query) use ($shiftStartDate, $shiftEndDate) {
@@ -447,7 +445,6 @@ class User extends Authenticatable
         }, $leaveDetails);
 
          
-        
         $datesNotInWorkSchedule = array_diff($notNullworkScheduleAssignmentUserDateIns, $dateArray);
 
         $workScheduleAssignmentUsers = WorkScheduleAssignmentUser::whereIn('date_in',$datesNotInWorkSchedule)
@@ -455,6 +452,52 @@ class User extends Authenticatable
             ->get();
 
         return $workScheduleAssignmentUsers;
+    }
+
+    public function moreThanOneHourLate($startDate,$endDate,$year)
+    {
+
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+        ->whereHas('workScheduleAssignment', function ($query) use ($year) {
+            $query->where('year', $year)
+                ->whereHas('shift', function ($subQuery) {
+                    $subQuery->where('code', 'NOT LIKE', '%_H')
+                            ->where('code', 'NOT LIKE', '%_TH');
+                });
+        })
+        ->whereBetween('date_in', [$startDate, $endDate])
+        ->where(function ($query) {
+            $query->whereNotNull('time_in');
+        })
+        ->get();
+
+
+        $lateList = [];
+
+        foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser){
+                $shiftId = $this->isShiftAssignment($workScheduleAssignmentUser->date_in);
+
+                $workShift = Shift::find($shiftId)->first();
+                $shiftStartDate = "$workScheduleAssignmentUser->date_in $workShift->start";
+                $workStartDate = "$workScheduleAssignmentUser->date_in $workScheduleAssignmentUser->time_in";
+                
+                $start = Carbon::parse($shiftStartDate);
+                $end = Carbon::parse($workStartDate);
+
+                $differenceInMinutes = $start->diffInMinutes($end);
+
+                if ($differenceInMinutes > 55){
+                    $lateList[] = $workScheduleAssignmentUser->date_in;
+                
+                }
+            
+            
+        }
+        return $lateList;
+       
     }
 
     public function getWorkScheduleAssignmentUsersInformationWithHolidayCheck($startDate, $endDate, $year)
@@ -1047,7 +1090,7 @@ class User extends Authenticatable
 
         $totalWorkMinute = ($earlyHourHour + $lateHourHour)*60 + $workHourCountSum + $earlyHourMinute + $lateHourMinute;
 
-        $sararyRecord = SalaryRecord::where('user_id',$this->id)
+        $salaryRecord = SalaryRecord::where('user_id',$this->id)
                         ->latest('id')
                         ->first();
        
@@ -1088,8 +1131,8 @@ class User extends Authenticatable
             'lateHour' => $lateHour !== 0 ? number_format($lateHour, 2) : null,
             'overTime' => $overTimeCountSum !== 0 ?  $overTimeCountSum : null,
             'deligenceAllowance' => number_format($this->getdiligenceAllowance($allowance,null), 2) ,
-            'salary' => number_format(round($totalWorkDay*$sararyRecord->salary, 0), 2),
-            'overTimeCost' => number_format(round($totalOvertime*$sararyRecord->salary/8, 0), 2),
+            'salary' => number_format(round($totalWorkDay*$salaryRecord->salary, 0), 2),
+            'overTimeCost' => number_format(round($totalOvertime*$salaryRecord->salary/8, 0), 2),
         ]);
     }
 
@@ -1174,7 +1217,7 @@ class User extends Authenticatable
 
         $totalWorkMinute = ($earlyHourHour + $lateHourHour)*60 + $workHourCountSum + $earlyHourMinute + $lateHourMinute;
 
-        $sararyRecord = SalaryRecord::where('user_id',$this->id)
+        $salaryRecord = SalaryRecord::where('user_id',$this->id)
                         ->latest('id')
                         ->first();
        
@@ -1189,39 +1232,56 @@ class User extends Authenticatable
         // 
         $workHourCountSum = intVal($workHourCountSum/60) + intVal($workHourCountSum % 60)/100 ;
         $socialSecurity = 0.00;
-        $totalSalary= number_format(round($totalWorkDay*$sararyRecord->salary, 0), 2);
 
-        $socialSecurity = round($totalWorkDay*$sararyRecord->salary, 0);
-        $incomes = $this->getSummaryIncomeDeductByUsers(1,$id);
+        $totalSalary = SalaryRecord::where('user_id',$this->id)->latest()->first()->salary;
+
+        if ($this->employee_type_id == 2){
+            $totalSalary= round($totalWorkDay*$salaryRecord->salary, 0);
+        }
+
+        $socialSecurity = round($salaryRecord->salary, 0);
+        $exceedOvertime = 0;    
+        if ($socialSecurity > 15000){
+            $socialSecurityFivePercent = number_format(round(15000 * .05), 2);
+        }else{
+            if ($this->employee_type_id != 1){
+                $socialSecurity = round($totalWorkDay*$salaryRecord->salary, 0);
+            }
+
+
+            $incomes = $this->getSummaryIncomeDeductByUsers(1,$id);
+
+            if(count($incomes) > 0)
+            {
+                $incomeDeductIds = $incomes->whereIn('income_deduct_id',[1,2])->pluck('income_deduct_id')->toArray();
+                $sum = IncomeDeductUser::where('user_id',$this->id)->where('payday_detail_id',$id)->whereIn('income_deduct_id',$incomeDeductIds)->sum('value');
+                $socialSecurity += $sum;
+            }
+            
+    
+            $socialSecurityFivePercent = number_format(round($socialSecurity * .05), 2);
+        }
+
+        $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8/30, 0), 2);
+
+        if ($this->employee_type_id != 1){
+            if ($overTimeCountSum > 24) {
+                $exceedOvertime = $overTimeCountSum - 24;
+                $overTimeCountSum = 24;
+            } 
+            
+            $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8, 0), 2);
+        }
         
-        $incomeDeductSum = 0;
-        if(count($incomes) > 0)
-        {
-            
-            $incomeDeductIds = $incomes->whereIn('income_deduct_id',[1,2])->pluck('income_deduct_id')->toArray();
-            // if($this->employee_no == '900225')
-            // {
-            //     dd(IncomeDeductUser::where('user_id',$this->id)->where('payday_detail_id',$id)->whereIn('income_deduct_id',$incomeDeductIds)->get());
-            //     dd($this->name,$this->employee_no,$this->id,$incomeDeductIds);
-            // }
-            $sum = IncomeDeductUser::where('user_id',$this->id)->where('payday_detail_id',$id)->whereIn('income_deduct_id',$incomeDeductIds)->sum('value');
-            $socialSecurity += $sum;
-            
-
-        }
-            
-        $socialSecurityFivePercent = number_format(round($socialSecurity * .05), 2) ;
-
-        if ($overTimeCountSum > 24) {
-            $exceedOvertime = $overTimeCountSum - 24;
-            $overTimeCountSum = 24;
-        } else {
-            $exceedOvertime = 0;
-        }
         $diligene_allowance_cost = null;
         if($this->diligence_allowance_id != null){
+            
             $diligene_allowance_cost = number_format($this->getdiligenceAllowance($allowance,$id), 2) ;
         }
+
+
+        
+        
         return collect([
             'workHour' => $workHourCountSum !== 0 ? number_format($workHourCountSum, 2) : null,
             'absentCountSum' => $absentCountSum !== 0 ? $absentCountSum : null,
@@ -1230,8 +1290,8 @@ class User extends Authenticatable
             'lateHour' => $lateHour !== 0 ? number_format($lateHour, 2) : null,
             'overTime' => $overTimeCountSum !== 0 ? $overTimeCountSum  : null,
             'deligenceAllowance' => $diligene_allowance_cost ,
-            'salary' => $totalSalary,
-            'overTimeCost' => number_format(round($overTimeCountSum*1.5*$sararyRecord->salary/8, 0), 2),
+            'salary' => number_format($totalSalary, 2),
+            'overTimeCost' => $overTimeCost,
             'socialSecurityFivePercent' => $socialSecurityFivePercent,
             'exceedOvertime' => $exceedOvertime,
         ]);
@@ -1252,8 +1312,6 @@ class User extends Authenticatable
 
         $firstPadayDetail = PaydayDetail::where('payday_id',$firstPaydayId)->where('start_date',$paydayDetail->start_date)->first();
         $secondPadayDetail = PaydayDetail::where('payday_id',$secondPaydayId)->where('end_date',$paydayDetail->end_date)->first();
-        // dd($firstPadayDetail,$secondPadayDetail);
-
 
         $exceedOvertimeFirstPaydayDetail = 0; 
 
@@ -1262,15 +1320,13 @@ class User extends Authenticatable
             ->get();
 
         foreach($workScheduleAssignmentUsersForFirstPaydayDetails as $workScheduleAssignmentUser){
-            $hourDifference = $workScheduleAssignmentUser->getOvertimeInfo();
+            $hourDifference = $workScheduleAssignmentUser->getOvertimeFromScanFile();
             if($hourDifference != null){
                 $exceedOvertimeFirstPaydayDetail += $hourDifference['hourDifference'];
             }            
         } 
 
         $exceedOvertimeFirstPaydayDetail = ($exceedOvertimeFirstPaydayDetail > 24) ? ($exceedOvertimeFirstPaydayDetail - 24) : 0;
-
-        // dd($exceedOvertimeFirstPaydayDetail);
 
         $exceedOvertimeSecondPaydayDetail = 0; 
 
@@ -1279,17 +1335,15 @@ class User extends Authenticatable
             ->get();
 
         foreach($workScheduleAssignmentUsersForSecondPaydayDetails as $workScheduleAssignmentUser){
-            $hourDifference = $workScheduleAssignmentUser->getOvertimeInfo();
+            $hourDifference = $workScheduleAssignmentUser->getOvertimeFromScanFile();
             if($hourDifference != null){
                 $exceedOvertimeSecondPaydayDetail += $hourDifference['hourDifference'];
             }            
         } 
       
-
         $exceedOvertimeSecondPaydayDetail = ($exceedOvertimeSecondPaydayDetail > 24) ? ($exceedOvertimeSecondPaydayDetail - 24) : 0;
 
         $exceedOvertime = $exceedOvertimeFirstPaydayDetail + $exceedOvertimeSecondPaydayDetail;
-        // dd($exceedOvertime);
         
         $holidayWorkScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
             ->whereBetween('date_in', [$startDate, $endDate])
@@ -1374,10 +1428,13 @@ class User extends Authenticatable
     {
         // $paydayDetail = $this->getPaydayDetailWithToday();
         $diligenceAllowanceClassifyId = DiligenceAllowanceClassify::where('diligence_allowance_id',$this->diligence_allowance_id)->first()->id;
-        // dd($diligenceAllowanceClassifyId);
+
+
         $paydayDetail = PaydayDetail::find($id);
         
         $diligenceAllowances = $this->diligenceAllowances;
+
+
 
         $userDiligenceAllowance =  $diligenceAllowances->where('payday_detail_id', $paydayDetail->id);
 
@@ -1388,6 +1445,8 @@ class User extends Authenticatable
         }
         $diligenceAllowanceId= $previousUserDiligenceAllowance->diligenceAllowanceClassify->diligence_allowance_id;
         $maxDiligenceAllowanceClassifyLevel = DiligenceAllowanceClassify::where('diligence_allowance_id',$diligenceAllowanceId)->max('id');
+
+        
 
         if(count($userDiligenceAllowance) == 0){
             $diligenceAllowanceClassifyLevel = UserDiligenceAllowance::where('user_id',$this->id)
@@ -1473,6 +1532,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(AssessmentGroupUser::class, 'user_id');
     }
+
+    public function getOvertimeHour($overtimeId){
+        return OvertimeDetail::where('over_time_id',$overtimeId)->where('user_id',$this->id)->first()->hour;
+    }
+
 }
 
 

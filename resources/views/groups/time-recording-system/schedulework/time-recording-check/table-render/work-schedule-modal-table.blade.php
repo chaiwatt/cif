@@ -2,9 +2,13 @@
     <thead>
         <tr>
             <th>วันที่เข้า</th>
-            <th style="width:25%">เวลาเข้า</th>
+            <th style="width:20%">เวลาเข้า</th>
             <th>วันที่ออก</th>
-            <th style="width:25%">เวลาออก</th>
+            <th style="width:20%">เวลาออก</th>
+            @if (count($overtimeDetails) != 0)
+            <th style="width:15%">O.T.</th>
+            @endif
+
             <th class="text-right">บันทึก</th>
         </tr>
     </thead>
@@ -13,6 +17,10 @@
         @foreach ($workScheduleAssignmentUsers as $key => $workScheduleAssignmentUser)
         <tr data-id="{{ $workScheduleAssignmentUser->id }}">
             <td>
+                @php
+                $moreThanOneHourLate =
+                $workScheduleAssignmentUser->moreThanOneHourLate();
+                @endphp
                 {{ date('d/m/Y', strtotime($workScheduleAssignmentUser->date_in)) }}
                 {!! (strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_H') !== false ||
                 strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_TH') !== false) ? '<span
@@ -41,6 +49,9 @@
                 @if (strpos($workScheduleAssignmentUser->code, 'E') !== false)
                 <span class="badge bg-warning">E</span>
                 @endif
+                @if ($moreThanOneHourLate > 55)
+                <i class="fas fa-exclamation-circle text-warning"></i>
+                @endif
 
             </td>
             <td style="width: 25%">
@@ -52,6 +63,23 @@
                 <input type="text" id="time_out[{{ $workScheduleAssignmentUser->id }}]"
                     class="form-control input-time-format" value="{{ $workScheduleAssignmentUser->time_out }}">
             </td>
+            @if (count($overtimeDetails) != 0)
+            <td>
+                @php
+                $hour = '';
+                $overtimeDetail = $workScheduleAssignmentUser->getOvertimeHourFromDate();
+                if($overtimeDetail != null){
+                $hour = $overtimeDetail->hour;
+                }
+                @endphp
+                @if ($overtimeDetail != null)
+                <input type="text" name="hour" id="hour" class="form-control integer" value="{{$hour}}"
+                    data-overtimeid="{{$overtimeDetail->over_time_id}}"
+                    data-userid="{{$workScheduleAssignmentUser->user_id}}">
+                @endif
+            </td>
+            @endif
+
             <td class="text-right">
                 <a class="btn btn-info btn-sm btnSaveBtn">
                     <i class="far fa-save"></i>

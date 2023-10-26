@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($overtimes as $overtime)
+        @foreach ($overtimes->where('status',0) as $overtime)
         <tr>
 
             <td>{{$overtime->name}}</td>
@@ -20,35 +20,7 @@
                 $overtime->from_date)->format('d/m/Y') }}
                 - {{ \Carbon\Carbon::createFromFormat('Y-m-d',
                 $overtime->to_date)->format('d/m/Y') }}</td>
-            {{-- <td>{{$overtime->user->name}}</td> --}}
-            {{-- <td>
-                @php
 
-                $approvedLists=$overtime->approver->authorizedUsers;
-
-
-                @endphp
-
-                @foreach ($approvedLists as $user)
-
-                @php
-                $approvalStatus =$overtime->getLeaderApprovalStatus($user->id)
-
-                @endphp
-                {{$user->name}} {{$approvalStatus}} <br>
-                @if ($approvalStatus === null)
-                <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
-                @elseif ($approvalStatus == 1)
-                <span class="badge bg-success" style="font-weight: normal;">อนุมัติแล้ว</span>
-                @elseif ($approvalStatus == 2)
-                <span class="badge bg-danger" style="font-weight: normal;">ไม่อนุมัติ</span>
-                @elseif ($approvalStatus == 0)
-                <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
-                @else
-                <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
-                @endif
-                @endforeach
-            </td> --}}
             <td>
                 สายอนุมัติ {{$overtime->approver->name}}
                 <br>

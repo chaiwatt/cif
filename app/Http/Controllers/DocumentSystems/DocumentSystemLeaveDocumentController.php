@@ -148,8 +148,13 @@ class DocumentSystemLeaveDocumentController extends Controller
         $endDateTime = Carbon::createFromFormat('d/m/Y H:i', $request->data['endDate'] . ' ' . $endTime);
 
         $dateLists = $this->generateDateList($startDateTime, $endDateTime);
-        
+
+
         $user = User::find($userId);
+
+        // $shiftId = $user->isShiftAssignment($startDate)->first();
+     
+        // $shift = Shift::find($shiftId);
 
         $holidays = $user->getHolidayDates($startDate, $endDate)->toArray();
 
@@ -187,7 +192,7 @@ class DocumentSystemLeaveDocumentController extends Controller
             'endTime' => $endTime,
             'user' => $user,
             'leaveType' => $leaveType,
-            'holidays' => $formattedDates,
+            // 'holidays' => $formattedDates,
             'takeLeaveDates' => $takeLeaveDates,
             'approver' => $approver,
             'workShifts' => $workShifts,

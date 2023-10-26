@@ -92,6 +92,18 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="form-group mr-2">
+                                            <label>เพิ่มพนักงาน<span class="small text-danger">*</span></label>
+                                            <select name="import_employee_from_dept" id="import_employee_from_dept"
+                                                class="form-control select2 @error('import_employee_from_dept') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="1">เพิ่มทันที</option>
+                                                <option value="2">ยังไม่เพิ่ม</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ประเภทเอกสาร<span class="small text-danger">*</span></label>
                                             <select name="document_type"
