@@ -167,7 +167,7 @@ class WorkScheduleAssignmentUser extends Model
             $absentCount = 1;
         }
         $totalOvertime = $this->getOvertimeFromManual();
-        // dd($totalOvertime);
+
         return collect([
             'workHour' => $totalWorkHour !== 0 ? $totalWorkHour : null,
             'leaveCount' => $this->getLeaveInfo(),
@@ -178,6 +178,28 @@ class WorkScheduleAssignmentUser extends Model
             'earlyMinute' => $earlyMinute !== 0 ? $earlyMinute : null,
             'lateMinute' => $lateMinute !== 0 ? $lateMinute : null,
         ]);
+    }
+
+    public function getWorkHourHolidayFromManual()
+    {
+        $userId = $this->user_id;
+        $shift = $this->workScheduleAssignment->shift;
+        $shiftType = $shift->shift_type_id;
+        $scheduleAssignmentDate = ($shiftType == 2) ? $this->date_out : $this->date_in;
+        $type = 2;
+        $overtimeDetail = OverTimeDetail::where('user_id',$userId)
+            ->whereDate('from_date',$scheduleAssignmentDate)
+            ->whereHas('overtime', function ($query) use ($type) {
+                    $query->where('status', 1)
+                    ->where('type', '=', $type);
+                })
+            ->first();
+ 
+        if($overtimeDetail != null){
+            return $overtimeDetail->hour;
+        }  
+         return 0;
+        
     }
     public function getWorkHourHoliday()
     {

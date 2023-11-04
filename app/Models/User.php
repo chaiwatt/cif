@@ -1199,6 +1199,7 @@ class User extends Authenticatable
                  ];
             }
         }
+        // dd($overTime);
 
         if(count($leaveType) > 0)
         {
@@ -1262,26 +1263,40 @@ class User extends Authenticatable
             $socialSecurityFivePercent = number_format(round($socialSecurity * .05), 2);
         }
 
-        $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8/30, 0), 2);
+        // $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8/30, 0), 2);
 
-        if ($this->employee_type_id != 1){
-            if ($overTimeCountSum > 24) {
-                $exceedOvertime = $overTimeCountSum - 24;
-                $overTimeCountSum = 24;
-            } 
+        // if ($this->employee_type_id != 1){
+        //     if ($overTimeCountSum > 24) {
+        //         $exceedOvertime = $overTimeCountSum - 24;
+        //         $overTimeCountSum = 24;
+        //     } 
             
+        //     $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8, 0), 2);
+        // }
+        
+        $exceedOverTimeCost = 0;    
+        if($overTimeCountSum > 24){
+            $exceedOvertime = $overTimeCountSum - 24;
+            $overTimeCountSum = 24;
+            
+            $exceedOverTimeCost = round($exceedOvertime*1.5*$salaryRecord->salary/8/30, 0);
+            if ($this->employee_type_id != 1){
+                $exceedOverTimeCost = round($exceedOvertime*1.5*$salaryRecord->salary/8, 0);
+            }
+
+        }
+
+        $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8/30, 0), 2);
+        if ($this->employee_type_id != 1){
             $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8, 0), 2);
         }
-        
+
         $diligene_allowance_cost = null;
         if($this->diligence_allowance_id != null){
             
             $diligene_allowance_cost = number_format($this->getdiligenceAllowance($allowance,$id), 2) ;
         }
 
-
-        
-        
         return collect([
             'workHour' => $workHourCountSum !== 0 ? number_format($workHourCountSum, 2) : null,
             'absentCountSum' => $absentCountSum !== 0 ? $absentCountSum : null,
@@ -1294,18 +1309,17 @@ class User extends Authenticatable
             'overTimeCost' => $overTimeCost,
             'socialSecurityFivePercent' => $socialSecurityFivePercent,
             'exceedOvertime' => $exceedOvertime,
+            'exceedOverTimeCost' => $exceedOverTimeCost,
         ]);
     }
 
     public function getExtraOvertime($id)
     {
-
         $paydayDetail = PaydayDetail::find($id);
 
         $payday = $paydayDetail->payday;
         $firstPaydayId = $payday->first_payday_id;
         $secondPaydayId = $payday->second_payday_id;
-
 
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
@@ -1320,12 +1334,12 @@ class User extends Authenticatable
             ->get();
 
         foreach($workScheduleAssignmentUsersForFirstPaydayDetails as $workScheduleAssignmentUser){
-            $hourDifference = $workScheduleAssignmentUser->getOvertimeFromScanFile();
+            $hourDifference = $workScheduleAssignmentUser->getOvertimeFromManual();
             if($hourDifference != null){
                 $exceedOvertimeFirstPaydayDetail += $hourDifference['hourDifference'];
             }            
         } 
-
+        
         $exceedOvertimeFirstPaydayDetail = ($exceedOvertimeFirstPaydayDetail > 24) ? ($exceedOvertimeFirstPaydayDetail - 24) : 0;
 
         $exceedOvertimeSecondPaydayDetail = 0; 
@@ -1335,16 +1349,15 @@ class User extends Authenticatable
             ->get();
 
         foreach($workScheduleAssignmentUsersForSecondPaydayDetails as $workScheduleAssignmentUser){
-            $hourDifference = $workScheduleAssignmentUser->getOvertimeFromScanFile();
+            $hourDifference = $workScheduleAssignmentUser->getOvertimeFromManual();
             if($hourDifference != null){
                 $exceedOvertimeSecondPaydayDetail += $hourDifference['hourDifference'];
             }            
         } 
       
         $exceedOvertimeSecondPaydayDetail = ($exceedOvertimeSecondPaydayDetail > 24) ? ($exceedOvertimeSecondPaydayDetail - 24) : 0;
-
         $exceedOvertime = $exceedOvertimeFirstPaydayDetail + $exceedOvertimeSecondPaydayDetail;
-        
+
         $holidayWorkScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
             ->whereBetween('date_in', [$startDate, $endDate])
             ->whereHas('workScheduleAssignment', function ($query) {
@@ -1370,16 +1383,16 @@ class User extends Authenticatable
         
         $workHoureHoliday = 0;
         $workHourTraditionalHoliday = 0;
+        
         foreach($holidayWorkScheduleAssignmentUsers as $holidayWorkScheduleAssignmentUser)
         {
-            $workHoureHoliday += $holidayWorkScheduleAssignmentUser->getWorkHourHoliday();
+            $workHoureHoliday += $holidayWorkScheduleAssignmentUser->getWorkHourHolidayFromManual();
         }
         foreach($traditionalHolidayWorkScheduleAssignmentUsers as $traditionalHolidayWorkScheduleAssignmentUser)
         {
-           $workHourTraditionalHoliday += $traditionalHolidayWorkScheduleAssignmentUser->getWorkHourHoliday();
+           $workHourTraditionalHoliday += $traditionalHolidayWorkScheduleAssignmentUser->getWorkHourHolidayFromManual();
         }
 
-        
         $exceedOvertimeCost = 0;
         $holidayOvertimeCost = 0;
         $traditionalHolidayOvertimeCost=0;

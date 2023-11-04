@@ -65,7 +65,9 @@
                                                 <option value="1" @if ($payDay->type == 1) selected
                                                     @endif>งวดปกติ</option>
                                                 <option value="2" @if ($payDay->type == 2) selected
-                                                    @endif>งวดพิเศษ</option>
+                                                    @endif>งวดพิเศษ (รายวัน)</option>
+                                                <option value="3" @if ($payDay->type == 3) selected
+                                                    @endif>งวดพิเศษ (รายเดือน)</option>
                                             </select>
                                         </div>
                                     </div>

@@ -60,7 +60,8 @@
                                             <select name="paydayType" id="paydayType" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1">งวดปกติ</option>
-                                                <option value="2">งวดพิเศษ</option>
+                                                <option value="2">งวดพิเศษ (รายวัน)</option>
+                                                <option value="3">งวดพิเศษ (รายเดือน)</option>
                                             </select>
                                         </div>
                                     </div>

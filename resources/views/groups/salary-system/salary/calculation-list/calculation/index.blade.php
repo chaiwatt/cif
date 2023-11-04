@@ -93,6 +93,7 @@
                                             @foreach ($users as $user)
                                             @php
                                             $userSummary = $user->salarySummary($paydayDetail->id);
+
                                             @endphp
                                             <tr>
                                                 <td>
@@ -113,7 +114,12 @@
                                                 <td class="text-center">{{$userSummary['earlyHour']}}</td>
                                                 <td class="text-center">{{$userSummary['leaveCountSum']}}</td>
                                                 <td class="text-center">{{$userSummary['absentCountSum']}}</td>
-                                                <td class="text-center">{{$userSummary['overTime']}}</td>
+                                                <td class="text-center">{{$userSummary['overTime']}}
+
+                                                    @if ($userSummary['exceedOvertime'] > 0)
+                                                    (ส่วนเกิน {{$userSummary['exceedOvertime']}})
+                                                    @endif
+                                                </td>
                                                 </td>
                                                 <td class="text-right">
                                                     <a class="btn btn-sm btn-info btn-user" data-id="{{$user->id}}"

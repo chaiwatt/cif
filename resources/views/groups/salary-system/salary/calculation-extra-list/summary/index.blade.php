@@ -44,10 +44,10 @@
                             <h3 class="card-title">พนักงาน</h3>
                             @if (count($users) !=0)
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
+                                {{-- <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
                                         class="form-control float-right" placeholder="ค้นหา">
-                                </div>
+                                </div> --}}
                             </div>
                             @endif
 
@@ -71,6 +71,7 @@
                                             @foreach ($users as $user)
                                             @php
                                             $userSummary = $user->getExtraOvertime($paydayDetail->id);
+                                            $summary = $user->salarySummary($paydayDetail->id);
                                             @endphp
                                             @php
                                             $exceedOvertimeCost = $userSummary['exceedOvertimeCost'];
@@ -89,7 +90,8 @@
                                                 <td>{{ $user->prefix->name }}{{
                                                     $user->name }} {{
                                                     $user->lastname }}</td>
-                                                <td class="text-center">{{ number_format(round($exceedOvertimeCost, 0),
+                                                <td class="text-center">{{
+                                                    number_format(round($exceedOvertimeCost, 0),
                                                     2)}}
                                                 </td>
                                                 <td class="text-center">{{ number_format(round($holidayOvertimeCost, 0),

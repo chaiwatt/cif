@@ -37,12 +37,12 @@
                                         href="#custom-content-below-home" role="tab"
                                         aria-controls="custom-content-below-home" aria-selected="false">ตารางพนักงาน</a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill"
                                         href="#custom-content-below-profile" role="tab"
                                         aria-controls="custom-content-below-profile"
                                         aria-selected="false">ตารางอื่น1</a>
-                                </li>
+                                </li> --}}
                             </ul>
                             <div class="tab-content" id="custom-content-below-tabContent">
                                 <div class="tab-pane fade active show" id="custom-content-below-home" role="tabpanel"
@@ -86,7 +86,7 @@
                                     </form>
 
                                 </div>
-                                <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel"
+                                {{-- <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel"
                                     aria-labelledby="custom-content-below-profile-tab">
                                     Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra
                                     purus ut ligula
@@ -98,7 +98,7 @@
                                     ligula eu lectus.
                                     Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod
                                     pellentesque diam.
-                                </div>
+                                </div> --}}
                             </div>
 
 

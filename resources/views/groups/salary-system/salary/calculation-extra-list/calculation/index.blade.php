@@ -43,10 +43,10 @@
                             <h3 class="card-title">พนักงาน</h3>
                             @if (count($users) !=0)
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
+                                {{-- <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
                                         class="form-control float-right" placeholder="ค้นหา">
-                                </div>
+                                </div> --}}
                             </div>
                             @endif
 
@@ -70,6 +70,7 @@
                                             @foreach ($users as $user)
                                             @php
                                             $userSummary = $user->getExtraOvertime($paydayDetail->id);
+
                                             @endphp
                                             @php
                                             $exceedOvertime = $userSummary['exceedOvertime'];

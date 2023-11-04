@@ -31,7 +31,7 @@ class SalarySystemSalaryCalculationExtraListCalculationController extends Contro
     }
     public function index($id)
     {
-        
+           
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -62,6 +62,9 @@ class SalarySystemSalaryCalculationExtraListCalculationController extends Contro
         ->pluck('user_id')
         ->unique()
         ->toArray();
+
+        $userPaydayIds = $paydayDetail->payday->users->pluck('id')->toarray();
+        $userIds = array_intersect($userIds, $userPaydayIds);
 
         $users = User::whereIn('id', $userIds)->paginate(20);
         $incomeDeducts = IncomeDeduct::all();

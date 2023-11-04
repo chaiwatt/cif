@@ -29,7 +29,7 @@ class SalarySystemSalaryCalculationExtraListSummaryController extends Controller
     }
     public function index($id)
     {
-        
+
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -60,6 +60,11 @@ class SalarySystemSalaryCalculationExtraListSummaryController extends Controller
         ->pluck('user_id')
         ->unique()
         ->toArray();
+
+        $userPaydayIds = $paydayDetail->payday->users->pluck('id')->toarray();
+        $userIds = array_intersect($userIds, $userPaydayIds);
+
+        // dd($userIds);
 
         $users = User::whereIn('id', $userIds)->paginate(20);
         $incomeDeducts = IncomeDeduct::all();
