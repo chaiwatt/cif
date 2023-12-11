@@ -43,7 +43,7 @@ class GroupsTableSeeder extends Seeder
             'code' => 'USER-MANAGEMENT',
             'name' => 'ระบบจัดการพนักงาน',
             'description' => 'รายละเอียดระบบจัดการพนักงาน',
-            'icon' => 'fa-user',
+            'icon' => 'fa-users',
             'dashboard' => 'groups.dashboard.user-management-system',
             'default_route' => 'groups.user-management-system.setting.userinfo'
         ]);
@@ -78,6 +78,14 @@ class GroupsTableSeeder extends Seeder
             'icon' => 'fa-user-tie',
             'dashboard' => 'groups.dashboard.job-application-system',
             'default_route' => 'groups.job-application-system.job-application.list'
+        ]);
+        Group::create([
+            'code' => 'EMPLOYEE',
+            'name' => 'ระบบพนักงาน',
+            'description' => 'รายละเอียดระบบพนักงาน',
+            'icon' => 'fa-user',
+            'dashboard' => 'groups.dashboard.employee-system',
+            'default_route' => 'groups.employee-system.employee.info'
         ]);
         Group::create([
             'code' => 'REPORT',

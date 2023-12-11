@@ -22,8 +22,11 @@ class UpdatedRoleGroupCollectionService
         
         $filterRoute = $this->filterRoute(Route::currentRouteName());
         $job = Job::where('route', $filterRoute)->first();
-        // dd(Route::currentRouteName());
+
+        // dd($filterRoute,$job);
+       
         $groupId = $job->group_module_job->group_id;
+        
         $moduleId = $job->group_module_job->module_id;
         $viewName = $job->view;
         $viewRoute = $job->route;

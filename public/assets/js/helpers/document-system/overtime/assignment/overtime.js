@@ -130,7 +130,6 @@ $(document).on('change', '#hour', function () {
         'val': value
     }
     RequestApi.postRequest(dataSet, updateHourUrl, token).then(response => {
-        console.log('ok');
         Toast.fire({
             icon: 'success',
             title: 'แก้ไขชั่วโมงล่วงเวลาสำเร็จ '

@@ -77,6 +77,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('setting.general.tax')}}"
+                            class="nav-link {{ request()->is('setting.general.tax*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>ประกันสังคมและภาษี</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{route('setting.general.searchfield.index')}}"
                             class="nav-link {{ request()->is('setting/general/searchfield*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>

@@ -88,6 +88,12 @@ class JobsTableSeeder extends Seeder
             'view' => 'groups.salary-system.salary.calculation-extra-list.index'
         ]);
         Job::create([
+            'code' => 'CALCULATION-BONUS-LIST',
+            'name' => 'เงินโบนัสประจำปี',
+            'route' => 'groups.salary-system.salary.calculation-bonus-list',
+            'view' => 'groups.salary-system.salary.calculation-bonus-list.index'
+        ]);
+        Job::create([
             'code' => 'SALARY-PAYDAY',
             'name' => 'รอบคำนวนเงินเดือน',
             'route' => 'groups.salary-system.setting.payday',
@@ -203,7 +209,7 @@ class JobsTableSeeder extends Seeder
         ]);
         Job::create([
             'code' => 'LEARNING-SETTING',
-            'name' => 'รายการเรียนรู้',
+            'name' => 'รายการตั้งค่า',
             'route' => 'groups.learning-system.setting.learning-list',
             'view' => 'groups.learning-system.setting.learning-list.index'
         ]);
@@ -212,6 +218,25 @@ class JobsTableSeeder extends Seeder
             'name' => 'รายงานระบบเงินเดือน',
             'route' => 'groups.report-system.report.salary',
             'view' => 'groups.report-system.report.salary.index'
+        ]);
+
+         Job::create([
+            'code' => 'EMPLOYEE-INFO',
+            'name' => 'ข้อมูลส่วนตัว',
+            'route' => 'groups.employee-system.employee.info',
+            'view' => 'groups.employee-system.employee.info.index'
+        ]);
+         Job::create([
+            'code' => 'EMPLOYEE-LEAVE',
+            'name' => 'การลา',
+            'route' => 'groups.employee-system.employee.leave',
+            'view' => 'groups.employee-system.employee.leave.index'
+        ]);
+         Job::create([
+            'code' => 'EMPLOYEE-OVERTIME',
+            'name' => 'ล่วงเวลา',
+            'route' => 'groups.employee-system.employee.overtime',
+            'view' => 'groups.employee-system.employee.overtime.index'
         ]);
     }
 }

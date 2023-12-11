@@ -17,8 +17,12 @@ class UserManagementSystemSettingUserInfDiligenceAllowanceClassifyController ext
         // $userDiligenceAllowanceId = $request->data['userDiligenceAllowanceId'];
 
         $user = User::find($userId);
-        $diligenceAllowanceClassifies = DiligenceAllowanceClassify::where('diligence_allowance_id',$user->diligence_allowance_id)->get();
-        // dd($user->diligence_allowance_id);
+        if ($user->employee_type_id == 1){
+            $diligenceAllowanceClassifies = DiligenceAllowanceClassify::where('diligence_allowance_id',2)->get();
+        }else{
+            $diligenceAllowanceClassifies = DiligenceAllowanceClassify::where('diligence_allowance_id',1)->get();
+        }
+
         return view('groups.user-management-system.setting.userinfo.table-render.update-diligence-allowance-modal-render',[
             'diligenceAllowanceClassifies' => $diligenceAllowanceClassifies
             ])->render();

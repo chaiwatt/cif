@@ -5,6 +5,7 @@
             <th>วันที่</th>
             <th>รายการล่วงเวลา</th>
             <th>แผนก</th>
+            <th class="text-center">มอบหมาย</th>
             <th class="text-right">เพิ่มเติม</th>
         </tr>
     </thead>
@@ -32,7 +33,9 @@
             <td>{{$overtime->name}}</td>
             <td>{{$overtime->approver->company_department->name}}</td>
 
-
+            <td class="text-center">
+                {{count($overtime->overtimeDetails()->with('user')->get()->pluck('user')->unique())}}
+            </td>
             <td class="text-right">
                 <a class="btn btn-info btn-sm"
                     href="{{route('groups.document-system.overtime.approval.assignment.download',['id' => $overtime->id])}}">

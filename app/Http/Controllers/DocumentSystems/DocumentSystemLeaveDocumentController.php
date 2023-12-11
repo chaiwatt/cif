@@ -133,6 +133,7 @@ class DocumentSystemLeaveDocumentController extends Controller
 
     public function checkLeave(Request $request)
     {
+        
         $leaveType = LeaveType::find($request->data['leaveType']);
         $userId = $request->data['userId'];
        

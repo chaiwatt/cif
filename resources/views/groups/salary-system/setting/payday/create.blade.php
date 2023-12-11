@@ -127,7 +127,7 @@
                                             <label>รอบคำนวน<span class="small text-danger">*</span></label>
                                             <select name="crossMonth" id="crossMonth" class="form-control select2"
                                                 style="width: 100%;">
-                                                <option value="1">คร่อมเดือน</option>
+                                                <option value="1">ข้ามเดือน</option>
                                                 <option value="2">ในเดือน</option>
                                             </select>
                                         </div>

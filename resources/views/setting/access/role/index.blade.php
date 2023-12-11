@@ -59,7 +59,7 @@
                                                     <td>{{$role->name}}</td>
 
                                                     <td>
-                                                        <ul>
+                                                        <ul class="mb-0">
                                                             @foreach ($role->users as $user)
                                                             <li style="padding: 5px;">
                                                                 {{$user->name}} {{$user->lastname}}<a

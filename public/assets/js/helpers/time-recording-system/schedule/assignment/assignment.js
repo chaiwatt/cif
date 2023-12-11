@@ -142,3 +142,35 @@ $(document).on('click', '#btn-import-employee-code', function (e) {
 });
 
 
+$(document).on('change', '#company_department', function (e) {
+    var companyDepartmentId = $('#company_department').val();
+    var importEmployeeNoFromDeptUrl = window.params.importEmployeeNoFromDeptRoute
+
+    var data = {
+        'companyDepartmentId': companyDepartmentId,
+        'workScheduleId': workScheduleId,
+        'month': month,
+        'year' : year
+    }
+    console.log(data);
+    var selectedText = $(this).find('option:selected').text();
+    Swal.fire({
+        title: 'นำเข้าพนักงาน',
+        text: 'นำเข้าพนักงานจากแผนก' + selectedText,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '##6495ed',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'นำเข้า',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            RequestApi.postRequest(data, importEmployeeNoFromDeptUrl, token).then(response => {
+                // window.location.reload();
+            }).catch(error => { })
+        }
+    });
+
+});
+

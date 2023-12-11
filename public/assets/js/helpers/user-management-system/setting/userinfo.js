@@ -162,6 +162,12 @@ $(document).on('click', '.btn-delete-salary', function (e) {
 
 });
 
+$(document).on('click', '.btn-leave-increment-setting', function (e) {
+    e.preventDefault();
+    
+    $('#modal-leave-increment-setting').modal('show');
+});
+
 $(document).on('click', '#update-workschedule', function (e) {
     e.preventDefault();
     $('#modal-workschedule-month').modal('show');
@@ -910,8 +916,6 @@ $(document).on('click', '#save-update-user-diligence-allowance', function (e) {
     var userDiligenceAllowanceId = $('#user-diligence-allowance-id').val();
     var diligenceAllowanceClassifyId = $('#diligence-allowance-classify').val();
 
-    
-
     var data = {
         'userId': userId,
         'userDiligenceAllowanceId': userDiligenceAllowanceId,
@@ -943,6 +947,87 @@ $(document).on('click', '#radFile, #radLink', function () {
 
     // console.log('Selection:', selection);
 });
+
+$(document).on('click', '.btn-update-leave', function (e) {
+    e.preventDefault();
+    $('#user-leave-id').val($(this).data('id'));
+    $('#update-user-leave').val($(this).data('count'));
+    $('#modal-update-user-leave').modal('show');
+});
+
+$(document).on('click', '#save-update-user-leave', function (e) {
+    e.preventDefault();
+    var updateUserLeaveUrl = window.params.updateUserLeaveRoute;
+    var userLeaveId = $('#user-leave-id').val();
+    var userId = $('#userId').val();
+    var leave = $('#update-user-leave').val();
+    if (leave == '') {
+        return
+    }
+    var data = {
+        'userId': userId,
+        'userLeaveId': userLeaveId,
+        'leave': leave
+    }
+
+    RequestApi.postRequest(data, updateUserLeaveUrl, token).then(response => {
+
+        $('#user-leave-container').html(response);
+        $('#modal-update-user-leave').modal('hide');
+
+    }).catch(error => { })
+    
+});
+
+
+// ให้เรียกฟังก์ชันนี้เมื่อคลิกปุ่ม "บันทึก"
+// document.getElementById('save-update-leave-increment').addEventListener('click', function () {
+$(document).on('click', '#save-update-leave-increment', function (e) { 
+    var updateLeaveIncrementUrl = window.params.updateLeaveIncrementRoute;
+    var userId = $('#userId').val();
+    var jsonData = [];
+    var tableRows = document.querySelectorAll('#module_modal_table tbody tr');
+    
+    tableRows.forEach(function (row) {
+        var leaveType = {
+            id: row.querySelector('td:nth-child(1)').getAttribute('data-id'),
+            name: row.querySelector('td:nth-child(1)').textContent.trim(),
+            type: row.querySelector('select').value,
+            months: [],
+            quantity: row.querySelector('input[type="text"]').value
+        };
+
+        // ดึงข้อมูลจากเดือนและ checkbox
+        var monthCells = row.querySelectorAll('td:nth-child(n+3):not(:last-child)');
+        monthCells.forEach(function (cell, index) {
+            var monthId = cell.querySelector('input').getAttribute('data-month');
+            var isChecked = cell.querySelector('input').checked ? 1 : 0; // เปลี่ยน true เป็น 1 และ false เป็น 0
+
+            leaveType.months.push({
+                monthId: monthId,
+                isChecked: isChecked
+            });
+        });
+        jsonData.push(leaveType);
+    });
+
+     var data = {
+        'userId': userId,
+        'jsonData': jsonData
+    }
+
+    RequestApi.postRequest(data, updateLeaveIncrementUrl, token).then(response => {
+        Swal.fire(
+            'สำเร็จ!',
+            'คลิก OK เพื่อรีโหลดการตั้งค่าเพิ่มวันลา',
+            'info'
+        ).then(function() {
+            window.location.reload();
+        });
+    
+    }).catch(error => { })
+});
+
 
 
 

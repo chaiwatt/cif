@@ -38,6 +38,17 @@
         <div class="container-fluid">
             @if ($permission->show)
             <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a class="btn btn-primary float-right mb-2 ml-2"
+                            href="{{route('groups.salary-system.salary.calculation-extra-list.download-report',['payday_detail_id' => $paydayDetail->id])}}">
+                            <i class="fas fa-download mr-1"></i>
+                            ดาวน์โหลด
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -71,13 +82,13 @@
                                             @foreach ($users as $user)
                                             @php
                                             $userSummary = $user->getExtraOvertime($paydayDetail->id);
-                                            $summary = $user->salarySummary($paydayDetail->id);
+                                            // $summary = $user->salarySummary($paydayDetail->id);
                                             @endphp
                                             @php
                                             $exceedOvertimeCost = $userSummary['exceedOvertimeCost'];
                                             $holidayOvertimeCost = $userSummary['holidayOvertimeCost'];
-                                            $traditionalHolidayOvertimeCost =
-                                            $userSummary['traditionalHolidayOvertimeCost'];
+                                            $traditionalHolidayOvertimeCost
+                                            =$userSummary['traditionalHolidayOvertimeCost'];
                                             @endphp
                                             @if (floatval($exceedOvertimeCost) != 0 || floatval($holidayOvertimeCost) !=
                                             0 ||

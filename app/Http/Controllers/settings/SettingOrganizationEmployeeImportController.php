@@ -28,6 +28,9 @@ class SettingOrganizationEmployeeImportController extends Controller
     public function store(Request $request)
     {
         $file = $request->file('file');
+        if(!$file){
+            return redirect()->back();
+        }
         $import = new EmployeeImport;
         Excel::import($import, $file);
 

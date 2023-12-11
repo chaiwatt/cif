@@ -1,4 +1,13 @@
 <table class="table table-bordered table-striped dataTable dtr-inline">
+    @php
+    $paymentDate = \Carbon\Carbon::parse($paydayDetail->payment_date);
+    $endDate = \Carbon\Carbon::parse($paydayDetail->end_date);
+    $currentDate = \Carbon\Carbon::now();
+    $isExpire = true;
+    if($paymentDate->gte($currentDate) && $currentDate->gte($endDate)){
+    $isExpire = false;
+    }
+    @endphp
     <thead>
         <tr>
             <th>เงินเพิ่ม / เงินหัก</th>
@@ -15,10 +24,14 @@
             </td>
             <td>{{$incomeDeductByUser->value}}</td>
             <td>{{$incomeDeductByUser->incomeDeduct->unit->name}}</td>
-            <td class="text-right"><a class="btn btn-danger btn-sm delete-income-deduct"
-                    data-id="{{$incomeDeductByUser->id}}">
+            <td class="text-right">
+                @if ($isExpire == false)
+                <a class="btn btn-danger btn-sm delete-income-deduct" data-id="{{$incomeDeductByUser->id}}">
                     <i class="fas fa-trash"></i>
-                </a></td>
+                </a>
+                @endif
+
+            </td>
         </tr>
         @endforeach
     </tbody>

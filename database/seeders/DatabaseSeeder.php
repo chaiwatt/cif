@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-
+        
+        $this->call(TaxSettingsTableSeeder::class);
         $this->call(EmployeeTypesTableSeeder::class);
         $this->call(UserPositionsTableSeeder::class);
         $this->call(EthnicitiesTableSeeder::class);
@@ -37,7 +38,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MonthsTableSeeder::class);
         $this->call(AssessableTypesTableSeeder::class);
         $this->call(DocumentTyesTableSeeder::class);
-        $this->call(YearlyHolidaysTableSeeder::class);
         $this->call(SearchFieldsTableSeeder::class);
         $this->call(AgreementUnitsTableSeeder::class);
         $this->call(AssessmentPurposesTableSeeder::class);
@@ -54,10 +54,8 @@ class DatabaseSeeder extends Seeder
         $this->call(JobsTableSeeder::class);
         $this->call(PayDayRangesTableSeeder::class);
         $this->call(IncomeDeductsTableSeeer::class);
-        // $this->call(ShifsTableSeeder::class);
-        // $this->call(WorkSchedulesTableSeeder::class);
         $this->call(GroupModuleJobsTableSeeder::class); 
-        // $this->call(ApproversTableSeeder::class); 
-        
+        $this->call(LeaveIncrementsTableSeeder::class); 
+         
     }
 }

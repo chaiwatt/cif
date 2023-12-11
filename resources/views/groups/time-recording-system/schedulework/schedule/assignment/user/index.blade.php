@@ -58,7 +58,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div>
+                        {{-- <div>
                             <span>หรือนำเข้าจากแผนก</span>
                         </div>
                         <div class="form-group ml-2 mr-2" style="width: 250px;">
@@ -72,7 +72,7 @@
                                 </option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -163,6 +163,7 @@
     window.params = {
         importUserGroupRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.import-user-group') }}',
         importEmployeeNoRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.import-employee-no') }}',
+        importEmployeeNoFromDeptRoute: '{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.import-employee-no-from-dept') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };

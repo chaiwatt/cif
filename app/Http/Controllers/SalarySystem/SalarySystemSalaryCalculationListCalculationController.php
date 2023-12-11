@@ -50,7 +50,10 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
 
+        
         $userIddiffs = array_intersect($ids, $userPaydays);
+
+        // dd($ids, $userPaydays,$userIddiffs);
         
         $paydayDetailWithMaxEndDate = PaydayDetail::where('end_date', '<', $startDate)
             ->where('end_date', function ($query) use ($startDate) {
@@ -65,7 +68,6 @@ class SalarySystemSalaryCalculationListCalculationController extends Controller
             foreach ($userIddiffs as $userId)
             {
                 $userDiligenceAllowance = UserDiligenceAllowance::where('user_id',$userId)->where('payday_detail_id',$paydayDetailWithMaxEndDateId)->first();
-                
                 if(!$userDiligenceAllowance)
                 {
                     $user = User::find($userId);

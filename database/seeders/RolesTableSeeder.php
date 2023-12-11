@@ -16,14 +16,16 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         Role::create([
-            'name' => 'เจ้าหน้าที่สามารถดูสร้างแก้ไขลบ'
+            'name' => 'แอดมิน'
         ]);
         Role::create([
-            'name' => 'เจ้าหน้าที่สามารถดูและสร้าง'
+            'name' => 'เจ้าหน้าที่ HR'
         ]);
         Role::create([
-            'name' => 'เจ้าหน้าที่สามารถดูอย่างเดียว'
+            'name' => 'หัวหน้างาน / ผู้จัดการ'
         ]);
-
+        Role::create([
+            'name' => 'ข้อมูลส่วนตัว'
+        ]);
     }
 }

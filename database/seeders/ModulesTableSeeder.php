@@ -116,5 +116,11 @@ class ModulesTableSeeder extends Seeder
             'name' => 'รายงาน',
             'icon' => 'fa-chart-pie'
         ]);
+        Module::create([
+            'prefix' => 'groups.employee-system.employee',
+            'code' => 'EMPLOYEE-MANAGE',
+            'name' => 'จัดการ',
+            'icon' => 'fa-user'
+        ]);
     }
 }

@@ -140,7 +140,7 @@
                                             <select name="crossMonth" id="crossMonth" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1" @if ($payDay->cross_month == 1) selected
-                                                    @endif>คร่อมเดือน</option>
+                                                    @endif>ข้ามเดือน</option>
                                                 <option value="2" @if ($payDay->cross_month == 2) selected
                                                     @endif>ในเดือน</option>
                                             </select>

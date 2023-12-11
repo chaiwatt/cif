@@ -274,10 +274,11 @@
 
 
                                                 <td class="text-right">
-                                                    @if ($paydayDetail->salarySummary->sum('employee')
+                                                    @if ($paydayDetail->salarySummary->sum('sum_leave')
+                                                    != 0 || $paydayDetail->salarySummary->sum('sum_absence')
                                                     != 0)
                                                     <a class="btn btn-sm btn-primary "
-                                                        href="{{route('groups.report-system.report.salary.view',['id' => $paydayDetail->id ])}}"><i
+                                                        href="{{route('groups.report-system.report.salary.attendance',['id' => $paydayDetail->id ])}}"><i
                                                             class="fas fa-eye"></i></a>
                                                     @endif
 

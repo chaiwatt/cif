@@ -167,7 +167,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-attachment">
+    <div class="modal fade" id="modal-attachment" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
@@ -179,6 +179,7 @@
                             <input type="text" id="workScheduleAssignmentUserFileId" hidden>
                             <input type="text" id="workScheduleAssignmentUserId" hidden>
                             <div class="form-group float-right">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                 <button type="button" class="btn btn-danger d-none" id="delete-image">ลบ</button>
                                 <button type="button" class="btn btn-primary" id="btnAddFile">เพิ่มไฟล์รูป</button>
                                 <div class="form-group">

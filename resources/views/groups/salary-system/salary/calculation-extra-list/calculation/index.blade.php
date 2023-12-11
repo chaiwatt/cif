@@ -72,6 +72,7 @@
                                             $userSummary = $user->getExtraOvertime($paydayDetail->id);
 
                                             @endphp
+                                            @if ($userSummary != null)
                                             @php
                                             $exceedOvertime = $userSummary['exceedOvertime'];
                                             $holidayOvertime = $userSummary['holidayOvertime'];
@@ -96,6 +97,8 @@
 
                                             </tr>
                                             @endif
+                                            @endif
+
 
                                             @endforeach
                                         </tbody>

@@ -90,5 +90,12 @@ class ModuleGroupsTableSeeder extends Seeder
         $report->modules()->attach([
             $dashboardReportModule->id
         ]);
+
+        $employee = Group::where('code','EMPLOYEE')->first();
+        $employeeManagementModule = Module::where('code','EMPLOYEE-MANAGE')->first();
+
+        $employee->modules()->attach([
+            $employeeManagementModule->id
+        ]);
     }
 }

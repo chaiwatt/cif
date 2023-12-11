@@ -69,6 +69,7 @@ class DocumentSystemLeaveApprovalController extends Controller
         $value = $request->data['value'];
         $approverId = $request->data['approverId'];
         $approver = Approver::find($approverId);
+       
 
         $year = $request->data['year'];
         $month = $request->data['month'];
@@ -103,7 +104,7 @@ class DocumentSystemLeaveApprovalController extends Controller
                 $leave->update(['status' => 2]);
             }  
         }
-        // 
+         
         $leave = Leave::find($leaveId);
 
         if (!in_array($authId, $authorizedUserIds) && $approver->user_id != $authId) {
@@ -130,7 +131,7 @@ class DocumentSystemLeaveApprovalController extends Controller
             $atLeastOneStatusIsOne = collect($approvedList)->pluck('status')->some(function ($status) {
                 return $status == 1;
             });
-
+            
             $hasStatusTwo = collect($approvedList)->pluck('status')->contains(2);
             
             if ($atLeastOneStatusIsOne) {
@@ -141,6 +142,7 @@ class DocumentSystemLeaveApprovalController extends Controller
                 $userLeave = UserLeave::where('user_id',$userId)->where('leave_type_id',$leaveTypeId)->first();
                 $leaveCount = $userLeave->count - $duration;
                 $leave = Leave::find($leaveId);
+                
                 if($leave->status != 1 && $leave->manager_approve == 1)
                 {
                     
@@ -155,14 +157,14 @@ class DocumentSystemLeaveApprovalController extends Controller
             }
 
         } 
-
+        
         if (isset($request->data['selectedCompanyDepartment'])) {
-            $companyDepartmentIds = $request->data['selectedCompanyDepartment'];
+            $companyDepartmentId = $request->data['selectedCompanyDepartment'];
         } else {
-            $companyDepartmentIds = [];
+            $companyDepartmentId = [];
         }
-
-        $query = Leave::whereHas('user', function ($query) use ($searchString,$companyDepartmentIds) {
+        
+        $query = Leave::whereHas('user', function ($query) use ($searchString,$companyDepartmentId) {
             $query->where(function ($query) use ($searchString) {
                 $query->where('employee_no', 'like', '%' . $searchString . '%')
                     ->orWhere('name', 'like', '%' . $searchString . '%')
@@ -172,9 +174,10 @@ class DocumentSystemLeaveApprovalController extends Controller
                         ->orWhere('code', 'like', '%' . $searchString . '%');
                     });
             });
-            if (!empty($companyDepartmentIds)) {
-                $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentIds) {
-                    $subQuery->whereIn('id', $companyDepartmentIds);
+            if (!empty($companyDepartmentId)) {
+                
+                $query->whereHas('company_department', function ($subQuery) use ($companyDepartmentId) {
+                    $subQuery->where('id', $companyDepartmentId);
                 });
             }
         })
@@ -182,7 +185,7 @@ class DocumentSystemLeaveApprovalController extends Controller
         ->whereMonth('from_date', $month);
 
         $leaves = $query->get();
-
+        
         return view('groups.document-system.leave.approval.table-render.leave-table-render',[
             'leaves' => $leaves
             ])->render();

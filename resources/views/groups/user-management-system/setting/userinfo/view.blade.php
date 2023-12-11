@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@push('styles')
+
+@endpush
+
 @section('content')
 @include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
 <div class="content-wrapper">
@@ -358,6 +362,7 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-workschedule" role="tabpanel"
@@ -529,24 +534,39 @@
                                 <div class="tab-pane fade" id="custom-tabs-one-leave" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-leave-tab">
                                     <div class="col-12" id="user-leave-container">
-                                        <label for="">วันลาคงเหลือ</label>
+                                        <label for="">วันลาคงเหลือ <a
+                                                class="btn btn-primary btn-sm btn-leave-increment-setting ml-2">
+                                                <i class="fas fa-cog"></i> ตั้งการเพิ่มวันลา
+                                            </a></label>
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 50%">ประเภท</th>
                                                     <th>คงเหลือ</th>
+                                                    <th style="width: 100px" class="text-right">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($userLeaves as $key =>$userLeave)
                                                 <tr>
+
                                                     <td>{{$userLeave->leaveType->name}}</td>
                                                     <td>{{$userLeave->count}}</td>
+                                                    <td class="text-right">
+
+                                                        <a class="btn btn-info btn-sm btn-update-leave"
+                                                            data-id="{{$userLeave->id}}"
+                                                            data-count="{{$userLeave->count}}">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     </div>
+
                                     <div class="col-12" id="leave-container">
                                         <label for="">รายการลา</label>
                                         <table class="table table-bordered table-striped dataTable dtr-inline">
@@ -1064,7 +1084,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>ปีที่จบ<span class="small text-danger">*</span></label>
-                                <input type="text" id="graduated-year" class="form-control numericInputInt">
+                                <input type="text" id="graduated-year" class="form-control input-date-format">
                             </div>
                         </div>
 
@@ -1306,6 +1326,106 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-update-user-leave">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="text" id="user-leave-id" hidden>
+                        <input type="text" id="user-leave-count" hidden>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>จำนวนวันลา<span class="small text-danger">*</span></label>
+                                <input type="text" class="form-control numericInputInt" id="update-user-leave">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group float-right">
+                                <button type="button" class="btn btn-primary" id="save-update-user-leave">แก้ไข</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-leave-increment-setting">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="module_modal_table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:220px">การลา</th>
+                                        <th>ประเภท</th>
+                                        <th>ม.ค.</th>
+                                        <th>ก.พ.</th>
+                                        <th>มี.ค.</th>
+                                        <th>เม.ษ.</th>
+                                        <th>พ.ค.</th>
+                                        <th>มิ.ย.</th>
+                                        <th>ก.ค.</th>
+                                        <th>ส.ค.</th>
+                                        <th>ก.ย.</th>
+                                        <th>ต.ค.</th>
+                                        <th>พ.ย.</th>
+                                        <th>ธ.ค.</th>
+                                        <th style="width:80px">เพิ่ม</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($leaveIncrements as $leaveIncrement)
+                                    <tr style="padding-bottom:0px; margin-bottom:0px">
+                                        <td style="padding-left: 10px;" class="mb-0"
+                                            data-id="{{$leaveIncrement->leaveType->id}}">
+                                            {{$leaveIncrement->leaveType->name}}
+                                        </td>
+                                        <td>
+                                            <select id="type_{{$leaveIncrement->leaveType->id}}"
+                                                class="form-control select2" style="width: 100%;">
+                                                <option value="1" {{$leaveIncrement->type == 1 ? 'selected' :
+                                                    ''}}>เริ่มใหม่</option>
+                                                <option value="2" {{$leaveIncrement->type == 2 ? 'selected' : ''}}>สะสม
+                                                </option>
+                                            </select>
+                                        </td>
+                                        @foreach ($months as $month)
+                                        <td style="padding-bottom:0px; margin-bottom:0px">
+                                            <div class="icheck-primary d-inline">
+                                                <input class="align-middle" type="checkbox"
+                                                    id="{{$leaveIncrement->leaveType->id}}_{{$month->id}}"
+                                                    data-leave="{{$leaveIncrement->leaveType->id}}"
+                                                    data-month="{{$month->id}}" {{$leaveIncrement->isChecked($month->id)
+                                                ? 'checked' : ''}}>
+                                                <label for="{{$leaveIncrement->leaveType->id}}_{{$month->id}}"></label>
+                                            </div>
+                                        </td>
+                                        @endforeach
+                                        <td style="padding-bottom:0px; margin-bottom:0px">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control sm integer"
+                                                    id="val_{{$leaveIncrement->leaveType->id}}"
+                                                    value="{{$leaveIncrement->quantity}}">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div class="col-12">
+                                <div class="form-group float-right">
+                                    <button type="button" class="btn btn-primary"
+                                        id="save-update-leave-increment">บันทึก</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @push('scripts')
 <script type="module" src="{{asset('assets/js/helpers/user-management-system/setting/userinfo.js?v=1')}}"></script>
@@ -1337,13 +1457,15 @@
         getPunishmentRoute: '{{ route('groups.user-management-system.setting.userinfo.punishment.get-punishment') }}',
         updatePunishmentRoute: '{{ route('groups.user-management-system.setting.userinfo.punishment.update-punishment') }}',
         deletePunishmentRoute: '{{ route('groups.user-management-system.setting.userinfo.punishment.delete') }}',
-
         storeAttachmentRoute: '{{ route('groups.user-management-system.setting.userinfo.attachment.store') }}',
         deleteAttachmentRoute: '{{ route('groups.user-management-system.setting.userinfo.attachment.delete') }}',
-
         getDiligenceAllowanceClassifyRoute: '{{ route('groups.user-management-system.setting.userinfo.get-diligence-allowance-classify') }}',
         updateDiligenceAllowanceClassifyRoute: '{{ route('groups.user-management-system.setting.userinfo.update-diligence-allowance-classify') }}',
+        updateUserLeaveRoute: '{{ route('groups.user-management-system.setting.userinfo.update-user-leave') }}',
+        updateLeaveIncrementRoute: '{{ route('groups.user-management-system.setting.userinfo.update-leave-increment') }}',
+        
 
+        
 
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')

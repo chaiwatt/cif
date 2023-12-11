@@ -80,7 +80,6 @@ class ReportSystemReportSalaryController extends Controller
 
     public function view($id)
     {
-        
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -97,6 +96,31 @@ class ReportSystemReportSalaryController extends Controller
         $paydayDetail = PaydayDetail::find($id);
 
         return view('groups.report-system.report.salary.view', [
+            'groupUrl' => $groupUrl,
+            'modules' => $updatedRoleGroupCollection,
+            'permission' => $permission,
+            'companyDepartments' => $companyDepartments,
+            'paydayDetail' => $paydayDetail
+        ]);
+    }
+
+    public function attendance($id){
+        // กำหนดค่าตัวแปร $action ให้เป็น 'show'
+        $action = 'show';
+        // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
+        $groupUrl = strval(session('groupUrl'));
+
+        // เรียกใช้งานเซอร์วิส updatedRoleGroupCollectionService เพื่อดึงข้อมูล updatedRoleGroupCollection, permission, viewName โดยใช้ค่า $action
+        $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
+        $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
+        $permission = $roleGroupCollection['permission'];
+        $viewName = $roleGroupCollection['viewName'];
+        
+        $companyDepartments = CompanyDepartment::all();
+        
+        $paydayDetail = PaydayDetail::find($id);
+
+        return view('groups.report-system.report.salary.attendance', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,

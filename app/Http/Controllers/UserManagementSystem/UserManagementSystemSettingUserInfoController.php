@@ -21,6 +21,8 @@ use App\Models\CompanyDepartment;
 use App\Http\Controllers\Controller;
 use App\Models\UserDiligenceAllowance;
 use App\Helpers\AddDefaultWorkScheduleAssignment;
+use App\Models\LeaveIncrement;
+use App\Models\LeaveType;
 use App\Services\UpdatedRoleGroupCollectionService;
 
 class UserManagementSystemSettingUserInfoController extends Controller
@@ -37,7 +39,6 @@ class UserManagementSystemSettingUserInfoController extends Controller
     }
     public function index()
     {
-
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -49,13 +50,15 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
         $users = User::paginate(50);
-
+      
+        
 
         return view($viewName, [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
-            'users' => $users
+            'users' => $users,
+         
         ]);
     }
     public function view($id)
@@ -87,7 +90,10 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $userDiligenceAllowances = UserDiligenceAllowance::where('user_id', $id)->orderBy('id', 'desc')->get();
         $leaves = Leave::where('user_id',$id)->whereYear('from_date',$currentYear)->get();
         $userLeaves = UserLeave::where('user_id',$id)->get();
-        // dd($userDiligenceAllowances);
+        $leaveTypes = LeaveType::all();
+
+        $leaveIncrements = LeaveIncrement::where('user_id',$id)->get();
+
         return view('groups.user-management-system.setting.userinfo.view', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
@@ -106,7 +112,9 @@ class UserManagementSystemSettingUserInfoController extends Controller
             'months' => $months,
             'userDiligenceAllowances' => $userDiligenceAllowances,
             'leaves' => $leaves,
-            'userLeaves' => $userLeaves
+            'userLeaves' => $userLeaves,
+            'leaveTypes' => $leaveTypes,
+            'leaveIncrements' => $leaveIncrements
         ]);
     }
 

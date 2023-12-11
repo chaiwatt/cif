@@ -90,6 +90,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {{-- {{$paydayDetail->id}} --}}
                                             @foreach ($users as $user)
                                             @php
                                             $userSummary = $user->salarySummary($paydayDetail->id);
@@ -107,7 +108,7 @@
                                                 </td>
                                                 <td>{{ $user->prefix->name }}{{
                                                     $user->name }} {{
-                                                    $user->lastname }}</td>
+                                                    $user->lastname }} </td>
                                                 <td>{{$user->company_department->name}}</td>
                                                 <td class="text-center">{{$userSummary['workHour']}}</td>
                                                 <td class="text-center">{{$userSummary['lateHour']}}</td>

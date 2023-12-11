@@ -223,6 +223,11 @@ class IncomeDeductsTableSeeer extends Seeder
             'name' =>'หักส่งกองบังคับคดี',
             'assessable_type_id' => 2,
             'unit_id' => 1
+            ],
+            [
+            'name' =>'หักภาษี',
+            'assessable_type_id' => 2,
+            'unit_id' => 1
             ]
         ]);
     }

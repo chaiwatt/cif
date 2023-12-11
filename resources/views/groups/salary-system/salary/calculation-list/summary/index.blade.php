@@ -46,7 +46,6 @@
                             <i class="fas fa-download mr-1"></i>
                             ดาวน์โหลด
                         </a>
-
                         @if (count($salarySummaries) == 0)
                         <a class="btn btn-success float-right mb-2"
                             href="{{route('groups.salary-system.salary.calculation-list.summary.finish',['payday_detail_id' => $paydayDetail->id])}}">
@@ -54,12 +53,7 @@
                             ปิดงวด
                         </a>
                         @endif
-
-
                     </div>
-
-
-
                 </div>
             </div>
 

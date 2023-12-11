@@ -66,7 +66,7 @@
         }
 
         .col1 {
-            width: 11.1%;
+            width: 9%;
             float: left;
         }
 
@@ -117,12 +117,13 @@
             <div class="col12">
                 <div class="col1">รหัส</div>
                 <div class="col1">ชื่อพนักงาน</div>
-                {{-- <div class="col1" style="text-align: center">วันทำงาน</div> --}}
                 <div class="col1" style="text-align: center">เงินเดือน</div>
                 <div class="col1" style="text-align: center">ค่าล่วงเวลา</div>
+                <div class="col1" style="text-align: center">เบี้ยขยันประจำวัน</div>
                 <div class="col1" style="text-align: center">เบี้ยขยัน</div>
                 <div class="col1" style="text-align: center">ประกันสังคม</div>
                 <div class="col1" style="text-align: center">รายได้อื่นๆ</div>
+                <div class="col1" style="text-align: center">หักภาษี</div>
                 <div class="col1" style="text-align: center">หักอื่นๆ</div>
                 <div class="col1" style="text-align: right;float:rigth">สุทธิ</div>
             </div>
@@ -140,6 +141,7 @@
             $totaloverTimeCost= 0;
             $totaldeligenceAllowance = 0;
             $totalsocialSecurityFivePercent = 0;
+            $totalTaxDeduct = 0;
             @endphp
             @foreach ($users->where('company_department_id',$companyDepartment->id) as $user)
             @php
@@ -150,9 +152,15 @@
             $netSalary = round(str_replace(',', '', $userSummary['salary'])) +
             round(str_replace(',', '', $userSummary['overTimeCost'])) +
             round(str_replace(',', '', $userSummary['deligenceAllowance']));
-
+            $taxDeduct = 0;
             foreach ($user->getSummaryIncomeDeductByUsers(2,$paydayDetail->id) as $getIncomeDeductByUser) {
+            // dd($getIncomeDeductByUser->incomeDeduct->name);
+            if($getIncomeDeductByUser->incomeDeduct->name != 'หักภาษี'){
             $netDeduct += $getIncomeDeductByUser->value;
+            }else{
+            $taxDeduct = $getIncomeDeductByUser->value;
+            }
+
             }
 
             foreach ($user->getSummaryIncomeDeductByUsers(1,$paydayDetail->id) as $getIncomeDeductByUser) {
@@ -170,6 +178,7 @@
             $totalNetIncome += $netIncome;
             $totalnetDeduct += $netDeduct;
             $totalSummary += $summary;
+            $totalTaxDeduct += $taxDeduct;
             @endphp
 
             <div class="col12">
@@ -177,9 +186,12 @@
                 <div class="col1">{{$user->name}} {{$user->lastname}}</div>
                 <div class="col1" style="text-align: center">{{$userSummary['salary']}}</div>
                 <div class="col1" style="text-align: center">{{$userSummary['overTimeCost']}}</div>
+                <div class="col1" style="text-align: center">-</div>
                 <div class="col1" style="text-align: center">{{$userSummary['deligenceAllowance']}}</div>
                 <div class="col1" style="text-align: center">{{$userSummary['socialSecurityFivePercent']}}</div>
                 <div class="col1" style="text-align: center">{{ $netIncome != 0 ? number_format($netIncome, 2) : '-' }}
+                </div>
+                <div class="col1" style="text-align: center">{{ $taxDeduct != 0 ? number_format($taxDeduct, 2) : '-' }}
                 </div>
                 <div class="col1" style="text-align: center">{{ $netDeduct != 0 ? number_format($netDeduct, 2) : '-' }}
                 </div>
@@ -187,15 +199,18 @@
             </div>
             @endforeach
             <div class="col12">
-                <div class="col1" style="width: 22.2%;text-align: center;font-weight:bold">รวม</div>
+                <div class="col1" style="width: 18%;text-align: center;font-weight:bold">รวม</div>
                 <div class="col1" style="text-align: center;font-weight:bold">{{number_format($totalSalary, 2)}}</div>
                 <div class="col1" style="text-align: center;font-weight:bold">{{number_format($totaloverTimeCost, 2)}}
                 </div>
+                <div class="col1" style="text-align: center;font-weight:bold">-</div>
                 <div class="col1" style="text-align: center;font-weight:bold">{{number_format($totaldeligenceAllowance,
                     2)}}</div>
                 <div class="col1" style="text-align: center;font-weight:bold">
                     {{number_format($totalsocialSecurityFivePercent, 2)}}</div>
                 <div class="col1" style="text-align: center;font-weight:bold">{{number_format($totalNetIncome, 2)}}
+                </div>
+                <div class="col1" style="text-align: center;font-weight:bold">{{number_format($totalTaxDeduct, 2)}}
                 </div>
                 <div class="col1" style="text-align: center;font-weight:bold">{{number_format($totalnetDeduct, 2)}}
                 </div>

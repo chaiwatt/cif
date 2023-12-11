@@ -10,6 +10,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\settings\SettingController;
 use App\Http\Controllers\settings\SettingReportLogController;
 use App\Http\Controllers\settings\SettingAccessRoleController;
+use App\Http\Controllers\settings\SettingGeneralTaxController;
 use App\Http\Controllers\settings\SettingReportUserController;
 use App\Http\Controllers\TimeRecordingSystems\ShiftController;
 use App\Http\Controllers\settings\SettingReportExpirationController;
@@ -23,15 +24,20 @@ use App\Http\Controllers\SalarySystem\SalarySystemSalarySummaryController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldUserController;
 use App\Http\Controllers\settings\SettingGeneralCompanyDepartmentController;
+use App\Http\Controllers\EmployeeSystem\EmployeeSystemEmployeeInfoController;
+use App\Http\Controllers\EmployeeSystem\EmployeeSystemEmployeeLeaveController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingIncomeDuctController;
 use App\Http\Controllers\settings\SettingOrganizationEmployeeImportController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemAssessmentController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveApprovalController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemLeaveDocumentController;
+use App\Http\Controllers\EmployeeSystem\EmployeeSystemEmployeeManageController;
 use App\Http\Controllers\settings\SettingAccessAssignmentGroupModuleController;
 use App\Http\Controllers\TimeRecordingSystems\WorkScheduleAssignmentController;
+use App\Http\Controllers\UserManagementSystemSettingUserInfoUserLeaveController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingScoreController;
+use App\Http\Controllers\EmployeeSystem\EmployeeSystemEmployeeOvertimeController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeApprovalController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemOvertimeDocumentController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationListController;
@@ -40,13 +46,14 @@ use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentControlle
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemReportController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingCriteriaController;
 use App\Http\Controllers\AssessmentSystemSettingAssessmentGroupAssignmentController;
+
 use App\Http\Controllers\LearningSystem\LearningSystemSettingLearningListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayAssignmentController;
 use App\Http\Controllers\AnnouncementSystem\AnnounceSystemAnnouncementListController;
 use App\Http\Controllers\LearningSystem\LearningSystemLearningLearningListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingDiligenceAllowanceController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationBonusListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListController;
-
 use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayAssignmentUserController;
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemAssessmentAssignmentController;
@@ -69,6 +76,7 @@ use App\Http\Controllers\LearningSystem\LearningSystemSettingLearningListChapter
 use App\Http\Controllers\SalarySystem\SalarySystemSettingDiligenceAllowanceAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemScheduleWorkScheduleController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemSettingEmployeeGroupController;
+use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationBonusListAssignmentController;
 use App\Http\Controllers\DocumentSystems\DocumentSystemSettingApproveDocumentAssignmentController;
 use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationExtraListCalculationController;
 use App\Http\Controllers\UserManagementSystem\UserManagementSystemSettingUserInfoSalaryController;
@@ -168,6 +176,7 @@ Route::middleware('auth')->group(function () {
                             Route::post('search', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'search'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.search');
                             Route::delete('work_schedule_id/{workScheduleId}/year/{year}/month/{month}/user_id/{userId}/delete', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'delete'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.delete');
                             Route::post('import-employee-no', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'importEmployeeNo'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.import-employee-no');
+                            Route::post('import-employee-no-from-dept', [TimeRecordingSystemScheduleWorkScheduleAssignmentUserController::class, 'importEmployeeNoFromDept'])->name('groups.time-recording-system.schedulework.schedule.assignment.user.import-employee-no-from-dept');
                         });
                     });
                 });
@@ -403,6 +412,24 @@ Route::middleware('auth')->group(function () {
                     });
                     Route::group(['prefix' => 'summary'], function () {
                         Route::get('{id}', [SalarySystemSalaryCalculationExtraListSummaryController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list.summary');
+                        Route::get('all/{payday_detail_id}', [SalarySystemSalaryCalculationExtraListSummaryController::class, 'downloadAll'])->name('groups.salary-system.salary.calculation-extra-list.download-report');
+                    });
+                });
+
+                Route::group(['prefix' => 'calculation-bonus-list'], function () {
+                    Route::get('', [SalarySystemSalaryCalculationBonusListController::class, 'index'])->name('groups.salary-system.salary.calculation-bonus-list');
+                    Route::get('create', [SalarySystemSalaryCalculationBonusListController::class, 'create'])->name('groups.salary-system.salary.calculation-bonus-list.create');
+                    Route::post('store', [SalarySystemSalaryCalculationBonusListController::class, 'store'])->name('groups.salary-system.salary.calculation-bonus-list.store');
+                    Route::delete('{id}', [SalarySystemSalaryCalculationBonusListController::class, 'delete'])->name('groups.salary-system.salary.calculation-bonus-list.delete');                  
+                    Route::get('{id}', [SalarySystemSalaryCalculationBonusListController::class, 'view'])->name('groups.salary-system.salary.calculation-bonus-list.view');
+                    Route::put('{id}', [SalarySystemSalaryCalculationBonusListController::class, 'update'])->name('groups.salary-system.salary.calculation-bonus-list.update');
+                    Route::get('download-pdf/{id}', [SalarySystemSalaryCalculationBonusListController::class, 'downloadPdf'])->name('groups.salary-system.salary.calculation-bonus-list.download-pdf');
+                    Route::group(['prefix' => 'assignment'], function () {
+                        Route::get('{id}', [SalarySystemSalaryCalculationBonusListAssignmentController::class, 'index'])->name('groups.salary-system.salary.calculation-bonus-list.assignment');
+                        Route::post('import', [SalarySystemSalaryCalculationBonusListAssignmentController::class, 'import'])->name('groups.salary-system.salary.calculation-bonus-list.assignment.import');
+                        Route::post('update-bonus', [SalarySystemSalaryCalculationBonusListAssignmentController::class, 'updateBonus'])->name('groups.salary-system.salary.calculation-bonus-list.assignment.update-bonus');
+                        Route::post('search', [SalarySystemSalaryCalculationBonusListAssignmentController::class, 'search'])->name('groups.salary-system.salary.calculation-bonus-list.assignment.search');
+                        Route::post('delete', [SalarySystemSalaryCalculationBonusListAssignmentController::class, 'delete'])->name('groups.salary-system.salary.calculation-bonus-list.assignment.delete');
                     });
                 });
                 
@@ -449,7 +476,7 @@ Route::middleware('auth')->group(function () {
                         Route::post('search', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'search'])->name('groups.document-system.setting.approve-document.assignment.search');
                         Route::post('import-employee-no', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'importEmployeeNo'])->name('groups.document-system.setting.approve-document.assignment.import-employee-no');
                         Route::post('import-employee-no-from-dept', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'importEmployeeNoFromDept'])->name('groups.document-system.setting.approve-document.assignment.import-employee-no-from-dept');
-                        // Route::post('import-employee-no-from-user-type', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'importEmployeeNoFromUserType'])->name('groups.document-system.setting.approve-document.assignment.import-employee-no-from-user-type');
+                        
                     });
                 });
             });
@@ -521,6 +548,10 @@ Route::middleware('auth')->group(function () {
                         Route::post('update-payday', [UserManagementSystemSettingUserInfoWorkscheduleController::class, 'updatePayday'])->name('groups.user-management-system.setting.userinfo.workschedule.update-payday');
                         Route::post('update-approver', [UserManagementSystemSettingUserInfoWorkscheduleController::class, 'updateApprover'])->name('groups.user-management-system.setting.userinfo.workschedule.update-approver');
                         Route::post('get-approver', [UserManagementSystemSettingUserInfoWorkscheduleController::class, 'getApprover'])->name('groups.user-management-system.setting.userinfo.workschedule.get-approver');
+                    });
+                    Route::group(['prefix' => 'leave'], function () {
+                        Route::post('update-user-leave', [UserManagementSystemSettingUserInfoUserLeaveController::class, 'updateUserLeave'])->name('groups.user-management-system.setting.userinfo.update-user-leave');
+                        Route::post('update-leave-increment', [UserManagementSystemSettingUserInfoUserLeaveController::class, 'updateLeaveIncrement'])->name('groups.user-management-system.setting.userinfo.update-leave-increment');
                     });
                     Route::group(['prefix' => 'position'], function () {
                         Route::post('store', [UserManagementSystemSettingUserInfoPositionController::class, 'store'])->name('groups.user-management-system.setting.userinfo.position.store');
@@ -597,12 +628,29 @@ Route::middleware('auth')->group(function () {
                 });
             });
         });
+        Route::group(['prefix' => 'employee-system'], function () {
+            Route::group(['prefix' => 'employee'], function () {
+                Route::group(['prefix' => 'info'], function () {
+                    Route::get('', [EmployeeSystemEmployeeInfoController::class, 'index'])->name('groups.employee-system.employee.info');
+                    Route::post('change-password', [EmployeeSystemEmployeeInfoController::class, 'changePassword'])->name('groups.employee-system.employee.info.change-password');
+                });
+                Route::group(['prefix' => 'leave'], function () {
+                    Route::get('', [EmployeeSystemEmployeeLeaveController::class, 'index'])->name('groups.employee-system.employee.leave');
+                });
+                Route::group(['prefix' => 'overtime'], function () {
+                    Route::get('', [EmployeeSystemEmployeeOvertimeController::class, 'index'])->name('groups.employee-system.employee.overtime');
+                });
+
+            });
+        });
         Route::group(['prefix' => 'report-system'], function () {
             Route::group(['prefix' => 'report'], function () {
                 Route::group(['prefix' => 'salary'], function () {
                     Route::get('', [ReportSystemReportSalaryController::class, 'index'])->name('groups.report-system.report.salary');
                     Route::get('view/{id}', [ReportSystemReportSalaryController::class, 'view'])->name('groups.report-system.report.salary.view');
+                    Route::get('attendance/{id}', [ReportSystemReportSalaryController::class, 'attendance'])->name('groups.report-system.report.salary.attendance');
                 });
+
             });
         });
     });
@@ -661,6 +709,9 @@ Route::middleware('auth')->group(function () {
                     Route::post('update', [SettingGeneralSearchFieldUserController::class, 'update'])->name('setting.general.searchfield.user.update');
                 });
             });
+            Route::group(['prefix' => 'tax'], function () {
+                    Route::get('', [SettingGeneralTaxController::class, 'index'])->name('setting.general.tax');
+                });
         });
         Route::group(['prefix' => 'access'], function () {
             Route::group(['prefix' => 'role'], function () {

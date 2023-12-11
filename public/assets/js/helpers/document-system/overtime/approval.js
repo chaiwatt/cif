@@ -1,6 +1,12 @@
 import * as RequestApi from '../../request-api.js';
 
 var token = window.params.token
+var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
 
 
 $(document).on('click', '.approve_overtime', function (e) {
@@ -47,6 +53,10 @@ $(document).on('click', '.approve_overtime', function (e) {
                     );
                 } else {
                     // If no error, update the #table_container element with the response
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'อนุมัติสำเร็จ '
+                    })
                     $('#table_container').html(response);
                 }
             }).catch(error => {
@@ -73,6 +83,10 @@ $(document).on('click', '.approve_overtime', function (e) {
                     );
                 } else {
                     // If no error, update the #table_container element with the response
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'อนุมัติสำเร็จ '
+                    })
                     $('#table_container').html(response);
                 }
             }).catch(error => {

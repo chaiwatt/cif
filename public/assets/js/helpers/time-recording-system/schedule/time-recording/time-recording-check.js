@@ -243,12 +243,13 @@ $(document).on('click', '.btnAttachment', function (e) {
     RequestApi.postRequest(data, getImageUrl, token).then(response => {
         var imageUrl = response.file;
         var baseUrl = window.location.origin; // Get the base URL of the application
-        
+        $('#modal-user-time-record').modal('hide');
         if (imageUrl) {
             var workScheduleAssignmentUserFileId = response.id;
             $('#workScheduleAssignmentUserFileId').val(workScheduleAssignmentUserFileId);
             // console.log(workScheduleAssignmentUserFileId)
             var fullImageUrl = baseUrl + '/storage/uploads/attachment/' + imageUrl;
+            
             $('#modal-attachment').modal('show');
             $('#modal-attachment img').attr('src', fullImageUrl);
             $('#delete-image').attr('data-id', workScheduleAssignmentUserFileId);
@@ -315,11 +316,28 @@ $(document).on('click', '#delete-image', function (e) {
         $('#delete-image').attr('data-id', '');
         $('#delete-image').addClass('d-none');
         $('#modal-attachment').modal('hide');
+        // $('#modal-user-time-record').modal('show');
         $('#btnAddFile').removeClass('d-none');
     }).catch(error => {
 
     })
 });
+
+ $('#modal-attachment').on('hidden.bs.modal', function () {
+        // ตั้งค่า scroll กลับมาที่ตำแหน่งเดิมของ Modal แรก
+     // $('#modal-user-time-record').modal('handleUpdate');
+     // ตั้งค่า scroll กลับมาที่ตำแหน่งเดิมของ Modal แรก
+    $('#modal-user-time-record').modal('show');
+     console.log('here');
+
+    });
+
+// $(document).on('click', '#close-image-modal', function (e) {
+//     e.preventDefault();
+//     $('#modal-attachment').modal('hide'); 
+//     $('#modal-user-time-record').modal('handleUpdate');
+
+// });
 
 $(document).on('click', '.show-leave-attachment', function (e) {
     e.preventDefault();

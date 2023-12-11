@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มพนักงาน</h1>
+                    <h1 class="m-0">{{$user->name}} {{$user->lastname}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -296,6 +296,12 @@
                                                 </option>
 
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>รหัสผ่านใหม่ (เว้นว่างถ้าไม่ต้องการเปลี่ยน)</label>
+                                            <input type="text" name="password" value="" class="form-control">
                                         </div>
                                     </div>
                                 </div>

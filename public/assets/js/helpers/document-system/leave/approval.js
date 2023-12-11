@@ -1,6 +1,12 @@
 import * as RequestApi from '../../request-api.js';
 
 var token = window.params.token
+var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
 
 
 $(document).on('click', '.approve_leave', function (e) {
@@ -49,6 +55,10 @@ $(document).on('click', '.approve_leave', function (e) {
                     );
                 } else {
                     // If no error, update the #table_container element with the response
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'อนุมัติสำเร็จ '
+                    })
                     $('#table_container').html(response);
                 }
             }).catch(error => {
@@ -75,6 +85,10 @@ $(document).on('click', '.approve_leave', function (e) {
                     );
                 } else {
                     // If no error, update the #table_container element with the response
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'อนุมัติสำเร็จ '
+                    })
                     $('#table_container').html(response);
                 }
             }).catch(error => {
@@ -106,25 +120,3 @@ $(document).on('click', '#search_leave', function (e) {
     })
 
 });
-
-// $(document).on('keyup', 'input[name="search_query"]', function () {
-//     var searchInput = $(this).val();
-//     var url = window.params.liveSearchRoute
-//     RequestApi.postRequest(searchInput, url, token).then(response => {
-//         $('#table_container').html(response);
-//     }).catch(error => { })
-// });
-
-// $(document).on('click', '.pagination a', function (e) {
-//     e.preventDefault();
-//     var searchInput = $('#search_query').val();
-//     var page = $(this).attr('href').split('page=')[1];
-//     var url = "/groups/document-system/leave/approval/search?page=" + page
-
-
-//     RequestApi.postRequest(searchInput, url, token).then(response => {
-//         console.log(response);
-//         $('#table_container').html(response);
-//     }).catch(error => { })
-// });
-

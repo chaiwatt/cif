@@ -46,7 +46,7 @@ class DocumentSystemOvertimeDocumentController extends Controller
         $currentMonth = Carbon::today()->month;
         
         // $overtimes = OverTime::whereMonth('from_date', $currentMonth)->paginate(31);
-        $overtimes = OverTime::paginate(31);
+        $overtimes = OverTime::where('status',0)->paginate(31);
         $months = Month::all();
 
         $currentYear = Carbon::now()->year;
@@ -305,7 +305,7 @@ class DocumentSystemOvertimeDocumentController extends Controller
                     $subQuery->where('company_department_id', $companyDepartmentId);
                 });
             }
-        })->paginate(31);
+        })->where('status',0)->paginate(31);
 
         return $overtimes;
     }

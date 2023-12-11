@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Carbon\Carbon;
 use App\Models\Role;
+use App\Models\Bonus;
 use App\Models\Group;
 use App\Models\Leave;
 use App\Models\Gender;
@@ -12,6 +13,7 @@ use App\Models\Payday;
 use App\Models\Prefix;
 use App\Models\Approver;
 use App\Models\Training;
+use App\Models\BonusUser;
 use App\Models\Education;
 use App\Models\Ethnicity;
 use App\Models\LeaveType;
@@ -57,6 +59,7 @@ class User extends Authenticatable
         'employee_type_id',
         'company_department_id',
         'employee_no',
+        'username',
         'name',
         'lastname',
         'address',
@@ -422,6 +425,8 @@ class User extends Authenticatable
         $shiftId = $this->isShiftAssignment($startDate);
 
         $workShift = Shift::find($shiftId)->first();
+
+        // dd($startDate,$shiftId);
         
         $shiftStartDate = "$startDate $workShift->start";
         $shiftEndDate = "$endDate $workShift->end";
@@ -1099,10 +1104,6 @@ class User extends Authenticatable
 
         $totalWorkDay = $sumWorkingHour/8 +  $sumTraditionalHoliday + $leaveCountSum ;                
         
-        // if($this->employee_no == '900163'){
-        //     dd($totalWorkDay);
-        // } 
-        
         $totalOvertime = 0;
 
         foreach ($overTime as $overtimeItem) {
@@ -1199,7 +1200,6 @@ class User extends Authenticatable
                  ];
             }
         }
-        // dd($overTime);
 
         if(count($leaveType) > 0)
         {
@@ -1241,9 +1241,11 @@ class User extends Authenticatable
         }
 
         $socialSecurity = round($salaryRecord->salary, 0);
-        $exceedOvertime = 0;    
-        if ($socialSecurity > 15000){
-            $socialSecurityFivePercent = number_format(round(15000 * .05), 2);
+        $exceedOvertime = 0;  
+        $taxSetting = TaxSetting::first();
+
+        if ($socialSecurity > $taxSetting->social_contribution_salary){
+            $socialSecurityFivePercent = number_format(round($taxSetting->social_contribution_salary * $taxSetting->social_contribution_percent * 0.01), 2);
         }else{
             if ($this->employee_type_id != 1){
                 $socialSecurity = round($totalWorkDay*$salaryRecord->salary, 0);
@@ -1263,21 +1265,14 @@ class User extends Authenticatable
             $socialSecurityFivePercent = number_format(round($socialSecurity * .05), 2);
         }
 
-        // $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8/30, 0), 2);
-
-        // if ($this->employee_type_id != 1){
-        //     if ($overTimeCountSum > 24) {
-        //         $exceedOvertime = $overTimeCountSum - 24;
-        //         $overTimeCountSum = 24;
-        //     } 
-            
-        //     $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8, 0), 2);
-        // }
-        
+        $exceedlimit = 24;
+        if($this->employee_type_id == 1){
+            $exceedlimit = 48;
+        }
         $exceedOverTimeCost = 0;    
-        if($overTimeCountSum > 24){
-            $exceedOvertime = $overTimeCountSum - 24;
-            $overTimeCountSum = 24;
+        if($overTimeCountSum > $exceedlimit){
+            $exceedOvertime = $overTimeCountSum - $exceedlimit;
+            $overTimeCountSum = $exceedlimit;
             
             $exceedOverTimeCost = round($exceedOvertime*1.5*$salaryRecord->salary/8/30, 0);
             if ($this->employee_type_id != 1){
@@ -1313,6 +1308,11 @@ class User extends Authenticatable
         ]);
     }
 
+    public function getBonus($bonusId)
+    {
+        return BonusUser::where('user_id',$this->id)->where('bonus_id',$bonusId)->first();
+    }
+
     public function getExtraOvertime($id)
     {
         $paydayDetail = PaydayDetail::find($id);
@@ -1327,6 +1327,11 @@ class User extends Authenticatable
         $firstPadayDetail = PaydayDetail::where('payday_id',$firstPaydayId)->where('start_date',$paydayDetail->start_date)->first();
         $secondPadayDetail = PaydayDetail::where('payday_id',$secondPaydayId)->where('end_date',$paydayDetail->end_date)->first();
 
+
+        if($firstPadayDetail == null || $secondPadayDetail == null ){
+            return;
+        }
+
         $exceedOvertimeFirstPaydayDetail = 0; 
 
         $workScheduleAssignmentUsersForFirstPaydayDetails = $this->workScheduleAssignmentUsers()
@@ -1339,11 +1344,14 @@ class User extends Authenticatable
                 $exceedOvertimeFirstPaydayDetail += $hourDifference['hourDifference'];
             }            
         } 
-        
-        $exceedOvertimeFirstPaydayDetail = ($exceedOvertimeFirstPaydayDetail > 24) ? ($exceedOvertimeFirstPaydayDetail - 24) : 0;
+        $exceedlimit = 24;
+        if($this->employee_type_id == 1){
+            $exceedlimit = 48;
+        }
+        $exceedOvertimeFirstPaydayDetail = ($exceedOvertimeFirstPaydayDetail > $exceedlimit) ? ($exceedOvertimeFirstPaydayDetail - $exceedlimit) : 0;
 
         $exceedOvertimeSecondPaydayDetail = 0; 
-
+        // dd($secondPadayDetail);
         $workScheduleAssignmentUsersForSecondPaydayDetails = $this->workScheduleAssignmentUsers()
             ->whereBetween('date_in', [$secondPadayDetail->start_date, $secondPadayDetail->end_date])
             ->get();
@@ -1355,7 +1363,7 @@ class User extends Authenticatable
             }            
         } 
       
-        $exceedOvertimeSecondPaydayDetail = ($exceedOvertimeSecondPaydayDetail > 24) ? ($exceedOvertimeSecondPaydayDetail - 24) : 0;
+        $exceedOvertimeSecondPaydayDetail = ($exceedOvertimeSecondPaydayDetail > $exceedlimit) ? ($exceedOvertimeSecondPaydayDetail - $exceedlimit) : 0;
         $exceedOvertime = $exceedOvertimeFirstPaydayDetail + $exceedOvertimeSecondPaydayDetail;
 
         $holidayWorkScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
@@ -1416,7 +1424,7 @@ class User extends Authenticatable
             $hourSalary = (SalaryRecord::where('user_id',$this->id)->latest()->first()->salary)/8;
             $exceedOvertimeCost = 1.5*$exceedOvertime*$hourSalary;
             $holidayOvertimeCost = 1.5*$workHoureHoliday*$hourSalary;
-            $traditionalHolidayOvertimeCost = 1.5*$workHourTraditionalHoliday*$hourSalary;
+            $traditionalHolidayOvertimeCost = 2*$workHourTraditionalHoliday*$hourSalary;
         }
         $totalOvertimeCost = $exceedOvertimeCost+$holidayOvertimeCost+$traditionalHolidayOvertimeCost;
         
@@ -1548,6 +1556,11 @@ class User extends Authenticatable
 
     public function getOvertimeHour($overtimeId){
         return OvertimeDetail::where('over_time_id',$overtimeId)->where('user_id',$this->id)->first()->hour;
+    }
+
+    public function bonus()
+    {
+        return $this->belongsTo(Bonus::class);
     }
 
 }

@@ -6,17 +6,23 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Prefix;
 use App\Models\Ethnicity;
+use App\Models\LeaveType;
+use App\Models\UserLeave;
 use App\Models\Nationality;
 use App\Models\SearchField;
 use App\Models\EmployeeType;
+use App\Models\SalaryRecord;
 use App\Models\UserPosition;
 use Illuminate\Http\Request;
+use App\Models\LeaveIncrement;
 use App\Helpers\ActivityLogger;
+use App\Models\PositionHistory;
 use Illuminate\Validation\Rule;
 use App\Models\CompanyDepartment;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use App\Models\UserDiligenceAllowance;
+use Illuminate\Support\Facades\Validator;
 
 class SettingOrganizationEmployeeController extends Controller
 {
@@ -124,11 +130,111 @@ class SettingOrganizationEmployeeController extends Controller
         //         'diligence_allowance_id' => 1,
         //     ]);
 
+
+        PositionHistory::create([
+                "user_id" => $user->id,
+                "user_position_id" => $request->userPosition,
+                'adjust_date' => Carbon::today()
+            ]);
+        SalaryRecord::create([
+                'user_id' => $user->id,
+                'salary' => 1500,
+                'record_date' => Carbon::today(),
+            ]);
+        $leaveTypes = LeaveType::all();    
+        foreach($leaveTypes as $leaveType)
+        {
+            UserLeave::create([
+                'user_id' => $user->id,
+                'leave_type_id' => $leaveType->id,
+                'count' => rand(3, 10)
+            ]);
+        } 
+        
+        $leaveIncrements = LeaveIncrement::where('user_id',$user->id)->get();
+            if($leaveIncrements->count() == 0){
+                $this->createLeaveTypesForUser($user);
+            }
+
         $this->activityLogger->log('เพิ่ม', $user);
 
         return redirect()->route('setting.organization.employee.index', [
             'message' => 'นำเข้าข้อมูลเรียบร้อยแล้ว'
         ]);
+    }
+
+    private function createLeaveTypesForUser($user)
+    {
+        $leaveTypes = [
+            [
+                'user_id' => $user->id,
+                'leave_type_id' => 1,
+                'type' => 1,
+                'months' => $this->generateMonthsData([1]),
+                'quantity' => 10,
+            ],
+            [
+                'user_id' => $user->id,
+                'leave_type_id' => 2,
+                'type' => 1,
+                'months' => $this->generateMonthsData([1]),
+                'quantity' => 10,
+            ],
+            [
+                'user_id' => $user->id,
+                'leave_type_id' => 3,
+                'type' => 1,
+                'months' => $this->generateMonthsData([1]),
+                'quantity' => 30,
+            ],
+            [
+                'user_id' => $user->id,
+                'leave_type_id' => 4,
+                'type' => 1,
+                'months' => $this->generateMonthsData([1]),
+                'quantity' => 30,
+            ],
+            [
+                'user_id' => $user->id,
+                'leave_type_id' => 5,
+                'type' => 2,
+                'months' => $this->generateMonthsData([1, 3, 5, 7, 9, 11]),
+                'quantity' => 1,
+            ],
+            [
+                'user_id' => $user->id,
+                'leave_type_id' => 6,
+                'type' => 1,
+                'months' => $this->generateMonthsData([1]),
+                'quantity' => 90,
+            ],
+            [
+                'user_id' => $user->id,
+                'leave_type_id' => 7,
+                'type' => 1,
+                'months' => $this->generateMonthsData([1]),
+                'quantity' => 120,
+            ],
+        ];
+
+        // Insert data into the table
+        DB::table('leave_increments')->insert($leaveTypes);
+    }
+
+    /**
+     * Generate months data with initial values.
+     *
+     * @param array $checkedMonths
+     * @return array
+     */
+    private function generateMonthsData($checkedMonths)
+    {
+        $months = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $isChecked = in_array($i, $checkedMonths) ? 1 : 0;
+            $months[] = ['monthId' => $i, 'isChecked' => $isChecked];
+        }
+        return json_encode($months);
     }
 
     public function view($id)
@@ -184,6 +290,7 @@ class SettingOrganizationEmployeeController extends Controller
         $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
         $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
         $timeRecordRequire = $request->timeRecordRequire;
+        $password = $request->password;
 
         $user = User::findOrFail($id);
 
@@ -206,14 +313,13 @@ class SettingOrganizationEmployeeController extends Controller
             'birth_date' => $birthDate,
             'visa_expiry_date' => $visaExpireDate,
             'permit_expiry_date' => $workPermitExpireDate,
-            // 'education_level' => $educationLevel,
-            // 'education_branch' => $educationBranch,
             'bank' => $bank,
             'bank_account' => $bankAccount,
             'passport' => $passport,
             'work_permit' => $workPermit,
             'tax' => $tax,
             'time_record_require' => $timeRecordRequire,
+            'password' => $password ? bcrypt($password) : $user->password,
         ]);
 
         return redirect()->route('setting.organization.employee.index', [
