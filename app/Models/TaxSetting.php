@@ -11,6 +11,7 @@ class TaxSetting extends Model
     protected $fillable = [
         'social_contribution_salary',
         'social_contribution_percent',
+        'social_contribution_max',
         'bonus_tax_percent',
     ];
 }

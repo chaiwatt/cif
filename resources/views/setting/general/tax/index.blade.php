@@ -53,6 +53,16 @@
                                     <div class="col-sm-6">
 
                                         <div class="form-group">
+                                            <label>หักสูงสุด</label>
+                                            <input type="text" name="social_contribution_max"
+                                                value="{{$taxSetting->social_contribution_max}}"
+                                                class="form-control decimal-input">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group">
                                             <label>ร้อยละหักภาษีโบนัส</label>
                                             <input type="text" name="bonus_tax_percent"
                                                 value="{{$taxSetting->bonus_tax_percent}}"

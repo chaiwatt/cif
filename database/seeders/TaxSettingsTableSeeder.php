@@ -17,6 +17,7 @@ class TaxSettingsTableSeeder extends Seeder
             [
             'social_contribution_salary' => 15000,
             'social_contribution_percent' => 5,
+            'social_contribution_max' => 750,
             'bonus_tax_percent' => 10
             ]
         ]);

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->double('social_contribution_salary',10,2,2)->default(15000);
             $table->double('social_contribution_percent',10,2,2)->default(5);
+            $table->double('social_contribution_max',10,2,2)->default(750);
             $table->double('bonus_tax_percent',10,2,2)->default(10);
             $table->timestamps();
         });
