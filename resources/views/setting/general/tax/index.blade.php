@@ -53,7 +53,7 @@
                                     <div class="col-sm-6">
 
                                         <div class="form-group">
-                                            <label>หักสูงสุด</label>
+                                            <label>สบทบสูงสุด</label>
                                             <input type="text" name="social_contribution_max"
                                                 value="{{$taxSetting->social_contribution_max}}"
                                                 class="form-control decimal-input">
