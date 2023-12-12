@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name',100)->nullable();
             $table->string('address',250)->nullable();
-            $table->char('phone', 10)->nullable();
-            $table->char('fax', 10)->nullable();
+            $table->char('phone', 50)->nullable();
+            $table->char('fax', 50)->nullable();
             $table->char('tax', 20)->nullable();
             $table->timestamps();
         });
