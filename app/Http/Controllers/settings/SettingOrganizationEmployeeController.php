@@ -71,7 +71,7 @@ class SettingOrganizationEmployeeController extends Controller
         $prefix = $request->prefix;  // คำนำหน้าชื่อ
         $name = $request->name;  // ชื่อ
         $lastname = $request->lastname;  // นามสกุล
-        $employeeNo = $request->employee_code;  // รหัสพนักงาน
+        $employeeNo = $request->employee_no;  // รหัสพนักงาน
         $hid = preg_replace('/\s+/', '', $request->hid) ?? null;  // รหัส HID (ลบช่องว่าง)
         $nationality = $request->nationality;  // สัญชาติ
         $ethnicity = $request->ethnicity;  // เชื้อชาติ
@@ -269,7 +269,7 @@ class SettingOrganizationEmployeeController extends Controller
         $prefix = $request->prefix;  // คำนำหน้าชื่อ
         $name = $request->name;  // ชื่อ
         $lastname = $request->lastname;  // นามสกุล
-        $employeeNo = $request->employee_code;  // รหัสพนักงาน
+        $employeeNo = $request->employee_no;  // รหัสพนักงาน
         $hid = preg_replace('/\s+/', '', $request->hid) ?? null;  // รหัส HID (ลบช่องว่าง)
         $nationality = $request->nationality;  // สัญชาติ
         $ethnicity = $request->ethnicity;  // เชื้อชาติ
@@ -366,7 +366,7 @@ class SettingOrganizationEmployeeController extends Controller
     {
         // Validate the form data
         $validator = Validator::make($request->all(), [
-                'employee_code' => 'required|numeric',
+                'employee_no' => 'required|numeric|unique:users',
                 'prefix' => [
                     'required',
                     Rule::exists(Prefix::class, 'id')

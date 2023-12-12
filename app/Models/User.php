@@ -1261,8 +1261,7 @@ class User extends Authenticatable
                 $socialSecurity += $sum;
             }
             
-    
-            $socialSecurityFivePercent = number_format(round($socialSecurity * .05), 2);
+            $socialSecurityFivePercent = number_format(round($socialSecurity * ($taxSetting->social_contribution_percent * 0.01)), 2);
         }
 
         $exceedlimit = 24;

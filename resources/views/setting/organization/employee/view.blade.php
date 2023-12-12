@@ -40,9 +40,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
-                                            <input type="text" name="employee_code"
-                                                value="{{old('employee_code') ?? $user->employee_no}}"
-                                                class="form-control numericInputInt @error('employee_code') is-invalid @enderror">
+                                            <input type="text" name="employee_no"
+                                                value="{{old('employee_no') ?? $user->employee_no}}"
+                                                class="form-control numericInputInt @error('employee_no') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
