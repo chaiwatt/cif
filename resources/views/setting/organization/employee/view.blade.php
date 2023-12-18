@@ -42,7 +42,8 @@
                                             <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
                                             <input type="text" name="employee_no"
                                                 value="{{old('employee_no') ?? $user->employee_no}}"
-                                                class="form-control numericInputInt @error('employee_no') is-invalid @enderror">
+                                                class="form-control numericInputInt @error('employee_no') is-invalid @enderror"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -276,6 +277,14 @@
                                         <div class="form-group">
                                             <label>เลขประจำตัวผู้เสียภาษีอากร</label>
                                             <input type="text" name="tax" value="{{old('tax') ?? $user->tax}}"
+                                                class="form-control numericInputInt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>เลขที่ประกันสังคม</label>
+                                            <input type="text" name="social_security_number"
+                                                value="{{old('social_security_number') ?? $user->social_security_number}}"
                                                 class="form-control numericInputInt">
                                         </div>
                                     </div>

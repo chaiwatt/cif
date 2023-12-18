@@ -61,9 +61,10 @@ class SettingOrganizationEmployeeController extends Controller
 
     public function store(Request $request)
     {
+        $check = User::where('employee_no',$request->employee_no)->first();
         $validator = $this->validateFormData($request);
 
-        if ($validator->fails()) {
+        if ($validator->fails() || $check) {
             // การตรวจสอบความถูกต้องล้มเหลว
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -91,6 +92,7 @@ class SettingOrganizationEmployeeController extends Controller
         $passport = $request->passport ?? null;  // พาสพอร์ต
         $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
         $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
+        $socialSecurityNumber = $request->social_security_number ?? null;  // เลขที่ประกันสังคม
         $timeRecordRequire = $request->timeRecordRequire;
 
         $user = new User();
@@ -100,6 +102,8 @@ class SettingOrganizationEmployeeController extends Controller
         $user->user_position_id = $userPosition;  // กำหนดค่าตำแหน่งงานให้กับคอลัมน์ user_position_id
         $user->employee_type_id = $employeeType;  // กำหนดค่าประเภทพนักงานให้กับคอลัมน์ employee_type_id
         $user->company_department_id = $companyDepartment;  // กำหนดค่าแผนกบริษัทให้กับคอลัมน์ company_department_id
+        $user->employee_no = $employeeNo;  // กำหนดค่ารหัสพนักงานให้กับคอลัมน์ employee_no
+        $user->username = $employeeNo;
         $user->employee_no = $employeeNo;  // กำหนดค่ารหัสพนักงานให้กับคอลัมน์ employee_no
         $user->name = $name;  // กำหนดค่าชื่อให้กับคอลัมน์ name
         $user->lastname = $lastname;  // กำหนดค่านามสกุลให้กับคอลัมน์ lastname
@@ -120,6 +124,7 @@ class SettingOrganizationEmployeeController extends Controller
         $user->passport = $passport;  
         $user->work_permit = $workPermit;  
         $user->tax = $tax;  
+        $user->social_security_number = $socialSecurityNumber;  
         $user->time_record_require = $timeRecordRequire; 
         
         $user->save();  // บันทึกข้อมูลในฐานข้อมูล
@@ -261,6 +266,7 @@ class SettingOrganizationEmployeeController extends Controller
     public function update(Request $request, $id)
     {
         $validator = $this->validateFormData($request);
+        
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -289,6 +295,7 @@ class SettingOrganizationEmployeeController extends Controller
         $passport = $request->passport ?? null;  // พาสพอร์ต
         $workPermit = $request->work_permit ?? null;  // เลขที่ใบอนุญาตทำงาน
         $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
+        $socialSecurityNumber = $request->social_security_number ?? null;  // เลขที่ประกันสังคม
         $timeRecordRequire = $request->timeRecordRequire;
         $password = $request->password;
 
@@ -318,6 +325,7 @@ class SettingOrganizationEmployeeController extends Controller
             'passport' => $passport,
             'work_permit' => $workPermit,
             'tax' => $tax,
+            'social_security_number' => $socialSecurityNumber,
             'time_record_require' => $timeRecordRequire,
             'password' => $password ? bcrypt($password) : $user->password,
         ]);
@@ -364,9 +372,8 @@ class SettingOrganizationEmployeeController extends Controller
 
     function validateFormData($request)
     {
-        // Validate the form data
         $validator = Validator::make($request->all(), [
-                'employee_no' => 'required|numeric|unique:users',
+                'employee_no' => 'required|numeric',
                 'prefix' => [
                     'required',
                     Rule::exists(Prefix::class, 'id')

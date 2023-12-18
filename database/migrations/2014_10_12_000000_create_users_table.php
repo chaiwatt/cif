@@ -38,6 +38,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('tax')->nullable();
+            $table->string('social_security_number')->nullable();
             $table->string('bank')->nullable()->comment('บัญชีธนาคาร');
             $table->string('bank_account')->nullable()->comment('เลขที่บัญชีธนาคาร');
             $table->char('is_admin',1)->default(0);

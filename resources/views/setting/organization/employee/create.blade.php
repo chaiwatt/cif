@@ -274,6 +274,14 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            <label>เลขที่ประกันสังคม</label>
+                                            <input type="text" name="social_security_number"
+                                                value="{{old('social_security_number')}}"
+                                                class="form-control numericInputInt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
                                             <label>การสแกนเวลาเข้าออก<span class="small text-danger">*</span></label>
                                             <select name="timeRecordRequire"
                                                 class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"

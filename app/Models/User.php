@@ -73,6 +73,7 @@ class User extends Authenticatable
         'email',
         'password',
         'tax',
+        'social_security_number',
         'diligence_allowance_id',
         'time_record_require',
         'bank',
@@ -1262,6 +1263,10 @@ class User extends Authenticatable
             }
             
             $socialSecurityFivePercent = number_format(round($socialSecurity * ($taxSetting->social_contribution_percent * 0.01)), 2);
+        }
+
+        if ($socialSecurityFivePercent > $taxSetting->social_contribution_max){
+            $socialSecurityFivePercent = $taxSetting->social_contribution_max;
         }
 
         $exceedlimit = 24;
