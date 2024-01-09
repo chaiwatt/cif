@@ -68,7 +68,7 @@ class LeaveIncrementsTableSeeder extends Seeder
             [
                 'user_id' => $user->id,
                 'leave_type_id' => 5,
-                'type' => 1,
+                'type' => 2,
                 'months' => $this->generateMonthsData([1, 3, 5, 7, 9, 11]),
                 'quantity' => 1,
             ],
