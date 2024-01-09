@@ -70,7 +70,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $documentOvertime = Job::where('code','DOCUMENT-OVERTIME')->first();
         $documentOvetimeApproval = Job::where('code','DOCUMENT-OVERTIME-APPROVAL')->first();
         $userInfo = Job::where('code','USER-INFO')->first();
-        $userLeave = Job::where('code','USER-LEAVE')->first();
+        // $userLeave = Job::where('code','USER-LEAVE')->first();
         $assessment = Job::where('code','ASSESSMENT')->first();
         $assessmentGroupMenu = Job::where('code','ASSESSMENT-GROUP')->first();
         $assessmentCriteria = Job::where('code','ASSESSMENT-CRITERIA')->first();
@@ -205,11 +205,11 @@ class GroupModuleJobsTableSeeder extends Seeder
             'module_id' => $userManagementModuleSetting->id,
             'job_id' => $userInfo->id,
         ]);
-        GroupModuleJob::create([
-            'group_id' => $userManagementGroup->id,
-            'module_id' => $userManagementModuleSetting->id,
-            'job_id' => $userLeave->id,
-        ]);
+        // GroupModuleJob::create([
+        //     'group_id' => $userManagementGroup->id,
+        //     'module_id' => $userManagementModuleSetting->id,
+        //     'job_id' => $userLeave->id,
+        // ]);
         GroupModuleJob::create([
             'group_id' => $assessmentGroup->id,
             'module_id' => $assessmentModule->id,

@@ -2,6 +2,10 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\LeaveType;
+use App\Models\UserLeave;
 use App\Models\LeaveIncrement;
 use Illuminate\Console\Command;
 
@@ -16,11 +20,37 @@ class LeaveIncrementCron extends Command
 
     public function handle()
     {
-        $leaveIncrements = LeaveIncrement::all();
+        $this->leaveIncrement();
+    }
 
-        foreach ($leaveIncrements as $leaveIncrement)
-        {
-            //check each user with each leave, if month match then change quantity field.
+    function leaveIncrement()
+    {
+        $month = Carbon::now()->month;
+        $users = User::all();
+        $leaveTypes = LeaveType::all();
+
+        foreach ($users as $user) {
+            foreach ($leaveTypes as $leaveType) {
+                $leaveIncrement = LeaveIncrement::where('user_id', $user->id)
+                    ->where('leave_type_id', $leaveType->id)
+                    ->whereRaw("JSON_CONTAINS(months, ?)", [
+                        json_encode(['monthId' => $month, 'isChecked' => 1]),
+                    ])->first();
+                    if($leaveIncrement != null){
+                        $numIncrement = $leaveIncrement->quantity;
+                        $userLeave = UserLeave::where('user_id',$user->id)->where('leave_type_id', $leaveType->id)->first();
+                        if($userLeave != null){
+                            $currentLeave = $userLeave->count;
+                            $totalNum = $numIncrement;
+                            if($leaveIncrement->type == 2){
+                                $totalNum = $numIncrement + $currentLeave;
+                            }
+                            $userLeave->update([
+                                'count' => $totalNum
+                            ]);
+                        }
+                    }
+            }
         }
     }
 }

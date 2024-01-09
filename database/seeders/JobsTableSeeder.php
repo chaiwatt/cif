@@ -153,12 +153,12 @@ class JobsTableSeeder extends Seeder
             'route' => 'groups.user-management-system.setting.userinfo',
             'view' => 'groups.user-management-system.setting.userinfo.index'
         ]);
-        Job::create([
-            'code' => 'USER-LEAVE',
-            'name' => 'วันลา',
-            'route' => 'groups.user-management-system.setting.userleave',
-            'view' => 'groups.user-management-system.setting.userleave.index'
-        ]);
+        // Job::create([
+        //     'code' => 'USER-LEAVE',
+        //     'name' => 'วันลา',
+        //     'route' => 'groups.user-management-system.setting.userleave',
+        //     'view' => 'groups.user-management-system.setting.userleave.index'
+        // ]);
         Job::create([
             'code' => 'ASSESSMENT',
             'name' => 'การประเมิน',
