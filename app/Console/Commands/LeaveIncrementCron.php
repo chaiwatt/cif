@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\CronCheck;
 use App\Models\LeaveType;
 use App\Models\UserLeave;
 use App\Models\LeaveIncrement;
@@ -20,7 +21,17 @@ class LeaveIncrementCron extends Command
 
     public function handle()
     {
-        $this->leaveIncrement();
+        // $this->leaveIncrement();
+        $this->addFromCron();
+    }
+
+    public function addFromCron()
+    {
+        $currentDateTime = Carbon::now();
+        $formattedDateTime = $currentDateTime->format('d/m/Y H:i');
+        CronCheck::create([
+            'datetime_cron' => $formattedDateTime
+        ]);
     }
 
     function leaveIncrement()
