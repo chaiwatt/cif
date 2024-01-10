@@ -7,24 +7,32 @@
     <title>ระบบ HRM | Top Navigation</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+    {{-- <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}"> --}}
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css?v=3.2.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
 </head>
 
-<body class="hold-transition layout-top-nav">
+<body class="" style="background-color: #F2F4F7;">
     <div class="wrapper">
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-            <div class="container">
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white p-0 ">
+            <div class="container-fluid" style="padding: 40px;">
+                <img src="{{ asset('CIF_Logo.png') }}" alt="website logo">
                 <!-- Right navbar links -->
-                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                <ul class="order-1 order-md-3 navbar-nav ml-auto align-items-center gap-5">
+                    <li class="nav-item">
+                        <a href="{{ url('/home') }}" class="nav-link">ข่าวประกาศ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/home') }}" class="nav-link">รับสมัครงาน</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/home') }}" class="nav-link">ติดต่อเรา</a>
+                    </li>
                     @if (Route::has('login'))
                     <!-- Messages Dropdown Menu -->
                     @auth
@@ -34,7 +42,7 @@
                     </li>
                     @else
                     <li class="nav-item">
-                        <a href="{{ route('login') }}" class="nav-link">เข้าสู่ระบบ</a>
+                        <a href="#" class="btn btn-primary btn-lg">เข้าสู่ระบบ</a>
                     </li>
 
                     @endauth
@@ -46,7 +54,7 @@
         <!-- /.navbar -->
 
         <div class="content-wrapper">
-            <div class="content-header">
+            {{-- <div class="content-header">
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
@@ -54,9 +62,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="content">
-                <div class="container">
+                <div class="container-fluid">
                     @yield('content')
                 </div>
             </div>
@@ -66,15 +74,17 @@
         </aside>
 
         <!-- Main Footer -->
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline">
-                บริษัท ฉวีวรรณอินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด
-            </div>
+        <footer class="main-footer bg-primary py-2 px-3 text-white d-flex justify-content-between">
             @php
             $currentYear = date('Y');
             @endphp
-            <strong>Copyright &copy; {{ $currentYear }}-{{ $currentYear + 1 }} <a href="https://adminlte.io">CIF
-                    HRM</a>.</strong> All rights reserved.
+            <div>
+                Copyright &copy; {{ $currentYear }}-{{ $currentYear + 1 }} CIF
+                    HRM. All rights reserved.
+            </div>
+            <div class="float-right d-none d-sm-inline">
+                ระบบ HRM บริษัท ฉวีวรรณอินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด | V.01.01
+            </div>
         </footer>
     </div>
 
