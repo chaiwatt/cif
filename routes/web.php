@@ -113,7 +113,6 @@ Route::get('post-job-application-news/{id}', [LandingController::class, 'postJob
 // Route::get('test', [TestController::class, 'testRoute'])->name('test');
 // Route::get('export', [TestController::class, 'export'])->name('export');
 // Route::get('leaveIncrement', [TestController::class, 'leaveIncrement'])->name('leaveIncrement');
-// Route::get('addFromCron', [TestController::class, 'addFromCron'])->name('addFromCron');
 
 Route::group(['prefix' => 'shift'], function () {
     Route::get('', [ShiftController::class, 'index'])->name('shifts.index');

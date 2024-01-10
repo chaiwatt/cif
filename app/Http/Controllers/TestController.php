@@ -8,7 +8,6 @@ use App\Models\Leave;
 use App\Models\Shift;
 use App\Models\Payday;
 use App\Models\Approver;
-use App\Models\CronCheck;
 use App\Models\LeaveType;
 use App\Models\UserLeave;
 use App\Models\UserPayday;

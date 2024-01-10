@@ -15,10 +15,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        //ใช้ทดสอบ cron hostinger
-        $schedule->command('app:leave-increment-cron')->hourly();
-
-        // $schedule->command('app:leave-increment-cron')->monthlyOn($hour = 1, $minute = 0)->lastOfMonth();
+        $schedule->command('app:leave-increment-cron')->monthlyOn($hour = 1, $minute = 0)->lastOfMonth();
         // เพิ่ม crontab -e ดังนี้
         // 0 1 * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1
         // ตย. centos8 ใช้ 0 1 L * * php /var/www/html/cif/artisan schedule:run >> /dev/null 2>&1 ตัวอย่างนี้ให้รันตอนตี 1 ของทุกสิ้นเดือน
