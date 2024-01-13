@@ -5,18 +5,16 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-3">
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
                     <h2 class="m-0">แดชบอร์ด</h2>
                 </div>
-                <div>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active">แดชบอร์ด</li>
-                        </ol>
-                    </nav>
-                </div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item active">แดชบอร์ด</li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
@@ -63,15 +61,19 @@
 
 
             <div class="row">
-                <div class="col-lg-12 px-3">
-                    <div class="card border-0">
-                        <div class="pt-4 px-5">
-                            <h3 class="m-0">แผนกทำงาน</h3>
-                        </div>
-                        <div class="card-body">
+                <div class="col-lg-12 px-3 mb-3">
+                    <div class="card border-0 rounded-4">
+                        <div class="card-body p-0">
                             <div class="row">
-                                <div class="col-lg-7 order-1 order-lg-2">
-                                    <table class="table table-borderless">
+                                <div class="col-lg-6 py-3 ps-3 p-0">
+                                    <div class="pt-3 pb-5 px-3">
+                                        <h3 class="m-0">แผนกทำงาน</h3>
+                                    </div>
+                                    <canvas id="employee_donutChart"
+                                        style="min-height: 370px; height: 370px; max-height: 370px; max-width: 100%;"></canvas>
+                                </div>
+                                <div class="col-lg-6 dashboard-chart-table px-4">
+                                    <table class="table table-borderless border-bottom">
                                         <thead class="border-bottom">
                                             <tr>
                                                 <th>#</th>
@@ -92,11 +94,7 @@
                                         </tbody>
 
                                     </table>
-                                    {{$companyDepartments->links()}}
-                                </div>
-                                <div class="col-lg-5 order-2 order-lg-1">
-                                    <canvas id="employee_donutChart"
-                                        style="min-height: 370px; height: 370px; max-height: 370px; max-width: 100%;"></canvas>
+                                    {{$companyDepartments->links('pagination::bootstrap-4')}}
                                 </div>
                             </div>
                            
@@ -104,15 +102,19 @@
                     </div>
                 </div>
                 <div class="col-lg-12 px-3">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">บทบาทและการมอบหมาย</h3>
-                        </div>
-                        <div class="card-body">
+                    <div class="card border-0 rounded-4">
+                        <div class="card-body p-0">
                             <div class="row">
-                                <div class="col-lg-7">
-                                    <table class="table table-striped">
-                                        <thead>
+                                <div class="col-lg-6 py-3 ps-3 p-0">
+                                    <div class="pt-3 pb-5 px-3">
+                                        <h3 class="m-0">บทบาทและการมอบหมาย</h3>
+                                    </div>
+                                    <canvas id="role_donutChart"
+                                        style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                                </div>
+                                <div class="col-lg-6 dashboard-chart-table px-4">
+                                    <table class="table table-borderless border-bottom">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>#</th>
                                                 <th>บทบาท</th>
@@ -139,10 +141,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-lg-5">
-                                    <canvas id="role_donutChart"
-                                        style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -164,12 +162,18 @@
         var employeeDonutOptions = {
             maintainAspectRatio: false,
             responsive: true,
+            legend: {
+                show: true,
+                position: 'bottom',
+                align:'start'
+            },
+
         };
     
         new Chart(employeeDonutChartCanvas, {
             type: 'doughnut',
             data: employeeDonutData,
-            options: employeeDonutOptions
+            options: employeeDonutOptions,
         });
     
         var roleDonutChartCanvas = $('#role_donutChart').get(0).getContext('2d');
@@ -183,12 +187,18 @@
         var roleDonutOptions = {
             maintainAspectRatio: false,
             responsive: true,
+            legend: {
+                show: true,
+                position: 'bottom',
+                align:'start',
+            },
+            
         };
     
         new Chart(roleDonutChartCanvas, {
             type: 'doughnut',
             data: roleDonutData,
-            options: roleDonutOptions
+            options: roleDonutOptions,
         });
 </script>
 

@@ -79,6 +79,12 @@ body {
     display: none;
 }
 
+/* dashboard */
+.dashboard-chart-table {
+    border-left: 1px solid #dee2e6;
+}
+
+
 @media (min-width: 576px) {
 
 }
