@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\HtmlColor;
 use Illuminate\Http\Request;
+use Jenssegers\Date\Date;
 
 class HomeController extends Controller
 {
@@ -32,7 +33,11 @@ class HomeController extends Controller
             $groupIds = $role->role_group_jsons->pluck('group_id');
             $groups = Group::whereIn('id',$groupIds)->get();
         }
+        
+        Date::setLocale('th');
+        $date = Date::now();
+        $formattedDate = $date->format('วันl, d F Y');
         $htmlcolors  = HtmlColor::all();
-        return view('home', ['groups' => $groups,'htmlcolors' => $htmlcolors]);
+        return view('home', ['groups' => $groups,'htmlcolors' => $htmlcolors, 'formatDated'=>$formattedDate ]);
     }
 }

@@ -17,3 +17,71 @@
     white-space: pre-line;
     align-self: stretch;
 }
+body[data-page="dashboard"] {
+    background-color: #101828;
+}
+body {
+    background-color: #F2F4F7;
+}
+
+.input-icon-label {
+    position: relative;
+}
+.input-icon-label > .icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+.input-icon-label.has-validation > .icon {
+    transform: translate(50%, -100%);
+}
+.input-icon-label > input {
+    padding-left: 2.75rem;
+}
+.noifiy {
+    position: relative;
+}
+.noifiy > .red-dot{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+}
+
+/* sidebar */
+.slidebar-dashboard {
+    flex: 0 0 72px;
+    background: #101828;
+}
+.nav-link {
+    color: #FFFFFF;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.nav-link:hover,
+.nav-link.active {
+    color: #FFFFFF !important;
+}
+.nav-link.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 48px;
+    border-radius: 0px 15px 15px 0px;
+    background: #F9FAFB;
+}
+.nav-link > p {
+    display: none;
+}
+
+@media (min-width: 576px) {
+
+}
+@media (min-width: 768px) {}
+@media (min-width: 992px) {}
+/* @media (min-width: 992px) {} */

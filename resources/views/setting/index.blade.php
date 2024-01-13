@@ -2,68 +2,77 @@
 
 @section('content')
 
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">แดชบอร์ด</h1>
+            <div class="d-flex justify-content-between align-items-center my-3">
+                <div>
+                    <h2 class="m-0">แดชบอร์ด</h2>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item active">แดชบอร์ด</li>
-                    </ol>
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item active">แดชบอร์ด</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-md-4 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-info"><i class="fas fa-user-tie"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">พนักงานรายเดือน</span>
-                            <span class="info-box-number">{{$users->where('employee_type_id',1)->count()}}</span>
+            <div class="row px-2">
+                <div class="col-md-4 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; font-size: 36px; width: 64px; height: 64px;">
+                            group
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>พนักงานรายเดือน</span>
+                            <h2 class="m-0">{{$users->where('employee_type_id',1)->count()}}</h2>
                         </div>
 
                     </div>
-
                 </div>
-
-                <div class="col-md-4 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-success"><i class="fas fa-user"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">พนักงานรายงัน</span>
-                            <span class="info-box-number">{{$users->where('employee_type_id',2)->count()}}</span>
+                <div class="col-md-4 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #47CA88; font-size: 36px; width: 64px; height: 64px;">
+                            person
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>พนักงานรายวัน</span>
+                            <h2 class="m-0">{{$users->where('employee_type_id',2)->count()}}</h2>
                         </div>
+
                     </div>
-
                 </div>
-                <div class="col-md-4 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-primary"><i class="fas fa-layer-group"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">จำนวนแผนก</span>
-                            <span class="info-box-number">{{$companyDepartments->total()}}</span>
+                <div class="col-md-4 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #9B8AFB; font-size: 36px; width: 64px; height: 64px;">
+                            stacks
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>จำนวนแผนก</span>
+                            <h2 class="m-0">{{$companyDepartments->total()}}</h2>
                         </div>
+
                     </div>
                 </div>
             </div>
+
+
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">แผนกทำงาน</h3>
+                <div class="col-lg-12 px-3">
+                    <div class="card border-0">
+                        <div class="pt-4 px-5">
+                            <h3 class="m-0">แผนกทำงาน</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-7">
-                                    <table class="table table-striped">
-                                        <thead>
+                                <div class="col-lg-7 order-1 order-lg-2">
+                                    <table class="table table-borderless">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>#</th>
                                                 <th>แผนก</th>
@@ -83,18 +92,18 @@
                                         </tbody>
 
                                     </table>
-
+                                    {{$companyDepartments->links()}}
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-5 order-2 order-lg-1">
                                     <canvas id="employee_donutChart"
                                         style="min-height: 370px; height: 370px; max-height: 370px; max-width: 100%;"></canvas>
                                 </div>
                             </div>
-                            {{$companyDepartments->links()}}
+                           
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12 px-3">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">บทบาทและการมอบหมาย</h3>

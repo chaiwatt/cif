@@ -27,7 +27,7 @@
                             ประกาศกระทรวงอุตสาหกรรม เรื่อง กำหนดให้โรง งานประเภทต่าง ๆ ต้องติดตั้ง เครื่องมือหรือเครื่อง อุปกรณ์พิเศษ เพื่อตรวจสอบคุณภาพอากาศ จากปล่องแบบอัตโนมัติอย่างต่อเนื่อง
                         </strong>
                     </div>
-                    <div class="text-end" >
+                    <div class="text-end">
                         <a href="#" class="text-primary" style="padding: 8px 14px;">อ่านเพิ่มเติม</a>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                             </p>
                         </div>
                         <div>
-                            <button class="btn btn-secondary text-nowrap btn-lg">
+                            <button class="btn btn-outline-secondary text-nowrap btn-lg">
                                 รายละเอียด
                             </button>
                         </div>
@@ -107,7 +107,7 @@
                             </p>
                         </div>
                         <div>
-                            <button class="btn btn-secondary text-nowrap btn-lg">
+                            <button class="btn btn-outline-secondary text-nowrap btn-lg">
                                 รายละเอียด
                             </button>
                         </div>

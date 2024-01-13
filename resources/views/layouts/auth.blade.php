@@ -11,13 +11,13 @@
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css?v=3.2.0') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css?v=3.2.0') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 
     @yield('content')
@@ -25,6 +25,6 @@
 
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-    <script src="{{ asset('assets/js/adminlte.min.js?v=3.2.0') }}"></script>
+    {{-- <script src="{{ asset('assets/js/adminlte.min.js?v=3.2.0') }}"></script> --}}
 
 </html>

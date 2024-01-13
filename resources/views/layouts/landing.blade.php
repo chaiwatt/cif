@@ -16,42 +16,51 @@
     <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
 </head>
 
-<body class="" style="background-color: #F2F4F7;">
+<body>
     <div class="wrapper">
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white p-0 ">
-            <div class="container-fluid" style="padding: 40px;">
-                <img src="{{ asset('CIF_Logo.png') }}" alt="website logo">
-                <!-- Right navbar links -->
-                <ul class="order-1 order-md-3 navbar-nav ml-auto align-items-center gap-5">
-                    <li class="nav-item">
-                        <a href="{{ url('/home') }}" class="nav-link">ข่าวประกาศ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/home') }}" class="nav-link">รับสมัครงาน</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/home') }}" class="nav-link">ติดต่อเรา</a>
-                    </li>
-                    @if (Route::has('login'))
-                    <!-- Messages Dropdown Menu -->
-                    @auth
-
-                    <li class="nav-item">
-                        <a href="{{ url('/home') }}" class="nav-link">แดชบอร์ด</a>
-                    </li>
-                    @else
-                    <li class="nav-item">
-                        <a href="#" class="btn btn-primary btn-lg">เข้าสู่ระบบ</a>
-                    </li>
-
-                    @endauth
-                    @endif
-
-                </ul>
-            </div>
-        </nav>
+        <nav class="navbar navbar-expand-lg sticky-top p-0">
+            <section class="container-fluid" style="padding: 40px;">
+                <a class="navbar-brand" href="/"><img src="{{ asset('CIF_Logo.png') }}" alt="website logo"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvaHRN" aria-controls="navbarOffcanvaHRN" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvaHRN" aria-labelledby="navbarOffcanvaHRNLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="{{ asset('CIF_Logo.png') }}" alt="website logo"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                      </div>
+                      <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end align-items-lg-center flex-grow-1 gap-3 gap-lg-5">
+                            <li class="nav-item">
+                                <a href="{{ url('/home') }}" class="nav-link">ข่าวประกาศ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/home') }}" class="nav-link">รับสมัครงาน</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/home') }}" class="nav-link">ติดต่อเรา</a>
+                            </li>
+                            @if (Route::has('login'))
+                            <!-- Messages Dropdown Menu -->
+                            @auth
+    
+                            <li class="nav-item">
+                                <a href="{{ url('/home') }}" class="nav-link">แดชบอร์ด</a>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a href="/login" class="btn btn-primary btn-lg">เข้าสู่ระบบ</a>
+                            </li>
+    
+                            @endauth
+                            @endif
+                        </ul>
+                      </div>
+                </div>
+            </section>
+          </nav>
         <!-- /.navbar -->
 
         <div class="content-wrapper">
@@ -92,7 +101,7 @@
     <!-- jQuery -->
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.js') }}"></script>
 
     <script src="{{ asset('assets/js/adminlte.min.js?v=3.2.0') }}"></script>
 </body>

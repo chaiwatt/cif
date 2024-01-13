@@ -66,8 +66,8 @@
                                                     </td>
                                                     <td>{{$user->employee_no}}</td>
                                                     <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
-                                                    <td>{{$user->company_department->name}}</td>
-                                                    <td>{{$user->user_position->name}}</td>
+                                                    <td>{{isset($user->company_department->name) ? $user->company_department->name:''}}</td>
+                                                    <td>{{isset($user->user_position->name) ? $user->user_position->name : "" }}</td>
                                                     <td class="text-right">
                                                         <a class="btn btn-info btn-sm"
                                                             href="{{route('setting.organization.employee.view',['id' => $user->id])}}">
