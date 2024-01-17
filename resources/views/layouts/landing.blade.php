@@ -20,34 +20,34 @@
     <div class="wrapper">
 
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg sticky-top p-0">
+        <nav class="navbar navbar-expand-lg sticky-top p-0" style="background-color: #F2F4F7;">
             <section class="container-fluid" style="padding: 40px;">
-                <a class="navbar-brand" href="/"><img src="{{ asset('CIF_Logo.png') }}" alt="website logo"></a>
+                <a class="navbar-brand" href="/"><img src="{{ asset('CIF_Logo.png') }}" height="48" alt="website logo"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvaHRN" aria-controls="navbarOffcanvaHRN" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvaHRN" aria-labelledby="navbarOffcanvaHRNLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="{{ asset('CIF_Logo.png') }}" alt="website logo"></h5>
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="{{ asset('CIF_Logo.png') }}" height="48" alt="website logo"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                       </div>
                       <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end align-items-lg-center flex-grow-1 gap-3 gap-lg-5">
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link">ข่าวประกาศ</a>
+                                <a href="{{ url('/home') }}" class="nav-link offcanva">ข่าวประกาศ</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link">รับสมัครงาน</a>
+                                <a href="{{ url('/home') }}" class="nav-link offcanva">รับสมัครงาน</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link">ติดต่อเรา</a>
+                                <a href="{{ url('/home') }}" class="nav-link offcanva">ติดต่อเรา</a>
                             </li>
                             @if (Route::has('login'))
                             <!-- Messages Dropdown Menu -->
                             @auth
     
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link">แดชบอร์ด</a>
+                                <a href="{{ url('/home') }}" class="nav-link offcanva">แดชบอร์ด</a>
                             </li>
                             @else
                             <li class="nav-item">

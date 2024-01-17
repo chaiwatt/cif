@@ -3,23 +3,28 @@
         <ul class="navbar-nav text-center gap-3" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
                 <a href="{{route('setting')}}" class="nav-link {{ request()->is('setting') ? 'active' : '' }}">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" >
                         dashboard
                     </span>
                     <p>
                         แดชบอร์ด
                     </p>
+                    <span class="material-symbols-outlined icon-right">
+                        keyboard_arrow_right
+                    </span>
                 </a>
             </li>
             <li class="nav-item nav-item {{ request()->is('setting/organization*') ? 'menu-open' : '' }}">
                 <a href="" class="nav-link {{ request()->is('setting/organization*') ? 'active' : '' }}">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" >
                         location_city
                     </span>
                     <p>
                         องค์กร
-                        <i class="right fas fa-angle-left"></i>
                     </p>
+                    <span class="material-symbols-outlined icon-right">
+                        keyboard_arrow_right
+                    </span>
                 </a>
                 <ul class="nav nav-treeview"
                     style="{{ request()->is('setting/organization*') ? '' : 'display: none;' }}">
@@ -42,13 +47,15 @@
             <li class="nav-item {{ request()->is('setting/access*', 'setting/assignment*') ? 'menu-open' : '' }}">
                 <a href=""
                     class="nav-link {{ request()->is('setting/access*', 'setting/assignment*') ? 'active' : '' }}">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" >
                         person_check
                     </span>
                     <p>
                         การใช้งาน
-                        <i class="right fas fa-angle-left"></i>
                     </p>
+                    <span class="material-symbols-outlined icon-right">
+                        keyboard_arrow_right
+                    </span>
                 </a>
                 <ul class="nav nav-treeview"
                     style="{{ request()->is('setting/access*', 'setting/assignment*') ? '' : 'display: none;' }}">
@@ -63,13 +70,15 @@
             </li>
             <li class="nav-item {{ request()->is('setting/general*') ? 'menu-open' : '' }}">
                 <a href="" class="nav-link {{ request()->is('setting/general*') ? 'active' : '' }}">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" >
                         settings
                     </span>
                     <p>
                         ทั่วไป
-                        <i class="right fas fa-angle-left"></i>
                     </p>
+                    <span class="material-symbols-outlined icon-right">
+                        keyboard_arrow_right
+                    </span>
                 </a>
                 <ul class="nav nav-treeview" style="{{ request()->is('setting/general*') ? '' : 'display: none;' }}">
                     <li class="nav-item">
@@ -97,13 +106,15 @@
             </li>
             <li class="nav-item {{ request()->is('setting/report*') ? 'menu-open' : '' }}">
                 <a href="" class="nav-link {{ request()->is('setting/report*') ? 'active' : '' }}">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" >
                         finance
                     </span>
                     <p>
                         รายงาน
-                        <i class="right fas fa-angle-left"></i>
                     </p>
+                    <span class="material-symbols-outlined icon-right">
+                        keyboard_arrow_right
+                    </span>
                 </a>
                 <ul class="nav nav-treeview" style="{{ request()->is('setting/report*') ? '' : 'display: none;' }}">
                     <li class="nav-item">

@@ -37,8 +37,8 @@
                     <div class="offcanvas-body justify-content-end">
                     <ul class="navbar-nav gap-3">
                         <li>
-                            <p class="text-lg-end m-0">{{Auth::user()->name}} {{Auth::user()->lastname}}</p>
-                            <p class="text-lg-end m-0 text-muted" style="font-size: 12px">{{Auth::user()->user_position->name}}</p>
+                            <p class="text-md-end m-0">{{Auth::user()->name}} {{Auth::user()->lastname}}</p>
+                            <p class="text-md-end m-0 text-muted" style="font-size: 12px">{{Auth::user()->user_position->name}}</p>
                         </li>
                         <li class="d-flex gap-3">
                             <img src="{{ asset('user_test.png') }}" class="rounded-circle" width="40px" height="40px" alt="avatar">
@@ -131,6 +131,7 @@
             </div>
         </footer>
 </body>
+
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

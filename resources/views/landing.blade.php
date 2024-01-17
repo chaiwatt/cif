@@ -19,7 +19,7 @@
             <div class="card-body d-flex justify-content-between p-5">
                 <div class="d-flex flex-column" style="gap: 20px; width: 364px;">
                     <div>
-                        <img src="{{ asset('image_test.jpg') }}" class="object-fit-cover rounded" style="width: 100%; height: 180px" alt="">
+                        <img src="{{ asset('image_test.jpg') }}" class="object-fit-cover rounded" style="width: 100%; height: 180px" alt="annoucement-image">
                     </div>
                     <div>
                         <p class="text-muted" style="margin-bottom: 12px">20/10/2566</p>
