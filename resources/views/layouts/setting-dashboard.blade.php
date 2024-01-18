@@ -30,9 +30,9 @@
     @stack('styles')
 
 <body data-page="dashboard">
-    <div class="d-flex">
+    <div class="d-flex flex-grow-1">
         @include('layouts.partial.setting-aside')
-        <div class="d-flex flex-column rounded-start-3 overflow-hidden" style="background: #F2F4F7;">
+        <div class="d-flex flex-grow-1 flex-column rounded-start-3 overflow-hidden" style="background: #F2F4F7;">
             <nav class="navbar navbar-expand bg-white">
                 <ul class="navbar-nav d-flex justify-content-between align-items-center w-100 px-3">
                     <li class="nav-item">
@@ -42,7 +42,15 @@
                             </span>
                         </a>
                     </li>
+                    {{-- Current Page --}}
+                    <li>
+                        <h3 class="m-0"></h3>
+                    </li>
                     <li class="d-flex gap-3">
+                        <div>
+                            <p class="text-md-end m-0">{{Auth::user()->name}} {{Auth::user()->lastname}}</p>
+                            <p class="text-md-end m-0 text-muted" style="font-size: 12px">{{Auth::user()->user_position->name}}</p>
+                        </div>
                         <img src="{{ asset('user_test.png') }}" class="rounded-circle" width="40px" height="40px" alt="avatar">
                         {{-- โทรโขง --}}
                         <button class="btn rounded-circle p-0" style="width: 40px; height: 40px;">

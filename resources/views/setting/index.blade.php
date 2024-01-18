@@ -9,19 +9,19 @@
                 <div>
                     <h2 class="m-0">แดชบอร์ด</h2>
                 </div>
-                <nav aria-label="breadcrumb">
+                <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">แดชบอร์ด</li>
                     </ol>
-                </nav>
+                </div>
             </div>
         </div>
     </div>
     <div class="content">
         <div class="container-fluid">
             <div class="row px-2">
-                <div class="col-md-4 col-sm-6 col-12 px-2 mb-3">
+                <div class="col-lg-4 col-sm-6 col-12 px-2 mb-3">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; font-size: 36px; width: 64px; height: 64px;">
                             group
@@ -33,7 +33,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-12 px-2 mb-3">
+                <div class="col-lg-4 col-sm-6 col-12 px-2 mb-3">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #47CA88; font-size: 36px; width: 64px; height: 64px;">
                             person
@@ -45,7 +45,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-12 px-2 mb-3">
+                <div class="col-lg-4 col-sm-6 col-12 px-2 mb-3">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #9B8AFB; font-size: 36px; width: 64px; height: 64px;">
                             stacks
