@@ -3,15 +3,15 @@
 
 @endpush
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0" id="role_id" data-id="{{$role->id}}">บทบาท: {{$role->name}}</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0" id="role_id" data-id="{{$role->id}}">บทบาท: {{$role->name}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb"> 
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('setting.access.role.index')}}">บทบาท</a>
                         </li>
                         <li class="breadcrumb-item active">{{$role->name}}</li>
@@ -90,7 +90,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
+                                <div>
                                     <h3 class="card-title">เลือกกลุ่มทำงาน</h3>
                                 </div>
                                 <div class="card-body table-responsive p-0">
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">ปิด</button>
                     <button type="button" class="btn btn-primary" id="bntSaveGroup">บันทึก</button>
                 </div>
             </div>
@@ -123,10 +123,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">ตั้งค่าบทบาท</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="location.reload()">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -154,7 +151,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"
                         onclick="location.reload()">ปิด</button>
                     <button type="button" class="btn btn-primary" id="bntSaveModule">บันทึก</button>
                 </div>

@@ -1,15 +1,15 @@
 @extends('layouts.setting-dashboard')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">นำเข้าพนักงาน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">นำเข้าพนักงาน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">นำเข้าพนักงาน</li>
                     </ol>
@@ -27,9 +27,9 @@
             @endif
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card border-0 rounded-4">
                         <div class="card-header">
-                            <h3 class="card-title">วิธีการนำเข้าพนักงาน</h3>
+                            <h4 class="m-0">วิธีการนำเข้าพนักงาน</h4>
                         </div>
                         <div class="card-body">
                             <p>การนำเข้าพนักงานโดยใช้ไฟล์เทมเพลต จะต้องตรวสอบข้อมูลให้ถูกต้องและห้ามลบแถวแรกของตาราง
@@ -43,20 +43,19 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-2">
                 <div class="col-sm-12">
                     <form action="{{route('setting.organization.employee.import.store')}}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <div class="custom-file">
-                                <input type="file" name="file" class="custom-file-input" accept=".xlsx, .xls, .csv"
-                                    id="customFile">
-                                <label class="custom-file-label" for="customFile">เลือกไฟล์ exel</label>
+                        <div class="px-4">
+                            <label class="custom-file-label" for="customFile">เลือกไฟล์ exel</label>
+                            <div class="d-flex gap-2">
+                                    <input type="file" name="file" class="form-control col-6" accept=".xlsx, .xls, .csv"
+                                    id="customFile" style="width: 250px;">
+                                <button type="submit" class="btn btn-primary mb-2">นำเข้าพนักงาน</button>
                             </div>
-
                         </div>
-                        <button type="submit" class="btn btn-primary mb-2 float-right">นำเข้าพนักงาน</button>
                     </form>
                 </div>
             </div>

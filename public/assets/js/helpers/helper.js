@@ -56,7 +56,8 @@ $(document).on('click', 'a[data-confirm]', function (event) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

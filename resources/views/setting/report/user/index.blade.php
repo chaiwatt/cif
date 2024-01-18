@@ -3,15 +3,15 @@
 
 @endpush
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">พนักงาน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">พนักงาน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">พนักงาน</li>
                     </ol>
@@ -69,12 +69,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 d-flex justify-content-end">
-                            <button class="btn btn-info mr-2" id="search_employee"><i
-                                    class="fas fa-search mr-1"></i>ค้นหา</button>
-                            <a class="btn btn-primary mr-2" id="export_employee"><i
-                                    class="fas fa-file-excel mr-1"></i>ส่งออก
+                    <div class="row mt-2">
+                        <div class="col-md-12 d-flex justify-content-end gap-2">
+                            <button class="btn btn-outline-secondary d-flex gap-2 align-items-center" id="search_employee">
+                                <i class="fas fa-search mr-1"></i>ค้นหา</button>
+                            <a class="btn btn-primary d-flex gap-2 align-items-center" id="export_employee">
+                                <i class="fas fa-file-excel mr-1"></i>ส่งออก
                                 Excel</a>
                             <button class="btn btn-dark " id="setting_report_field"><i class="fas fa-cog"></i></button>
                         </div>

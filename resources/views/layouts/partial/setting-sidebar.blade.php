@@ -45,7 +45,7 @@
                 </ul>
             </li>
             <li class="nav-item {{ request()->is('setting/access*', 'setting/assignment*') ? 'menu-open' : '' }}" id="main-sub-menu">
-                <a href="#" class="nav-link {{ request()->is('setting/access*', 'setting/assignment*') ? 'active' : '' }}" id="open-sub-menu">
+                <a href="#" class="nav-link {{ request()->is('setting/access*', 'setting/assignment*') ? 'current-page' : '' }}" id="open-sub-menu">
                     <span class="material-symbols-outlined" >
                         person_check
                     </span>
@@ -69,7 +69,7 @@
                 </ul>
             </li>
             <li class="nav-item {{ request()->is('setting/general*') ? 'menu-open' : '' }}" id="main-sub-menu"> 
-                <a href="#" class="nav-link {{ request()->is('setting/general*') ? 'active' : '' }}" id="open-sub-menu">
+                <a href="#" class="nav-link {{ request()->is('setting/general*') ? 'current-page' : '' }}" id="open-sub-menu">
                     <span class="material-symbols-outlined" >
                         settings
                     </span>
@@ -111,7 +111,7 @@
                 </ul>
             </li>
             <li class="nav-item {{ request()->is('setting/report*') ? 'menu-open' : '' }}" id="main-sub-menu">
-                <a href="#" class="nav-link {{ request()->is('setting/report*') ? 'active' : '' }}" id="open-sub-menu">
+                <a href="#" class="nav-link {{ request()->is('setting/report*') ? 'current-page' : '' }}" id="open-sub-menu">
                     <span class="material-symbols-outlined" >
                         finance
                     </span>

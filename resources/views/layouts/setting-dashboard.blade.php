@@ -43,11 +43,13 @@
                         </a>
                     </li>
                     {{-- Current Page --}}
-                    <li>
-                        <h3 class="m-0"></h3>
-                    </li>
+                    @isset($currentPage)
+                        <li class="nav-item">
+                            <h4 class="m-0">{{ $currentPage }}</h4>
+                        </li>
+                    @endisset
                     <li class="d-flex gap-3">
-                        <div>
+                        <div class="d-none d-sm-block">
                             <p class="text-md-end m-0">{{Auth::user()->name}} {{Auth::user()->lastname}}</p>
                             <p class="text-md-end m-0 text-muted" style="font-size: 12px">{{Auth::user()->user_position->name}}</p>
                         </div>

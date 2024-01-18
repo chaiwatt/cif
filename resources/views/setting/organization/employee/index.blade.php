@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
-                    <h1 class="m-0">พนักงาน</h1>
+                    <h3 class="m-0">พนักงาน</h3>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
@@ -33,13 +33,13 @@
             </a>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">รายชื่อพนักงาน</h3>
+                    <div class="card border-0 rounded-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="m-0">รายชื่อพนักงาน</h3>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                                     <td>{{isset($user->company_department->name) ? $user->company_department->name:''}}</td>
                                                     <td>{{isset($user->user_position->name) ? $user->user_position->name : "" }}</td>
                                                     <td class="text-right">
-                                                        <a class="btn btn-info btn-sm"
+                                                        <a class="btn btn-primary btn-sm"
                                                             href="{{route('setting.organization.employee.view',['id' => $user->id])}}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>

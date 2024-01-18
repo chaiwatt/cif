@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
-                    <h2 class="m-0">แดชบอร์ด</h2>
+                    <h3 class="m-0">แดชบอร์ด</h3>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">

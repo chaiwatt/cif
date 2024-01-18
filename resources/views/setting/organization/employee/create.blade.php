@@ -1,15 +1,15 @@
 @extends('layouts.setting-dashboard')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มพนักงาน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เพิ่มพนักงาน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">เพิ่มพนักงาน</li>
                     </ol>
@@ -21,15 +21,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">รายละเอียดข้อมูลพนักงาน</h3>
+                    <div class="card border-0 rounded-4">
+                        <div class="py-3 px-4">
+                            <h3 class="m-0">รายละเอียดข้อมูลพนักงาน</h3>
                         </div>
                         <div class="card-body">
                             <form action="{{route('setting.organization.employee.store')}}" method="POST">
                                 @csrf
                                 <!-- Display validation errors -->
-                                <div class="row">
+                                <div class="row gy-2">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
@@ -108,12 +108,14 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>วันเดือนปี เกิด</label>
-                                            <div class="input-group date" id="birth_date" data-target-input="nearest">
+                                            <div class="date-box date" id="birth_date" data-target-input="nearest">
                                                 <input name="birthDate" value="{{old('birthDate')}}" type="text"
                                                     class="form-control datetimepicker-input" data-target="#birth_date">
-                                                <div class="input-group-append" data-target="#birth_date"
+                                                <div class="date-icon" data-target="#birth_date"
                                                     data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    <span class="material-symbols-outlined">
+                                                        today
+                                                        </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,14 +189,16 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>เริ่มทำงาน<span class="small text-danger">*</span></label>
-                                            <div class="input-group date" id="start_work_date"
+                                            <div class="date-box date" id="start_work_date"
                                                 data-target-input="nearest">
                                                 <input name="startWorkDate" value="{{old('startWorkDate')}}" type="text"
                                                     class="form-control datetimepicker-input @error('startWorkDate') is-invalid @enderror"
                                                     data-target="#start_work_date">
-                                                <div class="input-group-append" data-target="#start_work_date"
+                                                <div class="date-icon" data-target="#start_work_date"
                                                     data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    <span class="material-symbols-outlined">
+                                                        today
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,15 +215,17 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>วันหมดอายุวีซ่า</label>
-                                            <div class="input-group date" id="visa_expire_date"
+                                            <div class="date-box date" id="visa_expire_date"
                                                 data-target-input="nearest">
                                                 <input name="visaExpireDate" value="{{old('visaExpireDate')}}"
                                                     type="text"
                                                     class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
                                                     data-target="#visa_expire_date">
-                                                <div class="input-group-append" data-target="#visa_expire_date"
+                                                <div class="date-icon" data-target="#visa_expire_date"
                                                     data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    <span class="material-symbols-outlined">
+                                                        today
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,15 +242,17 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>วันหมดอายุใบอนุญาตทำงาน</label>
-                                            <div class="input-group date" id="work_permit_expire_date"
+                                            <div class="date-box date" id="work_permit_expire_date"
                                                 data-target-input="nearest">
                                                 <input type="text" name="workPermitExpireDate"
                                                     value="{{old('workPermitExpireDate')}}"
                                                     class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
                                                     data-target="#work_permit_expire_date">
-                                                <div class="input-group-append" data-target="#work_permit_expire_date"
+                                                <div class="date-icon" data-target="#work_permit_expire_date"
                                                     data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    <span class="material-symbols-outlined">
+                                                        today
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -299,10 +307,10 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-12">
+                                <div class="row mt-2">
+                                    <div class="col-12 text-end">
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

@@ -3,15 +3,15 @@
 
 @endpush
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">ฟิลเตอร์ของตาราง</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">ฟิลเตอร์ของตาราง</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb mt-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">ฟิลเตอร์ของตาราง</li>
                     </ol>
@@ -77,12 +77,10 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        <div class="row">
-                                            <div class="col-12">
+                                            <div class="mt-2 text-end">
                                                 <button type="submit"
-                                                    class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                                    class="btn btn-primary">บันทึก</button>
                                             </div>
-                                        </div>
                                     </form>
 
                                 </div>

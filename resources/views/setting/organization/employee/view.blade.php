@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
-                    <h1 class="m-0">{{$user->name}} {{$user->lastname}}</h1>
+                    <h3 class="m-0">{{$user->name}} {{$user->lastname}}</h3>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
