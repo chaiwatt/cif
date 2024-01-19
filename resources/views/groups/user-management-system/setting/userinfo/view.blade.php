@@ -31,57 +31,58 @@
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
+                                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
                                         aria-selected="true">ข้อมูลทั่วไป</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-workschedule-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-workschedule-tab"
                                         href="#custom-tabs-one-workschedule" role="tab"
                                         aria-controls="custom-tabs-one-workschedule"
+                                        data-bs-toggle="tab"
                                         aria-selected="false">ตารางทำงาน</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-leave-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-leave-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-leave" role="tab" aria-controls="custom-tabs-one-leave"
                                         aria-selected="false">วันลา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-diligence-allowance-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-diligence-allowance-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-diligence-allowance" role="tab"
                                         aria-controls="custom-tabs-one-diligence-allowance"
                                         aria-selected="false">เบี้ยขยัน</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-education-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-education-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-education" role="tab"
                                         aria-controls="custom-tabs-one-education" aria-selected="false">การศึกษา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-trainings-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-trainings-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-trainings" role="tab"
                                         aria-controls="custom-tabs-one-trainings" aria-selected="false">การฝึกอบรม</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-position-adjustment-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-position-adjustment-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-position-adjustment" role="tab"
                                         aria-controls="custom-tabs-one-position-adjustment"
                                         aria-selected="false">การปรับตำแหน่ง</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-salary-adjustment-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-salary-adjustment-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-salary-adjustment" role="tab"
                                         aria-controls="custom-tabs-one-salary-adjustment"
                                         aria-selected="false">การปรับเงินเดือน</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-punishments-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-punishments-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-punishments" role="tab"
                                         aria-controls="custom-tabs-one-punishments"
                                         aria-selected="false">ความผิดและโทษ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-documents-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-documents-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-documents" role="tab"
                                         aria-controls="custom-tabs-one-documents" aria-selected="false">เอกสารสำคัญ</a>
                                 </li>
@@ -91,7 +92,7 @@
                             <div class="tab-content" id="custom-tabs-one-tabContent">
                                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-home-tab">
-                                    <div class="row">
+                                    <div class="row gy-2">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
@@ -170,16 +171,17 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>วันเดือนปี เกิด</label>
-                                                <div class="input-group date" id="birth_date"
+                                                <div class="date-box date" id="birth_date"
                                                     data-target-input="nearest">
                                                     <input name="birthDate"
                                                         value="{{old('birthDate') ?? $user->birth_date}}" type="text"
                                                         class="form-control datetimepicker-input"
                                                         data-target="#birth_date">
-                                                    <div class="input-group-append" data-target="#birth_date"
+                                                    <div class="date-icon" data-target="#birth_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -248,17 +250,18 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>เริ่มทำงาน<span class="small text-danger">*</span></label>
-                                                <div class="input-group date" id="start_work_date"
+                                                <div class="date-box date" id="start_work_date"
                                                     data-target-input="nearest">
                                                     <input name="startWorkDate"
                                                         value="{{old('startWorkDate') ?? $user->start_work_date}}"
                                                         type="text"
                                                         class="form-control datetimepicker-input @error('startWorkDate') is-invalid @enderror"
                                                         data-target="#start_work_date">
-                                                    <div class="input-group-append" data-target="#start_work_date"
+                                                    <div class="date-icon" data-target="#start_work_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -276,17 +279,18 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>วันหมดอายุวีซ่า</label>
-                                                <div class="input-group date" id="visa_expire_date"
+                                                <div class="date-box date" id="visa_expire_date"
                                                     data-target-input="nearest">
                                                     <input name="visaExpireDate"
                                                         value="{{old('visaExpireDate') ?? $user->visa_expiry_date}}"
                                                         type="text"
                                                         class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
                                                         data-target="#visa_expire_date">
-                                                    <div class="input-group-append" data-target="#visa_expire_date"
+                                                    <div class="date-icon" data-target="#visa_expire_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -304,17 +308,18 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>วันหมดอายุใบอนุญาตทำงาน</label>
-                                                <div class="input-group date" id="work_permit_expire_date"
+                                                <div class="date-box date" id="work_permit_expire_date"
                                                     data-target-input="nearest">
                                                     <input type="text" name="workPermitExpireDate"
                                                         value="{{old('workPermitExpireDate') ?? $user->permit_expiry_date}}"
                                                         class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
                                                         data-target="#work_permit_expire_date">
-                                                    <div class="input-group-append"
+                                                    <div class="date-icon"
                                                         data-target="#work_permit_expire_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -403,7 +408,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="text-right">
-                                                        <a class="btn btn-info btn-sm" id="update-workschedule">
+                                                        <a class="btn btn-primary btn-sm" id="update-workschedule">
                                                             <i class="fas fa-save"></i>
                                                         </a>
                                                     </td>
@@ -423,7 +428,7 @@
                                                         </select>
                                                     </td>
                                                     <td class="text-right">
-                                                        <a class="btn btn-info btn-sm" id="update-payday">
+                                                        <a class="btn btn-primary btn-sm" id="update-payday">
                                                             <i class="fas fa-save"></i>
                                                         </a>
                                                     </td>
@@ -470,7 +475,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="text-right">
-                                                        <a class="btn btn-info btn-sm" id="update-overtime-approver">
+                                                        <a class="btn btn-primary btn-sm" id="update-overtime-approver">
                                                             <i class="fas fa-save"></i>
                                                         </a>
                                                     </td>
@@ -518,7 +523,7 @@
 
                                                     </td>
                                                     <td class="text-right">
-                                                        <a class="btn btn-info btn-sm" id="update-leave-approver">
+                                                        <a class="btn btn-primary btn-sm" id="update-leave-approver">
                                                             <i class="fas fa-save"></i>
                                                         </a>
 
@@ -533,7 +538,7 @@
                                 <div class="tab-pane fade" id="custom-tabs-one-leave" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-leave-tab">
                                     <div class="col-12" id="user-leave-container">
-                                        <label for="">วันลาคงเหลือ <a
+                                        <label for="" class="py-2 d-flex gap-2 align-items-center">วันลาคงเหลือ <a
                                                 class="btn btn-primary btn-sm btn-leave-increment-setting ml-2">
                                                 <i class="fas fa-cog"></i> ตั้งการเพิ่มวันลา
                                             </a></label>
@@ -553,7 +558,7 @@
                                                     <td>{{$userLeave->count}}</td>
                                                     <td class="text-right">
 
-                                                        <a class="btn btn-info btn-sm btn-update-leave"
+                                                        <a class="btn btn-primary btn-sm btn-update-leave"
                                                             data-id="{{$userLeave->id}}"
                                                             data-count="{{$userLeave->count}}">
                                                             <i class="fas fa-pencil-alt"></i>
@@ -624,7 +629,7 @@
                                                     </td>
                                                     <td class="text-right">
                                                         @if ($loop->iteration == 2)
-                                                        <a class="btn btn-info btn-sm btn-update-user-diligence-allowance"
+                                                        <a class="btn btn-primary btn-sm btn-update-user-diligence-allowance"
                                                             data-id="{{$userDiligenceAllowance->id}}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
@@ -666,7 +671,7 @@
                                                         <td>{{$education->branch}}</td>
                                                         <td>{{$education->year}}</td>
                                                         <td class="text-right">
-                                                            <a class="btn btn-info btn-sm btn-update-education"
+                                                            <a class="btn btn-primary btn-sm btn-update-education"
                                                                 data-id="{{$education->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
@@ -711,7 +716,7 @@
                                                         <td>{{$training->organizer}}</td>
                                                         <td>{{$training->year}}</td>
                                                         <td class="text-right">
-                                                            <a class="btn btn-info btn-sm btn-update-training"
+                                                            <a class="btn btn-primary btn-sm btn-update-training"
                                                                 data-id="{{$training->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
@@ -761,7 +766,7 @@
                                                         </td>
                                                         <td>{{$positionHistory->user_position->name}}</td>
                                                         <td class="text-right">
-                                                            <a class="btn btn-info btn-sm btn-update-position-history"
+                                                            <a class="btn btn-primary btn-sm btn-update-position-history"
                                                                 data-id="{{$positionHistory->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
@@ -809,7 +814,7 @@
                                                         </td>
                                                         <td>{{$salaryRecord->salary}}</td>
                                                         <td class="text-right">
-                                                            <a class="btn btn-info btn-sm btn-update-salary"
+                                                            <a class="btn btn-primary btn-sm btn-update-salary"
                                                                 data-id="{{$salaryRecord->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
@@ -858,7 +863,7 @@
                                                         </td>
                                                         <td>{{$punishment->punishment}}</td>
                                                         <td class="text-right">
-                                                            <a class="btn btn-info btn-sm btn-update-punishment"
+                                                            <a class="btn btn-primary btn-sm btn-update-punishment"
                                                                 data-id="{{$punishment->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
@@ -951,8 +956,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-add-salary">เพิ่ม</button>
                             </div>
                         </div>
@@ -981,8 +986,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-update-salary">แก้ไข</button>
                             </div>
                         </div>
@@ -1042,8 +1047,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-add-position">เพิ่ม</button>
                             </div>
                         </div>
@@ -1087,8 +1092,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-add-education">เพิ่ม</button>
                             </div>
                         </div>
@@ -1122,8 +1127,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group">
                                 <button type="button" class="btn btn-primary" id="save-update-education">แก้ไข</button>
                             </div>
                         </div>
@@ -1156,8 +1161,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-add-training">เพิ่ม</button>
                             </div>
                         </div>
@@ -1191,8 +1196,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-update-training">แก้ไข</button>
                             </div>
                         </div>
@@ -1219,8 +1224,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-add-punishment">เพิ่ม</button>
                             </div>
                         </div>
@@ -1249,8 +1254,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-update-punishment">แก้ไข</button>
                             </div>
                         </div>
@@ -1270,7 +1275,7 @@
                                 <input type="text" class="form-control" id="attachment">
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 my-3">
                             <div class="form-group clearfix">
 
                                 <div class="icheck-primary d-inline">
@@ -1289,7 +1294,7 @@
                         </div>
                         <div class="col-md-12" id="file_wrapper">
                             <div class="form-group">
-                                <button type="button" class="btn btn-info" id="btn-add-attachment">เพิ่มไฟล์แนบ <span
+                                <button type="button" class="btn btn-primary" id="btn-add-attachment">เพิ่มไฟล์แนบ <span
                                         id="attachment-file" class="text-dark"></span></button>
                                 <div class="form-group">
                                     <input type="file" accept="" id="file-input" style="display: none;">
@@ -1303,8 +1308,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-add-attachment">เพิ่ม</button>
                             </div>
                         </div>
@@ -1338,8 +1343,8 @@
                                 <input type="text" class="form-control numericInputInt" id="update-user-leave">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="form-group float-right">
+                        <div class="col-12 mt-2">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save-update-user-leave">แก้ไข</button>
                             </div>
                         </div>
@@ -1414,7 +1419,7 @@
                                 </tbody>
                             </table>
                             <div class="col-12">
-                                <div class="form-group float-right">
+                                <div class="form-group text-end">
                                     <button type="button" class="btn btn-primary"
                                         id="save-update-leave-increment">บันทึก</button>
                                 </div>

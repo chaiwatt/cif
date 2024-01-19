@@ -4,19 +4,18 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">บันทึกเวลาและเงินได้ / เงินหัก: {{$user->prefix->name}}{{$user->name}}
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">บันทึกเวลาและเงินได้ / เงินหัก: {{$user->prefix->name}}{{$user->name}}
                         {{$user->lastname}}
-                    </h1>
+                    </h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.time-recording')}}">ตารางทำงาน</a>
                         </li>
@@ -35,11 +34,11 @@
                         <div class="card-header p-0 pt-1 border-bottom-0">
                             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="time-tab-tab" data-toggle="pill" href="#time-tab"
+                                    <a class="nav-link active" id="time-tab-tab" data-bs-toggle="tab" href="#time-tab"
                                         role="tab" aria-controls="time-tab" aria-selected="true">บันทึกเวลา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="income-deducy-tab-tab" data-toggle="pill"
+                                    <a class="nav-link" id="income-deducy-tab-tab" data-bs-toggle="tab"
                                         href="#income-deducy-tab" role="tab" aria-controls="income-deducy-tab"
                                         aria-selected="false">เงินได้ / เงินหัก</a>
                                 </li>

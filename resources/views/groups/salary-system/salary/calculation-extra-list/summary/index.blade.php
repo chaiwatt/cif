@@ -4,15 +4,13 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการเงินเดือนงวดพิเศษ
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการเงินเดือนงวดพิเศษ</h3>
                     <ul class="mt-2">
                         <li>
                             <h4>{{$paydayDetail->payday->name}} (รอบเงินเดือน {{date('d/m/Y',
@@ -22,8 +20,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.salary-system.salary.calculation-extra-list')}}">รอบเงินเดือนงวดพิเศษ</a>
                         </li>
@@ -39,10 +37,10 @@
             @if ($permission->show)
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <a class="btn btn-primary float-right mb-2 ml-2"
+                    <div class="form-group text-end">
+                        <a class="btn btn-primary mb-2 ms-2"
                             href="{{route('groups.salary-system.salary.calculation-extra-list.download-report',['payday_detail_id' => $paydayDetail->id])}}">
-                            <i class="fas fa-download mr-1"></i>
+                            <i class="fas fa-download me-1"></i>
                             ดาวน์โหลด
                         </a>
                     </div>
@@ -52,7 +50,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">พนักงาน</h3>
+                            <h4 class="card-title">พนักงาน</h3>
                             @if (count($users) !=0)
                             <div class="card-tools">
                                 {{-- <div class="input-group input-group-sm" style="width: 150px;">
@@ -140,7 +138,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>เงินได้ / เงินหัก<span class="small text-danger">*</span></label>
+                                <label>เงินได้ / เงินหัก <span class="fw-bold text-danger">*</span></label>
                                 <select id="incomeDeduct" class="form-control select2 " style="width: 100%;">
                                     <option value="">==เลือกรายการเงินได้ / เงินหัก==</option>
                                     @foreach ($incomeDeducts as $incomeDeduct)
@@ -159,9 +157,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
-                                id="btn-import-employee-code">เพิ่มรายการ</button>
+                        <div class="col-sm-12 text-end">
+                            <button type="button" class="btn btn-primary" id="btn-import-employee-code">เพิ่มรายการ</button>
                         </div>
                     </div>
                 </div>

@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">อนุมัติการลา</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">อนุมัติการลา</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">รายการลา</li>
                     </ol>
@@ -22,7 +21,7 @@
         <div class="container-fluid">
             <div class="card card-success card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">ค้นหา</h3>
+                    <h4 class="card-title">ค้นหา</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -87,9 +86,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 d-flex justify-content-end">
-                            <button class="btn btn-info mr-2" id="search_leave"><i
-                                    class="fas fa-search mr-1"></i>ค้นหา</button>
+                        <div class="col-md-12 d-flex justify-content-end mt-2">
+                            <button class="btn btn-primary d-flex gap-2 align-items-center" id="search_leave"><i
+                                    class="fas fa-search"></i>ค้นหา</button>
                         </div>
                     </div>
 

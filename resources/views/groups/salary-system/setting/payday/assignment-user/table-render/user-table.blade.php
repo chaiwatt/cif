@@ -5,7 +5,7 @@
             <th>ชื่อ-สกุล</th>
             <th>ประเภท</th>
             <th>แผนก</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -16,7 +16,7 @@
                 {{$user->lastname}}</td>
             <td>{{$user->company_department->name}}</td>
             <td>{{$user->employee_type->name}}</td>
-            <td class="text-right">
+            <td class="text-end">
                 @if ($permission->delete)
                 <form
                     action="{{ route('groups.salary-system.setting.payday.assignment-user.delete', ['payday_id' => $payday->id, 'user_id' => $user->id]) }}"

@@ -15,7 +15,7 @@
             @foreach ($paydays->where('type',1) as $key => $payday)
             <li class="nav-item">
                 <a class="nav-link {{ $key === 0 ? 'active' : '' }}" id="custom-tabs-{{$payday->id}}-tab"
-                    data-toggle="pill" href="#custom-tabs-{{$payday->id}}" role="tab"
+                    data-bs-toggle="tab" href="#custom-tabs-{{$payday->id}}" role="tab"
                     aria-controls="custom-tabs-{{$payday->id}}" aria-selected="true">{{$payday->name}}</a>
             </li>
             @endforeach

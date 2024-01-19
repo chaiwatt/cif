@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการล่วงเวลา</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการล่วงเวลา</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.document-system.overtime.document')}}">รายการล่วงเวลา</a>
                         </li>
@@ -24,7 +23,7 @@
         <div class="container-fluid">
             @if ($errors->has('userId'))
             <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 <h5><i class="icon fas fa-ban"></i> ผิดพลาด</h5>
                 กรุณาเลือกผู้อนุมัติเอกสารอย่างน้อย 1 คน
             </div>
@@ -34,12 +33,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">เพิ่มรายการล่วงเวลา</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                            <h4 class="card-title">เพิ่มรายการล่วงเวลา</h4>
                         </div>
                         <div class="card-body">
                             <form
@@ -102,8 +96,8 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-12 text-right">
-                                        <button class="btn bg-success mt-2">บันทึก</button>
+                                    <div class="col-12 text-end">
+                                        <button class="btn btn-success mt-2">บันทึก</button>
                                     </div>
                                 </div>
                             </form>
@@ -124,7 +118,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal">ปิด</button>
                     <button type="button" class="btn btn-primary" id="save_authorized_user">เพิ่มรายการ</button>
                 </div>
             </div>

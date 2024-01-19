@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>เอกสาร</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -10,7 +10,7 @@
         <tr>
             <td>{{$user_attachment->name}}</td>
             {{-- <td>{{$user_attachment->file}}</td> --}}
-            <td class="text-right">
+            <td class="text-end">
                 @php
                 $path = $user_attachment->file;
                 if ($user_attachment->type == 1){

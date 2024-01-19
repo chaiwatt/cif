@@ -4,15 +4,13 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการเงินเดือน
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการเงินเดือน</h3>
                     <ul class="mt-2">
                         @foreach ($paydayDetails as $paydayDetail)
                         <li>
@@ -24,8 +22,8 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.time-recording')}}">ตารางทำงาน</a>
                         </li>
@@ -41,13 +39,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">พนักงาน</h3>
+                        <div class="card-header d-flex justify-content-between">
+                            <h4 class="card-title">พนักงาน</h4>
                             @if (count($users) !=0)
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                             @endif
@@ -94,7 +92,7 @@
                                                 <td class="text-center">{{$userSummary['deligenceAllowance']}}
                                                 </td>
 
-                                                <td class="text-left ">
+                                                <td class="text-start ">
 
                                                     @foreach ($user->getSummaryIncomeDeductByUsers(1)
                                                     as $getIncomeDeductByUser)
@@ -102,7 +100,7 @@
                                                         ({{$getIncomeDeductByUser->value}})</li>
                                                     @endforeach
                                                 </td>
-                                                <td class="text-left">
+                                                <td class="text-start">
                                                     @foreach ($user->getSummaryIncomeDeductByUsers(2)
                                                     as $getIncomeDeductByUser)
                                                     <li>{{$getIncomeDeductByUser->incomeDeduct->name}}
@@ -120,7 +118,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             @endif
@@ -132,10 +129,6 @@
 <div class="modal-footer justify-content-between">
     {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
-</div>
-</div>
-</div>
-</div>
 </div>
 @push('scripts')
 

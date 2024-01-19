@@ -1,6 +1,6 @@
 <div class="col-md-12">
     <div class="form-group">
-        <label>เบี้ยขยัน<span class="small text-danger">*</span></label>
+        <label>เบี้ยขยัน <span class="fw-bold text-danger">*</span></label>
         <select id="diligence-allowance-classify" class="form-control select2" style="width: 100%;">
             @foreach ($diligenceAllowanceClassifies as $diligenceAllowanceClassify)
             <option value="{{ $diligenceAllowanceClassify->id }}">
@@ -12,7 +12,7 @@
 </div>
 
 <div class="col-12">
-    <div class="form-group float-right">
+    <div class="form-group text-end">
         <button type="button" class="btn btn-primary" id="save-update-user-diligence-allowance">แก้ไข</button>
     </div>
 </div>

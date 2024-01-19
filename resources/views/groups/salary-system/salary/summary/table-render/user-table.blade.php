@@ -36,7 +36,7 @@
             <td class="text-center">{{$userSummary['deligenceAllowance']}}
             </td>
 
-            <td class="text-left ">
+            <td class="text-start">
 
                 @foreach ($user->getSummaryIncomeDeductByUsers(1)
                 as $getIncomeDeductByUser)
@@ -44,7 +44,7 @@
                     ({{$getIncomeDeductByUser->value}})</li>
                 @endforeach
             </td>
-            <td class="text-left">
+            <td class="text-start">
                 @foreach ($user->getSummaryIncomeDeductByUsers(2)
                 as $getIncomeDeductByUser)
                 <li>{{$getIncomeDeductByUser->incomeDeduct->name}}

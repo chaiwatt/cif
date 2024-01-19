@@ -13,7 +13,7 @@
             <th>เงินเพิ่ม / เงินหัก</th>
             <th>จำนวน</th>
             <th>หน่วย</th>
-            <th class="text-right" style="width: 120px">ลบรายการ</th>
+            <th class="text-end" style="width: 120px">ลบรายการ</th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
             </td>
             <td>{{$incomeDeductByUser->value}}</td>
             <td>{{$incomeDeductByUser->incomeDeduct->unit->name}}</td>
-            <td class="text-right">
+            <td class="text-end">
                 @if ($isExpire == false)
                 <a class="btn btn-danger btn-sm delete-income-deduct" data-id="{{$incomeDeductByUser->id}}">
                     <i class="fas fa-trash"></i>

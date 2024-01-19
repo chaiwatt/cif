@@ -4,7 +4,7 @@
             {{-- <th>ระดับ</th> --}}
             <th>รอบจ่ายเงินเดือน</th>
             <th>เบี้ยขยัน</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -20,10 +20,10 @@
                 }}</td>
             <td>{{$userDiligenceAllowance->diligenceAllowanceClassify->cost}}
             </td>
-            <td class="text-right">
+            <td class="text-end">
 
                 @if ($loop->iteration == 2)
-                <a class="btn btn-info btn-sm btn-update-user-diligence-allowance"
+                <a class="btn btn-primary btn-sm btn-update-user-diligence-allowance"
                     data-id="{{$userDiligenceAllowance->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>

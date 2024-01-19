@@ -2,15 +2,15 @@
 
 @section('content')
 @include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รอบคำนวนเงินเดือน:{{$payday->name}} ปี {{$payday->year}}</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รอบคำนวนเงินเดือน:{{$payday->name}} ปี {{$payday->year}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.salary-system.setting.payday')}}">รอบคำนวนเงินเดือน</a></li>
                         <li class="breadcrumb-item active">{{$payday->name}}</li>
@@ -23,7 +23,7 @@
         <div class="container-fluid">
             @if ($permission->create)
             <a class="btn btn-primary mb-2" id="add_payday">
-                <i class="fas fa-plus mr-1"></i>
+                <i class="fas fa-plus me-1"></i>
                 เพิ่มวันที่
             </a>
             @endif
@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รอบคำนวนเงินเดือน</h3>
+                            <h4 class="card-title">รอบคำนวนเงินเดือน</h4>
                         </div>
                         <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
@@ -42,7 +42,7 @@
                                         <th>เริ่มวันที่</th>
                                         <th>ถึงวันที่</th>
                                         <th>วันที่จ่ายเงินเดือน</th>
-                                        <th class="text-right">เพิ่มเติม</th>
+                                        <th class="text-end">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,7 +56,7 @@
                                         <td>{{\Carbon\Carbon::createFromFormat('Y-m-d',$paydayDetail->payment_date)->format('d/m/Y')}}
                                         </td>
                                         @if ($permission->update)
-                                        <td class="text-right">
+                                        <td class="text-end">
                                             <a class="btn btn-info btn-sm update-payday" href="#"
                                                 data-id="{{$paydayDetail->id}}">
                                                 <i class="fas fa-pencil-alt"></i>
@@ -84,20 +84,19 @@
                         <input type="text" id="year" value="{{$payday->year}}" hidden>
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="startDate">เริ่มวันที่ (วดป. คศ)<span
-                                        class="small text-danger">*</span></label>
+                                <label for="startDate">เริ่มวันที่ (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control input-date-format" id="startDate">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="endDate">ถึงวันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
+                                <label for="endDate">ถึงวันที่ (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control input-date-format" id="endDate">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>เดือน<span class="small text-danger">*</span></label>
+                                <label>เดือน <span class="fw-bold text-danger">*</span></label>
                                 <select name="paymentType" id="paymentType" class="form-control select2"
                                     style="width: 100%;">
                                     <option value="1">จ่ายสิ้นเดือน</option>
@@ -107,12 +106,12 @@
                         </div>
                         <div class="col-md-12" id="duration_wrapper" style="display: none;">
                             <div class="form-group">
-                                <label>หลังปลายงวด (วัน)<span class="small text-danger">*</span></label>
+                                <label>หลังปลายงวด (วัน) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="duration" value="7" class="form-control numericInputInt">
                             </div>
                         </div>
                         <div class="col-12">
-                            <div class="form-group float-right">
+                            <div class="form-group text-end">
                                 <button type="button" class="btn btn-primary" id="save_payday">ตกลง</button>
                             </div>
                         </div>

@@ -4,17 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-0">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการเงินเดือนงวดปกติ @if (count($salarySummaries) != 0)
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการเงินเดือนงวดปกติ @if (count($salarySummaries) != 0)
                         <span class="text-danger">(ปิดงวด)</span>
                         @endif
-                    </h1>
+                    </h3>
                     <ul class="mt-2">
                         <li>
                             <h4>{{$paydayDetail->payday->name}} (รอบเงินเดือน {{date('d/m/Y',
@@ -24,8 +23,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.salary-system.salary.calculation-list')}}">รอบเงินเดือนงวดปกติ</a>
                         </li>
@@ -64,7 +63,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">พนักงาน</h3>
+                            <h4 class="card-title">พนักงาน</h4>
                             @if (count($users) !=0)
                             <div class="card-tools">
                                 <div class="input-group input-group-sm">
@@ -97,7 +96,7 @@
                                                 <th class="text-center" style="width: 13%">เงินหักอื่นๆ</th>
                                                 <th class="text-center" style="width: 8%">ปกสค.</th>
                                                 <th class="text-center" style="width: 10%">สุทธิ</th>
-                                                <th class="text-right">ดาวน์โหลด</th>
+                                                <th class="text-end">ดาวน์โหลด</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -127,7 +126,7 @@
                                                 <td class="text-center">{{$userSummary['deligenceAllowance']}}
                                                 </td>
 
-                                                <td class="text-left ">
+                                                <td class="text-start ">
                                                     @php
                                                     $totalIncome = 0;
                                                     @endphp
@@ -140,7 +139,7 @@
                                                         ({{$getIncomeDeductByUser->value}})</li>
                                                     @endforeach
                                                 </td>
-                                                <td class="text-left">
+                                                <td class="text-start">
                                                     @php
                                                     $totalDeduct = 0;
                                                     @endphp
@@ -162,7 +161,7 @@
                                                 @endphp
                                                 <td class="text-center">{{number_format($netIncome, 2)}}
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.summary.download-single',['user_id' => $user->id,'payday_detail_id' => $paydayDetail->id])}}"
                                                         class="btn btn-sm btn-primary"><i
                                                             class="fas fa-download"></i></a>

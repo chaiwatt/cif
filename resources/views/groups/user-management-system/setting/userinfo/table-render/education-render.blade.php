@@ -4,7 +4,7 @@
             <th>ระดับ</th>
             <th>สาขาวิชา</th>
             <th>ปีที่จบ</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -13,8 +13,8 @@
             <td>{{$education->level}}</td>
             <td>{{$education->branch}}</td>
             <td>{{$education->year}}</td>
-            <td class="text-right">
-                <a class="btn btn-info btn-sm btn-update-education" data-id="{{$education->id}}">
+            <td class="text-end">
+                <a class="btn btn-primary btn-sm btn-update-education" data-id="{{$education->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
                 <a class="btn btn-danger btn-sm btn-delete-education" data-id="{{$education->id}}">

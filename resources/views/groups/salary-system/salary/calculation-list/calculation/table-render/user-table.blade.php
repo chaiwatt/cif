@@ -9,7 +9,7 @@
             <th class="text-center">วันลา</th>
             <th class="text-center">ขาดงาน</th>
             <th class="text-center">OT(ชม.)</th>
-            <th class="text-right" style="width: 120px">เพิ่มเติม</th>
+            <th class="text-end" style="width: 120px">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -37,8 +37,8 @@
             <td class="text-center">{{$userSummary['absentCountSum']}}</td>
             <td class="text-center">{{$userSummary['overTime']}}</td>
             </td>
-            <td class="text-right">
-                <a class="btn btn-sm btn-info btn-user" data-id="{{$user->id}}"
+            <td class="text-end">
+                <a class="btn btn-sm btn-primary btn-user" data-id="{{$user->id}}"
                     data-startDate="{{$paydayDetail->start_date}}" data-endDate="{{$paydayDetail->end_date}}"
                     href="{{route('groups.salary-system.salary.calculation-extra-list.calculation.information',['start_date' => $paydayDetail->start_date,'end_date' => $paydayDetail->end_date,'user_id' => $user->id,'payday_detail_id' => $paydayDetail->id] )}}"><i
                         class="far fa-list-alt"></i></a>

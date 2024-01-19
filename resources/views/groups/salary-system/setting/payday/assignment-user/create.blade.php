@@ -8,14 +8,13 @@
 </style>
 @endpush
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 @if($errors->any())
                 <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     <h5> ผิดพลาด</h5>
                     <ul>
                         @foreach($errors->all() as $error)
@@ -24,8 +23,8 @@
                     </ul>
                 </div>
                 @endif
-                <div class="col-sm-6">
-                    <h1 class="m-0">นำเข้าพนักงาน</h1>
+                <div>
+                    <h3 class="m-0">นำเข้าพนักงาน</h3>
                 </div>
             </div>
         </div>
@@ -47,7 +46,7 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายชื่อพนักงาน</h3>
+                            <h4 class="card-title">รายชื่อพนักงาน</h3>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
@@ -104,10 +103,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end mt-2">
                                         @if ($permission->create)
-                                        <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                        <button type="submit" class="btn btn-primary">บันทึก</button>
                                         @endif
                                     </div>
                                 </div>

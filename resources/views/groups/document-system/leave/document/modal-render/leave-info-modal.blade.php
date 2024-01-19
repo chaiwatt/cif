@@ -1,12 +1,12 @@
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">
+            <h4 class="card-title">
                 {{$user->name}} {{$user->lastname}}
                 @if (count($notFoundShiftAssignments) !=0 || count($workShifts) == 0)
                 <span class="text-danger"> (ไม่พบตารางการทำงาน)</span>
                 @endif
-            </h3>
+            </h4>
         </div>
         <div class="card-body">
             <div></div>

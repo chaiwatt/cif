@@ -4,7 +4,7 @@
             <th>พนักงาน</th>
             <th>แผนก</th>
             <th style="width: 300px">โบนัส</th>
-            <th class="text-right" style="width: 100px">เพิ่มเติม
+            <th class="text-end" style="width: 100px">เพิ่มเติม
             </th>
         </tr>
     </thead>
@@ -19,7 +19,7 @@
                 1) readonly @endif>
             </td>
             @if ($bonus->status == 0)
-            <td class="text-right">
+            <td class="text-end">
                 <a class="btn btn-danger btn-sm delete" href="" data-id="{{$bonusUser->id}}">
                     <i class="fas fa-trash"></i>
                 </a>

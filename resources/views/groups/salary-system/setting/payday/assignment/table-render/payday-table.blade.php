@@ -5,7 +5,7 @@
             <th>เริ่มวันที่</th>
             <th>ถึงวันที่</th>
             <th>วันที่จ่ายเงินเดือน</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -19,8 +19,8 @@
             <td>{{\Carbon\Carbon::createFromFormat('Y-m-d',$paydayDetail->payment_date)->format('d/m/Y')}}
             </td>
 
-            <td class="text-right">
-                <a class="btn btn-info btn-sm update-payday" href="#" data-id="{{$paydayDetail->id}}">
+            <td class="text-end">
+                <a class="btn btn-primary btn-sm update-payday" href="#" data-id="{{$paydayDetail->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
                 <a class="btn btn-danger btn-sm" data-confirm='ลบรอบคำนวนเงินเดือน "{{$paydayDetail->name}}" หรือไม่?'

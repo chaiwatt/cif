@@ -65,7 +65,7 @@
                             </td>
                             <td>
                                 <a href="{{route('groups.salary-system.salary.calculation-extra-list.calculation',['id' => $paydayDetail->id])}}"
-                                    class="btn btn-sm btn-info"><i class="fas fa-calculator"></i></a>
+                                    class="btn btn-sm btn-primary"><i class="fas fa-calculator"></i></a>
                                 <a href="{{route('groups.salary-system.salary.calculation-extra-list.summary',['id' => $paydayDetail->id])}}"
                                     class="btn btn-sm btn-success"><i class="fas fa-chart-bar"></i></a>
                             </td>

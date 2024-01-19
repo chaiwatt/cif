@@ -4,15 +4,13 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการบันทึกเวลางวดปกติ
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการบันทึกเวลางวดปกติ</h3>
                     <ul class="mt-2">
                         <li>
                             <h4>{{$paydayDetail->payday->name}} (รอบเงินเดือน {{date('d/m/Y',
@@ -22,8 +20,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.salary-system.salary.calculation-list')}}">รอบเงินเดือนงวดปกติ</a>
                         </li>
@@ -54,8 +52,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">พนักงาน</h3>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title">พนักงาน</h4>
                             @if (count($users) !=0)
                             <div class="card-tools">
                                 <div class="input-group input-group-sm">
@@ -86,7 +84,7 @@
                                                 <th class="text-center">วันลา</th>
                                                 <th class="text-center">ขาดงาน</th>
                                                 <th class="text-center">OT(ชม.)</th>
-                                                <th class="text-right" style="width: 120px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -122,8 +120,8 @@
                                                     @endif
                                                 </td>
                                                 </td>
-                                                <td class="text-right">
-                                                    <a class="btn btn-sm btn-info btn-user" data-id="{{$user->id}}"
+                                                <td class="text-end">
+                                                    <a class="btn btn-sm btn-primary btn-user" data-id="{{$user->id}}"
                                                         data-startDate="{{$paydayDetail->start_date}}"
                                                         data-endDate="{{$paydayDetail->end_date}}"
                                                         href="{{route('groups.salary-system.salary.calculation-extra-list.calculation.information',['start_date' => $paydayDetail->start_date,'end_date' => $paydayDetail->end_date,'user_id' => $user->id,'payday_detail_id' => $paydayDetail->id] )}}"><i
@@ -151,7 +149,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>เงินได้ / เงินหัก<span class="small text-danger">*</span></label>
+                                <label>เงินได้ / เงินหัก <span class="fw-bold text-danger">*</span></label>
                                 <select id="incomeDeduct" class="form-control select2 " style="width: 100%;">
                                     <option value="">==เลือกรายการเงินได้ / เงินหัก==</option>
                                     @foreach ($incomeDeducts as $incomeDeduct)
@@ -170,8 +168,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
+                        <div class="col-sm-12 text-end">
+                            <button type="button" class="btn btn-primary"
                                 id="btn-import-employee-code">เพิ่มรายการ</button>
                         </div>
                     </div>

@@ -4,7 +4,7 @@
             <th>กลุ่มพนักงาน</th>
             <th>จำนวนพนักงาน</th>
             <th>ปี</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -13,7 +13,7 @@
             <td>{{$payday->name}}</td>
             <td>{{$payday->users->count()}}</td>
             <td>{{$payday->year}}</td>
-            <td class="text-right">
+            <td class="text-end">
                 <a class="btn btn-success btn-sm"
                     href="{{ route('groups.salary-system.setting.payday.assignment-user', ['id' => $payday->id]) }}">
                     <i class="fas fa-users"></i>

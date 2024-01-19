@@ -3,7 +3,7 @@
         <tr>
             <th>วันที่ปรับ</th>
             <th>เงินเดือน</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-primary">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -13,8 +13,8 @@
             <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
                 $salaryRecord->record_date)->format('d/m/Y') }}</td>
             <td>{{$salaryRecord->salary}}</td>
-            <td class="text-right">
-                <a class="btn btn-info btn-sm btn-update-salary" data-id="{{$salaryRecord->id}}">
+            <td class="text-primary">
+                <a class="btn btn-primary btn-sm btn-update-salary" data-id="{{$salaryRecord->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
                 <a class="btn btn-danger btn-sm btn-delete-salary" data-id="{{$salaryRecord->id}}">

@@ -6,7 +6,7 @@
             <th>ชื่อ-สกุล</th>
             <th>แผนก</th>
             <th>ตำแหน่ง</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody id="employee_tbody">
@@ -18,8 +18,8 @@
             <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
             <td>{{$user->company_department->name}}</td>
             <td>{{$user->user_position->name}}</td>
-            <td class="text-right">
-                <a class="btn btn-info btn-sm"
+            <td class="text-end">
+                <a class="btn btn-primary btn-sm"
                     href="{{route('groups.user-management-system.setting.userinfo.view',['id' => $user->id])}}">
                     <i class="fas fa-eye"></i>
                 </a>

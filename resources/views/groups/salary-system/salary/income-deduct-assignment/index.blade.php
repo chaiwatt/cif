@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการพนักงาน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการพนักงาน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">รายการพนักงาน</li>
                     </ol>
@@ -22,19 +21,19 @@
         <div class="container-fluid">
             @if ($permission->show)
             <a class="btn btn-primary mb-2" href="" id="btn-show-modal-income-deduct-assignment">
-                <i class="fas fa-plus mr-1">
+                <i class="fas fa-plus me-1">
                 </i>
                 เพิ่มรายการเงินได้เงินหัก
             </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">รายการพนักงาน</h3>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title">รายการพนักงาน</h4>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>
@@ -53,7 +52,7 @@
                                                     {{-- <th>ประเภท</th> --}}
                                                     {{-- <th>จำนวน</th> --}}
                                                     <th>แผนก</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="employee_tbody">
@@ -82,7 +81,7 @@
                                                     <td>{{$incomeDeductUser->user->company_department->name}}</td>
                                                     {{-- <td></td> --}}
 
-                                                    <td class="text-right">
+                                                    <td class="text-end">
                                                         <a class="btn btn-danger btn-sm btn-delete" href=""
                                                             data-id="{{$incomeDeductUser->user->id}}">
                                                             <i class="fas fa-trash"></i>
@@ -111,7 +110,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>เงินได้ / เงินหัก<span class="small text-danger">*</span></label>
+                                <label>เงินได้ / เงินหัก <span class="fw-bold text-danger">*</span></label>
                                 <select id="incomeDeduct" class="form-control select2 " style="width: 100%;">
                                     <option value="">==เลือกรายการเงินได้ / เงินหัก==</option>
                                     @foreach ($incomeDeducts as $incomeDeduct)
@@ -130,8 +129,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
+                        <div class="col-sm-12 text-end">
+                            <button type="button" class="btn btn-primary"
                                 id="btn-import-employee-code">เพิ่มรายการ</button>
                         </div>
                     </div>

@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<di>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เบี้ยขยัน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เบี้ยขยัน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">เบี้ยขยัน</li>
                     </ol>
@@ -25,7 +24,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียด</h3>
+                            <h4 class="card-title">รายละเอียด</h4>
                         </div>
                         <div class="card-body table-responsive p-0" id="table_container">
                             <table class="table table-striped text-nowrap">
@@ -33,7 +32,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>รายการเบี้ยขยัน</th>
-                                        <th class="text-right">เพิ่มเติม</th>
+                                        <th class="text-end">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,13 +40,13 @@
                                     <tr>
                                         <td>{{$key + 1}}</td>
                                         <td>{{$diligenceAllowance->name}}</td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                             <a class="btn btn-primary btn-sm"
                                                 href="{{route('groups.salary-system.setting.diligence-allowance.assignment',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-link"></i>
                                             </a>
                                             @if ($permission->update)
-                                            <a class="btn btn-info btn-sm"
+                                            <a class="btn btn-secondary btn-sm"
                                                 href="{{route('groups.salary-system.salary.diligence-allowance.view',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
@@ -74,7 +73,7 @@
 
         </div>
     </div>
-</div>
+</di>
 @push('scripts')
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 

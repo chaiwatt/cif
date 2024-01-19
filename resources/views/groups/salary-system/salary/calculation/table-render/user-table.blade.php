@@ -13,7 +13,7 @@
             <th class="text-center">ขาดงาน</th>
             <th class="text-center">ล่วงเวลา</th>
             <th class="text-center">เบี้ยขยัน</th>
-            <th class="text-right" style="width: 120px">เพิ่มเติม</th>
+            <th class="text-end" style="width: 120px">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -54,9 +54,9 @@
             <td class="text-center">{{$userSummary['absentCountSum']}}</td>
             <td class="text-center">{{$userSummary['overTime']}}</td>
             <td class="text-center">{{$userSummary['deligenceAllowance']}}</td>
-            <td class="text-right">
+            <td class="text-end">
 
-                <a class="btn btn-sm btn-info btn-user" data-id="{{$user->id}}"
+                <a class="btn btn-sm btn-primary btn-user" data-id="{{$user->id}}"
                     data-startDate="{{$paydayDetailWithToday->start_date}}"
                     data-endDate="{{$paydayDetailWithToday->end_date}}"
                     href="{{route('groups.salary-system.salary.calculation.information',['start_date' => $paydayDetailWithToday->start_date,'end_date' => $paydayDetailWithToday->end_date,'user_id' => $user->id] )}}"><i

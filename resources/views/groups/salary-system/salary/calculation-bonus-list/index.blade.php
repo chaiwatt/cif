@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เงินโบนัสประจำปี
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เงินโบนัสประจำปี</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">เงินโบนัสประจำปี</li>
@@ -58,7 +56,7 @@
                                                 <th style="width: 200px">วันที่</th>
                                                 <th>ชื่อรายการ</th>
                                                 <th style="width: 200px">สถานะ</th>
-                                                <th class="text-right" style="width: 200px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 200px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -74,7 +72,7 @@
                                                     <span class="badge bg-gray">ปิดงวด</span>
                                                     @endif
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     <a class="btn btn-success btn-sm"
                                                         href="{{route('groups.salary-system.salary.calculation-bonus-list.download-pdf',['id' => $bonus->id])}}">
                                                         <i class="fas fa-download"></i>

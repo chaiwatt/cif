@@ -6,7 +6,7 @@
             <th>รอบเงินเดือน</th>
             <th>เงินได้ / เงินหัก</th>
             <th>แผนก</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody id="employee_tbody">
@@ -32,7 +32,7 @@
                 @endif
             </td>
             <td>{{$incomeDeductUser->user->company_department->name}}</td>
-            <td class="text-right">
+            <td class="text-end">
                 <a class="btn btn-danger btn-sm btn-delete" href="" data-id="{{$incomeDeductUser->user->id}}">
                     <i class="fas fa-trash"></i>
                 </a>

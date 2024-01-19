@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รอบเงินเดือนงวดพิเศษ
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รอบเงินเดือนงวดพิเศษ</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb mt-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">รอบเงินเดือนงวดพิเศษ</li>
@@ -47,7 +45,7 @@
                                 @foreach ($paydays->where('type',2) as $key => $payday)
                                 <li class="nav-item">
                                     <a class="nav-link {{ $loop->first ? 'active' : '' }}"
-                                        id="custom-tabs-{{$payday->id}}-tab" data-toggle="pill"
+                                        id="custom-tabs-{{$payday->id}}-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-{{$payday->id}}" role="tab"
                                         aria-controls="custom-tabs-{{$payday->id}}"
                                         aria-selected="true">{{$payday->name}}</a>

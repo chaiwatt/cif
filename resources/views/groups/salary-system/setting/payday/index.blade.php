@@ -1,15 +1,14 @@
 @extends('layouts.dashboard')
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รอบคำนวนเงินเดือน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รอบคำนวนเงินเดือน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">รอบคำนวนเงินเดือน</li>
                     </ol>
@@ -21,8 +20,7 @@
         <div class="container-fluid">
             @if ($permission->create)
             <a class="btn btn-primary mb-2" href="{{route('groups.salary-system.setting.payday.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
+                <i class="fas fa-plus mr-1"></i>
                 เพิ่มรอบคำนวนเงินเดือน
             </a>
             @endif
@@ -30,8 +28,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">รอบคำนวนเงินเดือน</h3>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title">รอบคำนวนเงินเดือน</h4>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <select name="year" id="year"

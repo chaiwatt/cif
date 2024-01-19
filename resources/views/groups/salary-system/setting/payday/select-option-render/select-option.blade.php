@@ -1,6 +1,6 @@
 <div class="col-md-6">
     <div class="form-group">
-        <label>รอบคำนวนต้น<span class="small text-danger">*</span></label>
+        <label>รอบคำนวนต้น <span class="fw-bold text-danger">*</span></label>
         <select name="firstPayday" id="firstPayday" class="form-control select2" style="width: 100%;">
             <option value="">==เลือกรอบคำนวนต้น==</option>
             @foreach ($paydays as $payday)
@@ -16,7 +16,7 @@
 
 <div class="col-md-6">
     <div class="form-group">
-        <label>รอบคำนวนปลาย<span class="small text-danger">*</span></label>
+        <label>รอบคำนวนปลาย <span class="fw-bold text-danger">*</span></label>
         <select name="secondPayday" id="secondPayday" class="form-control select2" style="width: 100%;">
             <option value="">==เลือกรอบคำนวนปลาย==</option>
             @foreach ($paydays as $payday)

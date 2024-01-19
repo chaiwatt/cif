@@ -1,15 +1,14 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มรายการล่วงเวลา</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เพิ่มรายการล่วงเวลา</h3>
                 </div>
-                <div class="col-sm-6">
+                <div aria-label="breadcrumb">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.document-system.overtime.document')}}">ล่วงเวลา</a>
@@ -26,17 +25,12 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">เพิ่มรายการล่วงเวลา</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                            <h4 class="card-title">เพิ่มรายการล่วงเวลา</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{route('groups.document-system.overtime.document.store')}}" method="POST">
                                 @csrf
-                                <div class="row">
+                                <div class="row gy-2">
                                     <input type="text" name="manual_time" id="manual_time" value="1" hidden>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -71,8 +65,7 @@
                                     </div>
                                     <div class="col-12 mt-2">
                                         <div class="form-group clearfix mt-2">
-
-                                            <div class="icheck-primary d-inline mr-2 ">
+                                            <div class="icheck-primary d-inline me-2 ">
                                                 <input type="radio" id="radFixHour" name="rad" checked>
                                                 <label for="radFixHour">กำหนดชั่วโมง
                                                 </label>
@@ -112,8 +105,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 text-right">
-                                        <button class="btn bg-success mt-2">บันทึก</button>
+                                    <div class="col-12 text-end">
+                                        <button class="btn btn-primary mt-2">บันทึก</button>
                                     </div>
                                 </div>
                             </form>
@@ -134,7 +127,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">ปิด</button>
                     <button type="button" class="btn btn-primary" id="save_authorized_user">เพิ่มรายการ</button>
                 </div>
             </div>

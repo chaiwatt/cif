@@ -60,7 +60,7 @@
                                                     <td>{{$user->employee_type->name}}</td>
                                                     <td>{{$user->user_position->name}}</td>
                                                     <td class="text-right">
-                                                        <a class="btn btn-info btn-sm"
+                                                        <a class="btn btn-primary btn-sm"
                                                             href="{{route('groups.user-management-system.setting.userinfo.view',['id' => $user->id])}}">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
