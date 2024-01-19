@@ -1,17 +1,16 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row ">
-                <div class="col-sm-6">
-                    <h1 class="m-0">ตารางทำงาน: {{$workSchedule->name}} <span class="text-danger"
-                            id="expire_message"></span></h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">ตารางทำงาน: {{$workSchedule->name}} <span class="text-danger"
+                            id="expire_message"></span></h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.schedule.assignment',['id' => $workSchedule->id])}}">ตารางทำงาน</a>
                         </li>
@@ -82,7 +81,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">รายการพนักงานใน {{$workSchedule->name}}</h3>
+                                <h4 class="card-title">รายการพนักงานใน {{$workSchedule->name}}</h4>
                             </div>
                             <div class="card-body">
                                 <div class="dataTables_wrapper dt-bootstrap4">
@@ -144,8 +143,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
+                        <div class="col-sm-12 text-end">
+                            <button type="button" class="btn btn-primary"
                                 id="btn-import-employee-code">เพิ่มรายการ</button>
                         </div>
                     </div>

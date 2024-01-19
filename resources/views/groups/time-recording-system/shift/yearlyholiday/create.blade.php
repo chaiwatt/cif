@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มวันหยุดประจำปี</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เพิ่มวันหยุดประจำปี</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.shift.yearlyholiday')}}">วันหยุดประจำปี</a>
                         </li>
@@ -24,14 +23,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-primary">
+                    <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดวันหยุดประจำปี</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                            <h4 class="card-title">รายละเอียดวันหยุดประจำปี</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{route('groups.time-recording-system.shift.yearlyholiday.store')}}"
@@ -41,31 +35,30 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label>วันหยุด<span class="small text-danger">*</span></label>
+                                            <label>วันหยุด <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="holiday" value="{{old('holiday')}}"
                                                 class="form-control @error('holiday') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>วันที่</label><span class="small text-danger">*</span>
-                                            <div class="input-group date" id="holiday_date" data-target-input="nearest">
+                                            <label>วันที่ <span class="fw-bold text-danger">*</span></label>
+                                            <div class="date-box date" id="holiday_date" data-target-input="nearest">
                                                 <input name="HolidayDate" value="{{old('HolidayDate')}}" type="text"
                                                     class="form-control datetimepicker-input @error('holiday') is-invalid @enderror"
                                                     data-target="#holiday_date">
-                                                <div class="input-group-append" data-target="#holiday_date"
+                                                <div class="date-icon" data-target="#holiday_date"
                                                     data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    <span class="material-symbols-outlined">
+                                                        today
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
-                                    </div>
+                                <div class="mt-2 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">บันทึก</button>
                                 </div>
                             </form>
                         </div>

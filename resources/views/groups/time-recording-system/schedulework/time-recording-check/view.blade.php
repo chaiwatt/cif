@@ -4,22 +4,21 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">{{$month->name}} {{$year}} ({{$workSchedule->name}})
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">{{$month->name}} {{$year}} ({{$workSchedule->name}})
+                    </h3>
                     <input type="text" id="schedule_type_id" value="{{$workSchedule->schedule_type_id}}" hidden>
                     <input type="text" id="work_schedule_id" value="{{$workSchedule->id}}" hidden>
                     <input type="text" id="month_id" value="{{$month->id}}" hidden>
                     <input type="text" id="year" value="{{$year}}" hidden>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.time-recording')}}">ตารางทำงาน</a>
                         </li>
@@ -49,7 +48,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">พนักงาน</h3>
+                            <h4 class="card-title">พนักงาน</h4>
                             <div class="card-tools" id="filter-container" style="display: none;">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info btn-sm active">

@@ -9,28 +9,35 @@
         </li>
     </ul>
 </nav> --}}
-<nav>
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<nav class="mt-3">
+    <ul class="nav-slide text-center gap-3" data-widget="treeview" role="menu" data-accordion="false">
         @php
         $routename = Route::currentRouteName();
         @endphp
 
         @foreach ($modules as $module)
-        <li class="nav-item {{ Str::contains($routename,$module->module_prefix) ? 'menu-open' : '' }}">
-            <a href="" class="nav-link {{ Str::contains($routename,$module->module_prefix) ? 'active' : '' }}">
+        <li class="nav-item {{ Str::contains($routename,$module->module_prefix) ? 'menu-open' : '' }}" id="main-sub-menu">
+            <a href="#" class="nav-link {{ Str::contains($routename,$module->module_prefix) ? 'current-page' : '' }}" id="open-sub-menu">
                 <i class="nav-icon fas {{$module->module_icon}}"></i>
+                {{-- New ICON --}}
+                {{-- <span class="material-symbols-outlined">
+                    {{$module->module_icon}}
+                </span> --}}
                 <p>
                     {{ $module->module_name }}
-                    <i class="right fas fa-angle-left"></i>
                 </p>
+                <span class="material-symbols-outlined icon-right">
+                    keyboard_arrow_right
+                </span>
             </a>
-            <ul class="nav nav-treeview"
-                style="{{ Str::contains($routename,$module->module_prefix) ? '' : 'display: none;' }}">
+            <ul class="nav nav-treeview" id="sub-menu">
                 @foreach ($module->jobs as $job)
                 <li class="nav-item">
                     <a href="{{ $job->job_route ? route($job->job_route) : '#' }}"
                         class="nav-link {{ $routename == $job->job_route ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="4" fill="#D0D5DD"/>
+                        </svg>
                         <p>{{$job->job_name}}</p>
                     </a>
                 </li>
@@ -38,15 +45,5 @@
             </ul>
         </li>
         @endforeach
-        <li class="nav-item">
-            <a href="{{ route('logout') }}"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>ออกจากระบบ</p>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </li>
     </ul>
 </nav>

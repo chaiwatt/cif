@@ -8,17 +8,16 @@
 </style>
 @endpush
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">{{$workSchedule->name}} : {{$month->name}} {{$year}} <span id="expire_message"
-                            class="text-danger"></span> </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">{{$workSchedule->name}} : {{$month->name}} {{$year}} <span id="expire_message"
+                            class="text-danger"></span> </h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb mt-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.schedule.assignment',['id' => $workSchedule->id])}}">ตารางทำงาน</a>
                         </li>
@@ -34,7 +33,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดตารางทำงาน</h3>
+                            <h4 class="card-title">รายละเอียดตารางทำงาน</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mt-3">
@@ -83,9 +82,9 @@
                                 <button class="btn btn-info" id="get-updated-event">บันทึก</button>
                                 @endif
                             </div> --}}
-                            <div class="row float-right">
+                            <div class="d-flex justify-content-end mt-2">
                                 @if ($permission->create || $permission->update)
-                                <button class="btn btn-info" id="get-updated-event">บันทึก</button>
+                                <button class="btn btn-primary" id="get-updated-event">บันทึก</button>
                                 @endif
                             </div>
                         </div>

@@ -8,16 +8,15 @@
 </style>
 @endpush
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มตารางทำงาน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เพิ่มตารางทำงาน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.schedule')}}">ตารางทำงาน</a>
                         </li>
@@ -33,7 +32,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดตารางทำงาน</h3>
+                            <h4 class="card-title">รายละเอียดตารางทำงาน</h4>
                         </div>
                         <div class="card-body">
                             <form
@@ -138,14 +137,12 @@
                                     </div> --}}
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
+                                    <div class="d-flex justify-content-end mt-2">
                                         @if ($permission->update)
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                         @endif
                                     </div>
-                                </div>
                             </form>
                             <!-- Display validation errors -->
 
