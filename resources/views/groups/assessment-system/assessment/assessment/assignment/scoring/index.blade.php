@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">การประเมิน: {{$user->name}} {{$user->lastname}}
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">การประเมิน: {{$user->name}} {{$user->lastname}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">{{$assessmentGroup->name}}</a>
                         </li>
@@ -37,12 +35,12 @@
                         <div class="card-header p-0 pt-1 border-bottom-0">
                             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill"
+                                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home"
                                         aria-selected="true">ข้อมูลผู้ใช้</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-three-profile" role="tab"
                                         aria-controls="custom-tabs-three-profile" aria-selected="false">การประเมิน</a>
                                 </li>
@@ -203,8 +201,8 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-12 text-right">
-                                                <button type="submit" class="btn bg-success mt-2">บันทึก</button>
+                                            <div class="col-12 text-end">
+                                                <button type="submit" class="btn btn-primary mt-2">บันทึก</button>
                                             </div>
                                         </div>
                                     </form>
@@ -226,14 +224,14 @@
     </div>
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>

@@ -4,19 +4,18 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">ตัวคูณคะแนนเกณฑ์การประเมิน
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">ตัวคูณคะแนนเกณฑ์การประเมิน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">ตัวคูณคะแนนเกณฑ์การประเมิน</li>
                     </ol>
@@ -25,7 +24,7 @@
 
             <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
                 href="{{route('groups.assessment-system.setting.multiplication.create')}}">
-                <i class="fas fa-plus mr-1"></i>
+                <i class="fas fa-plus me-1"></i>
                 เพิ่มตัวคูณคะแนนเกณฑ์การประเมิน
             </a>
         </div>
@@ -37,7 +36,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">ตัวคูณคะแนนเกณฑ์การประเมิน</h3>
+                            <h4 class="card-title">ตัวคูณคะแนนเกณฑ์การประเมิน</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -46,14 +45,14 @@
                                         <thead>
                                             <tr>
                                                 <th>ตัวคูณคะแนนเกณฑ์การประเมิน</th>
-                                                <th class="text-right" style="width: 120px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($assessmentScoreMultiplications as $assessmentScoreMultiplication)
                                             <td>{{$assessmentScoreMultiplication->multiplication}}</td>
-                                            <td class="text-right">
-                                                <a class="btn btn-info btn-sm"
+                                            <td class="text-end">
+                                                <a class="btn btn-primary btn-sm"
                                                     href="{{route('groups.assessment-system.setting.multiplication.view',['id' => $assessmentScoreMultiplication->id])}}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
@@ -85,14 +84,14 @@
 
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 {{-- <script type="module"

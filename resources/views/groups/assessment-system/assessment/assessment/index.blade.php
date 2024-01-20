@@ -4,18 +4,17 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการการประเมิน
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการการประเมิน
+                    </h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">การประเมิน</li>
@@ -37,7 +36,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">การประเมิน</h3>
+                            <h4 class="card-title">การประเมิน</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -47,14 +46,14 @@
                                             <tr>
                                                 <th>การประเมิน</th>
                                                 <th>จุดประสงค์</th>
-                                                <th class="text-right" style="width: 120px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($assessmentGroups as $assessmentGroup)
                                             <td>{{$assessmentGroup->name}}</td>
                                             <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
-                                            <td class="text-right">
+                                            <td class="text-end">
                                                 <a class="btn btn-primary btn-sm"
                                                     href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">
                                                     <i class="fas fa-users"></i>
@@ -80,14 +79,14 @@
 
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 {{-- <script type="module"

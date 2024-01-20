@@ -6,14 +6,14 @@
         <thead>
             <tr>
                 <th>ไฟลน์แนบ</th>
-                <th class="text-right" style="width: 200px">เพิ่มเติม</th>
+                <th class="text-end" style="width: 200px">เพิ่มเติม</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($topicAttachments as $topicAttachment)
             <tr>
                 <td>{{$topicAttachment->name}}</td>
-                <td class="text-right">
+                <td class="text-end">
                     <a class="btn btn-primary btn-sm"
                         href="{{url('/storage/uploads/attachment') .'/'. $topicAttachment->file}}">
                         <i class="fas fa-download"></i>

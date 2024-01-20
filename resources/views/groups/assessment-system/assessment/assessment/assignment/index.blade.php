@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">การประเมิน: {{$assessmentGroup->name}}
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">การประเมิน: {{$assessmentGroup->name}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.assessment-system.assessment.assessment')}}">การประเมิน</a>
                         </li>
@@ -25,7 +23,7 @@
             </div>
 
             <a class="btn btn-primary mb-2" id="import-employee-code" href="">
-                <i class="fas fa-plus mr-1"></i>
+                <i class="fas fa-plus me-1"></i>
                 เพิ่มพนักงาน
             </a>
         </div>
@@ -38,7 +36,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการพนักงาน</h3>
+                            <h4 class="card-title">รายชื่อพนักงานเข้ารับประเมิน</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -49,7 +47,7 @@
                                                 <th>รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
                                                 <th>แผนก</th>
-                                                <th class="text-right" style="width: 120px">ประเมิน</th>
+                                                <th class="text-end" style="width: 120px">ประเมิน</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,7 +55,7 @@
                                             <td>{{$user->employee_no}}</td>
                                             <td>{{$user->name}} {{$user->lastname}}</td>
                                             <td>{{$user->company_department->name}}</td>
-                                            <td class="text-right">
+                                            <td class="text-end">
                                                 <a class="btn btn-success btn-sm"
                                                     href="{{route('groups.assessment-system.assessment.assessment.assignment.summary',['user_id' => $user->id,'id' => $assessmentGroup->id])}}">
                                                     <i class="fas fa-award"></i>
@@ -97,8 +95,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
+                        <div class="col-sm-12 mt-2">
+                            <button type="button" class="btn btn-primary"
                                 id="btn-import-employee-code">เพิ่มรายการ</button>
                         </div>
                     </div>
@@ -109,14 +107,14 @@
 
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 <script type="module"

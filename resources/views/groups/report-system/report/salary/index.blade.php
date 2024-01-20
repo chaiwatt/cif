@@ -4,18 +4,18 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายงานเดือน{{$month->name}}
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายงานเงินเดือน
+                        {{-- {{$month->name}} --}}
+                    </h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">รายงาน</li>
@@ -48,80 +48,93 @@
             @endphp
 
             <div class="row">
-                <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-info"><i class="fas fa-wallet"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">เงินเดือน</span>
-                            <span class="info-box-number">{{number_format($previousSalarySummary,2)}}</span>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
+                            bar_chart
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>เงินเดือน</span>
+                            <h2 class="m-0">{{number_format($previousSalarySummary,2)}}</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-success"><i class="far fa-clock"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">ล่วงเวลา</span>
-                            <span class="info-box-number">{{number_format($previousOvertime,2)}}</span>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #47CA88; width: 4rem; height: 4rem; font-size: 36px;">
+                            bar_chart
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>ล่วงเวลา</span>
+                            <h2 class="m-0">{{number_format($previousOvertime,2)}}</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-warning"><i class="fas fa-medal"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">เบี้ยขยัน</span>
-                            <span class="info-box-number">{{number_format($previousAllowanceDiligenceSummary,2)}}</span>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #FE9F55; width: 4rem; height: 4rem; font-size: 36px;">
+                            bar_chart
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>เบี้ยขยัน</span>
+                            <h2 class="m-0">{{number_format($previousAllowanceDiligenceSummary,2)}}</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-primary"><i class="fas fa-hand-holding-usd"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">รายได้อื่นๆ</span>
-                            <span class="info-box-number">{{number_format($previousIncomeSummary,2)}}</span>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #C295DE; width: 4rem; height: 4rem; font-size: 36px;">
+                            bar_chart
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>รายได้อื่นๆ</span>
+                            <h2 class="m-0">{{number_format($previousIncomeSummary,2)}}</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-danger"><i class="fas fa-cut"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">หักอื่นๆ</span>
-                            <span class="info-box-number">{{number_format($previousDeductSummary,2)}}</span>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #FD6F8E; width: 4rem; height: 4rem; font-size: 36px;">
+                            bar_chart
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>หักอื่นๆ</span>
+                            <h2 class="m-0">{{number_format($previousDeductSummary,2)}}</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-secondary"><i class="fas fa-leaf"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">ลางาน</span>
-                            <span class="info-box-number">{{$previousLeaveSummary}}</span>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #667085; width: 4rem; height: 4rem; font-size: 36px;">
+                            bar_chart
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>ลางาน</span>
+                            <h2 class="m-0">{{$previousLeaveSummary}}</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-dark"><i class="far fa-flag"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">ขาดงาน</span>
-                            <span class="info-box-number">{{$previousAbsentSummary}}</span>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1D2939; width: 4rem; height: 4rem; font-size: 36px;">
+                            bar_chart
+                        </span>
+                        <div class="d-flex flex-column justify-content-between">
+                            <span>ขาดงาน</span>
+                            <h2 class="m-0">{{$previousAbsentSummary}}</h2>
                         </div>
                     </div>
                 </div>
 
             </div>
             <hr>
-            <h3 class="mb-2">รายงานเงินเดือน
-            </h3>
+            <h3 class="mb-2">รายงานเงินเดือน</h3>
             <div class="row">
                 <div class="col-12">
                     <div class="card card-info card-outline card-tabs">

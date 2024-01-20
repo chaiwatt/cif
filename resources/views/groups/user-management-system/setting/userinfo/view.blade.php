@@ -95,7 +95,7 @@
                                     <div class="row gy-2">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
+                                                <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="employee_code"
                                                     value="{{old('employee_code') ?? $user->employee_no}}"
                                                     class="form-control numericInputInt @error('employee_code') is-invalid @enderror">
@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>คำนำหน้าชื่อ<span class="small text-danger">*</span></label>
+                                                <label>คำนำหน้าชื่อ <span class="fw-bold text-danger">*</span></label>
                                                 <select name="prefix"
                                                     class="form-control select2 @error('prefix') is-invalid @enderror"
                                                     style="width: 100%;">
@@ -118,14 +118,14 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ชื่อ<span class="small text-danger">*</span></label>
+                                                <label>ชื่อ <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="name" value="{{old('name') ?? $user->name}}"
                                                     class="form-control @error('name') is-invalid @enderror">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>นามสกุล<span class="small text-danger">*</span></label>
+                                                <label>นามสกุล <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="lastname"
                                                     value="{{old('lastname') ?? $user->lastname}}"
                                                     class="form-control @error('lastname') is-invalid @enderror">
@@ -140,7 +140,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>สัญชาติ<span class="small text-danger">*</span></label>
+                                                <label>สัญชาติ <span class="fw-bold text-danger">*</span></label>
                                                 <select name="nationality"
                                                     class="form-control select2 @error('nationality') is-invalid @enderror"
                                                     style="width: 100%;">
@@ -155,7 +155,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>เชื้อชาติ<span class="small text-danger">*</span></label>
+                                                <label>เชื้อชาติ <span class="fw-bold text-danger">*</span></label>
                                                 <select name="ethnicity"
                                                     class="form-control select2 @error('ethnicity') is-invalid @enderror"
                                                     style="width: 100%;">
@@ -188,7 +188,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ที่อยู่<span class="small text-danger">*</span></label>
+                                                <label>ที่อยู่ <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="address"
                                                     value="{{old('address') ?? $user->address}}"
                                                     class="form-control @error('address') is-invalid @enderror">
@@ -203,7 +203,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ประเภทพนักงาน<span class="small text-danger">*</span></label>
+                                                <label>ประเภทพนักงาน <span class="fw-bold text-danger">*</span></label>
                                                 <select name="employeeType"
                                                     class="form-control select2 @error('employeeType') is-invalid @enderror"
                                                     style="width: 100%;">
@@ -218,7 +218,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ตำแหน่ง<span class="small text-danger">*</span></label>
+                                                <label>ตำแหน่ง <span class="fw-bold text-danger">*</span></label>
                                                 <select name="userPosition"
                                                     class="form-control select2 @error('userPosition') is-invalid @enderror"
                                                     style="width: 100%;">
@@ -233,7 +233,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>แผนก<span class="small text-danger">*</span></label>
+                                                <label>แผนก <span class="fw-bold text-danger">*</span></label>
                                                 <select name="companyDepartment"
                                                     class="form-control select2 @error('companyDepartment') is-invalid @enderror"
                                                     style="width: 100%;">
@@ -249,7 +249,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>เริ่มทำงาน<span class="small text-danger">*</span></label>
+                                                <label>เริ่มทำงาน <span class="fw-bold text-danger">*</span></label>
                                                 <div class="date-box date" id="start_work_date"
                                                     data-target-input="nearest">
                                                     <input name="startWorkDate"
@@ -349,7 +349,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>การสแกนเวลาเข้าออก<span
-                                                        class="small text-danger">*</span></label>
+                                                         class="fw-bold text-danger">*</span></label>
                                                 <select name="timeRecordRequire"
                                                     class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"
                                                     style="width: 100%;">
@@ -945,13 +945,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>วันที่ปรับ (วดป. คศ)<span class="small text-danger">*</span></label>
+                                <label>วันที่ปรับ (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control input-date-format" id="salaray-adjustment-date">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>เงินเดือน<span class="small text-danger">*</span></label>
+                                <label>เงินเดือน <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="salary" class="form-control numericInputInt">
                             </div>
                         </div>
@@ -974,14 +974,14 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>วันที่ปรับ (วดป. คศ)<span class="small text-danger">*</span></label>
+                                <label>วันที่ปรับ (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control input-date-format"
                                     id="update-salaray-adjustment-date">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>เงินเดือน<span class="small text-danger">*</span></label>
+                                <label>เงินเดือน <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="update-salary" class="form-control numericInputInt">
                             </div>
                         </div>
@@ -1030,13 +1030,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>วันที่ปรับ (วดป. คศ)<span class="small text-danger">*</span></label>
+                                <label>วันที่ปรับ (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control input-date-format" id="position-adjustment-date">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>ตำแหน่ง<span class="small text-danger">*</span></label>
+                                <label>ตำแหน่ง <span class="fw-bold text-danger">*</span></label>
                                 <select id="position" class="form-control select2" style="width: 100%;">
                                     @foreach ($userPositions as $position)
                                     <option value="{{ $position->id }}">
@@ -1075,19 +1075,19 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>ระดับ<span class="small text-danger">*</span></label>
+                                <label>ระดับ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="education-level">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>สาขาวิชา<span class="small text-danger">*</span></label>
+                                <label>สาขาวิชา <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="education-branch" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>ปีที่จบ<span class="small text-danger">*</span></label>
+                                <label>ปีที่จบ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="graduated-year" class="form-control input-date-format">
                             </div>
                         </div>
@@ -1110,19 +1110,19 @@
                         <input type="text" id="educationId" hidden>
                         <div class="col-12">
                             <div class="form-group">
-                                <label>ระดับ<span class="small text-danger">*</span></label>
+                                <label>ระดับ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="update-education-level">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>สาขาวิชา<span class="small text-danger">*</span></label>
+                                <label>สาขาวิชา <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="update-education-branch" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>ปีที่จบ<span class="small text-danger">*</span></label>
+                                <label>ปีที่จบ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="update-graduated-year" class="form-control numericInputInt">
                             </div>
                         </div>
@@ -1144,19 +1144,19 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>หัวข้อ<span class="small text-danger">*</span></label>
+                                <label>หัวข้อ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="training-course">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>หน่วยงาน<span class="small text-danger">*</span></label>
+                                <label>หน่วยงาน <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="training-organizer" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>ปีที่ฝึกอบรม<span class="small text-danger">*</span></label>
+                                <label>ปีที่ฝึกอบรม <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="training-year" class="form-control numericInputInt">
                             </div>
                         </div>
@@ -1179,19 +1179,19 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>หัวข้อ<span class="small text-danger">*</span></label>
+                                <label>หัวข้อ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="update-training-course">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>หน่วยงาน<span class="small text-danger">*</span></label>
+                                <label>หน่วยงาน <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="update-training-organizer" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>ปีที่ฝึกอบรม<span class="small text-danger">*</span></label>
+                                <label>ปีที่ฝึกอบรม <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" id="update-training-year" class="form-control numericInputInt">
                             </div>
                         </div>
@@ -1213,13 +1213,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>ความผิด / โทษ<span class="small text-danger">*</span></label>
+                                <label>ความผิด / โทษ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="punishment">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>วันที่บันทึก (วดป. คศ)<span class="small text-danger">*</span></label>
+                                <label>วันที่บันทึก (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control input-date-format" id="punishment-record-date">
                             </div>
                         </div>
@@ -1242,13 +1242,13 @@
                         <input type="text" id="punishmentId" hidden>
                         <div class="col-12">
                             <div class="form-group">
-                                <label>ความผิด / โทษ<span class="small text-danger">*</span></label>
+                                <label>ความผิด / โทษ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="update-punishment">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>วันที่บันทึก (วดป. คศ)<span class="small text-danger">*</span></label>
+                                <label>วันที่บันทึก (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control input-date-format"
                                     id="update-punishment-record-date">
                             </div>
@@ -1271,7 +1271,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>ชื่อเอกสาร<span class="small text-danger">*</span></label>
+                                <label>ชื่อเอกสาร <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="attachment">
                             </div>
                         </div>
@@ -1303,7 +1303,7 @@
                         </div>
                         <div class="col-12" id="link_wrapper" style="display: none">
                             <div class="form-group">
-                                <label>ลิงก์ไฟล์<span class="small text-danger">*</span></label>
+                                <label>ลิงก์ไฟล์ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control" id="link">
                             </div>
                         </div>
@@ -1339,7 +1339,7 @@
                         <input type="text" id="user-leave-count" hidden>
                         <div class="col-12">
                             <div class="form-group">
-                                <label>จำนวนวันลา<span class="small text-danger">*</span></label>
+                                <label>จำนวนวันลา <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" class="form-control numericInputInt" id="update-user-leave">
                             </div>
                         </div>

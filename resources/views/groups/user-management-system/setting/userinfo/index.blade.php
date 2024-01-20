@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
-                    <h3 class="m-0">รายการพนักงาน</h3>
+                    <h3 class="m-0">ข้อมูลพนักงาน</h3>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
@@ -24,11 +24,11 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4 class="card-title m-0">รายการพนักงาน</h4>
+                            <h4 class="card-title m-0">รายชื่อพนักงาน</h4>
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
+                                <div class="input-group input-group-sm" style="width: 250px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>

@@ -8,16 +8,15 @@
 </style>
 @endpush
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
                     <h1 class="m-0">นำเข้าเกณฑ์การประเมิน</h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{ route('groups.assessment-system.setting.assessment-group.assignment', ['id' => $assessmentGroup->id]) }}">กลุ่มการประเมิน</a>
                         </li>
@@ -33,7 +32,7 @@
                 <div class="col-lg-12">
                     @if($errors->any())
                     <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         <h5> ผิดพลาด</h5>
                         <ul>
                             @foreach($errors->all() as $error)
@@ -43,12 +42,12 @@
                     </div>
                     @endif
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">เกณฑ์การประเมิน</h3>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title">เกณฑ์การประเมิน</h4>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>
@@ -114,10 +113,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 mt-2 text-end">
                                         @if ($permission->create)
-                                        <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                        <button type="submit" class="btn btn-primary">บันทึก</button>
                                         @endif
                                     </div>
                                 </div>

@@ -1,18 +1,17 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการจัดการเรียนรู้: {{$lesson->name}}</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการจัดการเรียนรู้: {{$lesson->name}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a
-                                href="{{route('groups.learning-system.setting.learning-list')}}">รายการจัดการเรียนรู้</a>
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{route('groups.learning-system.setting.learning-list')}}">รายการจัดการเรียนรู้</a>
                         </li>
                         <li class="breadcrumb-item active">{{$lesson->name}}</li>
                     </ol>
@@ -37,8 +36,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ชื่อรายการจัดการเรียนรู้<span
-                                                    class="small text-danger">*</span></label>
+                                            <label>ชื่อรายการจัดการเรียนรู้ <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" value="{{$lesson->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
@@ -52,10 +50,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end mt-2">
                                         @if ($permission->update)
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                         @endif
 
                                     </div>

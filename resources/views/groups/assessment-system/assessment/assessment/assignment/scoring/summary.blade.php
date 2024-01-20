@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">การประเมิน: {{$user->name}} {{$user->lastname}}
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">การประเมิน: {{$user->name}} {{$user->lastname}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">{{$assessmentGroup->name}}</a>
                         </li>
@@ -30,12 +28,10 @@
         <div class="container-fluid">
             @if ($permission->show)
             <div class="row">
-
-
                 <div class="col-12 ">
                     <div class="card card-primary card-outline card-tabs">
                         <div class="card-header">
-                            <h3 class="card-title">ผลการประเมิน</h3>
+                            <h4 class="card-title">ผลการประเมิน</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -57,16 +53,16 @@
                                                 </thead>
                                                 <tbody>
                                                     @php
-                                                    $totalScore = 0;
-                                                    $maxScore = 0;
+                                                        $totalScore = 0;
+                                                        $maxScore = 0;
                                                     @endphp
                                                     @foreach (
-                                                    $assessmentGroupUserCriterias as $assessmentGroupUserCriteria)
+                                                        $assessmentGroupUserCriterias as $assessmentGroupUserCriteria)
                                                     @php
-                                                    $multiplication =
-                                                    $assessmentGroupUserCriteria->getMultiplicationScore($assessmentGroupUserCriteria->assessmentCriteria->id,$assessmentGroup->id);
-                                                    $totalScore += $multiplication *$assessmentGroupUserCriteria->score;
-                                                    $maxScore += $multiplication *$maxAssessmentScore;
+                                                        $multiplication =
+                                                        $assessmentGroupUserCriteria->getMultiplicationScore($assessmentGroupUserCriteria->assessmentCriteria->id,$assessmentGroup->id);
+                                                        $totalScore += $multiplication *$assessmentGroupUserCriteria->score;
+                                                        $maxScore += $multiplication *$maxAssessmentScore;
                                                     @endphp
                                                     <td>{{$assessmentGroupUserCriteria->assessmentCriteria->name}}
                                                         <input type="text" value="{{$assessmentGroupUserCriteria->id}}"
@@ -110,14 +106,14 @@
     </div>
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>

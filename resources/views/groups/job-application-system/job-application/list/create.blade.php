@@ -4,18 +4,17 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มข่าวสมัครงาน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เพิ่มข่าวสมัครงาน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a
-                                href="{{route('groups.announcement-system.announcement.list')}}">ข่าวสมัครงาน</a>
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{route('groups.announcement-system.announcement.list')}}">ข่าวสมัครงาน</a>
                         </li>
                         <li class="breadcrumb-item active">เพิ่มข่าวสมัครงาน</li>
                     </ol>
@@ -29,17 +28,17 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดข่าวสมัครงาน</h3>
+                            <h4 class="card-title">รายละเอียดข่าวสมัครงาน</h4>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="form-group">
-                                <label>หัวข้อ<span class="small text-danger">*</span></label>
+                                <label>หัวข้อ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" name="title" value="{{old('title')}}" id="title"
                                     class="form-control @error('title') is-invalid @enderror">
                             </div>
                             <div class="form-group">
-                                <label>คำอธิบาย<span class="small text-danger">*</span></label>
+                                <label>คำอธิบาย <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" name="description" value="{{old('description')}}" id="description"
                                     class="form-control @error('description') is-invalid @enderror">
                             </div>
@@ -67,8 +66,8 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <div class="float-right">
-                                <button class="btn bg-gradient-success btn-flat float-right"
+                            <div class="text-end">
+                                <button class="btn btn-primary"
                                     id="btn-add-application-news">
                                     บันทึก</button>
                             </div>

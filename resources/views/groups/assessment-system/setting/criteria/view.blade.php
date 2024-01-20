@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เกณฑ์การประเมิน</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เกณฑ์การประเมิน</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.assessment-system.setting.criteria')}}">เกณฑ์การประเมิน</a>
                         </li>
@@ -26,12 +25,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">เกณฑ์การประเมิน</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                            <h4 class="card-title">เกณฑ์การประเมิน</h4>
                         </div>
                         <div class="card-body">
                             <form
@@ -39,11 +33,11 @@
                                 method="POST">
                                 @method('PUT')
                                 @csrf
-                                <div class="row">
+                                <div class="row gy-2">
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>เกณฑ์การประเมิน<span class="small text-danger">*</span></label>
+                                            <label>เกณฑ์การประเมิน <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" id="name"
                                                 value="{{old('name') ?? $assessmentCriteria->name}}"
                                                 class="form-control  @error('name') is-invalid @enderror">
@@ -51,14 +45,14 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>รายละเอียด<span class="small text-danger">*</span></label>
+                                            <label>รายละเอียด <span class="fw-bold text-danger">*</span></label>
                                             <textarea class="form-control  @error('description') is-invalid @enderror"
                                                 name="description"
                                                 rows="10">{{old('description') ?? $assessmentCriteria->description}}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-12 text-right">
-                                        <button class="btn bg-success mt-2">บันทึก</button>
+                                    <div class="col-12 text-end">
+                                        <button class="btn btn-primary mt-2">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

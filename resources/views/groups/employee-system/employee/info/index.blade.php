@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">ข้อมูลส่วนตัว {{$user->name}} {{$user->lastname}}
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">ข้อมูลส่วนตัว {{$user->name}} {{$user->lastname}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">ข้อมูลส่วนตัว</li>
@@ -31,49 +29,49 @@
                 <input type="text" id="userId" value="{{$user->id}}" hidden>
                 <div class="col-12">
                     <div class="card card-info card-outline card-tabs">
-                        <div class="card-header p-0 pt-1">
+                        <div class="p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
+                                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
                                         aria-selected="true">ข้อมูลทั่วไป</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-workschedule-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-workschedule-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-workschedule" role="tab"
                                         aria-controls="custom-tabs-one-workschedule"
                                         aria-selected="false">ตารางทำงาน</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-leave-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-leave-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-leave" role="tab" aria-controls="custom-tabs-one-leave"
                                         aria-selected="false">วันลา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-diligence-allowance-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-diligence-allowance-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-diligence-allowance" role="tab"
                                         aria-controls="custom-tabs-one-diligence-allowance"
                                         aria-selected="false">เบี้ยขยัน</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-education-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-education-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-education" role="tab"
                                         aria-controls="custom-tabs-one-education" aria-selected="false">การศึกษา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-trainings-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-trainings-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-trainings" role="tab"
                                         aria-controls="custom-tabs-one-trainings" aria-selected="false">การฝึกอบรม</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-position-adjustment-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-position-adjustment-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-position-adjustment" role="tab"
                                         aria-controls="custom-tabs-one-position-adjustment"
                                         aria-selected="false">การปรับตำแหน่ง</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-one-punishments-tab" data-toggle="pill"
+                                    <a class="nav-link" id="custom-tabs-one-punishments-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-one-punishments" role="tab"
                                         aria-controls="custom-tabs-one-punishments"
                                         aria-selected="false">ความผิดและโทษ</a>
@@ -166,16 +164,17 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>วันเดือนปี เกิด</label>
-                                                <div class="input-group date" id="birth_date"
+                                                <div class="date-box date" id="birth_date"
                                                     data-target-input="nearest">
                                                     <input name="birthDate"
                                                         value="{{old('birthDate') ?? $user->birth_date}}" type="text"
                                                         class="form-control datetimepicker-input"
                                                         data-target="#birth_date" disabled>
-                                                    <div class="input-group-append" data-target="#birth_date"
+                                                    <div class="date-icon" data-target="#birth_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -246,17 +245,18 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>เริ่มทำงาน<span class="small text-danger">*</span></label>
-                                                <div class="input-group date" id="start_work_date"
+                                                <div class="date-box date" id="start_work_date"
                                                     data-target-input="nearest">
                                                     <input name="startWorkDate"
                                                         value="{{old('startWorkDate') ?? $user->start_work_date}}"
                                                         type="text"
                                                         class="form-control datetimepicker-input @error('startWorkDate') is-invalid @enderror"
                                                         data-target="#start_work_date" disabled>
-                                                    <div class="input-group-append" data-target="#start_work_date"
+                                                    <div class="date-icon" data-target="#start_work_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,17 +274,18 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>วันหมดอายุวีซ่า</label>
-                                                <div class="input-group date" id="visa_expire_date"
+                                                <div class="date-box date" id="visa_expire_date"
                                                     data-target-input="nearest">
                                                     <input name="visaExpireDate"
                                                         value="{{old('visaExpireDate') ?? $user->visa_expiry_date}}"
                                                         type="text"
                                                         class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
                                                         data-target="#visa_expire_date" disabled>
-                                                    <div class="input-group-append" data-target="#visa_expire_date"
+                                                    <div class="date-icon" data-target="#visa_expire_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,17 +303,18 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>วันหมดอายุใบอนุญาตทำงาน</label>
-                                                <div class="input-group date" id="work_permit_expire_date"
+                                                <div class="date-box date" id="work_permit_expire_date"
                                                     data-target-input="nearest">
                                                     <input type="text" name="workPermitExpireDate"
                                                         value="{{old('workPermitExpireDate') ?? $user->permit_expiry_date}}"
                                                         class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
                                                         data-target="#work_permit_expire_date" disabled>
-                                                    <div class="input-group-append"
+                                                    <div class="date-icon"
                                                         data-target="#work_permit_expire_date"
                                                         data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
+                                                        <span class="material-symbols-outlined">
+                                                            today
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -359,7 +361,7 @@
                                                 <input type="text" name="changePassword" value="" class="form-control"
                                                     required>
                                             </div>
-                                            <div class="form-group float-right">
+                                            <div class="form-group mt-2">
                                                 <button type="submit" class="btn btn-primary">เปลี่ยนรหัสผ่าน</button>
                                             </div>
                                         </form>

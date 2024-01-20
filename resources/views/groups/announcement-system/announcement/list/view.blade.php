@@ -4,18 +4,17 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">ข่าวประกาศ</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">ข่าวประกาศ</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a
-                                href="{{route('groups.announcement-system.announcement.list')}}">ข่าวประกาศ</a>
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{route('groups.announcement-system.announcement.list')}}">ข่าวประกาศ</a>
                         </li>
                         <li class="breadcrumb-item active">{{$announcement->title}}</li>
                     </ol>
@@ -29,18 +28,18 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดข่าวประกาศ</h3>
+                            <h4 class="card-title">รายละเอียดข่าวประกาศ</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <input type="text" id="announcementId" value="{{$announcement->id}}" hidden>
                             <div class="form-group">
-                                <label>หัวข้อ<span class="small text-danger">*</span></label>
+                                <label>หัวข้อ <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" name="title" value="{{$announcement->title}}" id="title"
                                     class="form-control @error('title') is-invalid @enderror">
                             </div>
                             <div class="form-group">
-                                <label>คำอธิบาย<span class="small text-danger">*</span></label>
+                                <label>คำอธิบาย <span class="fw-bold text-danger">*</span></label>
                                 <input type="text" name="description" value="{{$announcement->description}}"
                                     id="description" class="form-control @error('description') is-invalid @enderror">
                             </div>
@@ -78,14 +77,14 @@
                                         <thead>
                                             <tr>
                                                 <th>ไฟลน์แนบ</th>
-                                                <th class="text-right" style="width: 200px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 200px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($announcementAttachments as $announcementAttachment)
                                             <tr>
                                                 <td>{{$announcementAttachment->name}}</td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{url('/storage/uploads/attachment') .'/'. $announcementAttachment->file}}">
                                                         <i class="fas fa-download"></i>
@@ -104,10 +103,8 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <div class="float-right">
-                                <button class="btn bg-gradient-success btn-flat float-right"
-                                    id="btn-update-announcement">
-                                    บันทึก</button>
+                            <div class="text-end">
+                                <button class="btn btn-primary" id="btn-update-announcement">บันทึก</button>
                             </div>
                         </div>
                     </div>

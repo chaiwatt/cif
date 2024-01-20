@@ -1,17 +1,17 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">เพิ่มการลา</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">เพิ่มการลา</h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">เพิ่มการลา</li>
                     </ol>
@@ -25,27 +25,22 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียด</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                            <h4 class="card-title">รายละเอียด</h4>
                         </div>
                         <div class="card-body">
                             <input type="text" name="" id="leaveId" hidden>
-                            <div class="row">
+                            <div class="row gy-2">
                                 <div class="col-md-6">
                                     <input type="text" name="user" id="user" value="{{$user->id}}" class="form-control"
                                         hidden>
                                     <div class="form-group">
-                                        <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
+                                        <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
                                         <input type="text" value="{{$user->employee_no}}" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>ประเภทการลา<span class="small text-danger">*</span></label>
+                                        <label>ประเภทการลา <span class="fw-bold text-danger">*</span></label>
                                         <select name="leaveType" id="leaveType"
                                             class="form-control select2 @error('leaveType') is-invalid @enderror"
                                             style="width: 100%;">
@@ -62,21 +57,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>เริ่มวันที่ (วดป.) <span class="small text-danger">*</span></label>
+                                        <label>เริ่มวันที่ (วดป.)  <span class="fw-bold text-danger">*</span></label>
                                         <input type="text" name="startDate" id="startDate" value="{{old('startDate')}}"
                                             class="form-control input-datetime-format @error('startDate') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>ถึงวันที่ (วดป.) <span class="small text-danger">*</span></label>
+                                        <label>ถึงวันที่ (วดป.)  <span class="fw-bold text-danger">*</span></label>
                                         <input type="text" name="endDate" id="endDate" value="{{old('endDate')}}"
                                             class="form-control input-datetime-format @error('endDate') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-info" id="btnAddFile">เพิ่มไฟล์แนบ <span
+                                        <button type="button" class="btn btn-outline-secondary" id="btnAddFile">เพิ่มไฟล์แนบ <span
                                                 id="fileName" class="text-dark"></span></button>
                                     </div>
                                 </div>
@@ -87,8 +82,8 @@
 
                                 </div>
 
-                                <div class="col-12 text-right">
-                                    <button class="btn bg-primary" id="leave_check">ตรวจสอบ</button>
+                                <div class="col-12 text-end">
+                                    <button class="btn btn-primary" id="leave_check">ตรวจสอบ</button>
                                 </div>
                             </div>
 

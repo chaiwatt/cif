@@ -4,19 +4,18 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">ข่าวประกาศ
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">ข่าวประกาศ</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">ข่าวประกาศ</li>
                     </ol>
@@ -27,7 +26,7 @@
     <div class="content">
         <div class="container-fluid">
             <a class="btn btn-primary mb-2" href="{{route('groups.announcement-system.announcement.list.create')}}">
-                <i class="fas fa-plus mr-1">
+                <i class="fas fa-plus me-1">
                 </i>
                 เพิ่มข่าวประกาศ
             </a>
@@ -36,12 +35,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการข่าวประกาศ</h3>
+                            <h4 class="card-title">รายการข่าวประกาศ</h3>
                             {{-- @if (count($users) !=0)
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control float-end" placeholder="ค้นหา">
                                 </div>
                             </div>
                             @endif --}}
@@ -57,7 +56,7 @@
                                                 <th>คำอธิบาย</th>
                                                 <th>วันที่เพิ่ม</th>
                                                 <th>สถานะ</th>
-                                                <th class="text-right" style="width: 120px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -75,7 +74,7 @@
                                                     ไม่แสดง
                                                     @endif
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{route('groups.announcement-system.announcement.list.view',['id' => $announcement->id ])}}"><i
                                                             class="fas fa-pencil-alt"></i></a>
@@ -107,14 +106,14 @@
     </div>
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 <script type="module" src="{{ asset('assets/js/helpers/salary-system/salary/calculation/index.js?v=1') }}">

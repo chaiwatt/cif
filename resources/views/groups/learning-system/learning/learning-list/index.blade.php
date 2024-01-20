@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายการจัดการเรียนรู้
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายการจัดการเรียนรู้</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">จัดการเรียนรู้</li>
@@ -31,7 +29,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการจัดการเรียนรู้</h3>
+                            <h4 class="card-title">รายการจัดการเรียนรู้</h3>
                             {{-- @if (count($users) !=0)
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -50,7 +48,7 @@
                                             <tr>
                                                 <th>จัดการเรียนรู้</th>
                                                 <th>วันที่เพิ่ม</th>
-                                                <th class="text-right" style="width: 200px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 200px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -58,7 +56,7 @@
                                             <tr>
                                                 <td>{{$lesson->name}}</td>
                                                 <td>{{$lesson->created_at}}</td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{route('groups.learning-system.learning.learning-list.view',['id' => $lesson->id ])}}"><i
                                                             class="fas fa-eye"></i></a>
@@ -80,14 +78,6 @@
         </div>
     </div>
 
-</div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
-    <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
-</div>
-</div>
-</div>
-</div>
 </div>
 @push('scripts')
 
