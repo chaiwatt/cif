@@ -72,8 +72,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th class="text-center" style="width: 150px">ตรวจสอบ</th>
                                                 <th>รอบเงินเดือน</th>
@@ -81,7 +81,7 @@
                                                 <th style="width: 200px">รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
                                                 <th>แผนก</th>
-                                                <th class="text-right" style="width: 120px">แก้ไข</th>
+                                                <th class="text-end" style="width: 120px">แก้ไข</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,11 +120,11 @@
                                                     $user->lastname }}</td>
                                                 <td>{{ $user->company_department->name
                                                     }}</td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     @php
                                                     $paydayDetailWithToday = $user->getPaydayDetailWithToday();
                                                     @endphp
-                                                    <a class="btn btn-sm btn-info" data-id="{{$user->id}}"
+                                                    <a class="btn btn-sm btn-action btn-edit" data-id="{{$user->id}}"
                                                         data-startDate="{{$paydayDetailWithToday->start_date}}"
                                                         data-endDate="{{$paydayDetailWithToday->end_date}}" id="user"><i
                                                             class="fas fa-pencil-alt"></i></a>
@@ -198,14 +198,14 @@
         </div>
     </div>
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> 
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 <script type="module"

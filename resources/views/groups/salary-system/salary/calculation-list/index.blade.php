@@ -27,39 +27,39 @@
             @if ($permission->show)
             <div class="row">
                 <div class="col-12" id="content_wrapper">
-                    <div class="card card-primary card-outline card-tabs">
-                        <div class="card-header p-0 pt-1 border-bottom-0">
-                            <div class="card-tools mt-2">
-                                <div class="input-group input-group-sm mt-1" style="width: 150px;">
-                                    <select name="year" id="year" class="form-control " style="width: 100%;">
-                                        @foreach ($years as $year)
-                                        <option value="{{ $year}}" @if ($year==$selectedYear) selected @endif>
-                                            {{ $year }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="card card-tabs">
                             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                                 @foreach ($paydays->where('type',1) as $key => $payday)
                                 <li class="nav-item">
                                     <a class="nav-link {{ $key === 0 ? 'active' : '' }}"
-                                        id="custom-tabs-{{$payday->id}}-tab" data-toggle="pill"
+                                        id="custom-tabs-{{$payday->id}}-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-{{$payday->id}}" role="tab"
                                         aria-controls="custom-tabs-{{$payday->id}}"
                                         aria-selected="true">{{$payday->name}}</a>
                                 </li>
                                 @endforeach
+                                <li class="ms-auto my-2">
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <select name="year" id="year" class="form-select" style="width: 100%;">
+                                                @foreach ($years as $year)
+                                                <option value="{{ $year}}" @if ($year==$selectedYear) selected @endif>
+                                                    {{ $year }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
-                        </div>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-tabs-three-tabContent">
                                 @foreach ($paydays->where('type',1) as $key => $payday)
-                                <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
+                                <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }} table-responsive"
                                     id="custom-tabs-{{$payday->id}}" role="tabpanel"
                                     aria-labelledby="custom-tabs-{{$payday->id}}-tab">
-                                    <table class="table table-striped">
-                                        <thead>
+                                    <table class="table table-borderless text-nowrap">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>ต้นงวด</th>
                                                 <th>ปลายงวด</th>
@@ -92,27 +92,29 @@
                                                 <td>
                                                     @if ($currentDate->gte($paymentDate))
 
-                                                    <span class="badge bg-gray">หมดเวลา</span>
+                                                    <span class="badge rounded-3" style="padding: 8px 12px; background: #F9FAFB;" >หมดเวลา</span>
                                                     @elseif($paymentDate->gte($currentDate) &&
                                                     $currentDate->gte($endDate))
 
-                                                    <span class="badge bg-success">อยู่ในช่วงทำรายการ</span>
+                                                    <span class="badge bg-success rounded-3" style="padding: 8px 12px">อยู่ในช่วงทำรายการ</span>
                                                     @else
-                                                    <span class="badge bg-warning">รอบต่อไป</span>
+                                                    <span class="badge bg-warning rounded-3 text-primary" style="padding: 8px 12px">รอบต่อไป</span>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if (count($paydayDetail->SalarySummary()->get()) != 0)
-                                                    <span class="badge bg-gray">ปิดงวด</span>
+                                                    <span class="badge rounded-3 text-primary" style="padding: 8px 12px; background: #D1FADF">ปิดงวด</span>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.calculation',['id' => $paydayDetail->id])}}"
-                                                        class="btn btn-sm btn-info"><i
-                                                            class="fas fa-calculator"></i></a>
+                                                        class="btn btn-sm btn-action" style="--bs-btn-color: #F79009; --bs-btn-color-hover: #DC6803;">
+                                                        <i class="fas fa-calculator"></i>
+                                                    </a>
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.summary',['id' => $paydayDetail->id])}}"
-                                                        class="btn btn-sm btn-primary"><i
-                                                            class="fas fa-chart-bar"></i></a>
+                                                        class="btn btn-sm btn-action" style="--bs-btn-color: #0086C9; --bs-btn-color-hover: #026AA2;">
+                                                        <i class="fas fa-chart-bar"></i>
+                                                    </a>
                                                 </td>
                                                 </tr>
                                                 @endif

@@ -71,7 +71,9 @@ $(document).on('click', 'a[data-confirm]', function (event) {
                     Swal.fire({
                         title: 'ลบแล้ว',
                         text: message,
-                        icon: 'success'
+                        icon: 'success',
+                        heightAuto: false
+                        
                     }).then((result) => {
                         
                         window.location.reload();
@@ -81,7 +83,8 @@ $(document).on('click', 'a[data-confirm]', function (event) {
                     Swal.fire({
                         title: 'ข้อผิดพลาด',
                         text: 'เกิดข้อผิดพลาดขณะลบ' + message,
-                        icon: 'error'
+                        icon: 'error',
+                        heightAuto: false
                     });
                 }
             });

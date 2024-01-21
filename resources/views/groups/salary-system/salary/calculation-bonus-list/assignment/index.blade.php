@@ -14,8 +14,8 @@
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a
-                                href="{{route('groups.salary-system.salary.calculation-bonus-list')}}">เงินโบนัสประจำปี</a>
+                        <li class="breadcrumb-item">
+                            <a href="{{route('groups.salary-system.salary.calculation-bonus-list')}}">เงินโบนัสประจำปี</a>
                         </li>
                         <li class="breadcrumb-item active">เพิ่มเงินโบนัสประจำปี</li>
                     </ol>
@@ -26,32 +26,34 @@
     <div class="content">
         <div class="container-fluid">
             @if ($permission->show)
-            @if ($bonus->status == 0)
-            <a class="btn btn-primary mb-2" id="import-employee-code">
-                <i class="fas fa-plus me-1">
-                </i>
-                เพิ่มรายการเงินโบนัส
-            </a>
-            @endif
 
             <div class="row">
                 <div class="col-12" id="content_wrapper">
                     <div class="card card-primary card-outline">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายการลาล่าสุด</h4>
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" id="search_query"
-                                        class="form-control" placeholder="ค้นหา">
+                            <div class="d-flex gap-2">
+                                @if ($bonus->status == 0)
+                                <a class="btn btn-header" id="import-employee-code">
+                                    <i class="fas fa-plus">
+                                    </i>
+                                    เพิ่มรายการเงินโบนัส
+                                </a>
+                                @endif
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="search_query" id="search_query"
+                                            class="form-control" placeholder="ค้นหา">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <input type="text" id="bonusId" value="{{$bonus->id}}" hidden>
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>พนักงาน</th>
                                                 <th>แผนก</th>
@@ -76,7 +78,7 @@
                                                 </td>
                                                 @if ($bonus->status == 0)
                                                 <td class="text-end">
-                                                    <a class="btn btn-danger btn-sm delete" href=""
+                                                    <a class="btn btn-action btn-delete btn-sm delete" href=""
                                                         data-id="{{$bonusUser->id}}">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
@@ -110,8 +112,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
-                                <button type="button" class="btn btn-primary float-right"
+                            <div class="col-sm-12 text-end mt-2">
+                                <button type="button" class="btn btn-primary"
                                     id="btn-import-employee-code">เพิ่มรายการ</button>
                             </div>
                         </div>

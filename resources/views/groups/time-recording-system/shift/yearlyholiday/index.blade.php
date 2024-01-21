@@ -19,38 +19,40 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            @if ($permission->create)
-            <a class="btn btn-primary mb-2" href="{{route('groups.time-recording-system.shift.yearlyholiday.create')}}">
-                <i class="fas fa-plus mr-1"></i>
-                เพิ่มวันหยุดประจำปี
-            </a>
-            @endif
             @if ($permission->show)
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">วันหยุดประจำปี</h4>
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <select name="year" id="year"
-                                        class="form-control @error('year') is-invalid @enderror" style="width: 100%;">
-                                        @foreach ($years as $year)
-                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
-                                        </option>
-                                        @endforeach
-                                    </select>
+                            <div class="d-flex gap-2">
+                                @if ($permission->create)
+                                <a class="btn btn-header" href="{{route('groups.time-recording-system.shift.yearlyholiday.create')}}">
+                                    <i class="fas fa-plus"></i>
+                                    เพิ่มวันหยุดประจำปี
+                                </a>
+                                @endif
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <select name="year" id="year"
+                                            class="form-control @error('year') is-invalid @enderror" style="width: 100%;">
+                                            @foreach ($years as $year)
+                                            <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body table-responsive p-0" id="table_container">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
+                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                            <table class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>#</th>
                                         <th>วันที่</th>
                                         <th>วันหยุดประจำปี</th>
-                                        <th class="text-right">เพิ่มเติม</th>
+                                        <th class="text-end">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,9 +61,9 @@
                                         <td>{{$key + 1}}</td>
                                         <td>{{$yearlyHoliday->holiday_date}}</td>
                                         <td>{{$yearlyHoliday->name}}</td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                             @if ($permission->update)
-                                            <a class="btn btn-info btn-sm"
+                                            <a class="btn btn-action btn-edit btn-sm"
                                                 href="{{ route('groups.time-recording-system.shift.yearlyholiday.view', ['id' => $yearlyHoliday->id]) }}">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>
@@ -69,7 +71,7 @@
                                             @endif
 
                                             @if ($permission->delete == true)
-                                            <a class="btn btn-danger btn-sm"
+                                            <a class="btn btn-action btn-delete btn-sm"
                                                 data-confirm='ลบวันหยุดประจำปี "{{$yearlyHoliday->name}}" หรือไม่?'
                                                 href="#" data-id="{{$yearlyHoliday->id}}"
                                                 data-delete-route="{{ route('groups.time-recording-system.shift.yearlyholiday.delete', ['id' => '__id__']) }}"

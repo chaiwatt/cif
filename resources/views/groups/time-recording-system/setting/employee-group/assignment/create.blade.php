@@ -29,7 +29,7 @@
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>
@@ -42,9 +42,9 @@
                                     hidden>
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
-                                        <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-sm-12 table-responsive" id="table_container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>
                                                             <div class="icheck-primary d-inline">
@@ -88,7 +88,6 @@
                                         class="btn btn-primary">บันทึก</button>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>

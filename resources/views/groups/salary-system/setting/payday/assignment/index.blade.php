@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
 <div>
     <div>
         <div class="container-fluid">
@@ -21,22 +20,22 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            @if ($permission->create)
-            <a class="btn btn-primary mb-2" id="add_payday">
-                <i class="fas fa-plus me-1"></i>
-                เพิ่มวันที่
-            </a>
-            @endif
             @if ($permission->show)
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รอบคำนวนเงินเดือน</h4>
+                            @if ($permission->create)
+                            <a class="btn btn-header mb-2" id="add_payday">
+                                <i class="fas fa-plus"></i>
+                                เพิ่มวันที่
+                            </a>
+                            @endif
                         </div>
-                        <div class="card-body table-responsive p-0" id="table_container">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
+                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                            <table class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>เดือน</th>
                                         <th>เริ่มวันที่</th>
@@ -57,7 +56,7 @@
                                         </td>
                                         @if ($permission->update)
                                         <td class="text-end">
-                                            <a class="btn btn-info btn-sm update-payday" href="#"
+                                            <a class="btn btn-action btn-links btn-sm update-payday" href="#"
                                                 data-id="{{$paydayDetail->id}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
@@ -79,7 +78,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row gy-2">
                         <input type="text" id="paydayId" value="{{$payday->id}}" hidden>
                         <input type="text" id="year" value="{{$payday->year}}" hidden>
                         <div class="col-12">

@@ -60,7 +60,7 @@
                                     <input type="search" class="form-control " name="search_query" id="search_query"
                                         placeholder="ค้นหา">
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-lg btn-default" id="btn-search">
+                                        <button type="button" class="btn" id="btn-search">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </div>
@@ -71,9 +71,9 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>

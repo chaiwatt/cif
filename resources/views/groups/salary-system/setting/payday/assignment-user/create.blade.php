@@ -35,7 +35,7 @@
                 <div class="col-lg-12">
                     @if($errors->any())
                     <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         <h5> ผิดพลาด</h5>
                         <ul>
                             @foreach($errors->all() as $error)
@@ -45,7 +45,7 @@
                     </div>
                     @endif
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายชื่อพนักงาน</h3>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -62,8 +62,8 @@
                                     <div class="row">
                                         <input type="text" name="paydayId" value="{{$payday->id}}" hidden>
                                         <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>
                                                             <div class="icheck-primary d-inline">
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 text-end mt-2">
+                                    <div class="col-12 text-end">
                                         @if ($permission->create)
                                         <button type="submit" class="btn btn-primary">บันทึก</button>
                                         @endif

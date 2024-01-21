@@ -34,10 +34,10 @@
                                 @method('PUT')
                                 @csrf
 
-                                <div class="row">
+                                <div class="row gy-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>ปี<span class="small text-danger">*</span></label>
+                                            <label>ปี <span class="fw-bold text-danger">*</span></label>
                                             <select name="year"
                                                 class="form-control select2 @error('year') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -51,14 +51,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>ชื่อรอบคำนวนเงินเดือน<span class="small text-danger">*</span></label>
+                                            <label>ชื่อรอบคำนวนเงินเดือน <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" value="{{old('name') ?? $payDay->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>งวดจ่าย<span class="small text-danger">*</span></label>
+                                            <label>งวดจ่าย <span class="fw-bold text-danger">*</span></label>
                                             <select name="paydayType" id="paydayType" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1" @if ($payDay->type == 1) selected
@@ -76,7 +76,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>วันที่ต้นงวด<span class="small text-danger">*</span></label>
+                                                    <label>วันที่ต้นงวด <span class="fw-bold text-danger">*</span></label>
                                                     <input type="text" name="startDay"
                                                         value="{{old('startDay') ?? $payDay->start_day}}"
                                                         class="form-control numericInputInt @error('startDay') is-invalid @enderror">
@@ -84,7 +84,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>วันที่ปลายงวด<span class="small text-danger">*</span></label>
+                                                    <label>วันที่ปลายงวด <span class="fw-bold text-danger">*</span></label>
                                                     <input type="text" name="endDay"
                                                         value="{{old('endDay') ?? $payDay->end_day}}"
                                                         class="form-control numericInputInt @error('endDay') is-invalid @enderror">
@@ -98,7 +98,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>รอบคำนวนต้น<span class="small text-danger">*</span></label>
+                                                    <label>รอบคำนวนต้น <span class="fw-bold text-danger">*</span></label>
                                                     <select name="firstPayday" id="firstPayday"
                                                         class="form-control select2" style="width: 100%;">
                                                         <option value="">==เลือกรอบคำนวนต้น==</option>
@@ -116,7 +116,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>รอบคำนวนปลาย<span class="small text-danger">*</span></label>
+                                                    <label>รอบคำนวนปลาย <span class="fw-bold text-danger">*</span></label>
                                                     <select name="secondPayday" id="secondPayday"
                                                         class="form-control select2" style="width: 100%;">
                                                         <option value="">==เลือกรอบคำนวนปลาย==</option>
@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>รอบคำนวน<span class="small text-danger">*</span></label>
+                                            <label>รอบคำนวน <span class="fw-bold text-danger">*</span></label>
                                             <select name="crossMonth" id="crossMonth" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1" @if ($payDay->cross_month == 1) selected
@@ -147,7 +147,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>เดือน<span class="small text-danger">*</span></label>
+                                            <label>เดือน <span class="fw-bold text-danger">*</span></label>
                                             <select name="paymentType" id="paymentType" class="form-control select2"
                                                 style="width: 100%;">
                                                 <option value="1" @if ($payDay->payment_type == 1) selected
@@ -161,16 +161,16 @@
                                         style="display:none"
                                         @endif >
                                         <div class="form-group">
-                                            <label>หลังปลายงวด (วัน)<span class="small text-danger">*</span></label>
+                                            <label>หลังปลายงวด (วัน) <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" id="duration"
                                                 value="{{old('duration') ?? $payDay->duration}}" name="duration"
                                                 class="form-control numericInputInt" inputmode="text">
                                         </div>
                                     </div>
                                     @if ($permission->update)
-                                    <div class="col-12">
+                                    <div class="col-12 text-end">
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึกแก้ไข</button>
+                                            class="btn btn-primary">บันทึกแก้ไข</button>
                                     </div>
                                     @endif
                                 </div>

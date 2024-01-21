@@ -26,9 +26,9 @@
                         <div class="card-header">
                             <h4 class="card-title">ตารางทำงาน</h4>
                         </div>
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body table-responsive py-0 px-3">
 
-                            <table class="table table-striped text-nowrap">
+                            <table class="table table-borderless text-nowrap">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -36,7 +36,7 @@
                                         <th>เดือน</th>
                                         <th>มอบหมายผู้ใช้</th>
                                         <th>เพิ่มกะทำงาน</th>
-                                        <th class="text-right">เพิ่มเติม</th>
+                                        <th class="text-end">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,12 +57,12 @@
                                         </td>
                                         <td>
                                             @if (isset($shiftsAdded) && $shiftsAdded->original['expired'])
-                                            <span class="badge bg-gray">หมดเวลา</span>
+                                            <span class="badge bg-gray" style="padding: 8px 12px;"">หมดเวลา</span>
                                             @else
                                             @if(isset($shiftsAdded) && $shiftsAdded->original['assigned'] )
-                                            <span class="badge bg-success">เพิ่มแล้ว</span>
+                                            <span class="badge bg-success" style="padding: 8px 12px;"">เพิ่มแล้ว</span>
                                             @else
-                                            <span class="badge bg-danger">ยังไม่ได้เพิ่ม</span>
+                                            <span class="badge bg-danger" style="padding: 8px 12px;"">ยังไม่ได้เพิ่ม</span>
                                             @endif
                                             {{-- @elseif ($shiftsAdded)
                                             <span class="badge bg-success">เพิ่มแล้ว</span>
@@ -70,19 +70,19 @@
                                             <span class="badge bg-danger">ยังไม่ได้เพิ่ม</span> --}}
                                             @endif
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-end">
 
                                             @if ($permission->create || $permission->update)
 
                                             @if(isset($shiftsAdded) && $shiftsAdded->original['assigned'] )
 
-                                            <a class="btn btn-info btn-sm"
+                                            <a class="btn btn-action btn-edit btn-sm"
                                                 href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user', ['workScheduleId' => $workSchedule->id, 'year' => $workSchedule->year, 'month' => $month->id]) }}">
                                                 <i class="fas fa-users"></i>
                                             </a>
                                             @endif
 
-                                            <a class="btn btn-primary btn-sm"
+                                            <a class="btn btn-action btn-links btn-sm"
                                                 href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.work-schedule', ['workScheduleId' => $workSchedule->id, 'year' => $workSchedule->year, 'month' => $month->id]) }}">
                                                 <i class="fas fa-link"></i>
                                             </a>

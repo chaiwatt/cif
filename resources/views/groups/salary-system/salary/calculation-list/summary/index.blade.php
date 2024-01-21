@@ -37,54 +37,49 @@
     <div class="content">
 
         <div class="container-fluid mt-0">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <a class="btn btn-primary float-right mb-2 ml-2"
-                            href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
-                            <i class="fas fa-download mr-1"></i>
-                            ดาวน์โหลด
-                        </a>
-                        @if (count($salarySummaries) == 0)
-                        <a class="btn btn-success float-right mb-2"
-                            href="{{route('groups.salary-system.salary.calculation-list.summary.finish',['payday_detail_id' => $paydayDetail->id])}}">
-                            <i class="fas fa-check mr-1"></i>
-                            ปิดงวด
-                        </a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
             @if ($permission->show)
             <div class="row">
 
                 <div class="col-12">
 
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex align-items-center justify-content-between">
                             <h4 class="card-title">พนักงาน</h4>
-                            @if (count($users) !=0)
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm">
-                                    <input type="search" class="form-control " name="search_query" id="search_query"
-                                        placeholder="ค้นหา">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-lg btn-default" id="btn-search">
-                                            <i class="fa fa-search"></i>
-                                        </button>
+                            <div class="d-flex gap-2">
+                                    <a class="btn btn-header"
+                                    href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
+                                    <i class="fas fa-download"></i>
+                                    ดาวน์โหลด
+                                </a>
+                                @if (count($salarySummaries) == 0)
+                                <a class="btn btn-header"
+                                    href="{{route('groups.salary-system.salary.calculation-list.summary.finish',['payday_detail_id' => $paydayDetail->id])}}">
+                                    <i class="fas fa-check"></i>
+                                    ปิดงวด
+                                </a>
+                                @endif
+                                @if (count($users) !=0)
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm">
+                                        <input type="search" class="form-control " name="search_query" id="search_query"
+                                            placeholder="ค้นหา">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn" id="btn-search">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
-                            @endif
 
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <input type="text" id="paydayDetailId" value="{{$paydayDetail->id}}" hidden>
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th style="width: 8%">รหัสพนักงาน</th>
                                                 <th style="width: 14%">ชื่อ-สกุล</th>

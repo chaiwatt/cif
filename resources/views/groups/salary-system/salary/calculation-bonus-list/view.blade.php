@@ -26,11 +26,6 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียด</h4>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
                         </div>
                         <div class="card-body">
                             <form
@@ -38,11 +33,11 @@
                                 method="POST">
                                 @method('PUT')
                                 @csrf
-                                <div class="row">
+                                <div class="row gy-2">
                                     <input type="text" name="manual_time" id="manual_time" value="1" hidden>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>ชื่อรายการ<span class="small text-danger">*</span></label>
+                                            <label>ชื่อรายการ <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" value="{{$bonus->name}}"
                                                 class="form-control  @error('name') is-invalid @enderror">
                                         </div>
@@ -50,7 +45,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>วันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
+                                            <label>วันที่ (วดป. คศ) <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="issued" value="{{ \Carbon\Carbon::createFromFormat('Y-m-d',
                                                         $bonus->issued)->format('d/m/Y') }}"
                                                 class="form-control input-date-format @error('issued') is-invalid @enderror">
@@ -67,18 +62,16 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>สถานะ<span class="small text-danger">*</span></label>
+                                            <label>สถานะ <span class="fw-bold text-danger">*</span></label>
                                             <select name="status" class="form-control select2 " style="width: 100%;">
-                                                <option value="0" @if ($bonus->status == 0) selected @endif>ใช้งาน
-                                                </option>
-                                                <option value="1" @if ($bonus->status == 1) selected @endif>ปิดงวด
-                                                </option>
+                                                <option value="0" @if ($bonus->status == 0) selected @endif>ใช้งาน</option>
+                                                <option value="1" @if ($bonus->status == 1) selected @endif>ปิดงวด</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-12 text-right">
-                                        <button class="btn bg-success mt-2">บันทึก</button>
+                                    <div class="col-12 text-end">
+                                        <button class="btn btn-primary mt-2">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

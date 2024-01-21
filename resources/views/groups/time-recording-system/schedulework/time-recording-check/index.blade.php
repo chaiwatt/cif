@@ -66,8 +66,8 @@
 
                         </div>
                         <div class="card-body table-responsive p-0" id="table_container">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
+                            <table class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>#</th>
                                         <th>ตารางทำงาน</th>

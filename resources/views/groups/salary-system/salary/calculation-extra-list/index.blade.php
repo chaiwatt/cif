@@ -28,19 +28,7 @@
             <div class="row">
                 <div class="col-12" id="content_wrapper">
 
-                    <div class="card card-primary card-outline card-tabs">
-                        <div class="card-header p-0 pt-1 border-bottom-0">
-                            <div class="card-tools mt-2">
-                                <div class="input-group input-group-sm mt-1" style="width: 150px;">
-                                    <select name="year" id="year" class="form-control " style="width: 100%;">
-                                        @foreach ($years as $year)
-                                        <option value="{{ $year}}" @if ($year==$selectedYear) selected @endif>
-                                            {{ $year }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="card  card-tabs">
                             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                                 @foreach ($paydays->where('type',2) as $key => $payday)
                                 <li class="nav-item">
@@ -51,9 +39,21 @@
                                         aria-selected="true">{{$payday->name}}</a>
                                 </li>
                                 @endforeach
+                                <li class="ms-auto my-2">
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <select name="year" id="year" class="form-select " style="width: 100%;">
+                                                @foreach ($years as $year)
+                                                <option value="{{ $year}}" @if ($year==$selectedYear) selected @endif>
+                                                    {{ $year }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
-                        </div>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-tabs-three-tabContent">
                                 @foreach ($paydays->where('type',2) as $key => $payday)
                                 <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}"
@@ -88,12 +88,12 @@
                                                 <td>{{ $endDate->format('d/m/Y') }}</td>
                                                 <td>
                                                     @if ($currentDate->gte($paymentDate))
-                                                    <span class="badge bg-gray">หมดเวลา</span>
+                                                    <span class="badge bg-gray rouned-3" style="padding: 8px 12px">หมดเวลา</span>
                                                     @elseif($paymentDate->gte($currentDate) &&
                                                     $currentDate->gte($endDate))
-                                                    <span class="badge bg-success">อยู่ในช่วงทำรายการ</span>
+                                                    <span class="badge bg-success rouned-3" style="padding: 8px 12px">อยู่ในช่วงทำรายการ</span>
                                                     @else
-                                                    <span class="badge bg-warning">รอบต่อไป</span>
+                                                    <span class="badge bg-warning rouned-3" style="padding: 8px 12px">รอบต่อไป</span>
                                                     @endif
                                                 </td>
                                                 <td>

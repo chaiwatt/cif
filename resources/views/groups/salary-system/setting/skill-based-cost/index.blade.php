@@ -19,23 +19,22 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            @if ($permission->create)
-            <a class="btn btn-primary mb-2" href="{{route('groups.salary-system.setting.skill-based-cost.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มค่าทักษะ
-            </a>
-            @endif
             @if ($permission->show)
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">ค่าทักษะ</h4>
+                            @if ($permission->create)
+                                <a class="btn btn-header" href="{{route('groups.salary-system.setting.skill-based-cost.create')}}">
+                                    <i class="fas fa-plus"></i>
+                                    เพิ่มค่าทักษะ
+                                </a>
+                             @endif
                         </div>
-                        <div class="card-body table-responsive p-0" id="table_container">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
+                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                            <table class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>ชื่อทักษะ</th>
                                         <th>มูลค่า</th>
@@ -49,14 +48,14 @@
                                         <td>{{$skillBasedCost->cost}}</td>
                                         <td class="text-end">
                                             @if ($permission->update)
-                                            <a class="btn btn-primary btn-sm"
+                                            <a class="btn btn-action btn-edit btn-sm"
                                                 href="{{route('groups.salary-system.setting.skill-based-cost.view',['id' => $skillBasedCost->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             @endif
 
                                             @if ($permission->delete)
-                                            <a class="btn btn-danger btn-sm"
+                                            <a class="btn btn-action btn-delete btn-sm"
                                                 data-confirm='ลบค่าทักษะ "{{$skillBasedCost->name}}" หรือไม่?' href="#"
                                                 data-id="{{$skillBasedCost->id}}"
                                                 data-delete-route="{{ route('groups.salary-system.setting.skill-based-cost.delete', ['id' => '__id__']) }}"

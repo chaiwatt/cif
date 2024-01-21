@@ -27,15 +27,15 @@
                             <h4 class="card-title">ตารางทำงาน</h4>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body pt-0">
                             <form
                                 action="{{route('groups.time-recording-system.setting.work-schedule-visibility.store')}}"
                                 method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th style="width: 120px">
                                                         <div class="icheck-primary d-inline">

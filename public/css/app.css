@@ -436,7 +436,15 @@ th {
   border-style: solid;
   border-width: 0;
 }
-
+td {
+  vertical-align: middle;
+  padding: 10px 8px !important;
+}
+th {
+  padding: 20px .5rem !important;
+  font-weight: 400;
+  color: #667085 !important;
+}
 label {
   display: inline-block;
 }
@@ -3006,6 +3014,39 @@ textarea.form-control-lg {
   opacity: var(--bs-btn-disabled-opacity);
 }
 
+/* For Action Icon */
+.btn-user {
+  --bs-btn-color: #039855;
+  --bs-btn-color-hover: #027a48;
+}
+.btn-links {
+  --bs-btn-color: #1570EF;
+  --bs-btn-color-hover: #175CD3;
+}
+.btn-edit {
+  --bs-btn-color: #0086C9;
+  --bs-btn-color-hover: #026AA2;
+}
+.btn-delete {
+  --bs-btn-color:#D92D20;
+  --bs-btn-color-hover: #B42318;
+}
+.btn-header {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.btn-action {
+  --bs-btn-bg: transparent;
+  font-size: 20px;
+  border: 0;
+}
+.btn-action:hover,
+.btn-action:active {
+  color: var(--bs-btn-color-hover) !important;
+}
+
+
 .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #101828;
@@ -3822,14 +3863,17 @@ textarea.form-control-lg {
   border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
 }
 .nav-tabs .nav-link {
+  height: 100%;
+  display: flex;
+  align-items: center;
   margin-bottom: calc(-1 * var(--bs-nav-tabs-border-width));
-  border: var(--bs-nav-tabs-border-width) solid transparent;
+  border-bottom: 4px solid transparent;
   border-top-left-radius: var(--bs-nav-tabs-border-radius);
   border-top-right-radius: var(--bs-nav-tabs-border-radius);
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
   isolation: isolate;
-  border-color: var(--bs-nav-tabs-link-hover-border-color);
+  /* border-color: var(--bs-nav-tabs-link-hover-border-color); */
 }
 .nav-tabs .nav-link.disabled, .nav-tabs .nav-link:disabled {
   color: var(--bs-nav-link-disabled-color);
@@ -3840,7 +3884,9 @@ textarea.form-control-lg {
 .nav-tabs .nav-item.show .nav-link {
   color: var(--bs-nav-tabs-link-active-color);
   background-color: var(--bs-nav-tabs-link-active-bg);
-  border-color: var(--bs-nav-tabs-link-active-border-color);
+  /* border-color: var(--bs-nav-tabs-link-active-border-color); */
+  border: 0;
+  border-bottom: 4px solid #101828;
 }
 .nav-tabs .dropdown-menu {
   margin-top: calc(-1 * var(--bs-nav-tabs-border-width));

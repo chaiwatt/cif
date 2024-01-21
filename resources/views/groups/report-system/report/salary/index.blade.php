@@ -16,7 +16,8 @@
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
+                        <li class="breadcrumb-item">
+                            <a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">รายงาน</li>
                     </ol>
@@ -143,7 +144,7 @@
                                 @foreach ($paydays->where('type',1) as $key => $payday)
                                 <li class="nav-item">
                                     <a class="nav-link {{ $key === 0 ? 'active' : '' }}"
-                                        id="custom-tabs-{{$payday->id}}-tab" data-toggle="pill"
+                                        id="custom-tabs-{{$payday->id}}-tab" data-bs-toggle="tab"
                                         href="#custom-tabs-{{$payday->id}}" role="tab"
                                         aria-controls="custom-tabs-{{$payday->id}}"
                                         aria-selected="true">{{$payday->name}}</a>
@@ -157,7 +158,7 @@
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
                                     id="custom-tabs-{{$payday->id}}" role="tabpanel"
                                     aria-labelledby="custom-tabs-{{$payday->id}}-tab">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
+                                    <table class="table table-borderless dataTable dtr-inline">
                                         <thead>
                                             <tr>
                                                 <th>เดือน</th>
@@ -167,7 +168,7 @@
                                                 <th class="text-center">รายได้อื่นๆ</th>
                                                 <th class="text-center">หักอื่นๆ</th>
                                                 <th class="text-center">ประกันสังคม</th>
-                                                <th class="text-right" style="width: 150px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 150px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -209,17 +210,17 @@
                                                     number_format($paydayDetail->salarySummary->sum('sum_social_security'),2)
                                                     :
                                                     ''}}</td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     @if ($paydayDetail->salarySummary->sum('employee')
                                                     != 0)
-                                                    <a class="btn btn-sm btn-info "
+                                                    <a class="btn btn-sm btn-info"
                                                         href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
-                                                        <i class="fas fa-download "></i>
-
+                                                        <i class="fas fa-download"></i>
                                                     </a>
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{route('groups.report-system.report.salary.view',['id' => $paydayDetail->id ])}}"><i
-                                                            class="fas fa-eye"></i></a>
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="{{route('groups.report-system.report.salary.view',['id' => $paydayDetail->id ])}}">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
                                                     @endif
 
                                                 </td>
@@ -247,7 +248,7 @@
                                 @foreach ($paydays->where('type',1) as $key => $payday)
                                 <li class="nav-item">
                                     <a class="nav-link {{ $key === 0 ? 'active' : '' }}"
-                                        id="custom-arttendance-tabs-{{$payday->id}}-tab" data-toggle="pill"
+                                        id="custom-arttendance-tabs-{{$payday->id}}-tab" data-bs-toggle="tab"
                                         href="#custom-arttendance-tabs-{{$payday->id}}" role="tab"
                                         aria-controls="custom-arttendance-tabs-{{$payday->id}}"
                                         aria-selected="true">{{$payday->name}}</a>
@@ -267,7 +268,7 @@
                                                 <th>เดือน</th>
                                                 <th class="text-center">ขาดงาน</th>
                                                 <th class="text-center">ลางาน</th>
-                                                <th class="text-right" style="width: 150px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 150px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -286,7 +287,7 @@
                                                     ''}}</td>
 
 
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     @if ($paydayDetail->salarySummary->sum('sum_leave')
                                                     != 0 || $paydayDetail->salarySummary->sum('sum_absence')
                                                     != 0)

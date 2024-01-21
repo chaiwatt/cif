@@ -61,7 +61,7 @@
                     </div>
                         <div class="mt-2 d-flex justify-content-end">
                             <button class="btn btn-primary d-flex gap-2 align-items-center" id="search_work_schedule">
-                                <i class="fas fa-search mr-1"></i>ค้นหา</button>
+                                <i class="fas fa-search"></i>ค้นหา</button>
                         </div>
 
                 </div>
@@ -73,14 +73,14 @@
                         <div class="card-header">
                             <h4 class="card-title">ตารางทำงาน</h4>
                         </div>
-                        <div class="card-body table-responsive p-0" id="table_container">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
+                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                            <table class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>#</th>
                                         <th>ตารางทำงาน</th>
                                         <th>เดือน-ปี</th>
-                                        <th class="text-right">เพิ่มเติม</th>
+                                        <th class="text-end">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,8 +89,8 @@
                                         <td>{{$key +1}}</td>
                                         <td>{{$workSchedule->name}}</td>
                                         <td>{{$workSchedule->monthName($currentMonth)}} {{$year}}</td>
-                                        <td class="text-right">
-                                            <a class="btn btn-info btn-sm"
+                                        <td class="text-end">
+                                            <a class="btn btn-action btn-edit btn-sm"
                                                 href="{{route('groups.time-recording-system.schedulework.time-recording.import',['workScheduleId' => $workSchedule->id,'year' => $currentYear,'month' => $currentMonth])}}">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>

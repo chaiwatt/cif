@@ -25,16 +25,16 @@
     <div class="content">
         <div class="container-fluid">
             @if ($permission->show)
-            <a class="btn btn-primary mb-2"
-                href="{{route('groups.salary-system.salary.calculation-bonus-list.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มรายการเงินโบนัส
-            </a>
             <div class="row">
                 <div class="col-12" id="content_wrapper">
                     <div class="card card-primary card-outline card-tabs">
-                        <div class="card-header p-0 pt-1 border-bottom-0">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <a class="btn btn-header"
+                                href="{{route('groups.salary-system.salary.calculation-bonus-list.create')}}">
+                                <i class="fas fa-plus">
+                                </i>
+                                เพิ่มรายการเงินโบนัส
+                            </a>
                             <div class="card-tools mt-2">
                                 {{-- <div class="input-group input-group-sm mt-1" style="width: 150px;">
                                     <select name="year" id="year" class="form-control " style="width: 100%;">
@@ -49,9 +49,9 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th style="width: 200px">วันที่</th>
                                                 <th>ชื่อรายการ</th>
@@ -67,9 +67,9 @@
                                                     $bonus->issued)->format('d/m/Y') }}</td>
                                                 <td>{{$bonus->name}}</td>
                                                 <td>@if($bonus->status == 0)
-                                                    <span class="badge bg-success">ใช้งาน</span>
+                                                    <span class="badge bg-success rounded-3" style="padding: 8px 12px">ใช้งาน</span>
                                                     @elseif($bonus->status == 1)
-                                                    <span class="badge bg-gray">ปิดงวด</span>
+                                                    <span class="badge bg-gray rounded-3" style="padding: 8px 12px; background: #D1FADF">ปิดงวด</span>
                                                     @endif
                                                 </td>
                                                 <td class="text-end">
@@ -77,16 +77,16 @@
                                                         href="{{route('groups.salary-system.salary.calculation-bonus-list.download-pdf',['id' => $bonus->id])}}">
                                                         <i class="fas fa-download"></i>
                                                     </a>
-                                                    <a class="btn btn-primary btn-sm"
+                                                    <a class="btn btn-action btn-links btn-sm"
                                                         href="{{route('groups.salary-system.salary.calculation-bonus-list.assignment',['id' =>$bonus->id])}}">
                                                         <i class="fas fa-link"></i>
                                                     </a>
-                                                    <a class="btn btn-info btn-sm"
+                                                    <a class="btn btn-action btn-edit btn-sm"
                                                         href="{{route('groups.salary-system.salary.calculation-bonus-list.view',['id' => $bonus->id])}}">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
                                                     @if ($bonus->status == 0)
-                                                    <a class="btn btn-danger btn-sm"
+                                                    <a class="btn btn-action btn-delete btn-sm"
                                                         data-confirm='ลบรายโบนัส "{{$bonus->name}}" หรือไม่?' href="#"
                                                         data-id="{{$bonus->id}}"
                                                         data-delete-route="{{ route('groups.salary-system.salary.calculation-bonus-list.delete', ['id' => '__id__']) }}"

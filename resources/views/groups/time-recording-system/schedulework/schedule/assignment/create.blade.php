@@ -5,6 +5,7 @@
     #calendar .fc-toolbar {
         display: none;
     }
+    
 </style>
 @endpush
 @section('content')
@@ -21,7 +22,7 @@
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.schedule.assignment',['id' => $workSchedule->id])}}">ตารางทำงาน</a>
                         </li>
-                        <li class="breadcrumb-item active">{{$workSchedule->name}} เดือน{{$month->name}}</li>
+                        <li class="breadcrumb-item active">{{$workSchedule->name}} เดือน {{$month->name}}</li>
                     </ol>
                 </div>
             </div>
@@ -96,9 +97,11 @@
 </div>
 
 @push('scripts')
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
 <script type="module" src="{{asset('assets/js/helpers/time-recording-system/schedule/calendar.js?v=1')}}"></script>
 <script>
+    
     $(function () {
         $('.select2').select2()
         window.params = {

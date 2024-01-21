@@ -7,7 +7,7 @@
             <th style="width: 200px">รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
             <th>แผนก</th>
-            <th class="text-right" style="width: 120px">แก้ไข</th>
+            <th class="text-end" style="width: 120px">แก้ไข</th>
         </tr>
     </thead>
     <tbody>
@@ -46,7 +46,7 @@
                 $user->lastname }}</td>
             <td>{{ $user->company_department->name
                 }}</td>
-            <td class="text-right">
+            <td class="text-end">
                 @php
                 $paydayDetailWithToday = $user->getPaydayDetailWithToday();
                 @endphp

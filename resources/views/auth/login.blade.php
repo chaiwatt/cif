@@ -42,7 +42,8 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="mb-2 @error('login') has-validation @enderror input-icon-label">
+
+                        <div class="mb-2 @error('password') has-validation @enderror input-icon-label">
                             <span class="bg-white icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <mask id="mask0_111_523" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">

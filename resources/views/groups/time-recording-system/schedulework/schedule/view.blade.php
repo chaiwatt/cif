@@ -40,7 +40,7 @@
                                 method="POST">
                                 @csrf
                                 @method('PUT')
-                                <div class="row">
+                                <div class="row gy-2">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ตารางทำงาน<span class="small text-danger">*</span></label>
@@ -137,7 +137,7 @@
                                     </div> --}}
 
                                 </div>
-                                    <div class="d-flex justify-content-end mt-2">
+                                    <div class="d-flex justify-content-end">
                                         @if ($permission->update)
                                         <button type="submit"
                                             class="btn btn-primary">บันทึก</button>

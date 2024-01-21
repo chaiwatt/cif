@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-primary">
+                    <div class="card">
 
                         <div class="card-body">
 
@@ -36,17 +36,17 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>ชื่อกลุ่ม<span class="small text-danger">*</span></label>
+                                            <label>ชื่อกลุ่ม <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" value="{{old('name') ?? $userGroup->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end mt-2">
                                         @if ($permission->update)
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                         @endif
 
                                     </div>

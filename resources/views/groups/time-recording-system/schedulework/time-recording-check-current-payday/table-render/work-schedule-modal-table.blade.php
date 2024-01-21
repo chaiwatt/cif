@@ -7,7 +7,7 @@
             <th style="width:25%">เวลาเข้า</th>
             <th>วันที่ออก</th>
             <th style="width:25%">เวลาออก</th>
-            <th class="text-right">บันทึก</th>
+            <th class="text-end">บันทึก</th>
         </tr>
     </thead>
     <!-- Add a unique class to the <a> elements instead of using id -->
@@ -54,7 +54,7 @@
                 <input type="text" id="time_out[{{ $workScheduleAssignmentUser->id }}]"
                     class="form-control input-time-format" value="{{ $workScheduleAssignmentUser->time_out }}">
             </td>
-            <td class="text-right">
+            <td class="text-end">
                 <a class="btn btn-info btn-sm btnSaveBtn">
                     <i class="far fa-save"></i>
                 </a>

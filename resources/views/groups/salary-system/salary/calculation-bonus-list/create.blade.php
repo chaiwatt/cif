@@ -31,7 +31,7 @@
                             <form action="{{route('groups.salary-system.salary.calculation-bonus-list.store')}}"
                                 method="POST">
                                 @csrf
-                                <div class="row">
+                                <div class="row gy-2">
                                     <input type="text" name="manual_time" id="manual_time" value="1" hidden>
                                     <div class="col-md-6">
                                         <div class="form-group">

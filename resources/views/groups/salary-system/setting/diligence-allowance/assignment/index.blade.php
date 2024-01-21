@@ -28,9 +28,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียด</h4>
                         </div>
-                        <div class="card-body table-responsive p-0" id="table_container">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
+                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                            <table class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>เดือนที่ / Level</th>
                                         <th>เบี้ยขยัน</th>
@@ -44,12 +44,12 @@
                                         <td>{{$diligenceAllowanceClassify->cost}}</td>
                                         <td class="text-end">
                                             @if ($permission->update)
-                                            <a class="btn btn-primary btn-sm" href="">
+                                            <a class="btn btn-action btn-edit btn-sm" href="">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             @endif
                                             @if ($permission->delete)
-                                            <a class="btn btn-danger btn-sm">
+                                            <a class="btn btn-action btn-delete btn-sm">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                             @endif

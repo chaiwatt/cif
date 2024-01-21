@@ -26,9 +26,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียด</h4>
                         </div>
-                        <div class="card-body table-responsive p-0" id="table_container">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
+                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                            <table class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>#</th>
                                         <th>รายการเบี้ยขยัน</th>
@@ -41,18 +41,18 @@
                                         <td>{{$key + 1}}</td>
                                         <td>{{$diligenceAllowance->name}}</td>
                                         <td class="text-end">
-                                            <a class="btn btn-primary btn-sm"
+                                            <a class="btn btn-action btn-links btn-sm"
                                                 href="{{route('groups.salary-system.setting.diligence-allowance.assignment',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-link"></i>
                                             </a>
                                             @if ($permission->update)
-                                            <a class="btn btn-secondary btn-sm"
+                                            <a class="btn btn-action btn-edit btn-sm"
                                                 href="{{route('groups.salary-system.salary.diligence-allowance.view',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             @endif
                                             @if ($permission->delete)
-                                            <a class="btn btn-danger btn-sm"
+                                            <a class="btn btn-action btn-delete btn-sm"
                                                 data-confirm='ลบรายการเบี้ยขยัน "{{$diligenceAllowance->name}}" หรือไม่?'
                                                 href="#" data-id="{{$diligenceAllowance->id}}"
                                                 data-delete-route="{{ route('groups.salary-system.salary.diligence-allowance.delete', ['id' => '__id__']) }}"

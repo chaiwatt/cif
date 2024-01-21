@@ -4,18 +4,16 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}
-                    </h1>
+                <div>
+                    <h3 class="m-0">{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('groups.report-system.report.salary')}}">รายงาน</a>
                         </li>
                         <li class="breadcrumb-item active">{{$paydayDetail->month->name}}
@@ -32,12 +30,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายงานรวม</h3>
+                            <h4 class="card-title">รายงานรวม</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
+                                    <table class="table table-borderless dataTable dtr-inline">
                                         <thead>
                                             <tr>
                                                 <th>แผนก</th>
