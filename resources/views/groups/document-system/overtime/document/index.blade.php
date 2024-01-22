@@ -19,11 +19,6 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2" href="{{route('groups.document-system.overtime.document.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มรายการล่วงเวลา
-            </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card ">
@@ -74,7 +69,12 @@
                     <div class="card card-info card-outline">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายการล่วงเวลาล่าสุด</h4>
-                            <ul class="nav nav-pills">
+                            <a class="btn btn-header" href="{{route('groups.document-system.overtime.document.create')}}">
+                                <i class="fas fa-plus">
+                                </i>
+                                เพิ่มรายการล่วงเวลา
+                            </a>
+                            {{-- <ul class="nav nav-pills">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
                                         aria-expanded="false">
@@ -83,25 +83,25 @@
                                     <div class="dropdown-menu" style="">
                                         <a class="dropdown-item" tabindex="-1" href="#" id="bulk-delete">ลบ</a>
                                         {{-- <a class="dropdown-item" tabindex="-1" href="#"
-                                            id="bulk-download">ดาวน์โหลด</a> --}}
-                                    </div>
+                                            id="bulk-download">ดาวน์โหลด</a>
+                                                                            </div>
                                 </li>
-                            </ul>
+                            </ul> --}}
                         </div>
 
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th style="width:70px">เลือก</th>
                                                     <th>วันที่</th>
                                                     <th>รายการล่วงเวลา</th>
                                                     <th>แผนก</th>
                                                     <th class="text-center">มอบหมาย</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -133,17 +133,17 @@
                                                     <td class="text-center">
                                                         {{count($overtime->overtimeDetails()->with('user')->get()->pluck('user')->unique())}}
                                                     </td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-info btn-sm"
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-user btn-sm"
                                                             href="{{route('groups.document-system.overtime.approval.assignment.download',['id' => $overtime->id])}}">
                                                             <i class="fas fa-download"></i>
                                                         </a>
-                                                        <a class="btn btn-primary btn-sm"
+                                                        <a class="btn btn-action btn-links btn-sm"
                                                             href="{{ route('groups.document-system.overtime.approval.assignment', ['id' => $overtime->id]) }}">
                                                             <i class="fas fa-link"></i>
                                                         </a>
                                                         @if ($overtime->status == 0)
-                                                        <a class="btn btn-danger btn-sm"
+                                                        <a class="btn btn-action btn-delete btn-sm"
                                                             data-confirm='ลบรายการล่วงเวลา "{{$overtime->name}}" หรือไม่?'
                                                             href="#" data-id="{{$overtime->id}}"
                                                             data-delete-route="{{ route('groups.document-system.overtime.document.delete', ['id' => '__id__']) }}"

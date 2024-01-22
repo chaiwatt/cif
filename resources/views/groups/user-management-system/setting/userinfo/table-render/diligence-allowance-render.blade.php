@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             {{-- <th>ระดับ</th> --}}
             <th>รอบจ่ายเงินเดือน</th>
@@ -23,7 +23,7 @@
             <td class="text-end">
 
                 @if ($loop->iteration == 2)
-                <a class="btn btn-primary btn-sm btn-update-user-diligence-allowance"
+                <a class="btn btn-edit btn-action btn-sm btn-update-user-diligence-allowance"
                     data-id="{{$userDiligenceAllowance->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>

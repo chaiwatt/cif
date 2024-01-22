@@ -4,19 +4,18 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">นำเข้าไฟล์เวลา: {{$month->name}} {{$year}} ({{$workSchedule->name}})
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">นำเข้าไฟล์เวลา: {{$month->name}} {{$year}} ({{$workSchedule->name}})
+                    </h3>
                     <input type="text" id="schedule_type_id" value="{{$workSchedule->schedule_type_id}}" hidden>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.time-recording')}}">ตารางทำงาน</a>
                         </li>
@@ -33,13 +32,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">ตารางทำงาน</h3>
+                            <h4 class="card-title">ตารางทำงาน</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>
                                                     <div class="icheck-primary d-inline">
@@ -75,8 +74,8 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-12">
-                                    <button type="submit" class="btn bg-gradient-success btn-flat float-right"
+                                <div class="col-12 text-end mt-2">
+                                    <button type="submit" class="btn btn-primary"
                                         id="show_modal">นำเข้า</button>
                                 </div>
                             </div>
@@ -158,14 +157,14 @@
         </div>
     </div>
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"
     integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ=="

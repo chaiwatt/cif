@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row ">
-                <div class="col-sm-6">
-                    <h1 class="m-0">สายอนุมัติ: {{$approver->name}}</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">สายอนุมัติ: {{$approver->name}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.document-system.setting.approve-document')}}">สายอนุมัติ</a>
                         </li>
@@ -22,11 +21,11 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="d-flex align-items-center mt-2">
-                <div class="form-group mr-2">
+            <div class="d-flex align-items-center gap-3 my-2">
+                <div class="form-group">
                     <a class="btn btn-primary"
                         href="{{route('groups.document-system.setting.approve-document.assignment.create',['id' => $approver->id])}}">
-                        <i class="fas fa-plus mr-1">
+                        <i class="fas fa-plus">
                         </i>
                         เพิ่มพนักงาน
                     </a>
@@ -75,20 +74,20 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการพนักงานใน {{$approver->name}}</h3>
+                            <h4 class="card-title">รายการพนักงานใน {{$approver->name}}</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -98,13 +97,13 @@
                                                     <td>{{$user->employee_no}}</td>
                                                     <td>{{$user->name}} {{$user->lastname}}</td>
                                                     <td>{{$user->company_department->name}}</td>
-                                                    <td class="text-right">
+                                                    <td class="text-end">
                                                         <form
                                                             action="{{ route('groups.document-system.setting.approve-document.assignment.delete', ['approver_id' => $approver->id, 'user_id' => $user->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                                            <button class="btn btn-action btn-delete btn-sm" type="submit"><i
                                                                     class="fas fa-trash"></i></button>
                                                         </form>
                                                     </td>

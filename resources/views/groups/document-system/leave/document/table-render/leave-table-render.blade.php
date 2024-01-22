@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th>สายอนุมัติ</th>
             <th>รหัสพนักงาน</th>
@@ -10,7 +10,7 @@
             <th>ผู้อนุมัติเอกสาร</th>
             <th>สถานะ</th>
 
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -39,27 +39,27 @@
                 @endforeach
             </td>
             <td>@if ($leave->status === null)
-                <span class="badge bg-primary">รออนุมัติ</span>
+                <span class="badge bg-primary rounded-3" style="padding: 8px 12px">รออนุมัติ</span>
                 @elseif ($leave->status === '1')
-                <span class="badge bg-success">อนุมัติแล้ว</span>
+                <span class="badge bg-success rounded-3" style="padding: 8px 12px">อนุมัติแล้ว</span>
                 @elseif ($leave->status === '2')
-                <span class="badge bg-danger">ไม่อนุมัติ</span>
+                <span class="badge bg-danger rounded-3" style="padding: 8px 12px">ไม่อนุมัติ</span>
                 @endif
             </td>
 
-            <td class="text-right">
+            <td class="text-end">
                 @if (!empty($leave->attachment))
-                <a class="btn btn-primary btn-sm show-attachment" data-id="{{$leave->id}}">
+                <a class="btn btn-action btn-links btn-sm show-attachment" data-id="{{$leave->id}}">
                     <i class="fas fa-link"></i>
                 </a>
                 @endif
 
                 @if ($leave->status === null)
-                <a class="btn btn-info btn-sm"
+                <a class="btn btn-action btn-edit btn-sm"
                     href="{{route('groups.document-system.leave.document.view',['id' => $leave->id])}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a class="btn btn-danger btn-sm"
+                <a class="btn btn-action btn-delete btn-sm"
                     data-confirm='ลบรายการลา "{{$leave->user->name}} {{$leave->user->lastname}}" หรือไม่?' href="#"
                     data-id="{{$leave->id}}"
                     data-delete-route="{{ route('groups.document-system.leave.document.delete', ['id' => '__id__']) }}"

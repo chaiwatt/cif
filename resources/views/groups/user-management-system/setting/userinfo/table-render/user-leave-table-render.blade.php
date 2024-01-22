@@ -1,6 +1,6 @@
 <label for="">วันลาคงเหลือ</label>
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th style="width: 50%">ประเภท</th>
             <th>คงเหลือ</th>
@@ -13,7 +13,7 @@
             <td>{{$userLeave->leaveType->name}}</td>
             <td>{{$userLeave->count}}</td>
             <td class="text-end">
-                <a class="btn btn-primary btn-sm btn-update-leave" data-id="{{$userLeave->id}}">
+                <a class="btn btn-edit btn-action btn-sm btn-update-leave" data-id="{{$userLeave->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
             </td>

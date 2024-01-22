@@ -35,7 +35,7 @@
                             <div class="row">
                                 <div class="col-md-6" hidden>
                                     <div class="form-group">
-                                        <label>พนักงาน<span class="small text-danger">*</span></label>
+                                        <label>พนักงาน <span class="fw-bold text-danger">*</span></label>
                                         <select name="user" id="user"
                                             class="form-control select2 @error('user') is-invalid @enderror"
                                             style="width: 100%;">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>ประเภทการลา<span class="small text-danger">*</span></label>
+                                        <label>ประเภทการลา <span class="fw-bold text-danger">*</span></label>
                                         <select name="leaveType" id="leaveType"
                                             class="form-control select2 @error('leaveType') is-invalid @enderror"
                                             style="width: 100%;">
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>เริ่มวันที่ (วดป.)<span class="small text-danger">*</span></label>
+                                        <label>เริ่มวันที่ (วดป.) <span class="fw-bold text-danger">*</span></label>
                                         <input type="text" name="startDate" id="startDate"
                                             value="{{ date_create_from_format('Y-m-d H:i:s', $leave->from_date)->format('d/m/Y H:i') }}"
                                             class="form-control input-datetime-format @error('startDate') is-invalid @enderror">
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>ถึงวันที่ (วดป.) <span class="small text-danger">*</span></label>
+                                        <label>ถึงวันที่ (วดป.)  <span class="fw-bold text-danger">*</span></label>
                                         <input type="text" name="endDate" id="endDate"
                                             value="{{ date_create_from_format('Y-m-d H:i:s', $leave->to_date)->format('d/m/Y H:i') }}"
                                             class="form-control input-datetime-format @error('endDate') is-invalid @enderror">

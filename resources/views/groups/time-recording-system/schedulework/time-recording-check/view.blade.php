@@ -37,7 +37,7 @@
                         ตรวจสอบการบันทึกเวลา
                     </a>
                     @if ($permission->create)
-                    <button class="btn bg-success float-right" id="add_note"><i class="fas fa-comments mr-2"></i>
+                    <button class="btn btn-primary" id="add_note"><i class="fas fa-comments mr-2"></i>
                         เพิ่มโน้ต</button>
                     @endif
                 </div>

@@ -1,5 +1,5 @@
 <table class="table table-borderless text-nowrap">
-    <thead>
+    <thead class="border-bottom">
         <tr>
             <th>#</th>
             <th>ชื่อตารางทำงาน</th>

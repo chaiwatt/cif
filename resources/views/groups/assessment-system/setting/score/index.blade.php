@@ -20,12 +20,6 @@
                     </ol>
                 </div>
             </div>
-
-            <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
-                href="{{route('groups.assessment-system.setting.score.create')}}">
-                <i class="fas fa-plus me-1"></i>
-                เพิ่มคะแนนเกณฑ์การประเมิน
-            </a>
         </div>
     </div>
     <div class="content">
@@ -34,14 +28,19 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">คะแนนเกณฑ์การประเมิน</h4>
+                            <a class="btn btn-header" id="btn-show-modal-income-deduct-assignment"
+                                href="{{route('groups.assessment-system.setting.score.create')}}">
+                                <i class="fas fa-plus"></i>
+                                เพิ่มคะแนนเกณฑ์การประเมิน
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>คะแนนเกณฑ์การประเมิน</th>
                                                 <th class="text-end" style="width: 120px">เพิ่มเติม</th>
@@ -51,11 +50,11 @@
                                             @foreach ($assessmentScores as $assessmentScore)
                                             <td>{{$assessmentScore->score}}</td>
                                             <td class="text-end">
-                                                <a class="btn btn-primary btn-sm"
+                                                <a class="btn btn-action btn-edit btn-sm"
                                                     href="{{route('groups.assessment-system.setting.score.view',['id' => $assessmentScore->id])}}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <a class="btn btn-danger btn-sm"
+                                                <a class="btn btn-action btn-delete btn-sm"
                                                     data-confirm='ลบคะแนนเกณฑ์การประเมิน "{{$assessmentScore->score}}" หรือไม่?'
                                                     href="#" data-id="{{$assessmentScore->id}}"
                                                     data-delete-route="{{ route('groups.assessment-system.setting.score.delete', ['id' => '__id__']) }}"

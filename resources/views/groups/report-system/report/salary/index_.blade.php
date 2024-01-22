@@ -4,18 +4,17 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
 @endpush
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
+<div>
     @include('layouts.partial.loading')
-    <div class="content-header">
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">รายงาน
-                    </h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายงาน
+                    </h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">รายงาน</li>
@@ -31,13 +30,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายงานรวม</h3>
+                            <h4 class="card-title">รายงานรวม</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>เดือน</th>
                                                 <th class="text-center">พนักงาน</th>
@@ -47,7 +46,7 @@
                                                 <th class="text-center">รายได้อื่นๆ</th>
                                                 <th class="text-center">หักอื่นๆ</th>
                                                 <th class="text-center">ประกันสังคม</th>
-                                                <th class="text-right" style="width: 150px">เพิ่มเติม</th>
+                                                <th class="text-end" style="width: 150px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -92,15 +91,15 @@
                                                     number_format($paydayDetail->salarySummary->sum('sum_social_security'),2)
                                                     :
                                                     ''}}</td>
-                                                <td class="text-right">
+                                                <td class="text-end">
                                                     @if ($paydayDetail->salarySummary->sum('employee')
                                                     != 0)
-                                                    <a class="btn btn-sm btn-info "
+                                                    <a class="btn btn-sm btn-user btn-action"
                                                         href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
                                                         <i class="fas fa-download "></i>
 
                                                     </a>
-                                                    <a class="btn btn-sm btn-primary "
+                                                    <a class="btn btn-sm btn-links btn-action"
                                                         href="{{route('groups.report-system.report.salary.view',['id' => $paydayDetail->id ])}}"><i
                                                             class="fas fa-eye"></i></a>
                                                     @endif

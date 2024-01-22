@@ -9,14 +9,14 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
-                    <h3 class="m-0">เพิ่มข่าวประกาศ</h1>
+                    <h3 class="m-0">สร้างข่าวประกาศ</h1>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item">
-                            <a href="{{route('groups.announcement-system.announcement.list')}}">ข่าวประกาศ</a>
+                            <a href="{{route('groups.announcement-system.announcement.list')}}">รายการข่าวประกาศ</a>
                         </li>
-                        <li class="breadcrumb-item active">เพิ่มข่าวประกาศ</li>
+                        <li class="breadcrumb-item active">สร้างข่าวประกาศ</li>
                     </ol>
                 </div>
             </div>

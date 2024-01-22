@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th class="text-center" style="width: 150px">ตรวจสอบ</th>
             <th>รอบเงินเดือน</th>
@@ -50,7 +50,7 @@
                 @php
                 $paydayDetailWithToday = $user->getPaydayDetailWithToday();
                 @endphp
-                <a class="btn btn-sm btn-info" data-id="{{$user->id}}"
+                <a class="btn btn-sm btn-edit btn-action" data-id="{{$user->id}}"
                     data-startDate="{{$paydayDetailWithToday->start_date}}"
                     data-endDate="{{$paydayDetailWithToday->end_date}}" id="user"><i class="fas fa-pencil-alt"></i></a>
             </td>

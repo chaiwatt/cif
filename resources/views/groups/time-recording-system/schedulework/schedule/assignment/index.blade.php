@@ -29,7 +29,7 @@
                         <div class="card-body table-responsive py-0 px-3">
 
                             <table class="table table-borderless text-nowrap">
-                                <thead>
+                                <thead class="border-bottom">
                                     <tr>
                                         <th>#</th>
                                         <th>ตารางทำงาน</th>

@@ -49,7 +49,7 @@
 
 
 @if ($approver !== null && $approver->authorizedUsers->isNotEmpty() && count($notFoundShiftAssignments) == 0)
-<div class="col-md-12">
-    <button class="btn bg-success float-right" id="save_leave">บันทึก</button>
+<div class="col-md-12 text-end">
+    <button class="btn btn-primary" id="save_leave">บันทึก</button>
 </div>
 @endif

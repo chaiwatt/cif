@@ -42,7 +42,7 @@
                     </div>
                     @endif
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายชื่อพนักงาน</h4>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -62,8 +62,8 @@
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>
                                                             <div class="icheck-primary d-inline">
@@ -103,10 +103,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end mt-2">
                                         @if ($permission->create)
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                         @endif
                                     </div>
                                 </div>

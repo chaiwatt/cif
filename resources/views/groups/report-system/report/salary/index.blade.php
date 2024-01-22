@@ -135,7 +135,11 @@
 
             </div>
             <hr>
-            <h3 class="mb-2">รายงานเงินเดือน</h3>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายงานเงินเดือน</h3>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card card-info card-outline card-tabs">
@@ -158,8 +162,8 @@
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
                                     id="custom-tabs-{{$payday->id}}" role="tabpanel"
                                     aria-labelledby="custom-tabs-{{$payday->id}}-tab">
-                                    <table class="table table-borderless dataTable dtr-inline">
-                                        <thead>
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>เดือน</th>
                                                 <th class="text-center">เงินเดือน</th>
@@ -213,11 +217,11 @@
                                                 <td class="text-end">
                                                     @if ($paydayDetail->salarySummary->sum('employee')
                                                     != 0)
-                                                    <a class="btn btn-sm btn-info"
+                                                    <a class="btn btn-sm btn-user btn-action"
                                                         href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
                                                         <i class="fas fa-download"></i>
                                                     </a>
-                                                    <a class="btn btn-sm btn-primary"
+                                                    <a class="btn btn-sm btn-links btn-action"
                                                         href="{{route('groups.report-system.report.salary.view',['id' => $paydayDetail->id ])}}">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
@@ -238,8 +242,11 @@
 
             </div>
             <hr>
-            <h3 class="mb-2">รายงานขาด ลา
-            </h3>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">รายงานขาด ลา</h3>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card card-info card-outline card-tabs">
@@ -262,14 +269,14 @@
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
                                     id="custom-arttendance-tabs-{{$payday->id}}" role="tabpanel"
                                     aria-labelledby="custom-arttendance-tabs-{{$payday->id}}-tab">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
-                                            <tr>
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
+                                            <td>
                                                 <th>เดือน</th>
                                                 <th class="text-center">ขาดงาน</th>
                                                 <th class="text-center">ลางาน</th>
                                                 <th class="text-end" style="width: 150px">เพิ่มเติม</th>
-                                            </tr>
+                                            </td>
                                         </thead>
                                         <tbody>
                                             @foreach ($payday->paydayDetails as $paydayDetail)
@@ -291,7 +298,7 @@
                                                     @if ($paydayDetail->salarySummary->sum('sum_leave')
                                                     != 0 || $paydayDetail->salarySummary->sum('sum_absence')
                                                     != 0)
-                                                    <a class="btn btn-sm btn-primary "
+                                                    <a class="btn btn-sm btn-edit btn-action"
                                                         href="{{route('groups.report-system.report.salary.attendance',['id' => $paydayDetail->id ])}}"><i
                                                             class="fas fa-eye"></i></a>
                                                     @endif

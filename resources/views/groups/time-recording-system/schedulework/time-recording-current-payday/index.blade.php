@@ -45,8 +45,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>
                                                     <div class="icheck-primary d-inline">
@@ -81,8 +81,8 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-12">
-                                    <button type="submit" class="btn bg-gradient-success btn-flat float-right"
+                                <div class="col-12 text-end mt-2">
+                                    <button type="submit" class="btn btn-primary"
                                         id="show_file_open">นำเข้า</button>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                 <input type="file" id="file-inputs" style="display: none;" multiple>
                             </div>
 
-                            <button type="button" class="btn btn-success"
+                            <button type="button" class="btn btn-primary"
                                 id="import_file_inputs">เลือกไฟล์และนำเข้า</button>
                         </div>
                     </div>
@@ -115,14 +115,14 @@
         </div>
     </div>
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> 
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"
     integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ=="

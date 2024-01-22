@@ -377,7 +377,7 @@
                                                 <tr>
                                                     <th>รายการ</th>
                                                     <th>รายละเอียด</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -407,8 +407,8 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-primary btn-sm" id="update-workschedule">
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-links btn-sm" id="update-workschedule">
                                                             <i class="fas fa-save"></i>
                                                         </a>
                                                     </td>
@@ -427,8 +427,8 @@
                                                             @endforeach
                                                         </select>
                                                     </td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-primary btn-sm" id="update-payday">
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-links btn-sm" id="update-payday">
                                                             <i class="fas fa-save"></i>
                                                         </a>
                                                     </td>
@@ -474,8 +474,8 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-primary btn-sm" id="update-overtime-approver">
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-links btn-sm" id="update-overtime-approver">
                                                             <i class="fas fa-save"></i>
                                                         </a>
                                                     </td>
@@ -522,8 +522,8 @@
 
 
                                                     </td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-primary btn-sm" id="update-leave-approver">
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-links btn-sm" id="update-leave-approver">
                                                             <i class="fas fa-save"></i>
                                                         </a>
 

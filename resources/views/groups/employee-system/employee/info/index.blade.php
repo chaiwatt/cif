@@ -86,7 +86,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
+                                                <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="employee_code"
                                                     value="{{old('employee_code') ?? $user->employee_no}}"
                                                     class="form-control numericInputInt @error('employee_code') is-invalid @enderror"
@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>คำนำหน้าชื่อ<span class="small text-danger">*</span></label>
+                                                <label>คำนำหน้าชื่อ <span class="fw-bold text-danger">*</span></label>
                                                 <select name="prefix"
                                                     class="form-control select2 @error('prefix') is-invalid @enderror"
                                                     style="width: 100%;" disabled>
@@ -110,14 +110,14 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ชื่อ<span class="small text-danger">*</span></label>
+                                                <label>ชื่อ <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="name" value="{{old('name') ?? $user->name}}"
                                                     class="form-control @error('name') is-invalid @enderror" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>นามสกุล<span class="small text-danger">*</span></label>
+                                                <label>นามสกุล <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="lastname"
                                                     value="{{old('lastname') ?? $user->lastname}}"
                                                     class="form-control @error('lastname') is-invalid @enderror"
@@ -133,7 +133,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>สัญชาติ<span class="small text-danger">*</span></label>
+                                                <label>สัญชาติ <span class="fw-bold text-danger">*</span></label>
                                                 <select name="nationality"
                                                     class="form-control select2 @error('nationality') is-invalid @enderror"
                                                     style="width: 100%;" disabled>
@@ -148,7 +148,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>เชื้อชาติ<span class="small text-danger">*</span></label>
+                                                <label>เชื้อชาติ <span class="fw-bold text-danger">*</span></label>
                                                 <select name="ethnicity"
                                                     class="form-control select2 @error('ethnicity') is-invalid @enderror"
                                                     style="width: 100%;" disabled>
@@ -181,7 +181,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ที่อยู่<span class="small text-danger">*</span></label>
+                                                <label>ที่อยู่ <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="address"
                                                     value="{{old('address') ?? $user->address}}"
                                                     class="form-control @error('address') is-invalid @enderror"
@@ -197,7 +197,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ประเภทพนักงาน<span class="small text-danger">*</span></label>
+                                                <label>ประเภทพนักงาน <span class="fw-bold text-danger">*</span></label>
                                                 <select name="employeeType"
                                                     class="form-control select2 @error('employeeType') is-invalid @enderror"
                                                     style="width: 100%;" disabled>
@@ -212,7 +212,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>ตำแหน่ง<span class="small text-danger">*</span></label>
+                                                <label>ตำแหน่ง <span class="fw-bold text-danger">*</span></label>
                                                 <select name="userPosition"
                                                     class="form-control select2 @error('userPosition') is-invalid @enderror"
                                                     style="width: 100%;" disabled>
@@ -227,7 +227,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>แผนก<span class="small text-danger">*</span></label>
+                                                <label>แผนก <span class="fw-bold text-danger">*</span></label>
                                                 <select name="companyDepartment"
                                                     class="form-control select2 @error('companyDepartment') is-invalid @enderror"
                                                     style="width: 100%;" disabled>
@@ -244,7 +244,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>เริ่มทำงาน<span class="small text-danger">*</span></label>
+                                                <label>เริ่มทำงาน <span class="fw-bold text-danger">*</span></label>
                                                 <div class="date-box date" id="start_work_date"
                                                     data-target-input="nearest">
                                                     <input name="startWorkDate"
@@ -371,8 +371,8 @@
                                 <div class="tab-pane fade" id="custom-tabs-one-workschedule" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-workschedule-tab">
                                     <div class="col-12">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>รายการ</th>
                                                     <th>รายละเอียด</th>
@@ -517,8 +517,8 @@
                                     aria-labelledby="custom-tabs-one-leave-tab">
                                     <div class="col-12" id="user-leave-container">
                                         <label for="">วันลาคงเหลือ</label>
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th style="width: 50%">ประเภท</th>
                                                     <th>คงเหลือ</th>
@@ -536,8 +536,8 @@
                                     </div>
                                     <div class="col-12" id="leave-container">
                                         <label for="">รายการลา</label>
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th style="width: 50%">วันที่</th>
                                                     <th>ประเภท</th>
@@ -564,8 +564,8 @@
                                     {{-- เบี้ยขยัน --}}
                                     {{-- $userDiligenceAllowances --}}
                                     <div class="col-12" id="dilegence-allowance-container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     {{-- <th>ระดับ</th> --}}
                                                     <th>รอบจ่ายเงินเดือน</th>
@@ -599,8 +599,8 @@
                                     aria-labelledby="custom-tabs-one-education-tab">
                                     <div class="row">
                                         <div class="col-12" id="education-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>ระดับ</th>
                                                         <th>สาขาวิชา</th>
@@ -624,8 +624,8 @@
                                     aria-labelledby="custom-tabs-one-trainings-tab">
                                     <div class="row">
                                         <div class="col-12" id="training-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>หัวข้อ</th>
                                                         <th>หน่วยงาน</th>
@@ -649,8 +649,8 @@
                                     aria-labelledby="custom-tabs-one-position-adjustment-tab">
                                     <div class="row">
                                         <div class="col-12" id="position-histories-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>วันที่ปรับ</th>
                                                         <th>ตำแหน่ง</th>
@@ -681,8 +681,8 @@
                                     aria-labelledby="custom-tabs-one-punishments-tab">
                                     <div class="row">
                                         <div class="col-12" id="punishment-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>ความผิด / โทษ</th>
                                                         <th>วันที่บันทึก</th>
@@ -705,15 +705,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             @endif
-
         </div>
     </div>
 </div>

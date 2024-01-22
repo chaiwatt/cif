@@ -1,5 +1,5 @@
-<table class="table table-bordered text-nowrap">
-    <thead>
+<table class="table table-borderless text-nowrap">
+    <thead class="border-bottom">
         <tr>
             <th>วันที่เข้า</th>
             <th style="width:20%">เวลาเข้า</th>
@@ -9,7 +9,7 @@
             <th style="width:15%">O.T.</th>
             @endif
 
-            <th class="text-right">บันทึก</th>
+            <th class="text-end">บันทึก</th>
         </tr>
     </thead>
     <!-- Add a unique class to the <a> elements instead of using id -->
@@ -80,14 +80,14 @@
             </td>
             @endif
 
-            <td class="text-right">
-                <a class="btn btn-info btn-sm btnSaveBtn">
+            <td class="text-end">
+                <a class="btn btn-links btn-action btn-sm btnSaveBtn">
                     <i class="far fa-save"></i>
                 </a>
                 @if (strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_H') === false &&
                 strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_TH') === false)
                 @if (empty($workScheduleAssignmentUser->time_in) || empty($workScheduleAssignmentUser->time_out))
-                <a class="btn btn-danger btn-sm btnAttachment" data-id="{{$workScheduleAssignmentUser->id}}">
+                <a class="btn btn-delete btn-action btn-sm btnAttachment" data-id="{{$workScheduleAssignmentUser->id}}">
                     <i class="fas fa-link"></i>
                 </a>
                 @endif

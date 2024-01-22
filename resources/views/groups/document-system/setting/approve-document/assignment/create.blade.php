@@ -24,12 +24,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายชื่อพนักงาน</h4>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>
@@ -40,9 +40,9 @@
                                 <input name="approverId" id="approverId" value="{{$approver->id}}" type="text" hidden>
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
-                                        <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-sm-12 table-responsive" id="table_container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>เลือก</th>
                                                         <th>รหัสพนักงาน</th>
@@ -77,9 +77,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end">
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

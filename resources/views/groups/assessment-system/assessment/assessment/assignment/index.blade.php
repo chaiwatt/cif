@@ -21,11 +21,6 @@
                     </ol>
                 </div>
             </div>
-
-            <a class="btn btn-primary mb-2" id="import-employee-code" href="">
-                <i class="fas fa-plus me-1"></i>
-                เพิ่มพนักงาน
-            </a>
         </div>
     </div>
     <div class="content">
@@ -35,14 +30,18 @@
                 <input type="text" value="{{$assessmentGroup->id}}" id="assessmentGroupId" hidden>
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายชื่อพนักงานเข้ารับประเมิน</h4>
+                            <a class="btn btn-header" id="import-employee-code" href="">
+                                <i class="fas fa-plus"></i>
+                                เพิ่มพนักงาน
+                            </a>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
@@ -56,13 +55,13 @@
                                             <td>{{$user->name}} {{$user->lastname}}</td>
                                             <td>{{$user->company_department->name}}</td>
                                             <td class="text-end">
-                                                <a class="btn btn-success btn-sm"
+                                                <a class="btn btn-action btn-sm" style="--bs-btn-color: #0BA5EC; --bs-btn-color-hover: #0086C9;"
+                                                href="{{route('groups.assessment-system.assessment.assessment.assignment.scoring',['user_id' => $user->id,'id' => $assessmentGroup->id])}}">
+                                                <i class="fas fa-clipboard-list"></i>
+                                                </a>
+                                                <a class="btn btn-action btn-sm" style="--bs-btn-color: #12B76A; --bs-btn-color-hover: #039855;"
                                                     href="{{route('groups.assessment-system.assessment.assessment.assignment.summary',['user_id' => $user->id,'id' => $assessmentGroup->id])}}">
                                                     <i class="fas fa-award"></i>
-                                                </a>
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{route('groups.assessment-system.assessment.assessment.assignment.scoring',['user_id' => $user->id,'id' => $assessmentGroup->id])}}">
-                                                    <i class="fas fa-user"></i>
                                                 </a>
                                             </td>
 
@@ -83,21 +82,24 @@
         </div>
     </div>
     <div class="modal fade" id="modal-import-employee-code">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="employee-code">รหัสพนักงานแถวละ 1 รายการ</label>
-                                <textarea class="form-control" id="employee-code" rows="10"></textarea>
+                                <label for="employee-code">
+                                    <h5>รหัสพนักงานแถวละ 1 รายการ</h5>
+                                </label>
+                                <textarea class="form-control" id="employee-code" rows="12"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 mt-2">
+                        <div class="col-sm-12 py-3 d-flex justify-content-center gap-3">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 160px;">ยกเลิก</button>
                             <button type="button" class="btn btn-primary"
-                                id="btn-import-employee-code">เพิ่มรายการ</button>
+                                id="btn-import-employee-code" style="width: 160px;">เพิ่มรายการ</button>
                         </div>
                     </div>
                 </div>

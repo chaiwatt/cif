@@ -24,17 +24,17 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2" href="{{route('groups.learning-system.setting.learning-list.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มรายการจัดการเรียนรู้
-            </a>
             @if ($permission->show)
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายการจัดการเรียนรู้</h4>
+                            <a class="btn btn-header" href="{{route('groups.learning-system.setting.learning-list.create')}}">
+                                <i class="fas fa-plus">
+                                </i>
+                                เพิ่มรายการจัดการเรียนรู้
+                            </a>
                             {{-- @if (count($users) !=0)
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -47,9 +47,9 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>จัดการเรียนรู้</th>
                                                 <th>วันที่เพิ่ม</th>
@@ -62,14 +62,14 @@
                                                 <td>{{$lesson->name}}</td>
                                                 <td>{{$lesson->created_at}}</td>
                                                 <td class="text-end">
-                                                    <a class="btn btn-sm btn-primary "
+                                                    <a class="btn btn-sm btn-action btn-links "
                                                         href="{{route('groups.learning-system.setting.learning-list.chapter',['id' => $lesson->id ])}}"><i
                                                             class="fas fa-book"></i></a>
-                                                    <a class="btn btn-sm btn-primary "
+                                                    <a class="btn btn-action btn-sm btn-edit "
                                                         href="{{route('groups.learning-system.setting.learning-list.view',['id' => $lesson->id ])}}"><i
                                                             class="fas fa-pencil-alt"></i></a>
                                                     @if ($permission->delete == true)
-                                                    <a class="btn btn-danger btn-sm"
+                                                    <a class="btn btn-action btn-delete btn-sm"
                                                         data-confirm='ลบการจัดการเรียนรู้ "{{$lesson->name}}" หรือไม่?'
                                                         href="#" data-id="{{$lesson->id}}"
                                                         data-delete-route="{{ route('groups.learning-system.setting.learning-list.delete', ['id' => '__id__']) }}"

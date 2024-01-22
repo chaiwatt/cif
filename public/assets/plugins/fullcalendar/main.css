@@ -35,11 +35,20 @@
   }
 .fc th {
     text-align: center;
+
   }
-.fc th,
+  th.fc-col-header-cell {
+    border-top: 1px solid #D0D5DD;
+    border-bottom: 1px solid #D0D5DD;
+    padding: 1rem !important;
+  }
+  .fc td {
+    border: 1px solid #D0D5DD;
+  }
+.fc th:not(.fc-col-header-cell),
   .fc td {
     vertical-align: top;
-    padding: 0;
+    padding: 0 !important;
   }
 .fc a[data-navlink] {
     cursor: pointer;
@@ -428,6 +437,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 .fc .fc-col-header-cell-cushion {
     display: inline-block; /* x-browser for when sticky (when multi-tier header) */
     padding: 2px 4px;
+    text-decoration: none;
   }
 .fc .fc-bg-event,
   .fc .fc-non-business,
@@ -466,6 +476,9 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   }
 /* link resets */
 /* ---------------------------------------------------------------------------------------------------- */
+a {
+  text-decoration: none;
+}
 a.fc-event,
 a.fc-event:hover {
   text-decoration: none;
@@ -725,7 +738,8 @@ A HORIZONTAL event
 }
 .fc .fc-daygrid-day-top {
     display: flex;
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; */
+    padding: 1rem .8rem;
   }
 .fc .fc-day-other .fc-daygrid-day-top {
     opacity: 0.3;

@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <h4 class="card-title">รายงานรวม</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0">
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
                                     <table class="table table-borderless dataTable dtr-inline">

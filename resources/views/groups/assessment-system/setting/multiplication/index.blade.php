@@ -21,12 +21,6 @@
                     </ol>
                 </div>
             </div>
-
-            <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
-                href="{{route('groups.assessment-system.setting.multiplication.create')}}">
-                <i class="fas fa-plus me-1"></i>
-                เพิ่มตัวคูณคะแนนเกณฑ์การประเมิน
-            </a>
         </div>
     </div>
     <div class="content">
@@ -35,14 +29,19 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">ตัวคูณคะแนนเกณฑ์การประเมิน</h4>
+                            <a class="btn btn-header" id="btn-show-modal-income-deduct-assignment"
+                                href="{{route('groups.assessment-system.setting.multiplication.create')}}">
+                                <i class="fas fa-plus"></i>
+                                เพิ่มตัวคูณคะแนนเกณฑ์การประเมิน
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>ตัวคูณคะแนนเกณฑ์การประเมิน</th>
                                                 <th class="text-end" style="width: 120px">เพิ่มเติม</th>
@@ -52,11 +51,11 @@
                                             @foreach ($assessmentScoreMultiplications as $assessmentScoreMultiplication)
                                             <td>{{$assessmentScoreMultiplication->multiplication}}</td>
                                             <td class="text-end">
-                                                <a class="btn btn-primary btn-sm"
+                                                <a class="btn btn-action btn-edit btn-sm"
                                                     href="{{route('groups.assessment-system.setting.multiplication.view',['id' => $assessmentScoreMultiplication->id])}}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <a class="btn btn-danger btn-sm"
+                                                <a class="btn btn-action btn-delete btn-sm"
                                                     data-confirm='ลบคะแนนตัวคูณคะแนนเกณฑ์การประเมิน "{{$assessmentScoreMultiplication->multiplication}}" หรือไม่?'
                                                     href="#" data-id="{{$assessmentScoreMultiplication->id}}"
                                                     data-delete-route="{{ route('groups.assessment-system.setting.multiplication.delete', ['id' => '__id__']) }}"

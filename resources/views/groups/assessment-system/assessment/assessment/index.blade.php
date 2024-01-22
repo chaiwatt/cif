@@ -40,9 +40,9 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>การประเมิน</th>
                                                 <th>จุดประสงค์</th>
@@ -54,7 +54,7 @@
                                             <td>{{$assessmentGroup->name}}</td>
                                             <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
                                             <td class="text-end">
-                                                <a class="btn btn-primary btn-sm"
+                                                <a class="btn btn-success btn-sm"
                                                     href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">
                                                     <i class="fas fa-users"></i>
                                                 </a>

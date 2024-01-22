@@ -69,7 +69,7 @@
                                         <td>{{$shift->year}}</td>
                                         <td class="text-end">
                                             @if ($permission->create)
-                                            <a class="btn btn-success btn-sm"
+                                            <a class="btn btn-user btn-action btn-sm"
                                                 href="{{ route('groups.time-recording-system.shift.timeattendance.duplicate', ['id' => $shift->id]) }}">
                                                 <i class="fas fa-copy"></i>
                                                 </i>

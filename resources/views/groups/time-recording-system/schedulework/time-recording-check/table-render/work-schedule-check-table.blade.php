@@ -1,12 +1,12 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th class="text-center" style="width: 150px">ตรวจสอบ</th>
             <th style="width: 200px">วันที่ผิดพลาด</th>
             <th style="width: 200px">รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
             <th>แผนก</th>
-            <th class="text-right" style="width: 120px">แก้ไข</th>
+            <th class="text-end" style="width: 120px">แก้ไข</th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +36,7 @@
             <td>{{ $userWithWorkSchedule['user']->prefix->name }}{{ $userWithWorkSchedule['user']->name }} {{
                 $userWithWorkSchedule['user']->lastname }}</td>
             <td>{{ $userWithWorkSchedule['user']->company_department->name }}</td>
-            <td class="text-right"><a class="btn btn-sm btn-info" data-id="{{$userWithWorkSchedule['user']->id}}"
+            <td class="text-end"><a class="btn btn-sm btn-edit btn-action" data-id="{{$userWithWorkSchedule['user']->id}}"
                     id="user"><i class="fas fa-pencil-alt"></i></a></td>
         </tr>
         @endforeach

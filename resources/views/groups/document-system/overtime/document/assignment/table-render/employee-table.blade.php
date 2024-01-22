@@ -1,6 +1,6 @@
-<div class="col-sm-12" id="table_container">
-    <table class="table table-bordered table-striped dataTable dtr-inline">
-        <thead>
+<div class="col-sm-12 table-responsive" id="table_container">
+    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+        <thead class="border-bottom">
             <tr>
                 <th>เลือก</th>
                 <th>รหัสพนักงาน</th>

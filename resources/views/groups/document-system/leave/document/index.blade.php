@@ -19,29 +19,31 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2" href="{{route('groups.document-system.leave.document.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มการลา
-            </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายการลาล่าสุด</h4>
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                           <div class="d-flex gap-2">
+                                <a class="btn btn-header" href="{{route('groups.document-system.leave.document.create')}}">
+                                    <i class="fas fa-plus">
+                                    </i>
+                                    เพิ่มการลา
+                                </a>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="search_query" id="search_query"
+                                            class="form-control" placeholder="ค้นหา">
+                                    </div>
                                 </div>
-                            </div>
+                           </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>สายอนุมัติ</th>
                                                     <th>รหัสพนักงาน</th>
@@ -52,7 +54,7 @@
                                                     <th>หัวหน้างาน</th>
                                                     <th>สถานะ</th>
 
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -84,28 +86,28 @@
                                                         @endforeach
                                                     </td>
                                                     <td>@if ($leave->status === null)
-                                                        <span class="badge bg-primary">รออนุมัติ</span>
+                                                        <span class="badge bg-primary rounded-3" style="padding: 8px 12px">รออนุมัติ</span>
                                                         @elseif ($leave->status === '1')
-                                                        <span class="badge bg-success">อนุมัติแล้ว</span>
+                                                        <span class="badge bg-success rounded-3" style="padding: 8px 12px">อนุมัติแล้ว</span>
                                                         @elseif ($leave->status === '2')
-                                                        <span class="badge bg-danger">ไม่อนุมัติ</span>
+                                                        <span class="badge bg-danger rounded-3" style="padding: 8px 12px">ไม่อนุมัติ</span>
                                                         @endif
                                                     </td>
 
-                                                    <td class="text-right">
+                                                    <td class="text-end">
 
                                                         @if (!empty($leave->attachment))
-                                                        <a class="btn btn-primary btn-sm show-attachment"
+                                                        <a class="btn btn-action btn-links btn-sm show-attachment"
                                                             data-id="{{$leave->id}}">
                                                             <i class="fas fa-link"></i>
                                                         </a>
                                                         @endif
                                                         @if ($leave->status === null)
-                                                        <a class="btn btn-info btn-sm"
+                                                        <a class="btn btn-action btn-edit btn-sm"
                                                             href="{{route('groups.document-system.leave.document.view',['id' => $leave->id])}}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        <a class="btn btn-danger btn-sm"
+                                                        <a class="btn btn-action btn-delete btn-sm"
                                                             data-confirm='ลบรายการลา "{{$leave->user->name}} {{$leave->user->lastname}}" หรือไม่?'
                                                             href="#" data-id="{{$leave->id}}"
                                                             data-delete-route="{{ route('groups.document-system.leave.document.delete', ['id' => '__id__']) }}"

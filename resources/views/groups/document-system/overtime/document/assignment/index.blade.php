@@ -1,16 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row ">
-                <div class="col-sm-6">
-                    <h1 class="m-0">{{$overtime->name}}</h1>
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
+                    <h3 class="m-0">{{$overtime->name}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.document-system.overtime.document')}}">รายการล่วงเวลา</a>
                         </li>
@@ -23,11 +22,11 @@
     <div class="content">
         <div class="container-fluid">
             <div>
-                <div class="d-flex align-items-center mt-2">
-                    <div class="form-group mr-2">
-                        <a class="btn btn-primary mb-2"
+                <div class="d-flex align-items-center my-3 gap-3">
+                    <div class="form-group">
+                        <a class="btn btn-primary"
                             href="{{route('groups.document-system.overtime.approval.assignment.create',['id' => $overtime->id])}}">
-                            <i class="fas fa-plus mr-1">
+                            <i class="fas fa-plus">
                             </i>
                             เพิ่มพนักงาน
                         </a>
@@ -69,15 +68,15 @@
                                 <div class="row">
                                     <input name="overtimeId" id="overtimeId" value="{{$overtime->id}}" type="text"
                                         hidden>
-                                    <div class="col-sm-12">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>
                                                     <th style="width: 250px">จำนวนชั่วโมง</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -94,13 +93,13 @@
                                                                 class="form-control integer" data-user="{{$user->id}}">
                                                         </div>
                                                     </td>
-                                                    <td class="text-right">
+                                                    <td class="text-end">
                                                         <form
                                                             action="{{ route('groups.document-system.overtime.approval.assignment.delete', ['overtime_id' => $overtime->id, 'user_id' => $user->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                                            <button class="btn btn-action btn-delete btn-sm" type="submit"><i
                                                                     class="fas fa-trash"></i></button>
                                                         </form>
                                                     </td>
@@ -131,7 +130,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
+                            <button type="button" class="btn btn-primary"
                                 id="btn-import-employee-code">เพิ่มรายการ</button>
                         </div>
                     </div>

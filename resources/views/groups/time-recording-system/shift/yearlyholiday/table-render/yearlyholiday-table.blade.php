@@ -1,10 +1,10 @@
-<table class="table table-striped text-nowrap">
-    <thead>
+<table class="table table-borderless text-nowrap">
+    <thead class="border-bottom">
         <tr>
             <th>#</th>
             <th>วันที่</th>
             <th>วันหยุดประจำปี</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -13,9 +13,9 @@
             <td>{{$key + 1}}</td>
             <td>{{$yearlyHoliday->holiday_date}}</td>
             <td>{{$yearlyHoliday->name}}</td>
-            <td class="text-right">
+            <td class="text-end">
                 @if ($permission->update)
-                <a class="btn btn-info btn-sm"
+                <a class="btn btn-edit btn-action btn-sm"
                     href="{{ route('groups.time-recording-system.shift.yearlyholiday.view', ['id' => $yearlyHoliday->id]) }}">
                     <i class="fas fa-pencil-alt">
                     </i>
@@ -23,7 +23,7 @@
                 @endif
 
                 @if ($permission->delete == true)
-                <a class="btn btn-danger btn-sm" data-confirm='ลบวันหยุดประจำปี "{{$yearlyHoliday->name}}" หรือไม่?'
+                <a class="btn btn-delete btn-action btn-sm" data-confirm='ลบวันหยุดประจำปี "{{$yearlyHoliday->name}}" หรือไม่?'
                     href="#" data-id="{{$yearlyHoliday->id}}"
                     data-delete-route="{{ route('groups.time-recording-system.shift.yearlyholiday.delete', ['id' => '__id__']) }}"
                     data-message="วันหยุดประจำปี">

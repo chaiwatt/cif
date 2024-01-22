@@ -14,18 +14,11 @@
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
-                        </li>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">กลุ่มการประเมิน</li>
                     </ol>
                 </div>
             </div>
-
-            <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
-                href="{{route('groups.assessment-system.setting.assessment-group.create')}}">
-                <i class="fas fa-plus me-1"></i>
-                เพิ่มกลุ่มการประเมิน
-            </a>
         </div>
     </div>
     <div class="content">
@@ -34,14 +27,19 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">กลุ่มการประเมิน</h4>
+                                <a class="btn btn-header" id="btn-show-modal-income-deduct-assignment"
+                                href="{{route('groups.assessment-system.setting.assessment-group.create')}}">
+                                <i class="fas fa-plus"></i>
+                                เพิ่มกลุ่มการประเมิน
+                            </a>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0">
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>กลุ่มการประเมิน</th>
                                                 <th>จุดประสงค์</th>
@@ -53,15 +51,15 @@
                                             <td>{{$assessmentGroup->name}}</td>
                                             <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
                                             <td class="text-end">
-                                                <a class="btn btn-primary btn-sm"
+                                                <a class="btn btn-action btn-links btn-sm"
                                                     href="{{route('groups.assessment-system.setting.assessment-group.assignment',['id' => $assessmentGroup->id])}}">
                                                     <i class="fas fa-link"></i>
                                                 </a>
-                                                <a class="btn btn-info btn-sm"
+                                                <a class="btn btn-action btn-edit btn-sm"
                                                     href="{{route('groups.assessment-system.setting.assessment-group.view',['id' => $assessmentGroup->id])}}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <a class="btn btn-danger btn-sm"
+                                                <a class="btn btn-action btn-delete btn-sm"
                                                     data-confirm='ลบกลุ่มการประเมิน "{{$assessmentGroup->name}}" หรือไม่?'
                                                     href="#" data-id="{{$assessmentGroup->id}}"
                                                     data-delete-route="{{ route('groups.assessment-system.setting.assessment-group.delete', ['id' => '__id__']) }}"

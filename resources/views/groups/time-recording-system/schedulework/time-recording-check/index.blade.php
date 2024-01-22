@@ -73,7 +73,7 @@
                                         <th>ตารางทำงาน</th>
                                         <th>เดือน-ปี</th>
                                         <th>โน้ต</th>
-                                        <th class="text-right">เพิ่มเติม</th>
+                                        <th class="text-end">เพิ่มเติม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,7 +93,7 @@
                                             @endif
 
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-end">
                                             <a class="btn btn-info btn-sm"
                                                 href="{{route('groups.time-recording-system.schedulework.time-recording-check.view',['workScheduleId' => $workSchedule->id,'year' => $currentYear,'month' => $currentMonth])}}">
                                                 <i class="fas fa-pencil-alt">

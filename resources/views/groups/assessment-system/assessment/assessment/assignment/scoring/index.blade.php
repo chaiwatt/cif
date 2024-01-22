@@ -51,11 +51,11 @@
                                 <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel"
                                     aria-labelledby="custom-tabs-three-home-tab">
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12 table-responsive">
 
                                             <label for="">Attendance</label>
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>รอบเงินเดือน</th>
                                                         <th>ชั่วโมงทำงาน</th>
@@ -85,11 +85,11 @@
                                     </div>
                                     <div class="row">
 
-                                        <div class="col-12" id="training-container">
+                                        <div class="col-12 table-responsive" id="training-container">
 
                                             <label for="">การฝึกอบรม</label>
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th style="width: 40%">หัวข้อ</th>
                                                         <th>หน่วยงาน</th>
@@ -111,10 +111,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-12 table-responsive">
                                             <label for="">ความผิดและโทษ</label>
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th style="width: 40%">ความผิด / โทษ</th>
                                                         <th>วันที่บันทึก</th>
@@ -149,9 +149,9 @@
                                             <input type="text" value="{{$assessmentGroup->id}}" id="assessmentGroupId"
                                                 name="assessmentGroupId" hidden>
                                             <input type="text" value="{{$user->id}}" name="userId" hidden>
-                                            <div class="col-sm-12" id="table_container">
-                                                <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                    <thead>
+                                            <div class="col-sm-12 table-responsive" id="table_container">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
                                                         <tr>
                                                             <th style="width: 50%">เกณฑ์การประเมิน</th>
                                                             <th style="width: 25%">ตัวคูณคะแนน</th>

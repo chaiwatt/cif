@@ -20,12 +20,6 @@
                     </ol>
                 </div>
             </div>
-
-            <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
-                href="{{route('groups.assessment-system.setting.criteria.create')}}">
-                <i class="fas fa-plus me-1"></i>
-                เพิ่มเกณฑ์การประเมิน
-            </a>
         </div>
     </div>
     <div class="content">
@@ -34,13 +28,18 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">เกณฑ์การประเมิน</h4>
+                                <a class="btn btn-header" id="btn-show-modal-income-deduct-assignment"
+                                href="{{route('groups.assessment-system.setting.criteria.create')}}">
+                                <i class="fas fa-plus"></i>
+                                เพิ่มเกณฑ์การประเมิน
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                         <thead>
                                             <tr>
                                                 <th>เกณฑ์การประเมิน</th>
@@ -53,11 +52,11 @@
                                             <td>{{$assessmentCriteria->name}}</td>
                                             <td>{{$assessmentCriteria->description}}</td>
                                             <td class="text-end">
-                                                <a class="btn btn-primary btn-sm"
+                                                <a class="btn btn-action btn-edit btn-sm"
                                                     href="{{route('groups.assessment-system.setting.criteria.view',['id' => $assessmentCriteria->id])}}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <a class="btn btn-danger btn-sm"
+                                                <a class="btn btn-action btn-delete btn-sm"
                                                     data-confirm='ลบเกณฑ์การประเมิน "{{$assessmentCriteria->name}}" หรือไม่?'
                                                     href="#" data-id="{{$assessmentCriteria->id}}"
                                                     data-delete-route="{{ route('groups.assessment-system.setting.criteria.delete', ['id' => '__id__']) }}"

@@ -25,18 +25,18 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2"
-                href="{{route('groups.job-application-system.job-application.list.create')}}">
-                <i class="fas fa-plus me-1">
-                </i>
-                เพิ่มข่าวสมัครงาน
-            </a>
             @if ($permission->show)
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">รายการข่าวสมัครงาน</h4>
+                            <a class="btn btn-header"
+                                href="{{route('groups.job-application-system.job-application.list.create')}}">
+                                <i class="fas fa-plus">
+                                </i>
+                                เพิ่มข่าวสมัครงาน
+                            </a>
                             {{-- @if (count($users) !=0)
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -47,11 +47,11 @@
                             @endif --}}
 
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>ข่าวประกาศ</th>
                                                 <th>คำอธิบาย</th>
@@ -76,11 +76,11 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-end">
-                                                    <a class="btn btn-sm btn-primary"
+                                                    <a class="btn btn-action btn-sm btn-edit"
                                                         href="{{route('groups.job-application-system.job-application.list.view',['id' => $applicationNew->id ])}}"><i
                                                             class="fas fa-pencil-alt"></i></a>
                                                     @if ($permission->delete == true)
-                                                    <a class="btn btn-danger btn-sm"
+                                                    <a class="btn btn-action btn-delete btn-sm"
                                                         data-confirm='ลบข่าวสมัครงาน"{{$applicationNew->name}}" หรือไม่?'
                                                         href="#" data-id="{{$applicationNew->id}}"
                                                         data-delete-route="{{ route('groups.job-application-system.job-application.list.delete', ['id' => '__id__']) }}"

@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label>วันหยุด<span class="small text-danger">*</span></label>
+                                            <label>วันหยุด <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="holiday"
                                                 value="{{old('holiday') ?? $yearlyHoliday->name}}"
                                                 class="form-control @error('holiday') is-invalid @enderror">
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>วันที่</label><span class="small text-danger">*</span>
+                                            <label>วันที่ <span class="fw-bold text-danger">*</span></label>
                                             <div class="input-group date" id="holiday_date" data-target-input="nearest">
                                                 <input name="HolidayDate"
                                                     value="{{old('HolidayDate') ?? $yearlyHoliday->holiday_date}}"
@@ -61,9 +61,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end mt-2">
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

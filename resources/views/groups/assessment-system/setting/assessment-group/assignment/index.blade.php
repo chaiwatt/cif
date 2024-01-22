@@ -20,12 +20,6 @@
                     </ol>
                 </div>
             </div>
-
-            <a class="btn btn-primary mb-2" id="btn-show-modal-income-deduct-assignment"
-                href="{{route('groups.assessment-system.setting.assessment-group.assignment.create',['id' => $assessmentGroup->id])}}">
-                <i class="fas fa-plus me-1"></i>
-                เพิ่มเกณฑ์การประเมิน
-            </a>
         </div>
     </div>
     <div class="content">
@@ -34,19 +28,23 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title">กลุ่มการประเมิน</h4>
+                            <a class="btn btn-header" id="btn-show-modal-income-deduct-assignment"
+                                href="{{route('groups.assessment-system.setting.assessment-group.assignment.create',['id' => $assessmentGroup->id])}}">
+                                <i class="fas fa-plus"></i>
+                                เพิ่มเกณฑ์การประเมิน
+                            </a>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>#</th>
                                                 <th>เกณฑ์การประเมิน</th>
                                                 <th>ตัวคูณคะแนน</th>
-
                                                 <th class="text-end" style="width: 100px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
@@ -58,7 +56,7 @@
                                                 <td>{{$assessmentGroupCriteria->assessmentScoreMultiplication->multiplication}}
                                                 </td>
                                                 <td class="text-end">
-                                                    <a class="btn btn-danger btn-sm"
+                                                    <a class="btn btn-action btn-delete btn-sm"
                                                         data-confirm='ลบเกณฑ์การประเมิน "{{$assessmentGroupCriteria->name}}" หรือไม่?'
                                                         href="#" data-id="{{$assessmentGroupCriteria->id}}"
                                                         data-delete-route="{{ route('groups.assessment-system.setting.assessment-group.assignment.delete', ['id' => '__id__']) }}"

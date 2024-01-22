@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th>วันที่ปรับ</th>
             <th>เงินเดือน</th>
@@ -14,10 +14,10 @@
                 $salaryRecord->record_date)->format('d/m/Y') }}</td>
             <td>{{$salaryRecord->salary}}</td>
             <td class="text-primary">
-                <a class="btn btn-primary btn-sm btn-update-salary" data-id="{{$salaryRecord->id}}">
+                <a class="btn btn-edit btn-action btn-sm btn-update-salary" data-id="{{$salaryRecord->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a class="btn btn-danger btn-sm btn-delete-salary" data-id="{{$salaryRecord->id}}">
+                <a class="btn btn-delete btn-action btn-sm btn-delete-salary" data-id="{{$salaryRecord->id}}">
                     <i class="fas fa-trash-alt"></i>
                 </a>
             </td>

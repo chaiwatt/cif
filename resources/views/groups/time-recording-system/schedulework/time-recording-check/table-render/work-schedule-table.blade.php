@@ -1,11 +1,11 @@
-<table class="table table-striped text-nowrap">
-    <thead>
+<table class="table table-borderless text-nowrap">
+    <thead class="border-bottom">
         <tr>
             <th>#</th>
             <th>ตารางทำงาน</th>
             <th>เดือน-ปี</th>
             <th>โน้ต</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -22,8 +22,8 @@
                 {{ $workScheduleMonthNote->note }}
                 @endif
             </td>
-            <td class="text-right">
-                <a class="btn btn-info btn-sm"
+            <td class="text-end">
+                <a class="btn btn-edit btn-action btn-sm"
                     href="{{route('groups.time-recording-system.schedulework.time-recording-check.view',['workScheduleId' => $workSchedule->id,'year' => $year,'month' => $month])}}">
                     <i class="fas fa-pencil-alt">
                     </i>

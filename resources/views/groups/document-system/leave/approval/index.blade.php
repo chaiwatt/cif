@@ -19,7 +19,7 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="card card-success card-outline">
+            <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">ค้นหา</h4>
                 </div>
@@ -102,16 +102,16 @@
                             {{-- <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control float-end" placeholder="ค้นหา">
                                 </div>
                             </div> --}}
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>สายอนุมัติ</th>
                                                     <th>ชื่อสกุล</th>
@@ -120,7 +120,7 @@
                                                     <th>ช่วงวันที่</th>
                                                     <th>หัวหน้างาน</th>
                                                     <th>สถานะ</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -141,23 +141,20 @@
                                                         $leave->to_date)->format('d/m/Y H:i') }}</td>
                                                     <td>
                                                         สายอนุมัติ {{$approver->name}}
-                                                        <span class="ml-3">
+                                                        <span class="me-3">
                                                             - {{$approver->user->name}} {{$approver->user->lastname}}
                                                             (ผู้จัดการ)
                                                             @if ($leave->manager_approve == 0)
-                                                            <span class="badge bg-primary"
-                                                                style="font-weight: normal;">รออนุมัติ</span>
+                                                            <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                                                             @elseif ($leave->manager_approve == 1)
-                                                            <span class="badge bg-success"
-                                                                style="font-weight: normal;">อนุมัติแล้ว</span>
+                                                            <span class="badge bg-success rounded-3" style="font-weight: normal; padding: 8px 12px">อนุมัติแล้ว</span>
                                                             @elseif ($leave->manager_approve == 2)
-                                                            <span class="badge bg-danger"
-                                                                style="font-weight: normal;">ไม่อนุมัติ</span>
+                                                            <span class="badge bg-danger rounded-3" style="font-weight: normal; padding: 8px 12px">ไม่อนุมัติ</span>
                                                             @endif
                                                             @foreach ($approver->authorizedUsers as $user)
                                                             <br>
 
-                                                            <span class="ml-3">
+                                                            <span class="me-3">
                                                                 - {{$user->name}} {{$user->lastname}}
 
                                                                 @php
@@ -166,33 +163,29 @@
                                                                 @endphp
                                                                 {{-- {{$approvalStatus}} --}}
                                                                 @if ($approvalStatus === null)
-                                                                <span class="badge bg-primary"
-                                                                    style="font-weight: normal;">รออนุมัติ</span>
+                                                                <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                                                                 @elseif ($approvalStatus == 1)
-                                                                <span class="badge bg-success"
-                                                                    style="font-weight: normal;">อนุมัติแล้ว</span>
+                                                                <span class="badge bg-success rounded-3" style="font-weight: normal; padding: 8px 12px">อนุมัติแล้ว</span>
                                                                 @elseif ($approvalStatus == 2)
-                                                                <span class="badge bg-danger"
-                                                                    style="font-weight: normal;">ไม่อนุมัติ</span>
+                                                                <span class="badge bg-danger rounded-3" style="font-weight: normal; padding: 8px 12px">ไม่อนุมัติ</span>
                                                                 @elseif ($approvalStatus == 0)
-                                                                <span class="badge bg-primary"
-                                                                    style="font-weight: normal;">รออนุมัติ</span>
+                                                                <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                                                                 @endif
                                                             </span>
                                                             @endforeach
 
                                                     </td>
                                                     <td>@if ($leave->status === null || $leave->status === '0')
-                                                        <span class="badge bg-primary">รออนุมัติ</span>
+                                                        <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                                                         @elseif ($leave->status === '1')
-                                                        <span class="badge bg-success">อนุมัติแล้ว</span>
+                                                        <span class="badge bg-success rounded-3" style="font-weight: normal; padding: 8px 12px">อนุมัติแล้ว</span>
                                                         @elseif ($leave->status === '2')
-                                                        <span class="badge bg-danger">ไม่อนุมัติ</span>
+                                                        <span class="badge bg-danger rounded-3" style="font-weight: normal; padding: 8px 12px">ไม่อนุมัติ</span>
                                                         @endif
                                                     </td>
-                                                    <td class="text-right">
+                                                    <td class="text-end">
                                                         @if ($leave->status !== '1')
-                                                        <a class="btn btn-info btn-sm approve_leave"
+                                                        <a class="btn btn-action btn-edit btn-sm approve_leave"
                                                             data-id="{{$leave->id}}"
                                                             data-name="{{$leave->user->name}} {{$leave->user->lastname}}"
                                                             data-user_id="{{$leave->user->id}}"

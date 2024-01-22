@@ -1,5 +1,5 @@
 <table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+    <thead class="border-bottom">
         <tr>
             <th>สายอนุมัติ</th>
             <th>ชื่อสกุล</th>
@@ -8,7 +8,7 @@
             <th>ช่วงวันที่</th>
             <th>หัวหน้างาน</th>
             <th>สถานะ</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -28,20 +28,20 @@
             <td>
                 สายอนุมัติ {{$approver->name}}
                 <br>
-                <span class="ml-3">
+                <span class="me-3">
                     - {{$approver->user->name}} {{$approver->user->lastname}} (ผู้จัดการ)
                     @if ($leave->manager_approve == 0)
-                    <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                    <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                     @elseif ($leave->manager_approve == 1)
-                    <span class="badge bg-success" style="font-weight: normal;">อนุมัติแล้ว</span>
+                    <span class="badge bg-success rounded-3" style="font-weight: normal; padding: 8px 12px">อนุมัติแล้ว</span>
                     @elseif ($leave->manager_approve == 2)
-                    <span class="badge bg-danger" style="font-weight: normal;">ไม่อนุมัติ</span>
+                    <span class="badge bg-danger rounded-3" style="font-weight: normal; padding: 8px 12px">ไม่อนุมัติ</span>
                     @endif
                 </span>
                 @foreach ($approver->authorizedUsers as $user)
                 <br>
 
-                <span class="ml-3">
+                <span class="me-3">
                     - {{$user->name}} {{$user->lastname}}
 
                     @php
@@ -50,29 +50,29 @@
                     @endphp
                     {{-- {{$approvalStatus}} --}}
                     @if ($approvalStatus === null)
-                    <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                    <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                     @elseif ($approvalStatus == 1)
-                    <span class="badge bg-success" style="font-weight: normal;">อนุมัติแล้ว</span>
+                    <span class="badge bg-success rounded-3" style="font-weight: normal; padding: 8px 12px">อนุมัติแล้ว</span>
                     @elseif ($approvalStatus == 2)
-                    <span class="badge bg-danger" style="font-weight: normal;">ไม่อนุมัติ</span>
+                    <span class="badge bg-danger rounded-3" style="font-weight: normal; padding: 8px 12px">ไม่อนุมัติ</span>
                     @elseif ($approvalStatus == 0)
-                    <span class="badge bg-primary" style="font-weight: normal;">รออนุมัติ</span>
+                    <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                     @endif
                 </span>
                 @endforeach
 
             </td>
             <td>@if ($leave->status === null || $leave->status === '0')
-                <span class="badge bg-primary">รออนุมัติ</span>
+                <span class="badge bg-primary rounded-3" style="font-weight: normal; padding: 8px 12px">รออนุมัติ</span>
                 @elseif ($leave->status === '1')
-                <span class="badge bg-success">อนุมัติแล้ว</span>
+                <span class="badge bg-success rounded-3" style="font-weight: normal; padding: 8px 12px">อนุมัติแล้ว</span>
                 @elseif ($leave->status === '2')
-                <span class="badge bg-danger">ไม่อนุมัติ</span>
+                <span class="badge bg-danger rounded-3" style="font-weight: normal; padding: 8px 12px">ไม่อนุมัติ</span>
                 @endif
             </td>
-            <td class="text-right">
+            <td class="text-end">
                 @if ($leave->status !== '1')
-                <a class="btn btn-info btn-sm approve_leave" data-id="{{$leave->id}}"
+                <a class="btn btn-action btn-edit btn-sm approve_leave" data-id="{{$leave->id}}"
                     data-name="{{$leave->user->name}} {{$leave->user->lastname}}" data-user_id="{{$leave->user->id}}"
                     data-approver_id="{{$approver->id}}">
                     <i class="fas fa-stamp"></i>

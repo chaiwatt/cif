@@ -7,6 +7,7 @@
     }
     
 </style>
+<link rel="stylesheet" href="{{ asset('assets/plugins/fullcalendar/main.css') }}">
 @endpush
 @section('content')
 <div>
@@ -14,15 +15,14 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
-                    <h3 class="m-0">{{$workSchedule->name}} : {{$month->name}} {{$year}} <span id="expire_message"
-                            class="text-danger"></span> </h3>
+                    <h3 class="m-0">ตารางทำงาน</h3>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb mt-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.time-recording-system.schedulework.schedule.assignment',['id' => $workSchedule->id])}}">ตารางทำงาน</a>
                         </li>
-                        <li class="breadcrumb-item active">{{$workSchedule->name}} เดือน {{$month->name}}</li>
+                        <li class="breadcrumb-item active">ตารางทำงาน{{$workSchedule->name}} เดือน {{$month->name}}</li>
                     </ol>
                 </div>
             </div>
@@ -34,13 +34,13 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4 class="card-title">รายละเอียดตารางทำงาน</h4>
+                            <h4 class="card-title">{{$workSchedule->name}} : {{$month->name}} {{$year}}</h4>
                         </div>
-                        <div class="card-body">
-                            <div class="row mt-3">
-                                <div class="col-md-3">
+                        <div class="card-body p-0 shadow m-3 rounded-3">
+                            <div class="row">
+                                <div class="col-md-3 p-0 border-end">
                                     {{-- <div class="sticky-top mb-3"> --}}
-                                        <div class="card card-outline card-success sticky-top">
+                                        <div class="card sticky-top">
                                             <div class="card-header">
                                                 <h4 class="card-title">กะการทำงาน</h4>
                                             </div>
@@ -63,12 +63,12 @@
                                     </div> --}}
                                 </div>
                                 <!-- /.col -->
-                                <div class="col-md-9">
-                                    <div class="card card-outline card-success sticky-top">
+                                <div class="col-md-9 p-0">
+                                    <div class="card sticky-top">
                                         <div class="card-header">
                                             <h4 class="card-title">ตารางทำงาน {{$month->name}} {{$year}}</h4>
                                         </div>
-                                        <div class="card-body ">
+                                        <div class="card-body p-0">
                                             <!-- THE CALENDAR -->
                                             <div id="calendar" data-events="{{ $events }}"></div>
                                         </div>
@@ -97,7 +97,8 @@
 </div>
 
 @push('scripts')
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+{{-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script> --}}
+<script src="{{ asset('assets/plugins/fullcalendar/main.js') }}"></script>
 <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
 <script type="module" src="{{asset('assets/js/helpers/time-recording-system/schedule/calendar.js?v=1')}}"></script>
 <script>

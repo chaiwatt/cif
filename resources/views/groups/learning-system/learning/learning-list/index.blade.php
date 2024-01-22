@@ -42,9 +42,9 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>จัดการเรียนรู้</th>
                                                 <th>วันที่เพิ่ม</th>
@@ -57,7 +57,7 @@
                                                 <td>{{$lesson->name}}</td>
                                                 <td>{{$lesson->created_at}}</td>
                                                 <td class="text-end">
-                                                    <a class="btn btn-sm btn-primary "
+                                                    <a class="btn btn-sm btn-action btn-edit"
                                                         href="{{route('groups.learning-system.learning.learning-list.view',['id' => $lesson->id ])}}"><i
                                                             class="fas fa-eye"></i></a>
                                                 </td>

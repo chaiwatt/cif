@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th>เอกสาร</th>
             <th class="text-end">เพิ่มเติม</th>
@@ -18,10 +18,10 @@
                 $user_attachment->file;
                 }
                 @endphp
-                <a class="btn btn-primary btn-sm" href="{{$path}}">
+                <a class="btn btn-user btn-action btn-sm" href="{{$path}}">
                     <i class="fas fa-download"></i>
                 </a>
-                <a class="btn btn-danger btn-sm btn-delete-user-attachment" data-id="{{$user_attachment->id}}">
+                <a class="btn btn-delete btn-action btn-sm btn-delete-user-attachment" data-id="{{$user_attachment->id}}">
                     <i class="fas fa-trash-alt"></i>
                 </a>
             </td>

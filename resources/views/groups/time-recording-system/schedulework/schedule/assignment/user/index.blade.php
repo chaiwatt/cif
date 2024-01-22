@@ -25,27 +25,27 @@
             @if ($permission->create)
             {{-- <div id="add_user_wrapper"> --}}
                 <div>
-                    <div class="d-flex align-items-center mt-2">
-                        <div class="form-group mr-2">
+                    <div class="d-flex align-items-center gap-3 mt-2">
+                        <div class="form-group me-2">
                             <a class="btn btn-primary "
                                 href="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.create', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId]) }}">
-                                <i class="fas fa-plus mr-1"></i>
+                                <i class="fas fa-plus me-1"></i>
                                 เพิ่มพนักงาน
                             </a>
                         </div>
                         <div>
                             <span>หรือนำเข้าจากรหัสพนักงาน</span>
                         </div>
-                        <div class="form-group ml-2 mr-2">
+                        <div class="form-group me-2 ms-2">
                             <a class="btn btn-primary " href="" id="import-employee-code">
-                                <i class="fas fa-plus mr-1"></i>
+                                <i class="fas fa-plus me-1"></i>
                                 รหัสพนักงาน
                             </a>
                         </div>
                         <div>
                             <span>หรือนำเข้าจากกลุ่มพนักงาน</span>
                         </div>
-                        <div class="form-group ml-2 mr-2" style="width: 300px;">
+                        <div class="form-group me-2 ms-2" style="width: 300px;">
                             <select name="userGroup" id="userGroup"
                                 class="form-control select2 @error('userGroup') is-invalid @enderror"
                                 style="width: 100%;">
@@ -86,15 +86,15 @@
                             <div class="card-body">
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
-                                        <div class="col-sm-12" id="table_content">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-sm-12 table-responsive" id="table_content">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>#</th>
                                                         <th>รหัสพนักงาน</th>
                                                         <th>ชื่อ-สกุล</th>
                                                         <th>แผนก</th>
-                                                        <th class="text-right">เพิ่มเติม</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -104,14 +104,14 @@
                                                         <td>{{$user->employee_no}}</td>
                                                         <td>{{$user->name}} {{$user->lastname}}</td>
                                                         <td>{{$user->company_department->name}}</td>
-                                                        <td class="text-right">
+                                                        <td class="text-end">
                                                             @if ($permission->delete)
                                                             <form
                                                                 action="{{ route('groups.time-recording-system.schedulework.schedule.assignment.user.delete', ['workScheduleId' => $workSchedule->id, 'year' => $year, 'month' => $monthId, 'userId' => $user->id]) }}"
                                                                 method="POST" class="d-inline">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button class="btn btn-danger btn-sm" type="submit"><i
+                                                                <button class="btn btn-delete btn-action btn-sm" type="submit"><i
                                                                         class="fas fa-trash"></i></button>
                                                             </form>
                                                             @endif

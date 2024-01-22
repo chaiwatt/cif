@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline" id="userTable">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline" id="userTable">
+    <thead class="border-bottom">
         <tr>
             <th>#</th>
             <th>รหัสพนักงาน</th>
@@ -19,7 +19,7 @@
             <td>{{$user->company_department->name}}</td>
             <td>{{$user->user_position->name}}</td>
             <td class="text-end">
-                <a class="btn btn-primary btn-sm"
+                <a class="btn btn-links btn-action btn-sm"
                     href="{{route('groups.user-management-system.setting.userinfo.view',['id' => $user->id])}}">
                     <i class="fas fa-eye"></i>
                 </a>

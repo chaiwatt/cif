@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
-                    <h1 class="m-0">นำเข้าเกณฑ์การประเมิน</h1>
+                    <h3 class="m-0">นำเข้าเกณฑ์การประเมิน</h3>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
@@ -60,9 +60,9 @@
                                     <div class="row">
                                         <input type="text" value="{{$assessmentGroup->id}}" name="assessmentGroupId"
                                             hidden>
-                                        <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-sm-12 table-responsive" id="table_container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th style="width: 120px">
                                                             <div class="icheck-primary d-inline">

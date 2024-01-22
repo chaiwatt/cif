@@ -73,7 +73,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-end">
-                                                    <a class="btn btn-success btn-sm"
+                                                    <a class="btn btn-action btn-user btn-sm"
                                                         href="{{route('groups.salary-system.salary.calculation-bonus-list.download-pdf',['id' => $bonus->id])}}">
                                                         <i class="fas fa-download"></i>
                                                     </a>
