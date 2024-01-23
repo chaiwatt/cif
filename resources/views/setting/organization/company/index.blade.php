@@ -21,9 +21,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-primary">
+                    <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดข้อมูลบริษัท</h3>
+                            <h4 class="card-title">รายละเอียดข้อมูลบริษัท</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('setting.organization.company.update', ['id' => $company->id]) }}"
@@ -34,14 +34,14 @@
                                 <div class="row gy-2">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ชื่อบริษัท<span class="small text-danger">*</span></label>
+                                            <label>ชื่อบริษัท <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" value="{{old('name') ?? $company->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ที่อยู่<span class="small text-danger">*</span></label>
+                                            <label>ที่อยู่ <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="address"
                                                 value="{{old('address') ?? $company->address}}"
                                                 class="form-control @error('address') is-invalid @enderror">
@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>เบอร์โทรศัพท์<span class="small text-danger">*</span></label>
+                                            <label>เบอร์โทรศัพท์ <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="phone" value="{{old('phone') ?? $company->phone}}"
                                                 class="form-control @error('phone') is-invalid @enderror">
                                         </div>

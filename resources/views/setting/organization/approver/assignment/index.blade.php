@@ -3,15 +3,15 @@
 
 @endpush
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row ">
-                <div class="col-sm-6">
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
                     <h3 class="m-0">สายอนุมัติ: {{$approver->name}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('setting.organization.approver.index')}}">สายอนุมัติ</a></li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
@@ -22,30 +22,30 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2"
-                href="{{route('setting.organization.approver.assignment.create',['id' => $approver->id])}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มพนักงาน
-            </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายการพนักงานใน {{$approver->name}}</h3>
+                            <h4 class="card-title">รายการพนักงานใน {{$approver->name}}</h4>
+                            <a class="btn btn-header"
+                                href="{{route('setting.organization.approver.assignment.create',['id' => $approver->id])}}">
+                                <i class="fas fa-plus">
+                                </i>
+                                เพิ่มพนักงาน
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -55,13 +55,13 @@
                                                     <td>{{$user->employee_no}}</td>
                                                     <td>{{$user->name}} {{$user->lastname}}</td>
                                                     <td>{{$user->company_department->name}}</td>
-                                                    <td class="text-right">
+                                                    <td class="text-end">
                                                         <form
                                                             action="{{ route('setting.organization.approver.assignment.delete', ['approver_id' => $approver->id, 'user_id' => $user->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                                            <button class="btn btn-delete btn-action btn-sm" type="submit"><i
                                                                     class="fas fa-trash"></i></button>
                                                         </form>
                                                     </td>

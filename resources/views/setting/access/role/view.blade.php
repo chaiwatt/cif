@@ -24,7 +24,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดข้อมูลแผนก</h3>
+                            <h4 class="card-title">รายละเอียดข้อมูลแผนก</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('setting.access.role.update', ['id' => $role->id]) }}" method="POST">

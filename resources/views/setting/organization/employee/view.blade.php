@@ -1,8 +1,8 @@
 @extends('layouts.setting-dashboard')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
@@ -22,8 +22,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card border-0">
-                        <div class="card-header p-3 px-4">
-                            <h3 class="card-title">รายละเอียดข้อมูลพนักงาน</h3>
+                        <div class="card-header">
+                            <h4 class="card-title">รายละเอียดข้อมูลพนักงาน</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('setting.organization.employee.update', ['id' => $user->id]) }}"
@@ -34,7 +34,7 @@
                                 <div class="row gy-2">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>รหัสพนักงาน<span class="small text-danger">*</span></label>
+                                            <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="employee_no"
                                                 value="{{old('employee_no') ?? $user->employee_no}}"
                                                 class="form-control numericInputInt @error('employee_no') is-invalid @enderror"
@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>คำนำหน้าชื่อ<span class="small text-danger">*</span></label>
+                                            <label>คำนำหน้าชื่อ <span class="fw-bold text-danger">*</span></label>
                                             <select name="prefix"
                                                 class="form-select select2 @error('prefix') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -58,14 +58,14 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ชื่อ<span class="small text-danger">*</span></label>
+                                            <label>ชื่อ <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" value="{{old('name') ?? $user->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>นามสกุล<span class="small text-danger">*</span></label>
+                                            <label>นามสกุล <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="lastname"
                                                 value="{{old('lastname') ?? $user->lastname}}"
                                                 class="form-control @error('lastname') is-invalid @enderror">
@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>สัญชาติ<span class="small text-danger">*</span></label>
+                                            <label>สัญชาติ <span class="fw-bold text-danger">*</span></label>
                                             <select name="nationality"
                                                 class="form-control select2 @error('nationality') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>เชื้อชาติ<span class="small text-danger">*</span></label>
+                                            <label>เชื้อชาติ <span class="fw-bold text-danger">*</span></label>
                                             <select name="ethnicity"
                                                 class="form-control select2 @error('ethnicity') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -126,7 +126,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ที่อยู่<span class="small text-danger">*</span></label>
+                                            <label>ที่อยู่ <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="address"
                                                 value="{{old('address') ?? $user->address}}"
                                                 class="form-control @error('address') is-invalid @enderror">
@@ -142,7 +142,7 @@
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ประเภทพนักงาน<span class="small text-danger">*</span></label>
+                                            <label>ประเภทพนักงาน <span class="fw-bold text-danger">*</span></label>
                                             <select name="employeeType"
                                                 class="form-control select2 @error('employeeType') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -157,7 +157,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ตำแหน่ง<span class="small text-danger">*</span></label>
+                                            <label>ตำแหน่ง <span class="fw-bold text-danger">*</span></label>
                                             <select name="userPosition"
                                                 class="form-control select2 @error('userPosition') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>แผนก<span class="small text-danger">*</span></label>
+                                            <label>แผนก <span class="fw-bold text-danger">*</span></label>
                                             <select name="companyDepartment"
                                                 class="form-control select2 @error('companyDepartment') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -188,7 +188,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>เริ่มทำงาน<span class="small text-danger">*</span></label>
+                                            <label>เริ่มทำงาน <span class="fw-bold text-danger">*</span></label>
                                             <div class="date-box date" id="start_work_date"
                                                 data-target-input="nearest">
                                                 <input name="startWorkDate"
@@ -293,7 +293,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>การสแกนเวลาเข้าออก<span class="small text-danger">*</span></label>
+                                            <label>การสแกนเวลาเข้าออก <span class="fw-bold text-danger">*</span></label>
                                             <select name="timeRecordRequire"
                                                 class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"
                                                 style="width: 100%;">

@@ -3,15 +3,15 @@
 
 @endpush
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
                     <h3 class="m-0">นำเข้าพนักงาน {{$approver->name}}</h3>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('setting.organization.approver.index')}}">สายอนุมัติ</a></li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
@@ -30,7 +30,7 @@
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control" placeholder="ค้นหา">
                                 </div>
                             </div>
                         </div>
@@ -40,9 +40,9 @@
                                 <input name="approverId" id="approverId" value="{{$approver->id}}" type="text" hidden>
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
-                                        <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-sm-12 table-responsive" id="table_container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>เลือก</th>
                                                         <th>รหัสพนักงาน</th>
@@ -77,9 +77,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end mt-2">
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

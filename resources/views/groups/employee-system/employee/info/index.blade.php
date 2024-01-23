@@ -83,7 +83,7 @@
                             <div class="tab-content" id="custom-tabs-one-tabContent">
                                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-home-tab">
-                                    <div class="row">
+                                    <div class="row gy-3">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>

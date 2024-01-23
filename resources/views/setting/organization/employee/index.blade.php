@@ -21,42 +21,44 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2" href="{{route('setting.organization.employee.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มพนักงาน
-            </a>
-            <a class="btn btn-primary mb-2" href="{{route('setting.organization.employee.import.index')}}">
-                <i class="fas fa-folder mr-1">
-                </i>
-                นำเข้าพนักงาน
-            </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card border-0 rounded-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h3 class="m-0">รายชื่อพนักงาน</h3>
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search_query" id="search_query"
-                                        class="form-control" placeholder="ค้นหา">
+                        <div class="card-header">
+                            <h4 class="m-0">รายชื่อพนักงาน</h4>
+                            <div class="d-flex gap-3">
+                                <a class="btn btn-header" href="{{route('setting.organization.employee.create')}}">
+                                    <i class="fas fa-plus">
+                                    </i>
+                                    เพิ่มพนักงาน
+                                </a>
+                                <a class="btn btn-header" href="{{route('setting.organization.employee.import.index')}}">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                    นำเข้าพนักงาน
+                                </a>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="search_query" id="search_query"
+                                            class="form-control" placeholder="ค้นหา">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline"
+                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline"
                                             id="userTable">
-                                            <thead>
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>รหัสพนักงาน</th>
                                                     <th>ชื่อ-สกุล</th>
                                                     <th>แผนก</th>
                                                     <th>ตำแหน่ง</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="employee_tbody">
@@ -68,12 +70,12 @@
                                                     <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
                                                     <td>{{isset($user->company_department->name) ? $user->company_department->name:''}}</td>
                                                     <td>{{isset($user->user_position->name) ? $user->user_position->name : "" }}</td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-primary btn-sm"
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-edit btn-sm"
                                                             href="{{route('setting.organization.employee.view',['id' => $user->id])}}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        <a class="btn btn-danger btn-sm"
+                                                        <a class="btn btn-action btn-delete btn-sm"
                                                             data-confirm='ลบพนักงาน "{{$user->name}} {{$user->lastname}}" หรือไม่?'
                                                             href="#" data-id="{{$user->id}}"
                                                             data-delete-route="{{ route('setting.organization.employee.delete', ['id' => '__id__']) }}"

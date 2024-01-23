@@ -92,10 +92,10 @@
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline"
+                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline"
                                             id="userTable">
-                                            <thead>
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>รหัสพนักงาน</th>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">ปิด</button>
                         <button type="button" class="btn btn-primary" id="bntUpdateReportField">บันทึก</button>
                     </div>
                 </div>

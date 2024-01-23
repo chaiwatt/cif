@@ -23,17 +23,17 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">
+                            <h4 class="card-title">
                                 กำหนดฟิลด์
-                            </h3>
+                            </h4>
                         </div>
                         <div class="card-body">
 
                             <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
+                                    <a class="nav-link active" id="custom-content-below-home-tab" data-bs-toggle="tab"
                                         href="#custom-content-below-home" role="tab"
                                         aria-controls="custom-content-below-home" aria-selected="false">ตารางพนักงาน</a>
                                 </li>
@@ -49,8 +49,8 @@
                                     aria-labelledby="custom-content-below-home-tab">
                                     <form action="{{route('setting.general.searchfield.user.update')}}" method="POST">
                                         @csrf
-                                        <table class="table table-bordered">
-                                            <thead>
+                                        <table class="table table-borderless text-nowrap">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th style="width: 15%">ใช้งาน</th>
                                                     <th>ชื่อฟิลด์ค้นหา</th>

@@ -129,7 +129,6 @@
         </div>
     </footer>
 
-
 </body>
 {{-- HRM Slidebar --}}
 <script src="{{ asset('js/hrm_slidebar.js') }}"></script>

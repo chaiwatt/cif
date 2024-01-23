@@ -16,8 +16,8 @@
                       </svg>
                     ข่าวประกาศ</h3>
             </div>
-            <div class="card-body d-flex justify-content-between p-5">
-                <div class="d-flex flex-column" style="gap: 20px; width: 364px;">
+            <div class="card-body d-flex p-5 overflow-auto" style="gap: 32px">
+                {{-- <div class="d-flex flex-column" style="gap: 20px; flex: 0 0 364px;">
                     <div>
                         <img src="{{ asset('image_test.jpg') }}" class="object-fit-cover rounded" style="width: 100%; height: 180px" alt="annoucement-image">
                     </div>
@@ -30,18 +30,37 @@
                     <div class="text-end">
                         <a href="#" class="text-primary" style="padding: 8px 14px;">อ่านเพิ่มเติม</a>
                     </div>
+                </div> --}}
+               
+                @php
+                    $countAnnounce = 0;
+                @endphp
+                @foreach ($announcements->where('status',1) as $announcement)
+                <div class="d-flex flex-column" style="gap: 20px; width: 364px;">
+                    <div>
+                        <img src="{{ asset('image_test.jpg') }}" class="object-fit-cover rounded" style="width: 100%; height: 180px" alt="annoucement-image">
+                    </div>
+                    <div>
+                        <p class="text-muted" style="margin-bottom: 12px">
+                        {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
+                            $announcement->created_at)->format('d/m/Y')}}
+                            </p>
+                        <strong class="annoucement-description">
+                            {{$announcement->title}}
+                        </strong>
+                    </div>
+                    <div class="text-end">
+                        <a href="{{route('post-announcement',['id' => $announcement->id])}}" class="text-primary" style="padding: 8px 14px;">อ่านเพิ่มเติม</a>
+                    </div>
                 </div>
+                @php
+                    $countAnnounce++;
+                @endphp
+                @if (count($announcements->where('status',1)) != $countAnnounce)
+                    <div class="divider-y"></div>
+                @endif
                 
-                {{-- @foreach ($announcements->where('status',1) as $announcement)
-                <tr>
-                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
-                        $announcement->created_at)->format('d/m/Y')
-                        }}</td>
-                    <td>{{$announcement->title}}</td>
-                    <td class="text-right"><a href="{{route('post-announcement',['id' => $announcement->id])}}"
-                            class="btn btn-sm btn-info">อ่าน</a></td>
-                </tr>
-                @endforeach --}}
+                @endforeach
             </div>
         </div>
         {{-- @endif --}}

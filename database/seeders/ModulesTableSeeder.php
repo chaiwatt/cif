@@ -42,7 +42,7 @@ class ModulesTableSeeder extends Seeder
             'prefix' => 'groups.salary-system.salary',
             'code' => 'SALARY',
             'name' => 'จัดการเงินเดือน',
-            'icon' => 'fa-wallet'
+            'icon' => 'fa-file-invoice-dollar'
         ]);
         Module::create([
             'prefix' => 'groups.salary-system.setting',
@@ -54,7 +54,7 @@ class ModulesTableSeeder extends Seeder
             'prefix' => 'groups.document-system.leave',
             'code' => 'DOCUMENT-LEAVE',
             'name' => 'การลา',
-            'icon' => 'fa-calendar-alt'
+            'icon' => 'fa-calendar'
         ]);
         Module::create([
             'prefix' => 'groups.document-system.overtime',
@@ -78,7 +78,7 @@ class ModulesTableSeeder extends Seeder
             'prefix' => 'groups.assessment-system.assessment',
             'code' => 'ASSESSMENT-MODULE',
             'name' => 'การประเมิน',
-            'icon' => 'fa-medal'
+            'icon' => 'fa-clipboard-list'
         ]);
         Module::create([
             'prefix' => 'groups.assessment-system.setting',
@@ -102,7 +102,7 @@ class ModulesTableSeeder extends Seeder
             'prefix' => 'groups.learning-system.learning',
             'code' => 'LEARNING',
             'name' => 'การเรียนรู้',
-            'icon' => 'fa-user-graduate'
+            'icon' => 'fa-book-open'
         ]);
         Module::create([
             'prefix' => 'groups.learning-system.setting',

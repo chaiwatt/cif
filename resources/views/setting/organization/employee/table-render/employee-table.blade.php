@@ -1,12 +1,12 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th>#</th>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
             <th>แผนก</th>
             <th>ตำแหน่ง</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody id="employee_tbody">
@@ -18,12 +18,12 @@
             <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
             <td>{{$user->company_department->name}}</td>
             <td>{{$user->user_position->name}}</td>
-            <td class="text-right">
-                <a class="btn btn-info btn-sm"
+            <td class="text-end">
+                <a class="btn btn-action btn-edit btn-sm"
                     href="{{route('setting.organization.employee.view',['id' => $user->id])}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a class="btn btn-danger btn-sm" data-confirm='ลบพนักงาน "{{$user->name}} {{$user->lastname}}" หรือไม่?'
+                <a class="btn btn-action btn-delete btn-sm" data-confirm='ลบพนักงาน "{{$user->name}} {{$user->lastname}}" หรือไม่?'
                     href="#" data-id="{{$user->id}}"
                     data-delete-route="{{ route('setting.organization.employee.delete', ['id' => '__id__']) }}"
                     data-message="ผู้ใช้งาน">

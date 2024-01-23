@@ -21,7 +21,7 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="card card-success">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -42,8 +42,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-end">
-                            <button class="btn btn-outline-secondary mt-2 d-flex gap-2 align-items-center" id="search_expiration"><i
-                                    class="fas fa-search mr-1"></i>ค้นหา</button>
+                            <button class="btn btn-outline-secondary mt-2 d-flex gap-2 align-items-center" id="search_expiration">
+                                <i class="fas fa-search"></i>ค้นหา</button>
                         </div>
                     </div>
 
@@ -53,15 +53,15 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">รายชื่อพนักงาน</h3>
+                            <h4 class="card-title">รายชื่อพนักงาน</h4>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline"
+                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline"
                                             id="userTable">
-                                            <thead>
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>รหัสพนักงาน</th>

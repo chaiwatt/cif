@@ -1,15 +1,15 @@
 @extends('layouts.setting-dashboard')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
+<div>
+    <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div>
                     <h3 class="m-0">สายอนุมัติ</h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('setting.organization.approver.index')}}">สายอนุมัติ</a></li>
                         <li class="breadcrumb-item active">{{$approver->name}}</li>
@@ -24,12 +24,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">รายละเอียดข้อมูลสายอนุมัติ</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                            <h4 class="card-title">รายละเอียดข้อมูลสายอนุมัติ</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('setting.organization.approver.update', ['id' => $approver->id]) }}"
@@ -40,14 +35,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>สายอนุมัติ<span class="small text-danger">*</span></label>
+                                            <label>สายอนุมัติ <span class="fw-bold text-danger">*</span></label>
                                             <input type="text" name="name" value="{{old('name') ?? $approver->name}}"
                                                 class="form-control @error('name') is-invalid @enderror">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>แผนก<span class="small text-danger">*</span></label>
+                                            <label>แผนก <span class="fw-bold text-danger">*</span></label>
                                             <select name="company_department"
                                                 class="form-control select2 @error('company_department') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -62,7 +57,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>ประเภทเอกสาร<span class="small text-danger">*</span></label>
+                                            <label>ประเภทเอกสาร <span class="fw-bold text-danger">*</span></label>
                                             <select name="document_type"
                                                 class="form-control select2 @error('document_type') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -77,7 +72,7 @@
                                     </div>
                                     {{-- <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>ผู้อนุมัติลำดับที่1<span class="small text-danger">*</span></label>
+                                            <label>ผู้อนุมัติลำดับที่1 <span class="fw-bold text-danger">*</span></label>
                                             <select name="approver_one"
                                                 class="form-control select2 @error('approver_one') is-invalid @enderror"
                                                 style="width: 100%;">
@@ -108,9 +103,9 @@
                                     </div> --}}
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 text-end mt-2">
                                         <button type="submit"
-                                            class="btn bg-gradient-success btn-flat float-right">บันทึก</button>
+                                            class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

@@ -57,7 +57,7 @@
                                                 <th>คำอธิบาย</th>
                                                 <th>วันที่เพิ่ม</th>
                                                 <th>สถานะ</th>
-                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
+                                                <th style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -76,6 +76,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-end">
+                                                    {{-- <a href="#" class="text-primary">Preview</a> --}}
                                                     <a class="btn btn-action btn-sm btn-edit"
                                                         href="{{route('groups.job-application-system.job-application.list.view',['id' => $applicationNew->id ])}}"><i
                                                             class="fas fa-pencil-alt"></i></a>

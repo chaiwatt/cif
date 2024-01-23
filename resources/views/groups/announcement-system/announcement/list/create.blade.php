@@ -31,37 +31,40 @@
                             <h4 class="card-title">รายละเอียดข่าวประกาศ</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>หัวข้อ <span class="fw-bold text-danger">*</span></label>
-                                <input type="text" name="title" value="{{old('title')}}" id="title"
-                                    class="form-control @error('title') is-invalid @enderror">
-                            </div>
-                            <div class="form-group">
-                                <label>คำอธิบาย <span class="fw-bold text-danger">*</span></label>
-                                <input type="text" name="description" value="{{old('description')}}" id="description"
-                                    class="form-control @error('description') is-invalid @enderror">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">รายละเอียด</label>
-                                <textarea id="summernote" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>สถานะ</label>
-                                <select name="status" id="status" class="form-control select2" style="width: 100%;">
-                                    <option value="1">แสดง</option>
-                                    <option value="2">ไม่แสดง</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <div class="btn btn-default btn-file">
-                                    <i class="fas fa-paperclip"></i> เอกสารแนบ
-                                    <input type="file" name="attachment" id="attachment" multiple>
+                        <div class="row card-body">
+                            <div class="col-12 col-lg-3"></div>
+                            <div class="col-12 col-lg-9">
+                                <div class="form-group">
+                                    <label>หัวข้อ <span class="fw-bold text-danger">*</span></label>
+                                    <input type="text" name="title" value="{{old('title')}}" id="title"
+                                        class="form-control @error('title') is-invalid @enderror">
                                 </div>
-                                <ul id="files_wrapper">
-
-                                </ul>
+                                <div class="form-group">
+                                    <label>คำอธิบาย <span class="fw-bold text-danger">*</span></label>
+                                    <input type="text" name="description" value="{{old('description')}}" id="description"
+                                        class="form-control @error('description') is-invalid @enderror">
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="">รายละเอียด</label>
+                                    <textarea id="summernote" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>สถานะ</label>
+                                    <select name="status" id="status" class="form-control select2" style="width: 100%;">
+                                        <option value="1">แสดง</option>
+                                        <option value="2">ไม่แสดง</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="btn btn-default btn-file">
+                                        <i class="fas fa-paperclip"></i> เอกสารแนบ
+                                        <input type="file" name="attachment" id="attachment" multiple>
+                                    </div>
+                                    <ul id="files_wrapper">
+    
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->

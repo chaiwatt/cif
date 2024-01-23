@@ -18,7 +18,7 @@
         @foreach ($modules as $module)
         <li class="nav-item {{ Str::contains($routename,$module->module_prefix) ? 'menu-open' : '' }}" id="main-sub-menu">
             <a href="#" class="nav-link {{ Str::contains($routename,$module->module_prefix) ? 'current-page' : '' }}" id="open-sub-menu">
-                <i class="nav-icon fas {{$module->module_icon}}"></i>
+                <i class="nav-icon fas {{$module->module_icon}}" style="font-size: 19px"></i>
                 {{-- New ICON --}}
                 {{-- <span class="material-symbols-outlined">
                     {{$module->module_icon}}

@@ -54,7 +54,7 @@
                                             <td>{{$assessmentGroup->name}}</td>
                                             <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
                                             <td class="text-end">
-                                                <a class="btn btn-success btn-sm"
+                                                <a class="btn btn-user btn-action btn-sm"
                                                     href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">
                                                     <i class="fas fa-users"></i>
                                                 </a>

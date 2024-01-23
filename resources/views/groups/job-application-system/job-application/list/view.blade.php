@@ -7,7 +7,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
                     <h3 class="m-0">ข่าวสมัครงาน</h3>
                 </div>

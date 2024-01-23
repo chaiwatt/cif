@@ -21,19 +21,21 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2" href="{{route('setting.access.role.create')}}">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มบทบาท
-            </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">รายการบทบาท</h3>
-                            <div class="card-tools mr-1">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <div id="searchWrapper" class="d-flex"></div>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title">รายการบทบาท</h4>
+                            <div class="d-flex gap-3">
+                                <a class="btn btn-header" href="{{route('setting.access.role.create')}}">
+                                    <i class="fas fa-plus">
+                                    </i>
+                                    เพิ่มบทบาท
+                                </a>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <div id="searchWrapper" class="d-flex"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -41,15 +43,15 @@
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>บทบาท</th>
                                                     <th>ผู้ใช้บทบาท</th>
                                                     <th class="text-center">กลุ่มงานมอบหมาย</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,7 +65,7 @@
                                                             @foreach ($role->users as $user)
                                                             <li style="padding: 5px;">
                                                                 {{$user->name}} {{$user->lastname}}<a
-                                                                    class="text-danger ml-2"
+                                                                    class="text-danger me-2"
                                                                     href="{{ route('setting.access.assignment.role.delete', ['roleId' => $role->id, 'userId' =>$user->id])}}"><i
                                                                         class="fas fa-times"
                                                                         style="font-size: smaller;"></i>
@@ -73,20 +75,20 @@
                                                         </ul>
                                                     </td>
                                                     <td class="text-center">{{$role->role_group_jsons->count()}}</td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-success btn-sm" id="un_assignment_role_button"
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-user btn-sm" id="un_assignment_role_button"
                                                             data-role="{{$role->id}}">
                                                             <i class="fas fa-users"></i>
                                                         </a>
-                                                        <a class="btn btn-primary btn-sm"
+                                                        <a class="btn btn-action btn-links btn-sm"
                                                             href="{{ route('setting.access.assignment.group-module.view', ['id' => $role->id]) }}">
                                                             <i class="fas fa-link"></i>
                                                         </a>
-                                                        <a class="btn btn-info btn-sm"
+                                                        <a class="btn btn-action btn-edit btn-sm"
                                                             href="{{ route('setting.access.role.view', ['id' => $role->id]) }}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        <a class="btn btn-danger btn-sm"
+                                                        <a class="btn btn-action btn-delete btn-sm"
                                                             data-confirm='ลบบทบาท "{{$role->name}}" หรือไม่?' href="#"
                                                             data-id="{{$role->id}}"
                                                             data-delete-route="{{ route('setting.access.role.delete', ['id' => '__id__']) }}"

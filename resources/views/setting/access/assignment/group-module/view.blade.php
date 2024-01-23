@@ -22,32 +22,34 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-            <a class="btn btn-primary mb-2" id="un_assignment_group_button">
-                <i class="fas fa-plus mr-1">
-                </i>
-                เพิ่มกลุ่มทำงาน
-            </a>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">รายชื่อกลุ่มทำงาน</h3>
-                            <div class="card-tools mr-1">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <div id="searchWrapper" class="d-flex"></div>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title">รายชื่อกลุ่มทำงาน</h4>
+                           <div class="d-flex gap-3">
+                                <a class="btn btn-header" id="un_assignment_group_button">
+                                    <i class="fas fa-plus">
+                                    </i>
+                                    เพิ่มกลุ่มทำงาน
+                                </a>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <div id="searchWrapper" class="d-flex"></div>
+                                    </div>
                                 </div>
-                            </div>
+                           </div>
                         </div>
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-sm-12 table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>ชื่อกลุ่มทำงาน</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -55,13 +57,13 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{$item->group->name}}</td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-primary btn-sm"
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-links btn-sm"
                                                             id="un_assignment_module_button"
                                                             data-id="{{$item->group->id}}" data-role="{{$role->id}}">
                                                             <i class="fas fa-link"></i>
                                                         </a>
-                                                        <a class="btn btn-danger btn-sm"
+                                                        <a class="btn btn-action btn-delete btn-sm"
                                                             data-confirm='ลบกลุ่มทำงาน "{{$item->group->name}}" หรือไม่?'
                                                             href="#" data-id="{{$item->group->id}}"
                                                             data-role="{{$role->id}}"
@@ -94,8 +96,8 @@
                                     <h3 class="card-title">เลือกกลุ่มทำงาน</h3>
                                 </div>
                                 <div class="card-body table-responsive p-0">
-                                    <table id="group_modal_table" class="table table-hover text-nowrap">
-                                        <thead>
+                                    <table id="group_modal_table" class="table table-borderless text-nowrap">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th style="width: 200px;">เลือก</th>
                                                 <th>กลุ่มทำงาน</th>
@@ -130,8 +132,8 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body table-responsive p-0">
-                                    <table id="module_modal_table" class="table">
-                                        <thead>
+                                    <table id="module_modal_table" class="table table-borderless text-nowrap">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th>โมดูล</th>
                                                 <th>การใช้งาน</th>

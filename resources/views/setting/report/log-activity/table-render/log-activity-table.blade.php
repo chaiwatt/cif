@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline" id="userTable">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline" id="userTable">
+    <thead class="border-bottom">
         <tr>
             <th>#</th>
             <th>วันที่</th>

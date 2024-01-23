@@ -21,7 +21,7 @@
         <div class="container-fluid">
             @if($errors->any())
             <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
                 เกิดข้อผิดพลาดการนำเข้า โปรดตรวจสอบไฟล์นำเข้าให้ถูกต้อง
             </div>
             @endif
