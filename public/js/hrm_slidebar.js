@@ -15,9 +15,12 @@ menuBtn.addEventListener("click", () => {
 const MainSub = document.querySelectorAll('#main-sub-menu')
 MainSub.forEach(function(sub) {
     const menuBtn_click = sub.querySelector('#open-sub-menu');
+    const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     menuBtn_click.addEventListener('click', () => {
         const slidebar = document.querySelector('.slidebar-dashboard');
-        !slidebar.classList.contains('slide-active') ? slidebar.classList.add('slide-active') : null
+        if (screenWidth < 1200) {
+            !slidebar.classList.contains('slide-active') ? slidebar.classList.add('slide-active') : null
+        }
         if (!menuBtn_click.classList.contains('active')) {
             menuBtn_click.classList.add('active')
         } else {
