@@ -79,7 +79,17 @@ class User extends Authenticatable
         'bank',
         'bank_account',
         'is_admin',
-        'work_permit'
+        'work_permit',
+        // Add New Field
+        'avatar',
+        'education',
+        'edu_department',
+        'district',
+        'subdistrict',
+        'zip',
+        'city',
+        'country',
+        'is_foreigner'
     ];
 
     /**

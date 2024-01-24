@@ -43,7 +43,12 @@ class UsersTableSeeder extends Seeder
             'permit_expiry_date' => Null,
             'work_schedule_id' => 1,
             'email' => '11111111@gmail.com',
-            'password' => bcrypt('11111111')
+            'password' => bcrypt('11111111'),
+            'district'=> "home",
+            'subdistrict'=> "home",
+            'city'=> "home",
+            'country'=> "home",
+            'avatar'=>''
         ]);
 
        

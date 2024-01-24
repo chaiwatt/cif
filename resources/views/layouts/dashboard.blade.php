@@ -33,7 +33,7 @@
     <div class="d-flex flex-grow-1">
         @include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
         <div class="d-flex flex-grow-1 flex-column rounded-start-3 overflow-hidden" style="background: #F2F4F7;">
-            <nav class="navbar navbar-expand bg-white">
+            <nav class="navbar navbar-expand">
                 <ul class="navbar-nav d-flex justify-content-between align-items-center w-100 px-3">
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="d-flex text-decoration-none" style="color: #101828;">
@@ -53,7 +53,7 @@
                             <p class="text-md-end m-0">{{Auth::user()->name}} {{Auth::user()->lastname}}</p>
                             <p class="text-md-end m-0 text-muted" style="font-size: 12px">{{Auth::user()->user_position->name}}</p>
                         </div>
-                        <img src="{{ asset('user_test.png') }}" class="rounded-circle" width="40px" height="40px" alt="avatar">
+                        <img src="{{ Auth::user()->avatar != "" ? route('storage.avatar', ['image'=> Auth::user()->avatar]) : asset('user_test.png') }}" class="rounded-circle" width="40px" height="40px" alt="avatar">
                         {{-- โทรโขง --}}
                         <button class="btn rounded-circle p-0" style="width: 40px; height: 40px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

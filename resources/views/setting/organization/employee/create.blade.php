@@ -23,19 +23,29 @@
                 <div class="col-md-12">
                     <div class="card border-0 rounded-4">
                         <div class="py-3 px-4">
-                            <h4 class="m-0">รายละเอียดข้อมูลพนักงาน</h4>
+                            <h4 class="m-0">ข้อมูลส่วนบุคคล</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('setting.organization.employee.store')}}" method="POST">
-                                @csrf
-                                <!-- Display validation errors -->
-                                <div class="row gy-2">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
+                        <form action="{{route('setting.organization.employee.store')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <!-- Display validation errors -->
+                            <div class="card-body">
+                                <div class="row gy-3">
+                                    <div class="col-12 position-relative">
+                                        <div class="form-group" style="width: 327px;">
                                             <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
-                                            <input type="text" name="employee_no" value="{{old('employee_no')}}"
-                                                class="form-control numericInputInt @error('employee_no') is-invalid @enderror">
+                                            <input type="text" name="employee_no" value="{{old('employee_no')}}" class="form-control numericInputInt @error('employee_no') is-invalid @enderror">
                                         </div>
+                                        <input type="file" name="avatar" id="avatar-input" accept="image/png, image/jpg, image/jpeg, image/gif" class="form-control" hidden>
+                                        <label for="avatar-input">
+                                            <div class="d-flex flex-column rounded-4 overflow-hidden position-absolute bottom-0 end-0" style="width: 124px; height: 124px;">
+                                                <div class="d-flex justify-content-center align-items-center " style="background: #667085; flex: 1;">
+                                                    <img src="{{ asset('icon _user_.png') }}" alt="avatar-preview" id="avatar-preview">
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-center" style="height: 30px; background: #D0D5DD;">
+                                                    <p class="m-0 text-decoration-underline">เพิ่มรูปภาพ</p>
+                                                </div>
+                                            </div>
+                                        </label>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -68,11 +78,20 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>เลขที่บัตรประชาชน</label>
-                                            <input type="text" name="hid" value="{{old('hid')}}"
-                                                class="form-control numericInputHid">
+                                            <label>วันเดือนปี เกิด</label>
+                                            <div class="date-box date" id="birth_date" data-target-input="nearest">
+                                                <input name="birthDate" value="{{old('birthDate')}}" type="text"
+                                                    class="form-control datetimepicker-input" data-target="#birth_date">
+                                                <div class="date-icon" data-target="#birth_date"
+                                                    data-toggle="datetimepicker">
+                                                    <span class="material-symbols-outlined">
+                                                        calendar_today
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>สัญชาติ <span class="fw-bold text-danger">*</span></label>
@@ -89,6 +108,7 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>เชื้อชาติ <span class="fw-bold text-danger">*</span></label>
@@ -105,21 +125,106 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>วันเดือนปี เกิด</label>
-                                            <div class="date-box date" id="birth_date" data-target-input="nearest">
-                                                <input name="birthDate" value="{{old('birthDate')}}" type="text"
-                                                    class="form-control datetimepicker-input" data-target="#birth_date">
-                                                <div class="date-icon" data-target="#birth_date"
+                                            <label>ระดับการศึกษาสูงสุด</label>
+                                            <input type="text" name="education" value="{{old('education')}}"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>สาขาวิชา</label>
+                                            <input type="text" name="edu_department" value="{{old('edu_department')}}"
+                                                class="form-control ">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>สถานภาพสมรส</label>
+                                            <select name="relationship"
+                                                class="form-control select2"
+                                                style="width: 100%;">
+                                                <option value="single">single</option>
+                                                {{-- @foreach ($employeeTypes as $employeeType)
+                                                <option value="{{ $employeeType->id }}" {{
+                                                    old('employeeType')==$employeeType->id
+                                                    ?
+                                                    'selected' : '' }}>
+                                                    {{ $employeeType->name }}
+                                                </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>เลขที่บัตรประชาชน</label>
+                                            <input type="text" name="hid" value="{{old('hid')}}"
+                                                class="form-control numericInputHid">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>เลขประจำตัวผู้เสียภาษีอากร</label>
+                                            <input type="text" name="tax" value="{{old('tax')}}"
+                                                class="form-control numericInputInt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-end h-100">
+                                            <div class="form-check form-check-inline py-2">
+                                                <input class="form-check-input" type="checkbox" id="is_foreigner" name="is_foreigner">
+                                                <label class="form-check-label" for="is_foreigner">พนักงานต่างชาติ</label>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label>พาสพอร์ต</label>
+                                                <input type="text" name="passport" value="{{old('passport')}}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>วันหมดอายุวีซ่า</label>
+                                            <div class="date-box date" id="visa_expire_date"
+                                                data-target-input="nearest">
+                                                <input name="visaExpireDate" value="{{old('visaExpireDate')}}"
+                                                    type="text"
+                                                    class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
+                                                    data-target="#visa_expire_date">
+                                                <div class="date-icon" data-target="#visa_expire_date"
                                                     data-toggle="datetimepicker">
                                                     <span class="material-symbols-outlined">
-                                                        today
-                                                        </span>
+                                                        calendar_today
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label>เลขที่ใบอนุญาตทำงาน</label>
+                                                <input type="text" name="work_permit" value="{{old('work_permit')}}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <h4 class="m-0" style="padding-bottom: 32px;">ข้อมูลติดต่อ</h4>
+                                <div class="row gy-3">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>ที่อยู่ <span class="fw-bold text-danger">*</span></label>
@@ -127,6 +232,98 @@
                                                 class="form-control @error('address') is-invalid @enderror">
                                         </div>
                                     </div>
+                                    {{-- เพิ่มใหม่ --}}
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>เขต/อำเภอ <span class="fw-bold text-danger">*</span></label>
+                                            <select name="district"
+                                                class="form-control select2 @error('district') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="district">district</option>
+                                                {{-- @foreach ($userPositions as $userPosition)
+                                                <option value="{{ $userPosition->id }}" {{
+                                                    old('userPosition')==$userPosition->id
+                                                    ?
+                                                    'selected' : '' }}>
+                                                    {{ $userPosition->name }}
+                                                </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>แขวง/ตำบล <span class="fw-bold text-danger">*</span></label>
+                                            <select name="subdistrict"
+                                                class="form-control select2 @error('subdistrict') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="subdistrict">subdistrict</option>
+                                                {{-- @foreach ($userPositions as $userPosition)
+                                                <option value="{{ $userPosition->id }}" {{
+                                                    old('userPosition')==$userPosition->id
+                                                    ?
+                                                    'selected' : '' }}>
+                                                    {{ $userPosition->name }}
+                                                </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>รหัสไปรษณีย์ <span class="fw-bold text-danger">*</span></label>
+                                            <select name="zip"
+                                                class="form-control select2 @error('zip') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="zip">zip</option>
+                                                {{-- @foreach ($userPositions as $userPosition)
+                                                <option value="{{ $userPosition->id }}" {{
+                                                    old('userPosition')==$userPosition->id
+                                                    ?
+                                                    'selected' : '' }}>
+                                                    {{ $userPosition->name }}
+                                                </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>จังหวัด <span class="fw-bold text-danger">*</span></label>
+                                            <select name="city"
+                                                class="form-control select2 @error('city') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="city">city</option>
+                                                {{-- @foreach ($userPositions as $userPosition)
+                                                <option value="{{ $userPosition->id }}" {{
+                                                    old('userPosition')==$userPosition->id
+                                                    ?
+                                                    'selected' : '' }}>
+                                                    {{ $userPosition->name }}
+                                                </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>ประเทศ <span class="fw-bold text-danger">*</span></label>
+                                            <select name="country"
+                                                class="form-control select2 @error('country') is-invalid @enderror"
+                                                style="width: 100%;">
+                                                <option value="country">country</option>
+                                                {{-- @foreach ($userPositions as $userPosition)
+                                                <option value="{{ $userPosition->id }}" {{
+                                                    old('userPosition')==$userPosition->id
+                                                    ?
+                                                    'selected' : '' }}>
+                                                    {{ $userPosition->name }}
+                                                </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {{-- \\\\ --}}
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>เบอร์โทรศัพท์มือถือ</label>
@@ -134,7 +331,20 @@
                                                 class="form-control numericInputPhone">
                                         </div>
                                     </div>
-
+                                    {{-- เพิ่มใหม่ --}}
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>อีเมล</label>
+                                            <input type="email" name="email" value="{{old('email')}}"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <h4 class="m-0" style="padding-bottom: 32px;">ข้อมูลการทำงาน</h4>
+                                <div class="row gy-3">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>ประเภทพนักงาน <span class="fw-bold text-danger">*</span></label>
@@ -197,48 +407,13 @@
                                                 <div class="date-icon" data-target="#start_work_date"
                                                     data-toggle="datetimepicker">
                                                     <span class="material-symbols-outlined">
-                                                        today
+                                                        calendar_today
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label>พาสพอร์ต</label>
-                                                <input type="text" name="passport" value="{{old('passport')}}"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>วันหมดอายุวีซ่า</label>
-                                            <div class="date-box date" id="visa_expire_date"
-                                                data-target-input="nearest">
-                                                <input name="visaExpireDate" value="{{old('visaExpireDate')}}"
-                                                    type="text"
-                                                    class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
-                                                    data-target="#visa_expire_date">
-                                                <div class="date-icon" data-target="#visa_expire_date"
-                                                    data-toggle="datetimepicker">
-                                                    <span class="material-symbols-outlined">
-                                                        today
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label>เลขที่ใบอนุญาตทำงาน</label>
-                                                <input type="text" name="work_permit" value="{{old('work_permit')}}"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>วันหมดอายุใบอนุญาตทำงาน</label>
@@ -251,7 +426,7 @@
                                                 <div class="date-icon" data-target="#work_permit_expire_date"
                                                     data-toggle="datetimepicker">
                                                     <span class="material-symbols-outlined">
-                                                        today
+                                                        calendar_today
                                                     </span>
                                                 </div>
                                             </div>
@@ -268,18 +443,12 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>เลขที่บัญชี</label>
+                                            <label>บัญชีธนาคาร</label>
                                             <input type="text" name="bankAccount" value="{{old('bankAccount')}}"
                                                 class="form-control numericInputInt">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เลขประจำตัวผู้เสียภาษีอากร</label>
-                                            <input type="text" name="tax" value="{{old('tax')}}"
-                                                class="form-control numericInputInt">
-                                        </div>
-                                    </div>
+                                  
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>เลขที่ประกันสังคม</label>
@@ -306,15 +475,14 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row mt-2">
+                            </div>
+                                <div class="row my-3">
                                     <div class="col-12 text-end">
                                         <button type="submit"
                                             class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -330,7 +498,12 @@
             format: 'L'
         });
     });
-
+    const avatar = document.getElementById('avatar-input');
+    const avatarPreview = document.getElementById('avatar-preview');
+    avatar.onchange = (event) => {
+        avatarPreview.src = URL.createObjectURL(event.target.files[0]);
+        avatarPreview.style = 'width: 100%; height: 100%; object-fit: cover;'
+    }
 </script>
 @endpush
 @endsection

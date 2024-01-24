@@ -75,18 +75,29 @@ class AnnounceSystemAnnouncementListController extends Controller
         $body = $request->summernoteContent;
         $attachments = $request->attachments;
         $status = $request->status;
-         
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $file = $request->file('announce_thumbnail');
+        $filename = 'thumbnail' . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('announcement/thumbnail', $filename);
+
         $announcement = Announcement::create([
+            'thumbnail'=> $filename,
             'title' => $title,
             'description' => $description,
             'body' => $body,
             'status' => $status,
+            'start_date'=> $start_date,
+            'end_date'=> $end_date
         ]);
         
 
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
             foreach($attachments as $attachment){
-                $filePath = $attachment->store('', 'attachments');
+                $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
+                $filePath = $attachment->storeAs('attachments', $filename);
                 AnnouncementAttachment::create([
                     'name' => $attachment->getClientOriginalName(),
                     'announcement_id' => $announcement->id,
@@ -139,17 +150,22 @@ class AnnounceSystemAnnouncementListController extends Controller
         $body = $request->summernoteContent;
         $attachments = $request->attachments;
         $status = $request->status;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
 
         Announcement::find($announcementId)->update([
             'title' => $title,
             'description' => $description,
             'body' => $body,
-            'status' => $status
+            'status' => $status,
+            'start_date'=> $start_date,
+            'end_date'=> $end_date
         ]);
         
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
             foreach($attachments as $attachment){
-                $filePath = $attachment->store('', 'attachments');
+                $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
+                $filePath = $attachment->storeAs('attachments', $filename);
                 AnnouncementAttachment::create([
                     'name' => $attachment->getClientOriginalName(),
                     'announcement_id' => $announcementId,
@@ -170,7 +186,8 @@ class AnnounceSystemAnnouncementListController extends Controller
         }
         
         $announcement = Announcement::findOrFail($id);
-
+        $filePath = 'announcement/thumbnail/' + $announcement->thumbnail;
+        Storage::delete($filePath);
         $this->activityLogger->log('ลบ', $announcement);
 
         $announcement->delete();
@@ -182,6 +199,8 @@ class AnnounceSystemAnnouncementListController extends Controller
         // ตรวจสอบความถูกต้องของข้อมูลในฟอร์ม
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
+            'announce_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'start_date' => 'required'
         ]);
 
         // ส่งกลับตัว validator

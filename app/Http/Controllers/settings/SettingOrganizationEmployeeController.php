@@ -68,7 +68,6 @@ class SettingOrganizationEmployeeController extends Controller
             // การตรวจสอบความถูกต้องล้มเหลว
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
         $prefix = $request->prefix;  // คำนำหน้าชื่อ
         $name = $request->name;  // ชื่อ
         $lastname = $request->lastname;  // นามสกุล
@@ -79,6 +78,7 @@ class SettingOrganizationEmployeeController extends Controller
         $birthDate = !is_null($request->birthDate) ? Carbon::createFromFormat('m/d/Y', $request->birthDate)->format('Y-m-d') : null;  // วันเกิด
         $address = $request->address;  // ที่อยู่
         $phone = preg_replace('/[^0-9]/', '', $request->phone) ?? null;  // เบอร์โทรศัพท์ (ลบช่องว่าง)
+        $email = $request->email;
         // $educationLevel = $request->educationLevel ?? null;  // ระดับการศึกษา
         // $educationBranch = $request->educationBranch ?? null;  // สาขาวิชาที่ศึกษา
         $employeeType = $request->employeeType;  // ประเภทพนักงาน
@@ -94,8 +94,23 @@ class SettingOrganizationEmployeeController extends Controller
         $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
         $socialSecurityNumber = $request->social_security_number ?? null;  // เลขที่ประกันสังคม
         $timeRecordRequire = $request->timeRecordRequire;
+        
+        // New Field
+        $education = $request->education;
+        $edu_department = $request->edu_department;
+        $relationship = $request->relationship;
+        $district = $request->district;
+        $subdistrict = $request->subdistrict;
+        $zip = $request->zip;
+        $city = $request->city;
+        $country = $request->country;
+        $is_foreigner = !is_null($request->is_foreigner) ? true : false;
+        $file = $request->file('avatar');
+        $filename = 'avatar' . '-' . time() . '.' . $file->getClientOriginalExtension();
 
+        $file->storeAs('avatar', $filename);
         $user = new User();
+        $user->avatar = $filename;
         $user->prefix_id = $prefix;  // กำหนดค่าคำนำหน้าชื่อให้กับคอลัมน์ prefix_id
         $user->nationality_id = $nationality;  // กำหนดค่าสัญชาติให้กับคอลัมน์ nationality_id
         $user->ethnicity_id = $ethnicity;  // กำหนดค่าเชื้อชาติให้กับคอลัมน์ ethnicity_id
@@ -119,13 +134,25 @@ class SettingOrganizationEmployeeController extends Controller
         $user->bank_account = $bankAccount;  // กำหนดค่าเลขที่บัญชีธนาคารให้กับคอลัมน์ bank_account
         // $user->education_level = $educationLevel;  // กำหนดค่าระดับการศึกษาให้กับคอลัมน์ education_level
         // $user->education_branch = $educationBranch;  // กำหนดค่าสาขาวิชาที่ศึกษาให้กับคอลัมน์ education_branch
-        $user->email = $employeeNo . '@cif.com';  // กำหนดค่าอีเมลให้กับคอลัมน์ email (รหัสพนักงาน@cif.com)
+        // $user->email = $employeeNo . '@cif.com';  // กำหนดค่าอีเมลให้กับคอลัมน์ email (รหัสพนักงาน@cif.com)
+        $user->email = $email;  // กำหนดค่าอีเมลให้กับคอลัมน์ email
         $user->password = bcrypt('11111111');  // กำหนดค่ารหัสผ่านให้กับคอลัมน์ password (เข้ารหัสแบบ bcrypt)
         $user->passport = $passport;  
         $user->work_permit = $workPermit;  
         $user->tax = $tax;  
         $user->social_security_number = $socialSecurityNumber;  
         $user->time_record_require = $timeRecordRequire; 
+        
+        // New Field Add
+        $user->education = $education;
+        $user->edu_department = $edu_department;
+        $user->relationship = $relationship;
+        $user->district = $district;
+        $user->subdistrict = $subdistrict;
+        $user->zip = $zip;
+        $user->city = $city;
+        $user->country = $country;
+        $user->is_foreigner = $is_foreigner;
         
         $user->save();  // บันทึกข้อมูลในฐานข้อมูล
 
@@ -405,6 +432,13 @@ class SettingOrganizationEmployeeController extends Controller
                 'visaExpireDate' => 'nullable|date|after_or_equal:today', // Add validation for visaExpireDate
                 'workPermitExpireDate' => 'nullable|date|after_or_equal:today',
                 'timeRecordRequire' => 'required',
+                // New Field Validate
+                'district'=> 'required',
+                'subdistrict'=> 'required',
+                'zip'=> 'required',
+                'city'=> 'required',
+                'country'=> 'required',
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:3072'
             ]);
         return $validator;
     }

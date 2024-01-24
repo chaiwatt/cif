@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
@@ -130,7 +131,7 @@ Route::group(['prefix' => 'work_schedule'], function () {
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/group/{id}', [GroupController::class, 'index'])->name('group.index');
-
+    Route::get('/storage/avatar/{image}', [ImageController::class, 'avatar_view'])->name('storage.avatar');
     Route::group(['prefix' => 'groups'], function () {
         Route::group(['prefix' => 'time-recording-system'], function () {
             Route::group(['prefix' => 'shift'], function () {

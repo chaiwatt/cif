@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+            $table->string('thumbnail')->nullable();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->longText('body')->nullable();

@@ -41,7 +41,7 @@
                             <p class="text-md-end m-0 text-muted" style="font-size: 12px">{{Auth::user()->user_position->name}}</p>
                         </li>
                         <li class="d-flex gap-3">
-                            <img src="{{ asset('user_test.png') }}" class="rounded-circle" width="40px" height="40px" alt="avatar">
+                            <img src="{{ Auth::user()->avatar != "" ? route('storage.avatar', ['image'=> Auth::user()->avatar]) : asset('user_test.png') }}" class="rounded-circle" width="40px" height="40px" alt="avatar">
                             {{-- โทรโขง --}}
                             <button class="btn rounded-circle p-0" style="width: 40px; height: 40px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
