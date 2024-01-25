@@ -10,9 +10,13 @@ class ApplicationNew extends Model
     use HasFactory;
     protected $fillable = [
         'title',
-        'description',
         'body',
-        'status'
+        'status',
+        // Add new fillable
+        'amount_apply',
+        'start_date',
+        'end_date',
+        'application_form'
     ];
 }
 
