@@ -11,13 +11,14 @@ use App\Models\AnnouncementAttachment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Services\UpdatedRoleGroupCollectionService;
+use Carbon\Carbon;
 
 class AnnounceSystemAnnouncementListController extends Controller
 {
     private $updatedRoleGroupCollectionService;
     private $activityLogger;
 
-    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService,ActivityLogger $activityLogger) 
+    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService,ActivityLogger $activityLogger)
     {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
         $this->activityLogger = $activityLogger;
@@ -35,7 +36,7 @@ class AnnounceSystemAnnouncementListController extends Controller
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
         $announcements = Announcement::orderBy('id', 'desc')->get();
-        
+
         return view($viewName, [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
@@ -43,6 +44,7 @@ class AnnounceSystemAnnouncementListController extends Controller
             'announcements' => $announcements
        ]);
     }
+
     public function create()
     {
         // กำหนดค่าตัวแปร $action ให้เป็น 'create'
@@ -62,13 +64,14 @@ class AnnounceSystemAnnouncementListController extends Controller
             'permission' => $permission
         ]);
     }
+
     public function store(Request $request)
     {
-       
+
         $validator = $this->validateFormData($request);
-       
+
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)/* ->withInput($request->all()) */;
         }
         $title = $request->title;
         $description = $request->description;
@@ -89,10 +92,11 @@ class AnnounceSystemAnnouncementListController extends Controller
             'description' => $description,
             'body' => $body,
             'status' => $status,
-            'start_date'=> $start_date,
-            'end_date'=> $end_date
+            'start_date'=> Carbon::parse($start_date),
+            'end_date'=> Carbon::parse($end_date)
         ]);
-        
+
+
 
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
             foreach($attachments as $attachment){
@@ -105,8 +109,11 @@ class AnnounceSystemAnnouncementListController extends Controller
                 ]);
             }
         }
-
+        return redirect()->route('groups.announcement-system.announcement.list', [
+            'success' => 'สร้างข่าวสารสำเร็จ'
+        ]);
     }
+
     public function view($id)
     {
         // กำหนดค่าตัวแปร $action ให้เป็น 'update'
@@ -126,7 +133,7 @@ class AnnounceSystemAnnouncementListController extends Controller
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'announcement' => $announcement,
-            'announcementAttachments' => $announcementAttachments 
+            'announcementAttachments' => $announcementAttachments
         ]);
     }
     public function deleteAttachment(Request $request)
@@ -143,7 +150,7 @@ class AnnounceSystemAnnouncementListController extends Controller
             // ในกรณีที่ข้อมูลไม่ถูกต้อง กลับไปยังหน้าก่อนหน้าพร้อมแสดงข้อผิดพลาดและข้อมูลที่กรอก
             return redirect()->back()->withErrors($validator)->withInput();
         }
-       
+
         $announcementId = $request->announcementId;
         $title = $request->title;
         $description = $request->description;
@@ -161,7 +168,7 @@ class AnnounceSystemAnnouncementListController extends Controller
             'start_date'=> $start_date,
             'end_date'=> $end_date
         ]);
-        
+
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
             foreach($attachments as $attachment){
                 $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
@@ -173,7 +180,7 @@ class AnnounceSystemAnnouncementListController extends Controller
                 ]);
             }
         }
-        
+
         return ;
     }
     public function delete($id)
@@ -184,7 +191,7 @@ class AnnounceSystemAnnouncementListController extends Controller
             Storage::disk('attachments')->delete($announceAttachment->file);
             $announceAttachment->delete();
         }
-        
+
         $announcement = Announcement::findOrFail($id);
         $filePath = 'announcement/thumbnail/' + $announcement->thumbnail;
         Storage::delete($filePath);

@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->longText('body')->nullable();
             $table->char('status')->default(1);
+            $table->string('announce_thumbnail')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->timestamps();
         });
     }

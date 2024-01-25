@@ -7,6 +7,15 @@
 <div>
     @include('layouts.partial.loading')
     <div>
+        @if ($errors->any())
+            <div class="alert alert-danger m-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center my-4 px-4">
                 <div>
@@ -121,7 +130,7 @@
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     window.params = {
-        searchRoute: '{{ route('groups.salary-system.salary.calculation.search') }}',        
+        searchRoute: '{{ route('groups.salary-system.salary.calculation.search') }}',
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };
