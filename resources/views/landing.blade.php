@@ -87,65 +87,29 @@
                     </p>
                 </div>
                 <div class="px-5 d-flex flex-column gap-3">
-                    <div class="p-5 d-flex flex-column flex-lg-row justify-content-between" style="background: #F2F4F7; gap:56px">
-                        <div class="d-flex flex-column justify-content-center align-items-center gap-2">
-                            <h1 class="m-0" style="font-size: 40px">1</h1>
-                            <h5><b>อัตรา</b></h5>
-                        </div>
-                        <div class="flex-grow-1">
-                            <strong><h5>ผู้จัดการฝ่ายควบคุมคุณภาพการผลิต</h5></strong>
-                            <p class="text-muted m-0 job-intro">หน้าที่ความรับผิดชอบ
-                                • ควบคุมดูแล และ ทำการตรวจสอบคุณภาพในส่วนของงาน QC ให้เป็นไปตามข้อกำหนด
-                                • ติดตามปัญหาในไลน์ผลิต และ ตัดสินใจเบื้องต้นเกี่ยวกับคุณภาพงาน
-                                • รวบรวมผลการตรวจสอบประจำวัน รวมทั้งปัญหาคุณภาพที่เกิดขึ้นในแต่ละวันให้ผู้บังคับบัญชาทราบ
-                                • ตรวจตรา ดูแลเครื่องมือ ให้สามารถปฏิบัติงานได้อย่างถูกต้องแม่นยำ
-                                • รับนโยบายและถ่ายทอดคำสั่งต่างๆแก่ผู้ใต้บังคับบัญชา
-                                • ปฏิบัติงานอื่นๆตามที่ได้รับมอบหมายจากผู้บังคับบัญชา
-                            </p>
-                        </div>
-                        <div>
-                            <button class="btn btn-outline-secondary text-nowrap btn-lg">
-                                รายละเอียด
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-5 d-flex flex-column flex-lg-row justify-content-between" style="background: #F2F4F7; gap:56px">
-                        <div class="d-flex flex-column justify-content-center align-items-center gap-2">
-                            <h1 class="m-0" style="font-size: 40px">1</h1>
-                            <h5><b>อัตรา</b></h5>
-                        </div>
-                        <div class="flex-grow-1">
-                            <strong><h5>ผู้จัดการฝ่ายควบคุมคุณภาพการผลิต</h5></strong>
-                            <p class="text-muted m-0 job-intro">หน้าที่ความรับผิดชอบ
-                                • ควบคุมดูแล และ ทำการตรวจสอบคุณภาพในส่วนของงาน QC ให้เป็นไปตามข้อกำหนด
-                                • ติดตามปัญหาในไลน์ผลิต และ ตัดสินใจเบื้องต้นเกี่ยวกับคุณภาพงาน
-                                • รวบรวมผลการตรวจสอบประจำวัน รวมทั้งปัญหาคุณภาพที่เกิดขึ้นในแต่ละวันให้ผู้บังคับบัญชาทราบ
-                                • ตรวจตรา ดูแลเครื่องมือ ให้สามารถปฏิบัติงานได้อย่างถูกต้องแม่นยำ
-                                • รับนโยบายและถ่ายทอดคำสั่งต่างๆแก่ผู้ใต้บังคับบัญชา
-                                • ปฏิบัติงานอื่นๆตามที่ได้รับมอบหมายจากผู้บังคับบัญชา
-                            </p>
-                        </div>
-                        <div>
-                            <button class="btn btn-outline-secondary text-nowrap btn-lg">
-                                รายละเอียด
-                            </button>
-                        </div>
+                    @foreach ($applicationNews->where('status',1) as $applicationNew)
+                        <div class="p-5 d-flex flex-column flex-lg-row justify-content-between" style="background: #F2F4F7; gap:56px">
+                            <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+                                <h1 class="m-0" style="font-size: 40px">{{ $applicationNew->amount_apply }}</h1>
+                                <h5><b>อัตรา</b></h5>
+                            </div>
+                            <div class="flex-grow-1">
+                                <strong><h5>{{ $applicationNew->title }}</h5></strong>
+                                <p class="text-muted m-0 job-intro">{!! $applicationNew->body !!}</p>
+                            </div>
+                            <div>
+                                <a href="{{route('post-job-application-news',['id' => $applicationNew->id])}}" class="btn btn-outline-secondary text-nowrap btn-lg">
+                                    รายละเอียด
+                                </a>
+                            </div>
+                       
+                        @endforeach
                     </div>
                 </div>
                 <div class="p-5 text-center">
                     <a href="#" class="text-primary px-3 py-2">งานทั้งหมด</a>
                 </div>
-                    {{-- @foreach ($applicationNews->where('status',1) as $applicationNew)
-                    <tr>
-                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
-                            $applicationNew->created_at)->format('d/m/Y')
-                            }}</td>
-                        <td>{{$applicationNew->title}}</td>
-                        <td class="text-right"><a
-                                href="{{route('post-job-application-news',['id' => $applicationNew->id])}}"
-                                class="btn btn-sm btn-info">อ่าน</a></td>
-                    </tr>
-                    @endforeach --}}
+                   
             </div>
         </div>
         {{-- @endif --}}

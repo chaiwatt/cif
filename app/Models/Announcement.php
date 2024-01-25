@@ -14,7 +14,6 @@ class Announcement extends Model
         'description',
         'body',
         'status',
-        'announce_thumbnail',
         'start_date',
         'end_date'
     ];

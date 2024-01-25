@@ -5,7 +5,8 @@
     #calendar .fc-toolbar {
         display: none;
     }
-    
+    .fc-day-sat:not(.fc-col-header-cell),
+    .fc-day-sun:not(.fc-col-header-cell) { background: #FBEED1;  }
 </style>
 <link rel="stylesheet" href="{{ asset('assets/plugins/fullcalendar/main.css') }}">
 @endpush

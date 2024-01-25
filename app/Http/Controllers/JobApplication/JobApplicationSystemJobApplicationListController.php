@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\JobApplication;
 
+use Carbon\Carbon;
 use Countable;
 use Illuminate\Http\Request;
 use App\Models\ApplicationNew;
@@ -64,36 +65,46 @@ class JobApplicationSystemJobApplicationListController extends Controller
     }
     public function store(Request $request)
     {
+        // dd($request);
         $validator = $this->validateFormData($request);
        
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        // title is Wanted Department
         $title = $request->title;
-        $description = $request->description;
-        $body = $request->summernoteContent;
-        $attachments = $request->attachments;
+        $body = $request->summernote;
         $status = $request->status;
 
+        $start_date = Carbon::parse($request->start_date);
+        $end_date = Carbon::parse($request->end_date);
+        $application_form = $request->application_form;
+        $amount_apply = $request->amount_apply;
          
-        $applicationNew = ApplicationNew::create([
+        ApplicationNew::create([
             'title' => $title,
-            'description' => $description,
             'body' => $body,
             'status' => $status,
+            // Add new field
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'application_form' => $application_form,
+            'amount_apply' => $amount_apply
         ]);
         
+        return redirect()->route('groups.job-application-system.job-application.list');
 
-        if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
-            foreach($attachments as $attachment){
-                $filePath = $attachment->store('', 'attachments');
-                ApplicationNewAttachment::create([
-                    'name' => $attachment->getClientOriginalName(),
-                    'application_new_id' => $applicationNew->id,
-                    'file' => $filePath
-                ]);
-            }
-        }
+        // Disable attachments
+        // if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
+        //     foreach($attachments as $attachment){
+        //         $filePath = $attachment->store('', 'attachments');
+        //         ApplicationNewAttachment::create([
+        //             'name' => $attachment->getClientOriginalName(),
+        //             'application_new_id' => $applicationNew->id,
+        //             'file' => $filePath
+        //         ]);
+        //     }
+        // }
 
     }
     public function view($id)
@@ -135,39 +146,46 @@ class JobApplicationSystemJobApplicationListController extends Controller
        
         $applicationNewId = $request->applicationNewId;
         $title = $request->title;
-        $description = $request->description;
-        $body = $request->summernoteContent;
-        $attachments = $request->attachments;
+        $body = $request->summernote;
         $status = $request->status;
+
+        $start_date = Carbon::parse($request->start_date);
+        $end_date = Carbon::parse($request->end_date);
+        $application_form = $request->application_form;
+        $amount_apply = $request->amount_apply;
 
         ApplicationNew::find($applicationNewId)->update([
             'title' => $title,
-            'description' => $description,
             'body' => $body,
             'status' => $status,
+             // Add new field
+             'start_date' => $start_date,
+             'end_date' => $end_date,
+             'application_form' => $application_form,
+             'amount_apply' => $amount_apply
         ]);
+        return redirect()->route('groups.job-application-system.job-application.list');
         
-        if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
-            foreach($attachments as $attachment){
-                $filePath = $attachment->store('', 'attachments');
-                ApplicationNewAttachment::create([
-                    'name' => $attachment->getClientOriginalName(),
-                    'application_new_id' => $applicationNewId,
-                    'file' => $filePath
-                ]);
-            }
-        }
-        
-        return ;
+        // if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
+        //     foreach($attachments as $attachment){
+        //         $filePath = $attachment->store('', 'attachments');
+        //         ApplicationNewAttachment::create([
+        //             'name' => $attachment->getClientOriginalName(),
+        //             'application_new_id' => $applicationNewId,
+        //             'file' => $filePath
+        //         ]);
+        //     }
+        // }
+    
     }
     public function delete($id)
     {
-        $applicationNewAttachments = ApplicationNewAttachment::where('application_new_id', $id)->get();
+        // $applicationNewAttachments = ApplicationNewAttachment::where('application_new_id', $id)->get();
         // Delete records and associated files
-        foreach ($applicationNewAttachments as $applicationNewAttachment) {
-            Storage::disk('attachments')->delete($applicationNewAttachment->file);
-            $applicationNewAttachment->delete();
-        }
+        // foreach ($applicationNewAttachments as $applicationNewAttachment) {
+        //     Storage::disk('attachments')->delete($applicationNewAttachment->file);
+        //     $applicationNewAttachment->delete();
+        // }
         
         $applicationNew = ApplicationNew::findOrFail($id);
 
@@ -182,6 +200,7 @@ class JobApplicationSystemJobApplicationListController extends Controller
         // ตรวจสอบความถูกต้องของข้อมูลในฟอร์ม
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
+            'amount_apply' => 'required'
         ]);
 
         // ส่งกลับตัว validator

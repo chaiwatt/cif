@@ -78,7 +78,7 @@ class SettingOrganizationEmployeeController extends Controller
         $birthDate = !is_null($request->birthDate) ? Carbon::createFromFormat('m/d/Y', $request->birthDate)->format('Y-m-d') : null;  // วันเกิด
         $address = $request->address;  // ที่อยู่
         $phone = preg_replace('/[^0-9]/', '', $request->phone) ?? null;  // เบอร์โทรศัพท์ (ลบช่องว่าง)
-        $email = $request->email;
+        $email = !is_null($request->email) ? $request->email : null;
         // $educationLevel = $request->educationLevel ?? null;  // ระดับการศึกษา
         // $educationBranch = $request->educationBranch ?? null;  // สาขาวิชาที่ศึกษา
         $employeeType = $request->employeeType;  // ประเภทพนักงาน

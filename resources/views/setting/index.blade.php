@@ -162,11 +162,21 @@
         var employeeDonutOptions = {
             maintainAspectRatio: false,
             responsive: true,
+            colors: {
+      enabled: false
+    },
             legend: {
                 show: true,
                 position: 'bottom',
-                align:'start'
+                align:'start',
+                enabled: false,
+                labels: {
+                    padding: 12,
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                },
             },
+            
 
         };
     
@@ -191,6 +201,11 @@
                 show: true,
                 position: 'bottom',
                 align:'start',
+                labels: {
+                    padding: 12,
+                    usePointStyle: true,
+                    pointStyle: 'circle'
+                },
             },
             
         };

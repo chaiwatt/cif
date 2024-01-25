@@ -63,11 +63,10 @@
                                                     <td>
                                                         <ul class="mb-0">
                                                             @foreach ($role->users as $user)
-                                                            <li style="padding: 5px;">
-                                                                {{$user->name}} {{$user->lastname}}<a
-                                                                    class="text-danger me-2"
-                                                                    href="{{ route('setting.access.assignment.role.delete', ['roleId' => $role->id, 'userId' =>$user->id])}}"><i
-                                                                        class="fas fa-times"
+                                                            <li style="padding: 5px;">{{$user->name}} {{$user->lastname}}<a
+                                                                    class="text-danger ms-2 text-decoration-none"
+                                                                    href="{{ route('setting.access.assignment.role.delete', ['roleId' => $role->id, 'userId' =>$user->id])}}">
+                                                                    <i class="fas fa-times"
                                                                         style="font-size: smaller;"></i>
                                                                 </a>
                                                             </li>

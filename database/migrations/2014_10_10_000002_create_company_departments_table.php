@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',100)->nullable();
             $table->string('eng_name',100)->nullable();
+            $table->string('color',50);
             $table->string('code',250)->nullable();
             $table->timestamps();
         });

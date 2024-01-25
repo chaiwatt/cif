@@ -96,7 +96,7 @@
                                                 <label for="avatar-input">
                                                     <div class="d-flex flex-column rounded-4 overflow-hidden position-absolute bottom-0 end-0" style="width: 124px; height: 124px;">
                                                         <div class="d-flex justify-content-center align-items-center " style="background: #667085; flex: 1;">
-                                                            <img src="{{ route('storage.avatar', ['image'=> Auth::user()->avatar]) }}" alt="avatar-preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                                            <img src="{{ Auth::user()->avatar ? route('storage.avatar', ['image'=> Auth::user()->avatar]) : asset('icon _user_.png') }}" alt="avatar-preview" style="{{ Auth::user()->avatar ? "width: 100%; height: 100%; object-fit: cover;" : "" }}">
                                                         </div>
                                                     </div>
                                                 </label>

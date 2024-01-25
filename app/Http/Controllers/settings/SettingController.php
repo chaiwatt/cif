@@ -29,7 +29,7 @@ class SettingController extends Controller
             $employeeDatapackages[] = [
                 'label' => $companyDepartment->name,
                 'value' => $companyDepartment->users_belong->count(),
-                'color' => $colors[$index % count($colors)],
+                'color' => $companyDepartment->color,
             ];
         }
 

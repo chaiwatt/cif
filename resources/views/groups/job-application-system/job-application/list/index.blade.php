@@ -53,10 +53,10 @@
                                     <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                         <thead class="border-bottom">
                                             <tr>
-                                                <th>ข่าวประกาศ</th>
-                                                <th>คำอธิบาย</th>
-                                                <th>วันที่เพิ่ม</th>
-                                                <th>สถานะ</th>
+                                                <th>ตำแหน่ง</th>
+                                                <th>จำนวน</th>
+                                                <th>ระยะเวลาการรับสมัคร</th>
+                                                <th>สถานะเปิดรับสมัคร</th>
                                                 <th style="width: 120px">เพิ่มเติม</th>
                                             </tr>
                                         </thead>
@@ -65,9 +65,7 @@
                                             <tr>
                                                 <td>{{$applicationNew->title}}</td>
                                                 <td>{{$applicationNew->description}}</td>
-                                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
-                                                    $applicationNew->created_at)->format('d/m/Y')
-                                                    }}</td>
+                                                <td>{{ \Jenssegers\Date\Date::parse($applicationNew->start_date)->format('d M Y') }} - {{ \Jenssegers\Date\Date::parse($applicationNew->end_date)->format('d M Y') }}</td>
                                                 <td>
                                                     @if ($applicationNew->status == 1)
                                                     แสดง

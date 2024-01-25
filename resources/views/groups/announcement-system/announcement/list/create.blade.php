@@ -163,11 +163,11 @@
         <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
         <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
         <script>
-            /*window.params = {
+            window.params = {
                 storeRoute: '{{ route('groups.announcement-system.announcement.list.store') }}',
                 url: '{{ url('/') }}',
                 token: $('meta[name="csrf-token"]').attr('content')
-            };*/
+            };
 
             $(document).ready(function() {
                 $('#summernote').summernote({

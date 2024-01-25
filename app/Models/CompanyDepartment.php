@@ -12,6 +12,7 @@ class CompanyDepartment extends Model
     protected $fillable = [
         'name',
         'eng_name',
+        'color',
         'code',
     ];
     /**
