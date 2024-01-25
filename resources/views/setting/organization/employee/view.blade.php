@@ -1,6 +1,15 @@
 @extends('layouts.setting-dashboard')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger m-4">
+        <ul>
+            @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div>
     <div>
         <div class="container-fluid">

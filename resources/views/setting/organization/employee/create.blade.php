@@ -1,6 +1,15 @@
 @extends('layouts.setting-dashboard')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger m-4">
+        <ul>
+            @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div>
     <div>
         <div class="container-fluid">
@@ -334,9 +343,9 @@
                                     {{-- เพิ่มใหม่ --}}
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>อีเมล</label>
+                                            <label>อีเมล <span class="fw-bold text-danger">*</span></label>
                                             <input type="email" name="email" value="{{old('email')}}"
-                                                class="form-control">
+                                                class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -413,7 +422,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>วันหมดอายุใบอนุญาตทำงาน</label>
@@ -448,7 +457,7 @@
                                                 class="form-control numericInputInt">
                                         </div>
                                     </div>
-                                  
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>เลขที่ประกันสังคม</label>

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             // Add new field avatar
-            $table->string('avatar', 250)->comment('avatar');
+            $table->string('avatar', 250)->nullable()->comment('avatar');
             $table->string('employee_no',50)->unique()->comment('รหัสพนักงาน');
             $table->string('username')->nullable()->unique()->comment('ชื่อผู้ใช้');
             $table->unsignedBigInteger('prefix_id')->nullable()->comment('คำนำหน้าชื่อ');
