@@ -666,6 +666,7 @@ Route::middleware('auth')->group(function () {
         Route::get('', [SettingController::class, 'index'])->name('setting');
         Route::group(['prefix' => 'organization'], function () {
             Route::group(['prefix' => 'employee'], function () {
+                Route::get('address/{postalCode}', [SettingOrganizationEmployeeController::class, 'getAddressByPostalCode'])->name('setting.organization.employee.address');
                 Route::get('', [SettingOrganizationEmployeeController::class, 'index'])->name('setting.organization.employee.index');
                 Route::get('create', [SettingOrganizationEmployeeController::class, 'create'])->name('setting.organization.employee.create');
                 Route::post('store', [SettingOrganizationEmployeeController::class, 'store'])->name('setting.organization.employee.store');

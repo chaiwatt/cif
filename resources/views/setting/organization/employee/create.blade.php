@@ -235,7 +235,8 @@
                             </div>
                             <hr>
                             <div class="card-body">
-                                <h4 class="m-0" style="padding-bottom: 32px;">ข้อมูลติดต่อ</h4>
+                                <h4 class="m-0">ข้อมูลติดต่อ</h4>
+                                <p class="text-muted m-0" style="padding-bottom: 32px;">คำแนะนำกรอก รหัสไปรษณีย์ ก่อน</p>
                                 <div class="row gy-3">
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -248,10 +249,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>เขต/อำเภอ <span class="fw-bold text-danger">*</span></label>
-                                            <select name="district"
+                                            <select name="district" id="district"
                                                 class="form-control select2 @error('district') is-invalid @enderror"
                                                 style="width: 100%;">
-                                                <option value="district">district</option>
                                                 {{-- @foreach ($userPositions as $userPosition)
                                                 <option value="{{ $userPosition->id }}" {{
                                                     old('userPosition')==$userPosition->id
@@ -266,46 +266,25 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>แขวง/ตำบล <span class="fw-bold text-danger">*</span></label>
-                                            <select name="subdistrict"
+                                            <select name="subdistrict" id="subdistrict"
                                                 class="form-control select2 @error('subdistrict') is-invalid @enderror"
                                                 style="width: 100%;">
-                                                <option value="subdistrict">subdistrict</option>
-                                                {{-- @foreach ($userPositions as $userPosition)
-                                                <option value="{{ $userPosition->id }}" {{
-                                                    old('userPosition')==$userPosition->id
-                                                    ?
-                                                    'selected' : '' }}>
-                                                    {{ $userPosition->name }}
-                                                </option>
-                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>รหัสไปรษณีย์ <span class="fw-bold text-danger">*</span></label>
-                                            <select name="zip"
-                                                class="form-control select2 @error('zip') is-invalid @enderror"
-                                                style="width: 100%;">
-                                                <option value="zip">zip</option>
-                                                {{-- @foreach ($userPositions as $userPosition)
-                                                <option value="{{ $userPosition->id }}" {{
-                                                    old('userPosition')==$userPosition->id
-                                                    ?
-                                                    'selected' : '' }}>
-                                                    {{ $userPosition->name }}
-                                                </option>
-                                                @endforeach --}}
-                                            </select>
+                                            <input type="text" class="form-control @error('zip') is-invalid @enderror" style="width: 100%;" id="zip-address">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>จังหวัด <span class="fw-bold text-danger">*</span></label>
-                                            <select name="city"
+                                            <select name="city" id="city"
                                                 class="form-control select2 @error('city') is-invalid @enderror"
                                                 style="width: 100%;">
-                                                <option value="city">city</option>
+                                               
                                                 {{-- @foreach ($userPositions as $userPosition)
                                                 <option value="{{ $userPosition->id }}" {{
                                                     old('userPosition')==$userPosition->id
@@ -323,15 +302,7 @@
                                             <select name="country"
                                                 class="form-control select2 @error('country') is-invalid @enderror"
                                                 style="width: 100%;">
-                                                <option value="country">country</option>
-                                                {{-- @foreach ($userPositions as $userPosition)
-                                                <option value="{{ $userPosition->id }}" {{
-                                                    old('userPosition')==$userPosition->id
-                                                    ?
-                                                    'selected' : '' }}>
-                                                    {{ $userPosition->name }}
-                                                </option>
-                                                @endforeach --}}
+                                               <option value="ประเทศไทย">ประเทศไทย</option>
                                             </select>
                                         </div>
                                     </div>
@@ -514,6 +485,38 @@
         avatarPreview.src = URL.createObjectURL(event.target.files[0]);
         avatarPreview.style = 'width: 100%; height: 100%; object-fit: cover;'
     }
+    $(document).on('change', '#zip-address', function (e) {
+        var postalCode = $('#zip-address').val();
+
+        $.get('{{ route('setting.organization.employee.address', ["postalCode" => "/"]) }}' + "/" +postalCode, function(data) {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            console.log(data);
+            const SubDistrictElement = document.getElementById("subdistrict");
+            const DistrictElement = document.getElementById("district");
+            const CityElement = document.getElementById("city");
+            for (const Subdi of data.subdistricts) {
+                const OptionElement = document.createElement('option');
+                OptionElement.value = Subdi.subDistrictName;
+                OptionElement.innerHTML = Subdi.subDistrictName;
+                SubDistrictElement.appendChild(OptionElement);
+            }
+            for (const Subdi of data.districts) {
+                const OptionElement = document.createElement('option');
+                OptionElement.value = Subdi.districtName;
+                OptionElement.innerHTML = Subdi.districtName;
+                DistrictElement.appendChild(OptionElement);
+            }
+            for (const Subdi of data.provinces) {
+                const OptionElement = document.createElement('option');
+                OptionElement.value = Subdi.provinceName;
+                OptionElement.innerHTML = Subdi.provinceName;
+                CityElement.appendChild(OptionElement);
+            }
+        });
+    });
 </script>
 @endpush
 @endsection

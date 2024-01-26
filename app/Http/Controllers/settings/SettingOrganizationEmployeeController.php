@@ -441,6 +441,34 @@ class SettingOrganizationEmployeeController extends Controller
         $users = $query->paginate(20);
         return view('setting.organization.employee.table-render.employee-table',['users' => $users])->render();
     }
+    // ดึงข้อมูลพื้นที่
+    public function getAddressByPostalCode($postalCode) {
+        $jsonPath = storage_path('th-address.json');
+
+        // อ่านข้อมูลจากไฟล์ JSON
+        $jsonData = file_get_contents($jsonPath);
+        $data = json_decode($jsonData, true);
+
+        // ค้นหาข้อมูลจากรหัสไปรษณีย์
+        foreach ($data as $entry) {
+            if ($entry['zipCode'] == $postalCode) {
+                $subDistrictList = $entry['subDistrictList'];
+                $districtList = $entry['districtList'];
+                $provinceList = $entry['provinceList'];
+
+                // ทำตามต้องการ: สร้าง JSON ที่มีข้อมูลตำแหน่งตามรหัสไปรษณีย์
+                $result = [
+                    'subdistricts' => $subDistrictList,
+                    'districts' => $districtList,
+                    'provinces' => $provinceList,
+                ];
+
+                return response()->json($result);
+            }
+        }
+
+        return response()->json(['error' => 'Postal code not found.']);
+    }
 
     function validateFormData($request)
     {

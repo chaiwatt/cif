@@ -40,4 +40,3 @@ $(document).on('click', '#btn-add-application-news', function (e) {
 
     })
 });
-
