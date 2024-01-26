@@ -84,7 +84,7 @@ class AnnounceSystemAnnouncementListController extends Controller
         $file = $request->file('announce_thumbnail');
         $filename = 'thumbnail' . '-' . time() . '.' . $file->getClientOriginalExtension();
 
-        $file->storeAs('announcement/thumbnail', $filename);
+        $file->storeAs('announcement/thumbnails', $filename);
 
         $announcement = Announcement::create([
             'thumbnail'=> $filename,
@@ -101,17 +101,69 @@ class AnnounceSystemAnnouncementListController extends Controller
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
             foreach($attachments as $attachment){
                 $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
-                $filePath = $attachment->storeAs('attachments', $filename);
+                $attachment->storeAs('announcement/attachments', $filename);
                 AnnouncementAttachment::create([
                     'name' => $attachment->getClientOriginalName(),
                     'announcement_id' => $announcement->id,
-                    'file' => $filePath
+                    'file' => $filename
                 ]);
             }
         }
         return redirect()->route('groups.announcement-system.announcement.list', [
             'success' => 'สร้างข่าวสารสำเร็จ'
         ]);
+    }
+
+    public function update(Request $request){
+        // ตรวจสอบความถูกต้องของข้อมูลแบบฟอร์ม
+        $validator = $this->validateFormData($request);
+        if ($validator->fails()) {
+            // ในกรณีที่ข้อมูลไม่ถูกต้อง กลับไปยังหน้าก่อนหน้าพร้อมแสดงข้อผิดพลาดและข้อมูลที่กรอก
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $announcementId = $request->announcementId;
+        $title = $request->title;
+        $description = $request->description;
+        $body = $request->summernoteContent;
+        $attachments = $request->attachments;
+        $status = $request->status;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+    
+        
+        $update = Announcement::find($announcementId);
+        $update->title = $title;
+        $update->description = $description;
+        $update->body = $body;
+        $update->status = $status;
+        $update->start_date= Carbon::parse($start_date);
+        $update->end_date= Carbon::parse($end_date);
+
+        if ($request->hasFile('announce_thumbnail')) {
+            Storage::disk('thumbnail')->delete($update->thumbnail);
+            $file = $request->file('announce_thumbnail');
+            $filename = 'thumbnail' . '-' . time() . '.' . $file->getClientOriginalExtension();
+            
+            $file->storeAs('announcement/thumbnails', $filename);
+            $update->thumbnail = $filename;
+        }
+
+        $update->save();
+
+        if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
+            foreach($attachments as $attachment){
+                $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->storeAs('announcement/attachments', $filename);
+                AnnouncementAttachment::create([
+                    'name' => $attachment->getClientOriginalName(),
+                    'announcement_id' => $announcementId,
+                    'file' => $filename
+                ]);
+            }
+        }
+
+        return ;
     }
 
     public function view($id)
@@ -143,46 +195,7 @@ class AnnounceSystemAnnouncementListController extends Controller
         Storage::disk('attachments')->delete($announcementAttachment->file);
         $announcementAttachment->delete();
     }
-    public function update(Request $request){
-        // ตรวจสอบความถูกต้องของข้อมูลแบบฟอร์ม
-        $validator = $this->validateFormData($request);
-        if ($validator->fails()) {
-            // ในกรณีที่ข้อมูลไม่ถูกต้อง กลับไปยังหน้าก่อนหน้าพร้อมแสดงข้อผิดพลาดและข้อมูลที่กรอก
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $announcementId = $request->announcementId;
-        $title = $request->title;
-        $description = $request->description;
-        $body = $request->summernoteContent;
-        $attachments = $request->attachments;
-        $status = $request->status;
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
-
-        Announcement::find($announcementId)->update([
-            'title' => $title,
-            'description' => $description,
-            'body' => $body,
-            'status' => $status,
-            'start_date'=> $start_date,
-            'end_date'=> $end_date
-        ]);
-
-        if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
-            foreach($attachments as $attachment){
-                $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
-                $filePath = $attachment->storeAs('attachments', $filename);
-                AnnouncementAttachment::create([
-                    'name' => $attachment->getClientOriginalName(),
-                    'announcement_id' => $announcementId,
-                    'file' => $filePath
-                ]);
-            }
-        }
-
-        return ;
-    }
+    
     public function delete($id)
     {
         $announceAttachments = AnnouncementAttachment::where('announcement_id', $id)->get();
@@ -193,8 +206,7 @@ class AnnounceSystemAnnouncementListController extends Controller
         }
 
         $announcement = Announcement::findOrFail($id);
-        $filePath = 'announcement/thumbnail/' + $announcement->thumbnail;
-        Storage::delete($filePath);
+        Storage::disk('thumbnail')->delete($announcement->thumbnail);
         $this->activityLogger->log('ลบ', $announcement);
 
         $announcement->delete();

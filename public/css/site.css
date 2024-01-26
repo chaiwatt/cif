@@ -258,7 +258,11 @@ body {
     height: 40px;
     color: #667085;
 }
-.file_content > p {
+.file_content > p,
+.file_content > a
+ {
+    color: #667085;
+    text-decoration: none;
     margin: 0;
     width: 120px;
     text-overflow: ellipsis;

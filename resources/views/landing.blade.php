@@ -36,7 +36,7 @@
                     $countAnnounce = 0;
                 @endphp
                 @foreach ($announcements->where('status',1) as $announcement)
-                <div class="d-flex flex-column" style="gap: 20px; width: 364px;">
+                <div class="d-flex flex-column" style="gap: 20px; flex: 0 0 364px;">
                     <div>
                         <img src="{{ asset('image_test.jpg') }}" class="object-fit-cover rounded" style="width: 100%; height: 180px" alt="annoucement-image">
                     </div>
@@ -95,7 +95,9 @@
                             </div>
                             <div class="flex-grow-1">
                                 <strong><h5>{{ $applicationNew->title }}</h5></strong>
-                                <p class="text-muted m-0 job-intro">{!! $applicationNew->body !!}</p>
+                                <p class="text-muted m-0 job-intro">
+                                    {!! $applicationNew->body !!}
+                                </p>
                             </div>
                             <div>
                                 <a href="{{route('post-job-application-news',['id' => $applicationNew->id])}}" class="btn btn-outline-secondary text-nowrap btn-lg">

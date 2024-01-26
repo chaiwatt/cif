@@ -26,11 +26,30 @@ use Illuminate\Support\Facades\Validator;
 
 class SettingOrganizationEmployeeController extends Controller
 {
+    private $relationships;
     private $activityLogger;
 
     public function __construct(ActivityLogger $activityLogger)
     {
         $this->activityLogger = $activityLogger;
+        $this->relationships = [
+            (object)[
+                "id" => "1",
+                "name" => "โสด"
+            ],
+            (object)[
+                "id" => "2",
+                "name" => "แต่งงาน"
+            ],
+            (object)[
+                "id" => "3",
+                "name" => "หย่าร้าง"
+            ],
+            (object)[
+                "id" => "4",
+                "name" => "ไม่ระบุ"
+            ],
+        ];
     }
     public function index()
     {
@@ -56,6 +75,7 @@ class SettingOrganizationEmployeeController extends Controller
             'employeeTypes' => $employeeTypes,  // ส่งข้อมูลประเภทพนักงานไปยังหน้าจอสร้างพนักงาน
             'userPositions' => $userPositions,  // ส่งข้อมูลตำแหน่งงานไปยังหน้าจอสร้างพนักงาน
             'companyDepartments' => $companyDepartments,  // ส่งข้อมูลแผนกบริษัทไปยังหน้าจอสร้างพนักงาน
+            'relationships'=> $this->relationships
         ]);
     }
 
@@ -287,6 +307,7 @@ class SettingOrganizationEmployeeController extends Controller
             'employeeTypes' => $employeeTypes,  // ส่งข้อมูลประเภทพนักงานไปยังหน้าจอสร้างพนักงาน
             'userPositions' => $userPositions,  // ส่งข้อมูลตำแหน่งงานไปยังหน้าจอสร้างพนักงาน
             'companyDepartments' => $companyDepartments,  // ส่งข้อมูลแผนกบริษัทไปยังหน้าจอสร้างพนักงาน
+            'relationships'=> $this->relationships,
         ]);
     }
 
@@ -325,12 +346,27 @@ class SettingOrganizationEmployeeController extends Controller
         $socialSecurityNumber = $request->social_security_number ?? null;  // เลขที่ประกันสังคม
         $timeRecordRequire = $request->timeRecordRequire;
         $password = $request->password;
-
+        $education = $request->education;
+        $edu_department = $request->edu_department;
+        $relationship = $request->relationship;
+        $district = $request->district;
+        $subdistrict = $request->subdistrict;
+        $zip = $request->zip;
+        $city = $request->city;
+        $country = $request->country;
+        $is_foreigner = !is_null($request->is_foreigner) ? true : false;
+        
         $user = User::findOrFail($id);
-
+        $filename = "";
         $this->activityLogger->log('อัปเดต', $user);
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $filename = 'avatar' . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('avatar', $filename);
+        }
 
         $user->update([
+            'avatar' => $filename,
             'prefix_id' => $prefix,
             'nationality_id' => $nationality,
             'ethnicity_id' => $ethnicity,
@@ -355,6 +391,15 @@ class SettingOrganizationEmployeeController extends Controller
             'social_security_number' => $socialSecurityNumber,
             'time_record_require' => $timeRecordRequire,
             'password' => $password ? bcrypt($password) : $user->password,
+            'education' => $education,
+            'edu_department' => $edu_department,
+            'relationship' => $relationship,
+            'district' => $district,
+            'subdistrict' => $subdistrict,
+            'zip' => $zip,
+            'city' => $city,
+            'country' => $country,
+            'is_foreigner' => $is_foreigner,
         ]);
 
         return redirect()->route('setting.organization.employee.index', [

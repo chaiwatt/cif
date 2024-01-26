@@ -48,7 +48,7 @@ class UsersTableSeeder extends Seeder
             'subdistrict'=> "home",
             'city'=> "home",
             'country'=> "home",
-            'avatar'=>''
+            'avatar'=> null
         ]);
 
        

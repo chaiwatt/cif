@@ -156,7 +156,10 @@
                                             <select name="relationship"
                                                 class="form-control select2"
                                                 style="width: 100%;">
-                                                <option value="single">single</option>
+                                                <option value="1">โสด</option>
+                                                <option value="2">แต่งงาน</option>
+                                                <option value="3">หย่าร้าง</option>
+                                                <option value="4">ไม่ระบุ</option>
                                                 {{-- @foreach ($employeeTypes as $employeeType)
                                                 <option value="{{ $employeeType->id }}" {{
                                                     old('employeeType')==$employeeType->id
@@ -485,12 +488,10 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="row my-3">
-                                    <div class="col-12 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
-                                </div>
+                            <div class="card-footer card-create">
+                                <a href="{{ route('setting.organization.employee.index') }}" type="button" class="btn btn-outline-secondary">ยกเลิก</a>
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
                         </form>
                     </div>
                 </div>

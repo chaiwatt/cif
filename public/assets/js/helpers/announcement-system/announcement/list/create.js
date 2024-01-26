@@ -27,15 +27,13 @@ $(document).on('click', '#btn-add-announcement', function (e) {
     var title = $('#title').val();
     var description = $('#description').val();
     var status = $('#status').val();
-    var start_date = $('#start_date').val();
-    var end_date = $('#end_date').val();
+    var start_date = $('#start_date_input').val();
+    var end_date = $('#end_date_input').val();
     var image = document.getElementById('announce-img-input').files;
-    var summernoteContent = $('#summernote').summernote('code');
+    var summernoteContent = document.getElementById('summernote').value;
     for (const file of attachments) {
-        console.log("file" + file);
         formData.append('attachments[]', attachments.get(file[0]));
     }
-
     formData.append('announce_thumbnail', image[0]);
     formData.append('title', title);
     formData.append('description', description);

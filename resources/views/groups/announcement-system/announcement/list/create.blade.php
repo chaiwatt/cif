@@ -38,8 +38,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card-primary card-outline">
-                            <form action="{{ route('groups.announcement-system.announcement.list.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
+                            <div>
+                                
                                 <div class="card-header">
                                     <h4 class="card-title">รายละเอียดข่าวประกาศ</h3>
                                 </div>
@@ -61,7 +61,7 @@
                                                     <p class="m-0 text-decoration-underline">เพิ่มรูปภาพ</p>
                                                 </div>
                                             </label>
-                                            <input type="file" name="announce_thumbnail" id="announce-img-input" hidden>
+                                            <input type="file" name="announce_thumbnail" id="announce-img-input" accept="image/jpeg, image/jpg, image/png, image/gif" max="5120" hidden>
                                         </div>
                                         <ul class="ps-4" style="color: #F79009;">
                                             <li>ไฟล์ jpeg, jpg, png เท่านั้น</li>
@@ -100,7 +100,7 @@
                                                     <label for="start_date">วันเริ่มประกาศ <span
                                                             class="fw-bold text-danger">*</span></label>
                                                     <div class="date-box date" id="start_date" data-target-input="nearest">
-                                                        <input name="start_date" value="{{ old('start_date') }}"
+                                                        <input name="start_date" value="{{ old('start_date') }}" id="start_date_input"
                                                             type="text"
                                                             class="form-control datetimepicker-input @error('start_date') is-invalid @enderror"
                                                             data-target="#start_date">
@@ -117,7 +117,7 @@
                                                 <div class="form-group">
                                                     <label for="end_date">วันสิ้นสุดประกาศ</label>
                                                     <div class="date-box date" id="end_date" data-target-input="nearest">
-                                                        <input name="end_date" value="{{ old('end_date') }}" type="text"
+                                                        <input name="end_date" value="{{ old('end_date') }}" type="text" id="end_date_input"
                                                             class="form-control datetimepicker-input"
                                                             data-target="#end_date">
                                                         <div class="date-icon" data-target="#end_date"
@@ -144,12 +144,11 @@
                                 </div>
 
                                 <!-- /.card-body -->
-                                <div class="pb-4">
-                                    <div class="text-end">
-                                        <button class="btn btn-primary" id="btn-add-announcement">บันทึก</button>
-                                    </div>
+                                <div class="card-footer card-create">
+                                    <a href="{{ route('groups.announcement-system.announcement.list')}}" class="btn btn-outline-secondary" type="button">ยกเลิก</a>
+                                    <button class="btn btn-primary" id="btn-add-announcement">บันทึก</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

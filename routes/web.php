@@ -105,6 +105,11 @@ Auth::routes();
 // Route::get('/', function () {
 //     return view('landing');
 // });
+// Announcement Picture
+Route::get('/storage/thumbnail/{image}', [ImageController::class, 'announce_thumbnail_view'])->name('storage.announce.thumbnail');
+Route::get('/storage/attachment/{file}', [ImageController::class, 'announce_attachment_view'])->name('storage.announce.attachment');
+
+
 Route::get('', [LandingController::class, 'index'])->name('landing');
 Route::get('post-announcement/{id}', [LandingController::class, 'postAnnouncement'])->name('post-announcement');
 Route::get('post-job-application-news/{id}', [LandingController::class, 'postJobApplicationNews'])->name('post-job-application-news');

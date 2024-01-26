@@ -57,9 +57,11 @@ return [
         ],
         'attachments' => [
             'driver' => 'local',
-            'root' => public_path('uploads/attachment'),
-            'url' => env('APP_URL').'/uploads/attachment',
-            'visibility' => 'public',
+            'root' => storage_path('app/announcement/attachments'),
+        ],
+        'thumbnail' => [
+            'driver' => 'local',
+            'root' => storage_path('app/announcement/thumbnails'),
         ],
 
     ],

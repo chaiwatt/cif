@@ -30,310 +30,474 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card border-0">
-                        <div class="card-header">
-                            <h4 class="card-title">รายละเอียดข้อมูลพนักงาน</h4>
+                    <div class="card border-0 rounded-4">
+                        <div class="py-3 px-4">
+                            <h4 class="m-0">ข้อมูลส่วนบุคคล</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{ route('setting.organization.employee.update', ['id' => $user->id]) }}"
-                                method="POST">
+                            <form action="{{route('setting.organization.employee.update', ['id' => $user->id])}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <!-- Display validation errors -->
-                                <div class="row gy-2">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
-                                            <input type="text" name="employee_no"
-                                                value="{{old('employee_no') ?? $user->employee_no}}"
-                                                class="form-control numericInputInt @error('employee_no') is-invalid @enderror"
-                                                readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>คำนำหน้าชื่อ <span class="fw-bold text-danger">*</span></label>
-                                            <select name="prefix"
-                                                class="form-select select2 @error('prefix') is-invalid @enderror"
-                                                style="width: 100%;">
-                                                @foreach ($prefixes as $prefix)
-                                                <option value="{{ $prefix->id }}" @if ($prefix->id ==
-                                                    $user->prefix_id) selected @endif>
-                                                    {{ $prefix->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>ชื่อ <span class="fw-bold text-danger">*</span></label>
-                                            <input type="text" name="name" value="{{old('name') ?? $user->name}}"
-                                                class="form-control @error('name') is-invalid @enderror">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>นามสกุล <span class="fw-bold text-danger">*</span></label>
-                                            <input type="text" name="lastname"
-                                                value="{{old('lastname') ?? $user->lastname}}"
-                                                class="form-control @error('lastname') is-invalid @enderror">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เลขที่บัตรประชาชน</label>
-                                            <input type="text" name="hid" value="{{old('hid') ?? $user->hid}}"
-                                                class="form-control numericInputHid">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>สัญชาติ <span class="fw-bold text-danger">*</span></label>
-                                            <select name="nationality"
-                                                class="form-control select2 @error('nationality') is-invalid @enderror"
-                                                style="width: 100%;">
-                                                @foreach ($nationalities as $nationality)
-                                                <option value="{{ $nationality->id }}" @if ($nationality->id ==
-                                                    $user->nationality_id) selected @endif >
-                                                    {{ $nationality->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เชื้อชาติ <span class="fw-bold text-danger">*</span></label>
-                                            <select name="ethnicity"
-                                                class="form-control select2 @error('ethnicity') is-invalid @enderror"
-                                                style="width: 100%;">
-                                                @foreach ($ethnicities as $ethnicity)
-                                                <option value="{{ $ethnicity->id }}" @if ($ethnicity->id ==
-                                                    $user->ethnicity_id) selected @endif>
-                                                    {{ $ethnicity->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>วันเดือนปี เกิด</label>
-                                            <div class="date-box date" id="birth_date" data-target-input="nearest">
-                                                <input name="birthDate"
-                                                    value="{{old('birthDate') ?? $user->birth_date}}" type="text"
-                                                    class="form-control datetimepicker-input" data-target="#birth_date">
-                                                <div class="date-icon" data-target="#birth_date"
-                                                    data-toggle="datetimepicker">
-                                                    <span class="material-symbols-outlined">
-                                                        today
-                                                    </span>
-                                                </div>
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-12 position-relative">
+                                            <div class="form-group" style="width: 327px;">
+                                                <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
+                                                <input type="text" name="employee_no" value="{{ $user->employee_no }}" class="form-control numericInputInt @error('employee_no') is-invalid @enderror">
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>ที่อยู่ <span class="fw-bold text-danger">*</span></label>
-                                            <input type="text" name="address"
-                                                value="{{old('address') ?? $user->address}}"
-                                                class="form-control @error('address') is-invalid @enderror">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เบอร์โทรศัพท์มือถือ</label>
-                                            <input type="text" name="phone" value="{{old('phone') ?? $user->phone}}"
-                                                class="form-control numericInputPhone">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>ประเภทพนักงาน <span class="fw-bold text-danger">*</span></label>
-                                            <select name="employeeType"
-                                                class="form-control select2 @error('employeeType') is-invalid @enderror"
-                                                style="width: 100%;">
-                                                @foreach ($employeeTypes as $employeeType)
-                                                <option value="{{ $employeeType->id }}" @if ($employeeType->id ==
-                                                    $user->employee_type_id) selected @endif>
-                                                    {{ $employeeType->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>ตำแหน่ง <span class="fw-bold text-danger">*</span></label>
-                                            <select name="userPosition"
-                                                class="form-control select2 @error('userPosition') is-invalid @enderror"
-                                                style="width: 100%;">
-                                                @foreach ($userPositions as $userPosition)
-                                                <option value="{{ $userPosition->id }}" @if ($userPosition->id ==
-                                                    $user->user_position_id) selected @endif>
-                                                    {{ $userPosition->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>แผนก <span class="fw-bold text-danger">*</span></label>
-                                            <select name="companyDepartment"
-                                                class="form-control select2 @error('companyDepartment') is-invalid @enderror"
-                                                style="width: 100%;">
-                                                @foreach ($companyDepartments as $companyDepartment)
-                                                <option value="{{ $companyDepartment->id }}" @if ($companyDepartment->id
-                                                    ==
-                                                    $user->company_department_id) selected @endif>
-                                                    {{ $companyDepartment->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เริ่มทำงาน <span class="fw-bold text-danger">*</span></label>
-                                            <div class="date-box date" id="start_work_date"
-                                                data-target-input="nearest">
-                                                <input name="startWorkDate"
-                                                    value="{{old('startWorkDate') ?? $user->start_work_date}}"
-                                                    type="text"
-                                                    class="form-control datetimepicker-input @error('startWorkDate') is-invalid @enderror"
-                                                    data-target="#start_work_date">
-                                                <div class="date-icon" data-target="#start_work_date"
-                                                    data-toggle="datetimepicker">
-                                                    <span class="material-symbols-outlined">
-                                                        today
-                                                    </span>
+                                            <input type="file" name="avatar" id="avatar-input" accept="image/png, image/jpg, image/jpeg, image/gif" class="form-control" hidden>
+                                            <label for="avatar-input">
+                                                <div class="d-flex flex-column rounded-4 overflow-hidden position-absolute bottom-0 end-0" style="width: 124px; height: 124px;">
+                                                    <div class="d-flex justify-content-center align-items-center " style="background: #667085; flex: 1;">
+                                                        @if (!is_null($user->avatar))
+                                                            <img src="{{ route('storage.avatar', ['image'=>$user->avatar])}}" alt="avatar-preview" id="avatar-preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                                        @else
+                                                            <img src="{{ asset('icon _user_.png') }}" alt="avatar-preview" id="avatar-preview">
+                                                        @endif
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-center" style="height: 30px; background: #D0D5DD;">
+                                                        <p class="m-0 text-decoration-underline">เพิ่มรูปภาพ</p>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </label>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>พาสพอร์ต</label>
-                                                <input type="text" name="passport"
-                                                    value="{{old('passport') ?? $user->passport}}" class="form-control">
+                                                <label>คำนำหน้าชื่อ <span class="fw-bold text-danger">*</span></label>
+                                                <select name="prefix"
+                                                    class="form-control select2 @error('prefix') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    @foreach ($prefixes as $prefix)
+                                                    <option value="{{ $prefix->id }}" 
+                                                    @if ($prefix->id == $user->prefix_id) selected @endif>
+                                                        {{ $prefix->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>วันหมดอายุวีซ่า</label>
-                                            <div class="date-box date" id="visa_expire_date"
-                                                data-target-input="nearest">
-                                                <input name="visaExpireDate"
-                                                    value="{{old('visaExpireDate') ?? $user->visa_expiry_date}}"
-                                                    type="text"
-                                                    class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
-                                                    data-target="#visa_expire_date">
-                                                <div class="date-icon" data-target="#visa_expire_date"
-                                                    data-toggle="datetimepicker">
-                                                    <span class="material-symbols-outlined">
-                                                        today
-                                                    </span>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>ชื่อ <span class="fw-bold text-danger">*</span></label>
+                                                <input type="text" name="name" value="{{ $user->name }}"
+                                                    class="form-control @error('name') is-invalid @enderror">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>นามสกุล <span class="fw-bold text-danger">*</span></label>
+                                                <input type="text" name="lastname" value="{{ $user->lastname }}"
+                                                    class="form-control @error('lastname') is-invalid @enderror">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>วันเดือนปี เกิด</label>
+                                                <div class="date-box date" id="birth_date" data-target-input="nearest">
+                                                    <input name="birthDate" value="{{ $user->birth_date }}" type="text"
+                                                        class="form-control datetimepicker-input" data-target="#birth_date">
+                                                    <div class="date-icon" data-target="#birth_date"
+                                                        data-toggle="datetimepicker">
+                                                        <span class="material-symbols-outlined">
+                                                            calendar_today
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
+    
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>เลขที่ใบอนุญาตทำงาน</label>
-                                                <input type="text" name="work_permit"
-                                                    value="{{old('work_permit') ?? $user->work_permit}}"
+                                                <label>สัญชาติ <span class="fw-bold text-danger">*</span></label>
+                                                <select name="nationality"
+                                                    class="form-control select2 @error('nationality') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    @foreach ($nationalities as $nationality)
+                                                        <option value="{{ $nationality->id }}" 
+                                                            @if ($nationality->id === $user->nationality) selected @endif>
+                                                                {{ $nationality->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>เชื้อชาติ <span class="fw-bold text-danger">*</span></label>
+                                                <select name="ethnicity"
+                                                    class="form-control select2 @error('ethnicity') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    @foreach ($ethnicities as $ethnicity)
+                                                    <option value="{{ $ethnicity->id }}" {{ $user->ethnicity === $ethnicity->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $ethnicity->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>ระดับการศึกษาสูงสุด</label>
+                                                <input type="text" name="education" value="{{$user->education}}"
                                                     class="form-control">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>วันหมดอายุใบอนุญาตทำงาน</label>
-                                            <div class="date-box date" id="work_permit_expire_date"
-                                                data-target-input="nearest">
-                                                <input type="text" name="workPermitExpireDate"
-                                                    value="{{old('workPermitExpireDate') ?? $user->permit_expiry_date}}"
-                                                    class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
-                                                    data-target="#work_permit_expire_date">
-                                                <div class="date-icon" data-target="#work_permit_expire_date"
-                                                    data-toggle="datetimepicker">
-                                                    <span class="material-symbols-outlined">
-                                                        today
-                                                    </span>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>สาขาวิชา</label>
+                                                <input type="text" name="edu_department" value="{{$user->edu_department}}"
+                                                    class="form-control ">
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>สถานภาพสมรส</label>
+                                                <select name="relationship"
+                                                    class="form-control select2"
+                                                    style="width: 100%;">
+                                                    @foreach ($relationships as $relationship)
+                                                        <option value="{{ $relationship->id }}" {{ $relationship->id === $user->relationship ? 'selected' : '' }}>{{ $relationship->name }}</option>
+                                                    @endforeach
+                                                    {{-- @foreach ($employeeTypes as $employeeType)
+                                                    <option value="{{ $employeeType->id }}" {{
+                                                        old('employeeType')==$employeeType->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $employeeType->name }}
+                                                    </option>
+                                                    @endforeach --}}
+                                                </select>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>เลขที่บัตรประชาชน</label>
+                                                <input type="text" name="hid" value="{{ $user->hid }}"
+                                                    class="form-control numericInputHid">
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>เลขประจำตัวผู้เสียภาษีอากร</label>
+                                                <input type="text" name="tax" value="{{ $user->tax }}"
+                                                    class="form-control numericInputInt">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="d-flex align-items-end h-100">
+                                                <div class="form-check form-check-inline py-2">
+                                                    <input class="form-check-input" type="checkbox" id="is_foreigner" name="is_foreigner" {{ $user->is_foreigner ? "checked" : ""}}>
+                                                    <label class="form-check-label" for="is_foreigner">พนักงานต่างชาติ</label>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label>พาสพอร์ต</label>
+                                                    <input type="text" name="passport" value="{{ $user->passport }}"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>วันหมดอายุวีซ่า</label>
+                                                <div class="date-box date" id="visa_expire_date"
+                                                    data-target-input="nearest">
+                                                    <input name="visaExpireDate" value="{{ $user->visa_expiry_date }}"
+                                                        type="text"
+                                                        class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
+                                                        data-target="#visa_expire_date">
+                                                    <div class="date-icon" data-target="#visa_expire_date"
+                                                        data-toggle="datetimepicker">
+                                                        <span class="material-symbols-outlined">
+                                                            calendar_today
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label>เลขที่ใบอนุญาตทำงาน</label>
+                                                    <input type="text" name="work_permit" value="{{ $user->work_permit }}"
+                                                        class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>ธนาคาร</label>
-                                            <input type="text" name="bank" value="{{old('bank') ?? $user->bank}}"
-                                                class="form-control">
+                                </div>
+                                <hr>
+                                <div class="card-body">
+                                    <h4 class="m-0" style="padding-bottom: 32px;">ข้อมูลติดต่อ</h4>
+                                    <div class="row gy-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>ที่อยู่ <span class="fw-bold text-danger">*</span></label>
+                                                <input type="text" name="address" value="{{ $user->address }}"
+                                                    class="form-control @error('address') is-invalid @enderror">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เลขที่บัญชี</label>
-                                            <input type="text" name="bankAccount"
-                                                value="{{old('bankAccount') ?? $user->bank_account}}"
-                                                class="form-control numericInputInt">
+                                        {{-- เพิ่มใหม่ --}}
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>เขต/อำเภอ <span class="fw-bold text-danger">*</span></label>
+                                                <select name="district"
+                                                    class="form-control select2 @error('district') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    <option value="district">district</option>
+                                                    {{-- @foreach ($userPositions as $userPosition)
+                                                    <option value="{{ $userPosition->id }}" {{
+                                                        old('userPosition')==$userPosition->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $userPosition->name }}
+                                                    </option>
+                                                    @endforeach --}}
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เลขประจำตัวผู้เสียภาษีอากร</label>
-                                            <input type="text" name="tax" value="{{old('tax') ?? $user->tax}}"
-                                                class="form-control numericInputInt">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>แขวง/ตำบล <span class="fw-bold text-danger">*</span></label>
+                                                <select name="subdistrict"
+                                                    class="form-control select2 @error('subdistrict') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    <option value="subdistrict">subdistrict</option>
+                                                    {{-- @foreach ($userPositions as $userPosition)
+                                                    <option value="{{ $userPosition->id }}" {{
+                                                        old('userPosition')==$userPosition->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $userPosition->name }}
+                                                    </option>
+                                                    @endforeach --}}
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>เลขที่ประกันสังคม</label>
-                                            <input type="text" name="social_security_number"
-                                                value="{{old('social_security_number') ?? $user->social_security_number}}"
-                                                class="form-control numericInputInt">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>รหัสไปรษณีย์ <span class="fw-bold text-danger">*</span></label>
+                                                <select name="zip"
+                                                    class="form-control select2 @error('zip') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    <option value="zip">zip</option>
+                                                    {{-- @foreach ($userPositions as $userPosition)
+                                                    <option value="{{ $userPosition->id }}" {{
+                                                        old('userPosition')==$userPosition->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $userPosition->name }}
+                                                    </option>
+                                                    @endforeach --}}
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>การสแกนเวลาเข้าออก <span class="fw-bold text-danger">*</span></label>
-                                            <select name="timeRecordRequire"
-                                                class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"
-                                                style="width: 100%;">
-
-                                                <option value="1" @if ($user->time_record_require == 1) selected
-                                                    @endif>
-                                                    ต้องสแกนเวลา
-                                                </option>
-                                                <option value="0" @if ($user->time_record_require == 0) selected
-                                                    @endif>
-                                                    ไม่ต้องสแกนเวลา
-                                                </option>
-
-                                            </select>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>จังหวัด <span class="fw-bold text-danger">*</span></label>
+                                                <select name="city"
+                                                    class="form-control select2 @error('city') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    <option value="city">city</option>
+                                                    {{-- @foreach ($userPositions as $userPosition)
+                                                    <option value="{{ $userPosition->id }}" {{
+                                                        old('userPosition')==$userPosition->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $userPosition->name }}
+                                                    </option>
+                                                    @endforeach --}}
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>รหัสผ่านใหม่ (เว้นว่างถ้าไม่ต้องการเปลี่ยน)</label>
-                                            <input type="text" name="password" value="" class="form-control">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>ประเทศ <span class="fw-bold text-danger">*</span></label>
+                                                <select name="country"
+                                                    class="form-control select2 @error('country') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    <option value="country">country</option>
+                                                    {{-- @foreach ($userPositions as $userPosition)
+                                                    <option value="{{ $userPosition->id }}" {{
+                                                        old('userPosition')==$userPosition->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $userPosition->name }}
+                                                    </option>
+                                                    @endforeach --}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        {{-- \\\\ --}}
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>เบอร์โทรศัพท์มือถือ</label>
+                                                <input type="text" name="phone" value="{{ $user->phone }}"
+                                                    class="form-control numericInputPhone">
+                                            </div>
+                                        </div>
+                                        {{-- เพิ่มใหม่ --}}
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>อีเมล <span class="fw-bold text-danger">*</span></label>
+                                                <input type="email" name="email" value="{{ $user->email }}"
+                                                    class="form-control" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row mt-2">
-                                    <div class="col-12 text-end">
-                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <hr>
+                                <div class="card-body">
+                                    <h4 class="m-0" style="padding-bottom: 32px;">ข้อมูลการทำงาน</h4>
+                                    <div class="row gy-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>ประเภทพนักงาน <span class="fw-bold text-danger">*</span></label>
+                                                <select name="employeeType"
+                                                    class="form-control select2 @error('employeeType') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    @foreach ($employeeTypes as $employeeType)
+                                                    <option value="{{ $employeeType->id }}" {{
+                                                        $user->employee_type === $employeeType->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $employeeType->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>ตำแหน่ง <span class="fw-bold text-danger">*</span></label>
+                                                <select name="userPosition"
+                                                    class="form-control select2 @error('userPosition') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    @foreach ($userPositions as $userPosition)
+                                                    <option value="{{ $userPosition->id }}" {{
+                                                        $user->user_position === $userPosition->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $userPosition->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>แผนก <span class="fw-bold text-danger">*</span></label>
+                                                <select name="companyDepartment"
+                                                    class="form-control select2 @error('companyDepartment') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    @foreach ($companyDepartments as $companyDepartment)
+                                                    <option value="{{ $companyDepartment->id }}" {{
+                                                        $user->company_department === $companyDepartment->id
+                                                        ?
+                                                        'selected' : '' }}>
+                                                        {{ $companyDepartment->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>เริ่มทำงาน <span class="fw-bold text-danger">*</span></label>
+                                                <div class="date-box date" id="start_work_date"
+                                                    data-target-input="nearest">
+                                                    <input name="startWorkDate" value="{{ $user->start_work_date }}" type="text"
+                                                        class="form-control datetimepicker-input @error('startWorkDate') is-invalid @enderror"
+                                                        data-target="#start_work_date">
+                                                    <div class="date-icon" data-target="#start_work_date"
+                                                        data-toggle="datetimepicker">
+                                                        <span class="material-symbols-outlined">
+                                                            calendar_today
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>วันหมดอายุใบอนุญาตทำงาน</label>
+                                                <div class="date-box date" id="work_permit_expire_date"
+                                                    data-target-input="nearest">
+                                                    <input type="text" name="workPermitExpireDate"
+                                                        value="{{ $user->permit_expiry_date }}"
+                                                        class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
+                                                        data-target="#work_permit_expire_date">
+                                                    <div class="date-icon" data-target="#work_permit_expire_date"
+                                                        data-toggle="datetimepicker">
+                                                        <span class="material-symbols-outlined">
+                                                            calendar_today
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label>เลขที่บัญชี</label>
+                                                    <input type="text" name="bank" value="{{ $user->bank }}"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>บัญชีธนาคาร</label>
+                                                <input type="text" name="bankAccount" value="{{ $user->bank_account }}"
+                                                    class="form-control numericInputInt">
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>เลขที่ประกันสังคม</label>
+                                                <input type="text" name="social_security_number"
+                                                    value="{{ $user->social_security_number }}"
+                                                    class="form-control numericInputInt">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>การสแกนเวลาเข้าออก <span class="fw-bold text-danger">*</span></label>
+                                                <select name="timeRecordRequire"
+                                                    class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                
+                                                    <option value="1" @if ($user->time_record_require == 1) selected
+                                                        @endif>
+                                                        ต้องสแกนเวลา
+                                                    </option>
+                                                    <option value="0" @if ($user->time_record_require == 0) selected
+                                                        @endif>
+                                                        ไม่ต้องสแกนเวลา
+                                                    </option>
+    
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="card-footer card-create">
+                                    <a href="{{ route('setting.organization.employee.index') }}" type="button" class="btn btn-outline-secondary">ยกเลิก</a>
+                                    <button type="submit" class="btn btn-primary">บันทึก</button>
                                 </div>
                             </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -350,6 +514,12 @@
             format: 'L'
         });
     });
+    const avatar = document.getElementById('avatar-input');
+    const avatarPreview = document.getElementById('avatar-preview');
+    avatar.onchange = (event) => {
+        avatarPreview.src = URL.createObjectURL(event.target.files[0]);
+        avatarPreview.style = 'width: 100%; height: 100%; object-fit: cover;'
+    }
 </script>
 @endpush
 @endsection
