@@ -21,7 +21,7 @@ class LandingController extends Controller
     public function announcement(){
         $announcement = Announcement::orderBy('id', 'desc')->get();
         return view('announcement',[
-            'announcement' => $announcement,
+            'announcements' => $announcement,
         ]);
     }
     public function jobApplication(){
