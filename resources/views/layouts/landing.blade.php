@@ -34,10 +34,10 @@
                       <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end align-items-lg-center flex-grow-1 gap-3 gap-lg-5">
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link offcanva">ข่าวประกาศ</a>
+                                <a href="{{ url('/announcement') }}" class="nav-link offcanva">ข่าวประกาศ</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link offcanva">รับสมัครงาน</a>
+                                <a href="{{ url('/application') }}" class="nav-link offcanva">รับสมัครงาน</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('/home') }}" class="nav-link offcanva">ติดต่อเรา</a>
@@ -45,7 +45,7 @@
                             @if (Route::has('login'))
                             <!-- Messages Dropdown Menu -->
                             @auth
-    
+
                             <li class="nav-item">
                                 <a href="{{ url('/home') }}" class="nav-link offcanva">แดชบอร์ด</a>
                             </li>
@@ -53,7 +53,7 @@
                             <li class="nav-item">
                                 <a href="/login" class="btn btn-primary btn-lg">เข้าสู่ระบบ</a>
                             </li>
-    
+
                             @endauth
                             @endif
                         </ul>

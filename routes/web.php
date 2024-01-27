@@ -111,6 +111,8 @@ Route::get('/storage/attachment/{file}', [ImageController::class, 'announce_atta
 
 
 Route::get('', [LandingController::class, 'index'])->name('landing');
+Route::get('announcement', [LandingController::class, 'announcement'])->name('announcement');
+Route::get('job-application', [LandingController::class, 'jobApplication'])->name('application');
 Route::get('post-announcement/{id}', [LandingController::class, 'postAnnouncement'])->name('post-announcement');
 Route::get('post-job-application-news/{id}', [LandingController::class, 'postJobApplicationNews'])->name('post-job-application-news');
 
@@ -410,7 +412,7 @@ Route::middleware('auth')->group(function () {
                         Route::get('finish/{payday_detail_id}', [SalarySystemSalaryCalculationListSummaryController::class, 'finish'])->name('groups.salary-system.salary.calculation-list.summary.finish');
                     });
                 });
-                
+
                 Route::group(['prefix' => 'calculation-extra-list'], function () {
                     Route::get('', [SalarySystemSalaryCalculationExtraListController::class, 'index'])->name('groups.salary-system.salary.calculation-extra-list');
                     Route::post('search', [SalarySystemSalaryCalculationExtraListController::class, 'search'])->name('groups.salary-system.salary.calculation-extra-list.search');
@@ -427,7 +429,7 @@ Route::middleware('auth')->group(function () {
                     Route::get('', [SalarySystemSalaryCalculationBonusListController::class, 'index'])->name('groups.salary-system.salary.calculation-bonus-list');
                     Route::get('create', [SalarySystemSalaryCalculationBonusListController::class, 'create'])->name('groups.salary-system.salary.calculation-bonus-list.create');
                     Route::post('store', [SalarySystemSalaryCalculationBonusListController::class, 'store'])->name('groups.salary-system.salary.calculation-bonus-list.store');
-                    Route::delete('{id}', [SalarySystemSalaryCalculationBonusListController::class, 'delete'])->name('groups.salary-system.salary.calculation-bonus-list.delete');                  
+                    Route::delete('{id}', [SalarySystemSalaryCalculationBonusListController::class, 'delete'])->name('groups.salary-system.salary.calculation-bonus-list.delete');
                     Route::get('{id}', [SalarySystemSalaryCalculationBonusListController::class, 'view'])->name('groups.salary-system.salary.calculation-bonus-list.view');
                     Route::put('{id}', [SalarySystemSalaryCalculationBonusListController::class, 'update'])->name('groups.salary-system.salary.calculation-bonus-list.update');
                     Route::get('download-pdf/{id}', [SalarySystemSalaryCalculationBonusListController::class, 'downloadPdf'])->name('groups.salary-system.salary.calculation-bonus-list.download-pdf');
@@ -439,7 +441,7 @@ Route::middleware('auth')->group(function () {
                         Route::post('delete', [SalarySystemSalaryCalculationBonusListAssignmentController::class, 'delete'])->name('groups.salary-system.salary.calculation-bonus-list.assignment.delete');
                     });
                 });
-                
+
                 Route::group(['prefix' => 'calculation'], function () {
                     Route::get('', [SalarySystemSalaryCalculationController::class, 'index'])->name('groups.salary-system.salary.calculation');
                     Route::get('create', [SalarySystemSalaryCalculationController::class, 'create'])->name('groups.salary-system.salary.calculation.create');
@@ -460,7 +462,7 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::group(['prefix' => 'summary'], function () {
                     Route::get('', [SalarySystemSalarySummaryController::class, 'index'])->name('groups.salary-system.salary.summary');
-                    
+
                 });
             });
         });
@@ -483,7 +485,7 @@ Route::middleware('auth')->group(function () {
                         Route::post('search', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'search'])->name('groups.document-system.setting.approve-document.assignment.search');
                         Route::post('import-employee-no', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'importEmployeeNo'])->name('groups.document-system.setting.approve-document.assignment.import-employee-no');
                         Route::post('import-employee-no-from-dept', [DocumentSystemSettingApproveDocumentAssignmentController::class, 'importEmployeeNoFromDept'])->name('groups.document-system.setting.approve-document.assignment.import-employee-no-from-dept');
-                        
+
                     });
                 });
             });
@@ -498,7 +500,7 @@ Route::middleware('auth')->group(function () {
                     Route::delete('{id}', [DocumentSystemLeaveDocumentController::class, 'delete'])->name('groups.document-system.leave.document.delete');
                     Route::post('search', [DocumentSystemLeaveDocumentController::class, 'search'])->name('groups.document-system.leave.document.search');
                     Route::post('get-attachment', [DocumentSystemLeaveDocumentController::class, 'getAttachment'])->name('groups.document-system.leave.document.get-attachment');
-                    
+
                 });
                 Route::group(['prefix' => 'approval'], function () {
                     Route::get('', [DocumentSystemLeaveApprovalController::class, 'index'])->name('groups.document-system.leave.approval');
@@ -518,7 +520,7 @@ Route::middleware('auth')->group(function () {
                     Route::post('get-users', [DocumentSystemOvertimeDocumentController::class, 'getUsers'])->name('groups.document-system.overtime.document.get-users');
                     Route::post('search', [DocumentSystemOvertimeDocumentController::class, 'search'])->name('groups.document-system.overtime.document.search');
                     Route::post('bulk-delete', [DocumentSystemOvertimeDocumentController::class, 'bulkDelete'])->name('groups.document-system.overtime.document.bulk-delete');
-                    
+
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('{id}', [DocumentSystemOvertimeApprovalAssignmentController::class, 'index'])->name('groups.document-system.overtime.approval.assignment');
                         Route::get('download/{id}', [DocumentSystemOvertimeApprovalAssignmentController::class, 'download'])->name('groups.document-system.overtime.approval.assignment.download');
@@ -526,8 +528,8 @@ Route::middleware('auth')->group(function () {
                         Route::post('store', [DocumentSystemOvertimeApprovalAssignmentController::class, 'store'])->name('groups.document-system.overtime.approval.assignment.store');
                         Route::delete('overtimes/{overtime_id}/users/{user_id}/delete', [DocumentSystemOvertimeApprovalAssignmentController::class, 'delete'])->name('groups.document-system.overtime.approval.assignment.delete');
                         Route::post('search', [DocumentSystemOvertimeApprovalAssignmentController::class, 'search'])->name('groups.document-system.overtime.approval.assignment.search');
-                        Route::post('import-user-group', [DocumentSystemOvertimeApprovalAssignmentController::class, 'importUserGroup'])->name('groups.document-system.overtime.approval.assignment.import-user-group');        
-                        Route::post('import-employee-no', [DocumentSystemOvertimeApprovalAssignmentController::class, 'importEmployeeNo'])->name('groups.document-system.overtime.approval.assignment.import-employee-no');        
+                        Route::post('import-user-group', [DocumentSystemOvertimeApprovalAssignmentController::class, 'importUserGroup'])->name('groups.document-system.overtime.approval.assignment.import-user-group');
+                        Route::post('import-employee-no', [DocumentSystemOvertimeApprovalAssignmentController::class, 'importEmployeeNo'])->name('groups.document-system.overtime.approval.assignment.import-employee-no');
                         Route::post('update-hour', [DocumentSystemOvertimeApprovalAssignmentController::class, 'updateHour'])->name('groups.document-system.overtime.approval.assignment.update-hour');
                     });
                 });
@@ -595,10 +597,10 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::group(['prefix' => 'userleave'], function () {
                     Route::get('', [UserManagementSystemSettingUserLeaveController::class, 'index'])->name('groups.user-management-system.setting.userleave');
-                    
+
                 });
             });
-        });  
+        });
         Route::group(['prefix' => 'learning-system'], function () {
             Route::group(['prefix' => 'learning'], function () {
                 Route::group(['prefix' => 'learning-list'], function () {

@@ -31,7 +31,7 @@
                         <a href="#" class="text-primary" style="padding: 8px 14px;">อ่านเพิ่มเติม</a>
                     </div>
                 </div> --}}
-               
+
                 @php
                     $countAnnounce = 0;
                 @endphp
@@ -59,7 +59,7 @@
                 @if (count($announcements->where('status',1)) != $countAnnounce)
                     <div class="divider-y"></div>
                 @endif
-                
+
                 @endforeach
             </div>
         </div>
@@ -104,14 +104,14 @@
                                     รายละเอียด
                                 </a>
                             </div>
-                       
+
                         @endforeach
                     </div>
                 </div>
                 <div class="p-5 text-center">
-                    <a href="#" class="text-primary px-3 py-2">งานทั้งหมด</a>
+                    <a href="{{ route('application') }}" class="text-primary px-3 py-2">งานทั้งหมด</a>
                 </div>
-                   
+
             </div>
         </div>
         {{-- @endif --}}
