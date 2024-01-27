@@ -18,13 +18,13 @@ class LandingController extends Controller
             'applicationNews' => $applicationNews
         ]);
     }
-    public function announcement($id){
-        $announcement = Announcement::find($id);
+    public function announcement(){
+        $announcement = Announcement::orderBy('id', 'desc')->get();
         return view('announcement',[
             'announcement' => $announcement,
         ]);
     }
-    public function jobApplication($id){
+    public function jobApplication(){
         $applicationNews = ApplicationNew::orderBy('id', 'desc')->get();
         return view('application',[
             'applicationNews' => $applicationNews,
