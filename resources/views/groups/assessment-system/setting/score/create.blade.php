@@ -27,8 +27,8 @@
                         <div class="card-header">
                             <h4 class="card-title">เพิ่มคะแนนเกณฑ์การประเมิน</h4>
                         </div>
+                        <form action="{{route('groups.assessment-system.setting.score.store')}}" method="POST">
                         <div class="card-body">
-                            <form action="{{route('groups.assessment-system.setting.score.store')}}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -38,12 +38,12 @@
                                                 class="form-control  @error('score') is-invalid @enderror">
                                         </div>
                                     </div>
-                                    <div class="col-12 text-end">
-                                        <button class="btn btn-primary mt-2">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="cif-modal-footer">
+                                <button class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

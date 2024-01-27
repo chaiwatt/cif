@@ -25,9 +25,9 @@
                         <div class="card-header">
                             <h3 class="card-title">รายละเอียดบทบาท</h3>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('setting.access.role.store')}}" method="POST">
-                                @csrf
+                        <form action="{{route('setting.access.role.store')}}" method="POST">
+                            @csrf
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -37,11 +37,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-2 text-end">
-                                    <button type="submit" class="btn btn-primary">บันทึก</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="cif-modal-footer">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

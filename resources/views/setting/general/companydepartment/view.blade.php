@@ -25,10 +25,10 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดข้อมูลแผนก</h4>
                         </div>
-                        <div class="card-body">
-                            <form
-                                action="{{ route('setting.general.companydepartment.update', ['id' => $companyDepartment->id]) }}"
-                                method="POST">
+                        <form
+                            action="{{ route('setting.general.companydepartment.update', ['id' => $companyDepartment->id]) }}"
+                            method="POST">
+                            <div class="card-body">
                                 @method('PUT')
                                 @csrf
                                 <div class="row gy-2">
@@ -57,12 +57,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="mt-2 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="cif-modal-footer">
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

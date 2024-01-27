@@ -28,7 +28,7 @@
             <div class="row">
                 <input type="text" id="userId" value="{{$user->id}}" hidden>
                 <div class="col-12">
-                    <div class="card card-info card-outline card-tabs">
+                    <div class="card card-tabs">
                         <div class="p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">
@@ -134,7 +134,7 @@
                                                 <div class="form-group">
                                                     <label>วันเดือนปี เกิด</label>
                                                     <div class="date-box date" id="birth_date" data-target-input="nearest">
-                                                        <input name="birthDate" value="{{old('birthDate') ?? $user->birthDate}}" type="text"
+                                                        <input name="birthDate" value="{{old('birthDate') ?? $user->birth_date}}" type="text" placeholder="ดด/วว/ปป"
                                                             class="form-control datetimepicker-input" data-target="#birth_date" disabled>
                                                         <div class="date-icon" data-target="#birth_date"
                                                             data-toggle="datetimepicker">
@@ -179,13 +179,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>ระดับการศึกษาสูงสุด</label>
-                                                    <input type="text" name="education" value="{{old('education') ?? $user->education}}" class="form-control" disabled>
+                                                    <input type="text" name="education" value="{{old('education') ?? $user->education}}" class="form-control" placeholder="ระดับการศึกษาสูงสุด" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>สาขาวิชา</label>
-                                                    <input type="text" name="edu_department" value="{{old('edu_department') ?? $user->edu_department }}" class="form-control " disabled>
+                                                    <input type="text" name="edu_department" value="{{old('edu_department') ?? $user->edu_department }}" class="form-control" placeholder="สาขาวิชา" disabled>
                                                 </div>
                                             </div>
                                             {{-- ยังไม่มีข้อมูล --}}
@@ -195,15 +195,13 @@
                                                     <select name="relationship"
                                                         class="form-control select2"
                                                         style="width: 100%;" disabled>
-                                                        <option value="{{ $user->relationship }}">{{ $user->relationship }}</option>
-                                                        {{-- @foreach ($employeeTypes as $employeeType)
-                                                        <option value="{{ $employeeType->id }}" {{
-                                                            old('employeeType')==$employeeType->id
-                                                            ?
-                                                            'selected' : '' }}>
-                                                            {{ $employeeType->name }}
-                                                        </option>
-                                                        @endforeach --}}
+                                                        @if (!is_null($user->relationship))
+                                                            @foreach ($relationships as $relationship)
+                                                                <option value="{{ $relationship->id }}" {{ $relationship->id === $user->relationship ? 'selected' : '' }}>{{ $relationship->name }}</option>
+                                                            @endforeach
+                                                        @else
+                                                            <option value="">ไม่ได้เลือก</option>
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </div>
@@ -212,7 +210,7 @@
                                                 <div class="form-group">
                                                     <label>เลขที่บัตรประชาชน</label>
                                                     <input type="text" name="hid" value="{{old('hid') ?? $user->hid}}" disabled
-                                                        class="form-control numericInputHid">
+                                                        class="form-control numericInputHid" placeholder="เลขที่บัตรประชาชน">
                                                 </div>
                                             </div>
         
@@ -220,13 +218,13 @@
                                                 <div class="form-group">
                                                     <label>เลขประจำตัวผู้เสียภาษีอากร</label>
                                                     <input type="text" name="tax" value="{{old('tax') ?? $user->tax }}" disabled
-                                                        class="form-control numericInputInt">
+                                                        class="form-control numericInputInt" placeholder="เลขประจำตัวผู้เสียภาษีอากร">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="d-flex align-items-end h-100">
                                                     <div class="form-check form-check-inline py-2">
-                                                        <input class="form-check-input" type="checkbox" id="is_foreigner" checked="{{$user->is_foreigner ? "true" : "false"}}">
+                                                        <input class="form-check-input" type="checkbox" id="is_foreigner" checked="{{$user->is_foreigner ? "true" : "false"}}" disabled>
                                                         <label class="form-check-label" for="is_foreigner">พนักงานต่างชาติ</label>
                                                       </div>
                                                 </div>
@@ -235,7 +233,7 @@
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label>พาสพอร์ต</label>
-                                                        <input type="text" name="passport" value="{{old('passport') ?? $user->passport}}" disabled
+                                                        <input type="text" name="passport" value="{{old('passport') ?? $user->passport}}" placeholder="passport" disabled
                                                             class="form-control">
                                                     </div>
                                                 </div>
@@ -245,7 +243,7 @@
                                                     <label>วันหมดอายุวีซ่า</label>
                                                     <div class="date-box date" id="visa_expire_date"
                                                         data-target-input="nearest">
-                                                        <input name="visaExpireDate" value="{{old('visaExpireDate') ?? $user->visa_expiry_date}}" disabled
+                                                        <input name="visaExpireDate" value="{{old('visaExpireDate') ?? $user->visa_expiry_date}}" disabled placeholder="วันหมดอายุวีซ่า"
                                                             type="text"
                                                             class="form-control datetimepicker-input @error('visaExpireDate') is-invalid @enderror"
                                                             data-target="#visa_expire_date">
@@ -262,7 +260,7 @@
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label>เลขที่ใบอนุญาตทำงาน</label>
-                                                        <input type="text" name="work_permit" value="{{old('work_permit') ?? $user->work_permit}}" disabled
+                                                        <input type="text" name="work_permit" value="{{old('work_permit') ?? $user->work_permit}}" disabled placeholder="เลขที่ใบอนุญาตทำงาน"
                                                             class="form-control">
                                                     </div>
                                                 </div>
@@ -288,14 +286,6 @@
                                                         class="form-control select2 @error('district') is-invalid @enderror"
                                                         style="width: 100%;" disabled>
                                                         <option value="{{ $user->district }}" selected>{{ $user->district }}</option>
-                                                        {{-- @foreach ($userPositions as $userPosition)
-                                                        <option value="{{ $userPosition->id }}" {{
-                                                            old('userPosition')==$userPosition->id
-                                                            ?
-                                                            'selected' : '' }}>
-                                                            {{ $userPosition->name }}
-                                                        </option>
-                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -306,14 +296,6 @@
                                                         class="form-control select2 @error('subdistrict') is-invalid @enderror"
                                                         style="width: 100%;" disabled>
                                                         <option value="{{ $user->subdistrict }}" selected>{{ $user->subdistrict }}</option>
-                                                        {{-- @foreach ($userPositions as $userPosition)
-                                                        <option value="{{ $userPosition->id }}" {{
-                                                            old('userPosition')==$userPosition->id
-                                                            ?
-                                                            'selected' : '' }}>
-                                                            {{ $userPosition->name }}
-                                                        </option>
-                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -324,14 +306,6 @@
                                                         class="form-control select2 @error('zip') is-invalid @enderror"
                                                         style="width: 100%;" disabled>
                                                         <option value="{{ $user->zip }}" selected>{{ $user->zip }}</option>
-                                                        {{-- @foreach ($userPositions as $userPosition)
-                                                        <option value="{{ $userPosition->id }}" {{
-                                                            old('userPosition')==$userPosition->id
-                                                            ?
-                                                            'selected' : '' }}>
-                                                            {{ $userPosition->name }}
-                                                        </option>
-                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -342,14 +316,6 @@
                                                         class="form-control select2 @error('city') is-invalid @enderror"
                                                         style="width: 100%;" disabled>
                                                         <option value="{{ $user->city }}" selected>{{ $user->city }}</option>
-                                                        {{-- @foreach ($userPositions as $userPosition)
-                                                        <option value="{{ $userPosition->id }}" {{
-                                                            old('userPosition')==$userPosition->id
-                                                            ?
-                                                            'selected' : '' }}>
-                                                            {{ $userPosition->name }}
-                                                        </option>
-                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -360,14 +326,6 @@
                                                         class="form-control select2 @error('country') is-invalid @enderror"
                                                         style="width: 100%;" disabled>
                                                         <option value="{{ $user->country }}" selected>{{ $user->country }}</option>
-                                                        {{-- @foreach ($userPositions as $userPosition)
-                                                        <option value="{{ $userPosition->id }}" {{
-                                                            old('userPosition')==$userPosition->id
-                                                            ?
-                                                            'selected' : '' }}>
-                                                            {{ $userPosition->name }}
-                                                        </option>
-                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -376,7 +334,7 @@
                                                 <div class="form-group">
                                                     <label>เบอร์โทรศัพท์มือถือ</label>
                                                     <input type="text" name="phone" value="{{old('phone') ?? $user->phone}}" disabled
-                                                        class="form-control numericInputPhone">
+                                                        class="form-control numericInputPhone" placeholder="เบอร์โทรศัพท์มือถือ">
                                                 </div>
                                             </div>
                                             {{-- เพิ่มใหม่ --}}
@@ -384,7 +342,7 @@
                                                 <div class="form-group">
                                                     <label>อีเมล</label>
                                                     <input type="email" name="email" value="{{old('email') ?? $user->email}}" disabled
-                                                        class="form-control">
+                                                        class="form-control" placeholder="อีเมล">
                                                 </div>
                                             </div>
                                         </div>
@@ -401,7 +359,7 @@
                                                         style="width: 100%;" disabled>
                                                         @foreach ($employeeTypes as $employeeType)
                                                         <option value="{{ $employeeType->id }}" {{
-                                                            $user->employeeType == $employeeType->id
+                                                            $user->employee_type_id === $employeeType->id
                                                             ?
                                                             'selected' : '' }}>
                                                             {{ $employeeType->name }}
@@ -418,7 +376,7 @@
                                                         style="width: 100%;" disabled>
                                                         @foreach ($userPositions as $userPosition)
                                                         <option value="{{ $userPosition->id }}" {{
-                                                            $user->userPosition == $userPosition->id
+                                                            $user->user_position_id === $userPosition->id
                                                             ?
                                                             'selected' : '' }}>
                                                             {{ $userPosition->name }}
@@ -435,7 +393,7 @@
                                                         style="width: 100%;" disabled>
                                                         @foreach ($companyDepartments as $companyDepartment)
                                                         <option value="{{ $companyDepartment->id }}" {{
-                                                            $user->companyDepartment == $companyDepartment->id
+                                                            $user->company_department_id === $companyDepartment->id
                                                             ?
                                                             'selected' : '' }}>
                                                             {{ $companyDepartment->name }}
@@ -468,7 +426,7 @@
                                                     <div class="date-box date" id="work_permit_expire_date"
                                                         data-target-input="nearest">
                                                         <input type="text" name="workPermitExpireDate" disabled
-                                                            value="{{old('workPermitExpireDate') ?? $user->permit_expiry_date}}"
+                                                            value="{{old('workPermitExpireDate') ?? $user->permit_expiry_date}}" placeholder="วันหมดอายุใบอนุญาตทำงาน"
                                                             class="form-control datetimepicker-input @error('workPermitExpireDate') is-invalid @enderror"
                                                             data-target="#work_permit_expire_date">
                                                         <div class="date-icon" data-target="#work_permit_expire_date"
@@ -484,16 +442,16 @@
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label>เลขที่บัญชี</label>
-                                                        <input type="text" name="bank" value="{{old('bank') ?? $user->bank}}" disabled
-                                                            class="form-control">
+                                                        <input type="text" name="bank" value="{{old('bank') ?? $user->bank}}" disabled placeholder="เลขที่บัญชี"
+                                                            class="form-control numericInputInt">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>บัญชีธนาคาร</label>
-                                                    <input type="text" name="bankAccount" value="{{old('bankAccount') ?? $user->bank_account}}" disabled
-                                                        class="form-control numericInputInt">
+                                                    <input type="text" name="bankAccount" value="{{old('bankAccount') ?? $user->bank_account}}" disabled placeholder="บัญชีธนาคาร"
+                                                        class="form-control">
                                                 </div>
                                             </div>
                                           
@@ -501,7 +459,7 @@
                                                 <div class="form-group">
                                                     <label>เลขที่ประกันสังคม</label>
                                                     <input type="text" name="social_security_number"
-                                                        value="{{old('social_security_number') ?? $user->social_security_number}}"
+                                                        value="{{old('social_security_number') ?? $user->social_security_number}}" placeholder="เลขที่ประกันสังคม"
                                                         class="form-control numericInputInt" disabled>
                                                 </div>
                                             </div>
@@ -533,7 +491,7 @@
                                             <label for="" class="text-danger">***เปลี่ยนรหัสผ่าน***</label>
                                             <div class="form-group">
                                                 <label>รหัสผ่านใหม่</label>
-                                                <input type="text" name="changePassword" value="" class="form-control"
+                                                <input type="text" name="changePassword" value="" class="form-control" placeholder="รหัสผ่านใหม่"
                                                     required>
                                             </div>
                                             <div class="form-group mt-2">

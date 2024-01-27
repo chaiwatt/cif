@@ -30,12 +30,30 @@ class UserManagementSystemSettingUserInfoController extends Controller
     private $updatedRoleGroupCollectionService;
     private $addDefaultWorkScheduleAssignment;
     private $activityLogger;
-
+    private $relationships;
     public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService, AddDefaultWorkScheduleAssignment $addDefaultWorkScheduleAssignment,ActivityLogger $activityLogger) 
     {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
         $this->addDefaultWorkScheduleAssignment = $addDefaultWorkScheduleAssignment;
         $this->activityLogger = $activityLogger;
+        $this->relationships = [
+            (object)[
+                "id" => "1",
+                "name" => "โสด"
+            ],
+            (object)[
+                "id" => "2",
+                "name" => "แต่งงาน"
+            ],
+            (object)[
+                "id" => "3",
+                "name" => "หย่าร้าง"
+            ],
+            (object)[
+                "id" => "4",
+                "name" => "ไม่ระบุ"
+            ],
+        ];
     }
     public function index()
     {
@@ -58,7 +76,6 @@ class UserManagementSystemSettingUserInfoController extends Controller
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'users' => $users,
-         
         ]);
     }
     public function view($id)
@@ -114,7 +131,8 @@ class UserManagementSystemSettingUserInfoController extends Controller
             'leaves' => $leaves,
             'userLeaves' => $userLeaves,
             'leaveTypes' => $leaveTypes,
-            'leaveIncrements' => $leaveIncrements
+            'leaveIncrements' => $leaveIncrements,
+            'relationships' => $this->relationships
         ]);
     }
 

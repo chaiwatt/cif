@@ -80,11 +80,11 @@
 
                                     </div>
                                 </div>
-                                    <div class="mt-2 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
                             </div>
+                        </div>
+                        <div class="cif-modal-footer">
+                            <button type="submit"
+                                class="btn btn-primary">บันทึก</button>
                         </div>
                     </div>
                 </div>

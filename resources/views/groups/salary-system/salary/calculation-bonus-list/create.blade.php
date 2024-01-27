@@ -27,9 +27,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียด</h4>
                         </div>
+                        <form action="{{route('groups.salary-system.salary.calculation-bonus-list.store')}}"
+                            method="POST">
                         <div class="card-body">
-                            <form action="{{route('groups.salary-system.salary.calculation-bonus-list.store')}}"
-                                method="POST">
                                 @csrf
                                 <div class="row gy-2">
                                     <input type="text" name="manual_time" id="manual_time" value="1" hidden>
@@ -60,12 +60,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 text-end mt-2">
-                                        <button class="btn btn-primary">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

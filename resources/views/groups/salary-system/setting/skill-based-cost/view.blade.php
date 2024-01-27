@@ -27,10 +27,10 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดค่าทักษะ</h4>
                         </div>
-                        <div class="card-body">
-                            <form
-                                action="{{route('groups.salary-system.setting.skill-based-cost.update',['id' => $skillBasedCost->id ])}}"
-                                method="POST">
+                        <form
+                            action="{{route('groups.salary-system.setting.skill-based-cost.update',['id' => $skillBasedCost->id ])}}"
+                            method="POST">
+                            <div class="card-body">
                                 @method('PUT')
                                 @csrf
                                 <div class="row">
@@ -51,12 +51,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 mt-2 text-end">
-                                        <button type="submit" class="btn btn-primary">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

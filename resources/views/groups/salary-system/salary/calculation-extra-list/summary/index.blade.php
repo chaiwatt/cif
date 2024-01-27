@@ -38,11 +38,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group text-end">
-                        <a class="btn btn-primary mb-2 ms-2"
-                            href="{{route('groups.salary-system.salary.calculation-extra-list.download-report',['payday_detail_id' => $paydayDetail->id])}}">
-                            <i class="fas fa-download me-1"></i>
-                            ดาวน์โหลด
-                        </a>
+                      
                     </div>
                 </div>
             </div>
@@ -51,6 +47,11 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">พนักงาน</h3>
+                                <a class="btn btn-header"
+                                    href="{{route('groups.salary-system.salary.calculation-extra-list.download-report',['payday_detail_id' => $paydayDetail->id])}}">
+                                    <i class="fas fa-download"></i>
+                                    ดาวน์โหลด
+                                </a>
                             @if (count($users) !=0)
                             <div class="card-tools">
                                 {{-- <div class="input-group input-group-sm" style="width: 150px;">
@@ -63,9 +64,9 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th style="width: 10%">รหัสพนักงาน</th>
                                                 <th style="width: 20%">ชื่อ-สกุล</th>

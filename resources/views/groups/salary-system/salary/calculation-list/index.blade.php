@@ -27,7 +27,7 @@
             @if ($permission->show)
             <div class="row">
                 <div class="col-12" id="content_wrapper">
-                    <div class="card card-tabs">
+                    <div class="card card-tabs pe-2">
                             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                                 @foreach ($paydays->where('type',1) as $key => $payday)
                                 <li class="nav-item">
@@ -41,18 +41,21 @@
                                 <li class="ms-auto my-2">
                                     <div class="card-tools">
                                         <div class="input-group input-group-sm" style="width: 150px;">
-                                            <select name="year" id="year" class="form-select" style="width: 100%;">
-                                                @foreach ($years as $year)
-                                                <option value="{{ $year}}" @if ($year==$selectedYear) selected @endif>
-                                                    {{ $year }}
-                                                </option>
-                                                @endforeach
+                                            <select name="year" id="year" class="form-control select2" style="width: 100%;">
+                                                @if (count($years) >= 1)     
+                                                    @foreach ($years as $year)
+                                                    <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                                    </option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled selected>ยังไม่มีข้อมูล</option>
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
-                        <div>
+                        <div class="card-body">
                             <div class="tab-content" id="custom-tabs-three-tabContent">
                                 @foreach ($paydays->where('type',1) as $key => $payday)
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }} table-responsive"
@@ -108,11 +111,11 @@
                                                 </td>
                                                 <td>
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.calculation',['id' => $paydayDetail->id])}}"
-                                                        class="btn btn-sm btn-action" style="--bs-btn-color: #F79009; --bs-btn-color-hover: #DC6803;">
+                                                        class="btn btn-calculator btn-action">
                                                         <i class="fas fa-calculator"></i>
                                                     </a>
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.summary',['id' => $paydayDetail->id])}}"
-                                                        class="btn btn-sm btn-action" style="--bs-btn-color: #0086C9; --bs-btn-color-hover: #026AA2;">
+                                                        class="btn btn-edit btn-action">
                                                         <i class="fas fa-chart-bar"></i>
                                                     </a>
                                                 </td>
@@ -147,6 +150,7 @@
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
     };
+    $('.select2').select2()
 </script>
 
 @endpush

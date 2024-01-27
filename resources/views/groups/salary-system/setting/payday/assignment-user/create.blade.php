@@ -54,9 +54,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('groups.salary-system.setting.payday.assignment-user.store')}}"
-                                method="POST">
+                        <form action="{{route('groups.salary-system.setting.payday.assignment-user.store')}}"
+                            method="POST">
+                            <div class="card-body">
                                 @csrf
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
@@ -102,15 +102,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 text-end">
-                                        @if ($permission->create)
-                                        <button type="submit" class="btn btn-primary">บันทึก</button>
-                                        @endif
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                @if ($permission->create)
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                @endif
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

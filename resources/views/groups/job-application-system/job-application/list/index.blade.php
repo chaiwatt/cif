@@ -74,7 +74,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-end">
-                                                    {{-- <a href="#" class="text-primary">Preview</a> --}}
+                                                    <a href="#" data-bs-target="#preview-{{ $applicationNew->id }}" data-bs-toggle="modal" class="text-primary">Preview</a>
                                                     <a class="btn btn-action btn-sm btn-edit"
                                                         href="{{route('groups.job-application-system.job-application.list.view',['id' => $applicationNew->id ])}}"><i
                                                             class="fas fa-pencil-alt"></i></a>
@@ -104,7 +104,30 @@
 
         </div>
     </div>
-
+</div>
+<!-- Modal -->
+<div>
+    @foreach ($applicationNews as $item)
+    <div class="modal fade" id="preview-{{ $item->id }}" tabindex="-1" aria-labelledby="preview-{{ $item->id }}-Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 980px;">
+          <div class="modal-content cif-content">
+            <div class="modal-header">
+                <div class="d-flex align-items-center" style="gap: 32px">
+                    <img src="{{ asset('logomark.png') }}" alt="logomark" width="60" height="60">
+                    <h3 class="modal-title" id="preview-{{ $item->id }}-Label">{{ $item->title }}</h3>
+                </div>
+                <a href="{{ $item->application_form }}" target="_blank" class="btn btn-primary btn-lg" style="width: 160px">สมัครงาน</a>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 48px 124px 0 124px">
+                {!! $item->body !!}
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    @endforeach
 </div>
 {{-- <div class="modal-footer justify-content-between">
     {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>

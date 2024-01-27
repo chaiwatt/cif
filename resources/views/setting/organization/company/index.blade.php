@@ -25,9 +25,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดข้อมูลบริษัท</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{ route('setting.organization.company.update', ['id' => $company->id]) }}"
-                                method="POST">
+                        <form action="{{ route('setting.organization.company.update', ['id' => $company->id]) }}"
+                            method="POST">
+                            <div class="card-body">
                                 @method('PUT')
                                 @csrf
                                 <!-- Display validation errors -->
@@ -72,11 +72,11 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-3 text-end">
-                                    <button type="submit" class="btn btn-primary">บันทึก</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="cif-modal-footer">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

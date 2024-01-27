@@ -18,14 +18,13 @@
         href="{{ asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('assets/plugins/bs-stepper/css/bs-stepper.min.css') }}">
     {{--
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}"> --}}
 
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
 
     @stack('styles')
 
@@ -116,18 +115,7 @@
 
 
     </div>
-    <footer class="main-footer bg-primary py-2 px-3 text-white d-flex justify-content-between">
-        @php
-        $currentYear = date('Y');
-        @endphp
-        <div>
-            Copyright &copy; {{ $currentYear }}-{{ $currentYear + 1 }} CIF
-                HRM. All rights reserved.
-        </div>
-        <div class="float-right d-none d-sm-inline">
-            ระบบ HRM บริษัท ฉวีวรรณอินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด | V.01.01
-        </div>
-    </footer>
+    @include('layouts.footer')
 
 
 </body>
@@ -143,6 +131,7 @@
 <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
 
 {{-- <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

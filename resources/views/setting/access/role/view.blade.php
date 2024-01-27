@@ -26,9 +26,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดข้อมูลแผนก</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{ route('setting.access.role.update', ['id' => $role->id]) }}" method="POST">
-                                @method('PUT')
+                        <form action="{{ route('setting.access.role.update', ['id' => $role->id]) }}" method="POST">
+                            @method('PUT')
+                            <div class="card-body">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -39,12 +39,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="mt-2 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="cif-modal-footer">
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

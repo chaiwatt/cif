@@ -45,7 +45,7 @@
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="search_query" id="search_query"
-                                        class="form-control float-right" placeholder="ค้นหา">
+                                        class="form-control select2" placeholder="ค้นหา">
                                 </div>
                             </div>
                             @endif
@@ -135,14 +135,14 @@
     </div>
 
 </div>
-<div class="modal-footer justify-content-between">
-    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
+{{-- <div class="modal-footer justify-content-between">
+    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 <script type="module" src="{{ asset('assets/js/helpers/salary-system/salary/calculation/index.js?v=1') }}">
@@ -153,7 +153,8 @@
         searchRoute: '{{ route('groups.salary-system.salary.calculation.search') }}',        
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')
-    };
+    };\
+    $('.select2').select2()
 </script>
 
 @endpush

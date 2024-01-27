@@ -3,11 +3,14 @@
         <div class="card-tools mt-2">
             <div class="input-group input-group-sm mt-1" style="width: 150px;">
                 <select name="year" id="year" class="form-control " style="width: 100%;">
-                    @foreach ($years as $year)
-                    <option value="{{ $year}}" @if ($year==$selectedYear) selected @endif>
-                        {{ $year }}
-                    </option>
-                    @endforeach
+                    @if (count($years) >= 1)     
+                        @foreach ($years as $year)
+                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                        </option>
+                        @endforeach
+                    @else
+                        <option value="" disabled selected>ยังไม่มีข้อมูล</option>
+                    @endif
                 </select>
             </div>
         </div>
@@ -65,9 +68,9 @@
                             </td>
                             <td>
                                 <a href="{{route('groups.salary-system.salary.calculation-extra-list.calculation',['id' => $paydayDetail->id])}}"
-                                    class="btn btn-sm btn-primary"><i class="fas fa-calculator"></i></a>
+                                    class="btn btn-action btn-calculator"><i class="fas fa-calculator"></i></a>
                                 <a href="{{route('groups.salary-system.salary.calculation-extra-list.summary',['id' => $paydayDetail->id])}}"
-                                    class="btn btn-sm btn-success"><i class="fas fa-chart-bar"></i></a>
+                                    class="btn btn-action btn-edit"><i class="fas fa-chart-bar"></i></a>
                             </td>
                             </tr>
                             @endif

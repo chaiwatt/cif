@@ -1,9 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap');
 @charset "UTF-8"; /*!
  * Bootstrap  v5.3.0 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ 
 :root,
 [data-bs-theme=light] {
   --bs-blue: #0d6efd;
@@ -72,14 +73,14 @@
   --bs-dark-border-subtle: #adb5bd;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
-  --bs-font-sans-serif: "Nunito", sans-serif;
+  --bs-font-sans-serif: 'Noto Sans Thai', sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 0.9rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.6;
-  --bs-body-color: #212529;
+  --bs-body-color: #101828;
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg: #F9FAFB;
   --bs-body-bg-rgb: 248, 250, 252;
@@ -104,7 +105,7 @@
   --bs-border-width: 1px;
   --bs-border-style: solid;
   --bs-border-color: #dee2e6;
-  --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
+  --bs-border-color-translucent: #D0D5DD;
   --bs-border-radius: 0.375rem;
   --bs-border-radius-sm: 0.25rem;
   --bs-border-radius-lg: 0.5rem;
@@ -215,7 +216,7 @@ hr {
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  /* font-weight: 500; */
   line-height: 1.2;
   color: var(--bs-heading-color);
 }
@@ -425,7 +426,9 @@ th {
   text-align: inherit;
   text-align: -webkit-match-parent;
 }
-
+thead.border-bottom {
+  --bs-border-color: #D0D5DD;
+}
 thead,
 tbody,
 tfoot,
@@ -3032,7 +3035,10 @@ textarea.form-control-lg {
   --bs-btn-color:#D92D20;
   --bs-btn-color-hover: #B42318;
 }
-
+.btn-calculator {
+  --bs-btn-color: #F79009; 
+  --bs-btn-color-hover: #DC6803;
+}
 .btn-header {
   display: flex;
   align-items: center;
@@ -5583,7 +5589,7 @@ textarea.form-control-lg {
   background-color: var(--bs-modal-bg);
   background-clip: padding-box;
   border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-  border-radius: var(--bs-modal-border-radius);
+  border-radius: 20px;
   outline: 0;
 }
 
@@ -5630,6 +5636,7 @@ textarea.form-control-lg {
   position: relative;
   flex: 1 1 auto;
   padding: var(--bs-modal-padding);
+  padding-bottom: 0;
 }
 
 .modal-footer {

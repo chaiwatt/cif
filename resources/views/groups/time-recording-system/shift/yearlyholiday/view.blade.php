@@ -46,15 +46,17 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>วันที่ <span class="fw-bold text-danger">*</span></label>
-                                            <div class="input-group date" id="holiday_date" data-target-input="nearest">
+                                            <div class="date-box date" id="holiday_date" data-target-input="nearest">
                                                 <input name="HolidayDate"
                                                     value="{{old('HolidayDate') ?? $yearlyHoliday->holiday_date}}"
                                                     type="text"
                                                     class="form-control datetimepicker-input @error('holiday') is-invalid @enderror"
                                                     data-target="#holiday_date">
-                                                <div class="input-group-append" data-target="#holiday_date"
+                                                <div class="date-icon" data-target="#holiday_date"
                                                     data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    <span class="material-symbols-outlined">
+                                                        today
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

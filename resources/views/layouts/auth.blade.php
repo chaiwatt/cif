@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css?v=3.2.0') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">

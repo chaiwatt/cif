@@ -33,9 +33,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('groups.document-system.setting.approve-document.assignment.store')}}"
-                                method="POST">
+                        <form action="{{route('groups.document-system.setting.approve-document.assignment.store')}}"
+                            method="POST">
+                            <div class="card-body">
                                 @csrf
                                 <input name="approverId" id="approverId" value="{{$approver->id}}" type="text" hidden>
                                 <div class="dataTables_wrapper dt-bootstrap4">
@@ -76,15 +76,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
+                                
+                            </div>
+                            <div class="card-footer card-create">
+                                    <button type="submit"
+                                        class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

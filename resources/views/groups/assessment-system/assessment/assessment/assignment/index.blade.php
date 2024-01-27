@@ -84,24 +84,16 @@
     <div class="modal fade" id="modal-import-employee-code">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="employee-code">
-                                    <h5>รหัสพนักงานแถวละ 1 รายการ</h5>
-                                </label>
-                                <textarea class="form-control" id="employee-code" rows="12"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 py-3 d-flex justify-content-center gap-3">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 160px;">ยกเลิก</button>
-                            <button type="button" class="btn btn-primary"
-                                id="btn-import-employee-code" style="width: 160px;">เพิ่มรายการ</button>
-                        </div>
-                    </div>
+                <div class="cif-modal-body">
+                    <label for="employee-code" class="h5">
+                        รหัสพนักงานแถวละ 1 รายการ
+                    </label>
+                    <textarea class="form-control" id="employee-code" rows="12"></textarea>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 160px;">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary"
+                        id="btn-import-employee-code" style="width: 160px;">เพิ่มรายการ</button>
                 </div>
             </div>
         </div>

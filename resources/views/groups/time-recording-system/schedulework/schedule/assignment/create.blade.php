@@ -39,7 +39,7 @@
                         </div>
                         <div class="card-body p-0 shadow m-3 rounded-3">
                             <div class="row">
-                                <div class="col-md-3 p-0 border-end">
+                                <div class="col-md-3 border-end">
                                     {{-- <div class="sticky-top mb-3"> --}}
                                         <div class="card sticky-top">
                                             <div class="card-header">
@@ -64,12 +64,12 @@
                                     </div> --}}
                                 </div>
                                 <!-- /.col -->
-                                <div class="col-md-9 p-0">
+                                <div class="col-md-9">
                                     <div class="card sticky-top">
                                         <div class="card-header">
                                             <h4 class="card-title">ตารางทำงาน {{$month->name}} {{$year}}</h4>
                                         </div>
-                                        <div class="card-body p-0">
+                                        <div class="card-body">
                                             <!-- THE CALENDAR -->
                                             <div id="calendar" data-events="{{ $events }}"></div>
                                         </div>
@@ -84,11 +84,11 @@
                                 <button class="btn btn-info" id="get-updated-event">บันทึก</button>
                                 @endif
                             </div> --}}
-                            <div class="d-flex justify-content-end mt-2">
-                                @if ($permission->create || $permission->update)
-                                <button class="btn btn-primary" id="get-updated-event">บันทึก</button>
-                                @endif
-                            </div>
+                        </div>
+                        <div class="card-footer card-create border-0">
+                            @if ($permission->create || $permission->update)
+                            <button class="btn btn-primary" id="get-updated-event">บันทึก</button>
+                            @endif
                         </div>
                     </div>
                 </div>

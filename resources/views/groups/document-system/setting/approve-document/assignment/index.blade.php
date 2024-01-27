@@ -121,24 +121,17 @@
         </div>
     </div>
     <div class="modal fade" id="modal-import-employee-code">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <input type="text" id="approverId" value="{{$approver->id}}" hidden>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="employee-code">รหัสพนักงานแถวละ 1 รายการ</label>
-                                <textarea class="form-control" id="employee-code" rows="10"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary float-right"
-                                id="btn-import-employee-code">เพิ่มรายการ</button>
-                        </div>
-                    </div>
+                <div class="cif-modal-body">
+                    <input type="text" id="approverId" value="{{$approver->id}}" hidden>
+                    <label for="employee-code" class="h5">รหัสพนักงานแถวละ 1 รายการ</label>
+                    <textarea class="form-control" id="employee-code" rows="10"></textarea>
+                </div>
+                <div class="cif-modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                        <button type="button" class="btn btn-primary"
+                            id="btn-import-employee-code">เพิ่มรายการ</button>
                 </div>
             </div>
         </div>

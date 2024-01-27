@@ -201,7 +201,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-12 text-end">
+                                            <div class="cif-modal-footer p-0">
                                                 <button type="submit" class="btn btn-primary mt-2">บันทึก</button>
                                             </div>
                                         </div>

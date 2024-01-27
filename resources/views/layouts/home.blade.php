@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/font.css?v=1.0') }}">
 
 <body class="d-flex flex-column" style="height: 100vh;">
         <nav class="main-header navbar navbar-expand-md bg-white" style="padding: 12px 0;">
@@ -118,18 +117,7 @@
                 @yield('content')
             </div>
         </div>
-        <footer class="main-footer bg-primary py-2 px-3 text-white d-flex justify-content-between">
-            @php
-            $currentYear = date('Y');
-            @endphp
-            <div>
-                Copyright &copy; {{ $currentYear }}-{{ $currentYear + 1 }} CIF
-                    HRM. All rights reserved.
-            </div>
-            <div class="float-right d-none d-sm-inline">
-                ระบบ HRM บริษัท ฉวีวรรณอินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด | V.01.01
-            </div>
-        </footer>
+        @include('layouts.footer')
 </body>
 
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>

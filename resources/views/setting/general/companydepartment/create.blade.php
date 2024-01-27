@@ -25,9 +25,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดข้อมูลแผนก</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('setting.general.companydepartment.store')}}" method="POST">
-                                @csrf
+                        <form action="{{route('setting.general.companydepartment.store')}}" method="POST">
+                            @csrf
+                            <div class="card-body">
                                 <div class="row gy-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -50,12 +50,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="text-end mt-2">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="cif-modal-footer">
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

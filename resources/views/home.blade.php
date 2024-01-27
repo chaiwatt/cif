@@ -8,11 +8,12 @@
     </header>
     @if(session('error'))
     <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true" aria-label="Close"></button>
         <h5>ผิดพลาด!</h5>
         {{ session('error') }}
     </div>
     @endif
+    
     <div class="row">
         @foreach ($groups as $group)
         <div class="col-sm-6 col-lg-4 px-2 mb-3">

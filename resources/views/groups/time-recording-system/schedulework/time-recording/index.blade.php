@@ -36,10 +36,14 @@
                                 <select name="year" id="year"
                                     class="form-control select2 @error('year') is-invalid @enderror"
                                     style="width: 100%;">
-                                    @foreach ($years as $year)
-                                    <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
-                                    </option>
-                                    @endforeach
+                                    @if (count($years) >= 1)     
+                                        @foreach ($years as $year)
+                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                        </option>
+                                        @endforeach
+                                    @else
+                                        <option value="" disabled selected>ยังไม่มีข้อมูล</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>

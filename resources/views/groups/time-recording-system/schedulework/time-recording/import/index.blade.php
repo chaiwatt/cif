@@ -73,12 +73,10 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-12 text-end mt-2">
-                                    <button type="submit" class="btn btn-primary"
-                                        id="show_modal">นำเข้า</button>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="card-footer card-create">
+                            <button type="submit" class="btn btn-primary"
+                                id="show_modal">นำเข้า</button>
                         </div>
                     </div>
                 </div>

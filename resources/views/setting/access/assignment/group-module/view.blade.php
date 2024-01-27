@@ -88,7 +88,7 @@
     <div class="modal fade" id="modal-group">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="cif-modal-body">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -111,8 +111,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">ปิด</button>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                     <button type="button" class="btn btn-primary" id="bntSaveGroup">บันทึก</button>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                     <h4 class="modal-title">ตั้งค่าบทบาท</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="cif-modal-body">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -152,9 +152,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"
-                        onclick="location.reload()">ปิด</button>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                        onclick="location.reload()">ยกเลิก</button>
                     <button type="button" class="btn btn-primary" id="bntSaveModule">บันทึก</button>
                 </div>
             </div>

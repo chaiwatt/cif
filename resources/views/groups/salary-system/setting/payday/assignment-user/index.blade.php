@@ -122,23 +122,17 @@
         </div>
     </div>
     <div class="modal fade" id="modal-import-employee-code">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
+            <div class="modal-content" style="height: 600px">
                 <input type="text" id="paydayId" value="{{$payday->id}}" hidden>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="d-flex gap-3 text-nowrap align-items-center">
-                                <label for="employee-code">รหัสพนักงานแถวละ 1 รายการ</label>
-                                <textarea class="form-control" id="employee-code" rows="10"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 mt-2">
-                            <button type="button" class="btn btn-primary"
-                                id="btn-import-employee-code">เพิ่มรายการ</button>
-                        </div>
+                <div class="cif-modal-body">
+                    <label for="employee-code" class="h5">รหัสพนักงานแถวละ 1 รายการ</label>
+                    <textarea class="form-control" id="employee-code" rows="18"></textarea>
+                </div>
+                    <div class="cif-modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                        <button type="button" class="btn btn-primary"
+                            id="btn-import-employee-code">เพิ่มรายการ</button>
                     </div>
                 </div>
             </div>

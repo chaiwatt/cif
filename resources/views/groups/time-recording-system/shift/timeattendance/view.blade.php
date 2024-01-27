@@ -27,10 +27,8 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดกะการทำงาน</h4>
                         </div>
+                        <form action="{{ route('groups.time-recording-system.shift.timeattendance.update', ['id' => $shift->id]) }}" method="POST">
                         <div class="card-body">
-                            <form
-                                action="{{ route('groups.time-recording-system.shift.timeattendance.update', ['id' => $shift->id]) }}"
-                                method="POST">
                                 @method('PUT')
                                 @csrf
                                 <!-- Display validation errors -->
@@ -202,14 +200,13 @@
                                                 class="form-control numericInputSingle @error('multiply') is-invalid @enderror">
                                         </div>
                                     </div>
-
-                                    <div class="col-12 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <a href="{{ route('groups.time-recording-system.shift.timeattendance') }}" class="btn btn-outline-secondary" type="button">ยกเลิก</a>
+                                <button class="btn btn-primary" type="submit">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

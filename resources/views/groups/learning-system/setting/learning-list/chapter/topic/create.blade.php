@@ -54,11 +54,9 @@
                             </div>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
-                            <div class="text-end">
+                        <div class="card-footer card-create">
                                 <button class="btn btn-primary" id="btn-add-topic">
                                     บันทึก</button>
-                            </div>
                         </div>
                     </div>
                 </div>

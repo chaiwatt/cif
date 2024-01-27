@@ -27,9 +27,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียด</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('groups.salary-system.setting.skill-based-cost.store')}}"
-                                method="POST">
+                        <form action="{{route('groups.salary-system.setting.skill-based-cost.store')}}"
+                            method="POST">
+                            <div class="card-body">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -46,14 +46,14 @@
                                                 class="form-control numericInputInt @error('cost') is-invalid @enderror">
                                         </div>
                                     </div>
-                                    @if ($permission->create)
-                                    <div class="col-12 mt-2 text-end">
-                                        <button type="submit"class="btn btn-primary">บันทึก</button>
-                                    </div>
-                                    @endif
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            @if ($permission->create)
+                            <div class="card-footer card-create">
+                                <button type="submit"class="btn btn-primary">บันทึก</button>
+                            </div>
+                            @endif
+                        </form>
                     </div>
                 </div>
             </div>

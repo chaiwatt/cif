@@ -46,7 +46,7 @@
                                 <div class="form-group mr-2 mb-0">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <input type="text" name="search_query" id="search_query"
-                                            class="form-control float-right" placeholder="ค้นหา">
+                                            class="form-control" placeholder="ค้นหา">
                                     </div>
                                 </div>
                                 <div class="form-group mb-0">
@@ -124,6 +124,7 @@
                                                     @php
                                                     $paydayDetailWithToday = $user->getPaydayDetailWithToday();
                                                     @endphp
+                                                    
                                                     <a class="btn btn-sm btn-action btn-edit" data-id="{{$user->id}}"
                                                         data-startDate="{{$paydayDetailWithToday->start_date}}"
                                                         data-endDate="{{$paydayDetailWithToday->end_date}}" id="user"><i

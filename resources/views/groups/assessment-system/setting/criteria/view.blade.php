@@ -27,10 +27,10 @@
                         <div class="card-header">
                             <h4 class="card-title">เกณฑ์การประเมิน</h4>
                         </div>
-                        <div class="card-body">
-                            <form
-                                action="{{route('groups.assessment-system.setting.criteria.update',['id' => $assessmentCriteria->id])}}"
-                                method="POST">
+                        <form
+                            action="{{route('groups.assessment-system.setting.criteria.update',['id' => $assessmentCriteria->id])}}"
+                            method="POST">
+                            <div class="card-body">
                                 @method('PUT')
                                 @csrf
                                 <div class="row gy-2">
@@ -51,12 +51,12 @@
                                                 rows="10">{{old('description') ?? $assessmentCriteria->description}}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-12 text-end">
-                                        <button class="btn btn-primary mt-2">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

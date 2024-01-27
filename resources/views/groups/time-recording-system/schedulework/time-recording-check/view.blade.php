@@ -30,18 +30,6 @@
     </div>
     <div class="content">
         <div class="container-fluid">
-
-            <div class="row">
-                <div class="col-12">
-                    <a class="btn btn-primary mb-3" id="show_modal">
-                        ตรวจสอบการบันทึกเวลา
-                    </a>
-                    @if ($permission->create)
-                    <button class="btn btn-primary" id="add_note"><i class="fas fa-comments mr-2"></i>
-                        เพิ่มโน้ต</button>
-                    @endif
-                </div>
-            </div>
             @if ($permission->show)
 
             <div class="row">
@@ -49,34 +37,40 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">พนักงาน</h4>
-                            <div class="card-tools" id="filter-container" style="display: none;">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-info btn-sm active">
-                                        <input type="radio" name="options" id="option_0" autocomplete="off" checked="">
-                                        ทั้งหมด
-                                    </label>
-                                    <label class="btn btn-info btn-sm">
-                                        <input type="radio" name="options" id="option_1" autocomplete="off">
-                                        สำเร็จ
-                                    </label>
-                                    <label class="btn btn-info btn-sm">
-                                        <input type="radio" name="options" id="option_2" autocomplete="off"> ผิดพลาด
-                                    </label>
-                                </div>
+                            <div class="d-flex gap-2 align-items-center">
+                                <a class="btn btn-header" id="show_modal">
+                                    ตรวจสอบการบันทึกเวลา
+                                </a>
+                                @if ($permission->create)
+                                <button class="btn btn-header" id="add_note"><i class="fas fa-comments mr-2"></i>
+                                    เพิ่มโน้ต</button>
+                                @endif
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="options" id="option_0" autocomplete="off" checked="">
+                                        <label class="form-check-label" for="option_0">ทั้งหมด</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="options" id="option_1" autocomplete="off">
+                                        <label class="form-check-label" for="option_1">สำเร็จ</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="options" id="option_2" autocomplete="off">
+                                        <label class="form-check-label" for="option_2">ผิดพลาด</label>
+                                    </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th class="text-center" style="width: 150px">ตรวจสอบ</th>
                                                 <th style="width: 200px">วันที่ผิดพลาด</th>
                                                 <th style="width: 200px">รหัสพนักงาน</th>
                                                 <th>ชื่อ-สกุล</th>
                                                 <th>แผนก</th>
-                                                <th class="text-right" style="width: 120px">แก้ไข</th>
+                                                <th class="text-end" style="width: 120px">แก้ไข</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -99,9 +93,9 @@
     </div>
 
     <div class="modal fade" id="modal-date-range">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="cif-modal-body">
                     <div class="row mb-2">
                         <div class="col-6">
                             <div class="form-group">
@@ -116,12 +110,11 @@
                                 <input type="text" class="form-control input-date-format" id="endDate">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="form-group float-right">
-                                <button type="button" class="btn btn-primary" id="check-time-record">ตกลง</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-primary" id="check-time-record">ตกลง</button>
+
                 </div>
             </div>
         </div>
@@ -140,12 +133,12 @@
         </div>
     </div>
     <div class="modal fade" id="modal-add-note">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="cif-modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="startDate">โน้ต</label><br>
                                 <textarea type="text" class="form-control" id="note" rows="3"></textarea>
                             </div>
@@ -156,12 +149,10 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="form-group float-right">
-                                <button type="button" class="btn btn-primary" id="save_note">บันทึก</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer pt-0">
+                    <button type="button" class="btn btn-primary" id="save_note">บันทึก</button>
                 </div>
             </div>
         </div>
@@ -177,7 +168,7 @@
                         <div class="col-12">
                             <input type="text" id="workScheduleAssignmentUserFileId" hidden>
                             <input type="text" id="workScheduleAssignmentUserId" hidden>
-                            <div class="form-group float-right">
+                            <div class="form-group">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                 <button type="button" class="btn btn-danger d-none" id="delete-image">ลบ</button>
                                 <button type="button" class="btn btn-primary" id="btnAddFile">เพิ่มไฟล์รูป</button>

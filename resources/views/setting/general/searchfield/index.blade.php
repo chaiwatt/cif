@@ -77,7 +77,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                            <div class="mt-2 text-end">
+                                            <div class="cif-modal-footer p-0">
                                                 <button type="submit"
                                                     class="btn btn-primary">บันทึก</button>
                                             </div>

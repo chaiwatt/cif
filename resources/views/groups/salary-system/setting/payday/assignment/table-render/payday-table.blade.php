@@ -1,5 +1,5 @@
-<table class="table table-striped text-nowrap">
-    <thead>
+<table class="table table-borderless text-nowrap">
+    <thead class="border-bottom">
         <tr>
             <th>เดือน</th>
             <th>เริ่มวันที่</th>
@@ -20,10 +20,10 @@
             </td>
 
             <td class="text-end">
-                <a class="btn btn-primary btn-sm update-payday" href="#" data-id="{{$paydayDetail->id}}">
+                <a class="btn btn-edit btn-action update-payday" href="#" data-id="{{$paydayDetail->id}}">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a class="btn btn-danger btn-sm" data-confirm='ลบรอบคำนวนเงินเดือน "{{$paydayDetail->name}}" หรือไม่?'
+                <a class="btn btn-delete btn-action" data-confirm='ลบรอบคำนวนเงินเดือน "{{$paydayDetail->name}}" หรือไม่?'
                     href="#" data-id="{{$paydayDetail->id}}"
                     data-delete-route="{{ route('groups.salary-system.setting.payday.assignment.delete', ['id' => '__id__']) }}"
                     data-message="รอบคำนวนเงินเดือน">

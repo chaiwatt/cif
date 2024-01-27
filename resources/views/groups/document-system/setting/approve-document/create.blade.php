@@ -49,9 +49,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดข้อมูลสายอนุมัติ</h4>
                         </div>
+                        <form action="{{route('groups.document-system.setting.approve-document.store')}}"
+                            method="POST">
                         <div class="card-body">
-                            <form action="{{route('groups.document-system.setting.approve-document.store')}}"
-                                method="POST">
                                 @csrf
                                 <!-- Display validation errors -->
                                 <div class="row gy-2">
@@ -142,7 +142,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
 
                                 {{-- <div class="row">
                                     <div class="col-12">
@@ -162,14 +161,11 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="row">
-                                    <div class="col-12 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

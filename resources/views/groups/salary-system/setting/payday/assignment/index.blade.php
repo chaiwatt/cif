@@ -75,9 +75,9 @@
         </div>
     </div>
     <div class="modal fade" id="modal-payday-date">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="cif-modal-body">
                     <div class="row gy-2">
                         <input type="text" id="paydayId" value="{{$payday->id}}" hidden>
                         <input type="text" id="year" value="{{$payday->year}}" hidden>
@@ -109,21 +109,24 @@
                                 <input type="text" id="duration" value="7" class="form-control numericInputInt">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save_payday">ตกลง</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save_payday">ตกลง</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="modal-update-payday-date">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body" id="modal-update-payday-date-wrapper">
+                <div class="cif-modal-body" id="modal-update-payday-date-wrapper">
 
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="update_payday">ตกลง</button>
                 </div>
             </div>
         </div>

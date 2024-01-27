@@ -114,7 +114,7 @@
                                                     style="width: 100%;">
                                                     @foreach ($nationalities as $nationality)
                                                         <option value="{{ $nationality->id }}" 
-                                                            @if ($nationality->id === $user->nationality) selected @endif>
+                                                            @if ($nationality->id === $user->nationality_id) selected @endif>
                                                                 {{ $nationality->name }}
                                                         </option>
                                                     @endforeach
@@ -129,7 +129,7 @@
                                                     class="form-control select2 @error('ethnicity') is-invalid @enderror"
                                                     style="width: 100%;">
                                                     @foreach ($ethnicities as $ethnicity)
-                                                    <option value="{{ $ethnicity->id }}" {{ $user->ethnicity === $ethnicity->id
+                                                    <option value="{{ $ethnicity->id }}" {{ $user->ethnicity_id === $ethnicity->id
                                                         ?
                                                         'selected' : '' }}>
                                                         {{ $ethnicity->name }}
@@ -163,14 +163,6 @@
                                                     @foreach ($relationships as $relationship)
                                                         <option value="{{ $relationship->id }}" {{ $relationship->id === $user->relationship ? 'selected' : '' }}>{{ $relationship->name }}</option>
                                                     @endforeach
-                                                    {{-- @foreach ($employeeTypes as $employeeType)
-                                                    <option value="{{ $employeeType->id }}" {{
-                                                        old('employeeType')==$employeeType->id
-                                                        ?
-                                                        'selected' : '' }}>
-                                                        {{ $employeeType->name }}
-                                                    </option>
-                                                    @endforeach --}}
                                                 </select>
                                             </div>
                                         </div>
@@ -272,7 +264,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>รหัสไปรษณีย์ <span class="fw-bold text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('zip') is-invalid @enderror" style="width: 100%;" id="zip-address" value="{{ $user->zip }}">
+                                                <input type="text" name="zip" class="form-control @error('zip') is-invalid @enderror" style="width: 100%;" id="zip-address" value="{{ $user->zip }}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -325,7 +317,7 @@
                                                     style="width: 100%;">
                                                     @foreach ($employeeTypes as $employeeType)
                                                     <option value="{{ $employeeType->id }}" {{
-                                                        $user->employee_type === $employeeType->id
+                                                        $user->employee_type_id === $employeeType->id
                                                         ?
                                                         'selected' : '' }}>
                                                         {{ $employeeType->name }}
@@ -342,7 +334,7 @@
                                                     style="width: 100%;">
                                                     @foreach ($userPositions as $userPosition)
                                                     <option value="{{ $userPosition->id }}" {{
-                                                        $user->user_position === $userPosition->id
+                                                        $user->user_position_id === $userPosition->id
                                                         ?
                                                         'selected' : '' }}>
                                                         {{ $userPosition->name }}
@@ -359,7 +351,7 @@
                                                     style="width: 100%;">
                                                     @foreach ($companyDepartments as $companyDepartment)
                                                     <option value="{{ $companyDepartment->id }}" {{
-                                                        $user->company_department === $companyDepartment->id
+                                                        $user->company_department_id === $companyDepartment->id
                                                         ?
                                                         'selected' : '' }}>
                                                         {{ $companyDepartment->name }}
@@ -409,7 +401,7 @@
                                                 <div class="form-group">
                                                     <label>เลขที่บัญชี</label>
                                                     <input type="text" name="bank" value="{{ $user->bank }}"
-                                                        class="form-control">
+                                                        class="form-control numericInputInt">
                                                 </div>
                                             </div>
                                         </div>
@@ -417,7 +409,7 @@
                                             <div class="form-group">
                                                 <label>บัญชีธนาคาร</label>
                                                 <input type="text" name="bankAccount" value="{{ $user->bank_account }}"
-                                                    class="form-control numericInputInt">
+                                                    class="form-control">
                                             </div>
                                         </div>
     

@@ -34,14 +34,14 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดข้อมูลสายอนุมัติ</h4>
                         </div>
-                        <div class="card-body">
-                            <form
-                                action="{{ route('groups.document-system.setting.approve-document.update', ['id' => $approver->id]) }}"
-                                method="POST">
+                        <form
+                            action="{{ route('groups.document-system.setting.approve-document.update', ['id' => $approver->id]) }}"
+                            method="POST">
+                            <div class="card-body">
                                 @method('PUT')
                                 @csrf
                                 <!-- Display validation errors -->
-                                <div class="row">
+                                <div class="row gy-2">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ชื่อสายอนุมัติ<span class="small text-danger">*</span></label>
@@ -122,11 +122,11 @@
                                     </div>
 
                                 </div>
-                                <div class="col-12 mt-2">
-                                    <button type="submit"
-                                        class="btn btn-primary">บันทึก</button>
-                                </div>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                            </div>
 
                         {{-- <div class="row">
                             <div class="col-12">

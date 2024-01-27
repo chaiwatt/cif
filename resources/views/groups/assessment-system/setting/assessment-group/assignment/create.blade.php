@@ -51,11 +51,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <form
-                                action="{{route('groups.assessment-system.setting.assessment-group.assignment.store')}}"
-                                method="POST">
-                                @csrf
+                        <form
+                            action="{{route('groups.assessment-system.setting.assessment-group.assignment.store')}}"
+                            method="POST">
+                            @csrf
+                            <div class="card-body">
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <input type="text" value="{{$assessmentGroup->id}}" name="assessmentGroupId"
@@ -112,15 +112,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 mt-2 text-end">
-                                        @if ($permission->create)
-                                        <button type="submit" class="btn btn-primary">บันทึก</button>
-                                        @endif
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                @if ($permission->create)
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                @endif
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

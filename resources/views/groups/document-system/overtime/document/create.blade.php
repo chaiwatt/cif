@@ -27,9 +27,9 @@
                         <div class="card-header">
                             <h4 class="card-title">เพิ่มรายการล่วงเวลา</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('groups.document-system.overtime.document.store')}}" method="POST">
-                                @csrf
+                        <form action="{{route('groups.document-system.overtime.document.store')}}" method="POST">
+                            <div class="card-body">
+                            @csrf
                                 <div class="row gy-2">
                                     <input type="text" name="manual_time" id="manual_time" value="1" hidden>
                                     <div class="col-md-6">
@@ -105,12 +105,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 text-end">
-                                        <button class="btn btn-primary mt-2">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

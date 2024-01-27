@@ -156,18 +156,9 @@
                                             <select name="relationship"
                                                 class="form-control select2"
                                                 style="width: 100%;">
-                                                <option value="1">โสด</option>
-                                                <option value="2">แต่งงาน</option>
-                                                <option value="3">หย่าร้าง</option>
-                                                <option value="4">ไม่ระบุ</option>
-                                                {{-- @foreach ($employeeTypes as $employeeType)
-                                                <option value="{{ $employeeType->id }}" {{
-                                                    old('employeeType')==$employeeType->id
-                                                    ?
-                                                    'selected' : '' }}>
-                                                    {{ $employeeType->name }}
-                                                </option>
-                                                @endforeach --}}
+                                                @foreach ($relationships as $relationship)
+                                                    <option value="{{ $relationship->id }}">{{ $relationship->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -252,14 +243,6 @@
                                             <select name="district" id="district"
                                                 class="form-control select2 @error('district') is-invalid @enderror"
                                                 style="width: 100%;">
-                                                {{-- @foreach ($userPositions as $userPosition)
-                                                <option value="{{ $userPosition->id }}" {{
-                                                    old('userPosition')==$userPosition->id
-                                                    ?
-                                                    'selected' : '' }}>
-                                                    {{ $userPosition->name }}
-                                                </option>
-                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>
@@ -275,7 +258,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>รหัสไปรษณีย์ <span class="fw-bold text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('zip') is-invalid @enderror" style="width: 100%;" id="zip-address">
+                                            <input type="text" name="zip" class="form-control @error('zip') is-invalid @enderror" style="width: 100%;" id="zip-address">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -284,15 +267,6 @@
                                             <select name="city" id="city"
                                                 class="form-control select2 @error('city') is-invalid @enderror"
                                                 style="width: 100%;">
-                                               
-                                                {{-- @foreach ($userPositions as $userPosition)
-                                                <option value="{{ $userPosition->id }}" {{
-                                                    old('userPosition')==$userPosition->id
-                                                    ?
-                                                    'selected' : '' }}>
-                                                    {{ $userPosition->name }}
-                                                </option>
-                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>
@@ -420,7 +394,7 @@
                                             <div class="form-group">
                                                 <label>เลขที่บัญชี</label>
                                                 <input type="text" name="bank" value="{{old('bank')}}"
-                                                    class="form-control">
+                                                    class="form-control numericInputInt">
                                             </div>
                                         </div>
                                     </div>
@@ -428,7 +402,7 @@
                                         <div class="form-group">
                                             <label>บัญชีธนาคาร</label>
                                             <input type="text" name="bankAccount" value="{{old('bankAccount')}}"
-                                                class="form-control numericInputInt">
+                                                class="form-control">
                                         </div>
                                     </div>
 

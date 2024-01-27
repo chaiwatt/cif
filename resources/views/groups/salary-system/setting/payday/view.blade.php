@@ -27,10 +27,10 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียด</h4>
                         </div>
+                        <form
+                            action="{{ route('groups.salary-system.setting.payday.update', ['id' => $payDay->id]) }}"
+                            method="POST">
                         <div class="card-body">
-                            <form
-                                action="{{ route('groups.salary-system.setting.payday.update', ['id' => $payDay->id]) }}"
-                                method="POST">
                                 @method('PUT')
                                 @csrf
 
@@ -167,15 +167,15 @@
                                                 class="form-control numericInputInt" inputmode="text">
                                         </div>
                                     </div>
-                                    @if ($permission->update)
-                                    <div class="col-12 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึกแก้ไข</button>
-                                    </div>
-                                    @endif
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            @if ($permission->update)
+                            <div class="card-footer card-create">
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                            </div>
+                            @endif
+                        </form>
                     </div>
                 </div>
             </div>

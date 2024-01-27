@@ -33,10 +33,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <form
-                                action="{{route('groups.time-recording-system.setting.employee-group.assignment.store')}}"
-                                method="POST">
+                        <form
+                            action="{{route('groups.time-recording-system.setting.employee-group.assignment.store')}}"
+                            method="POST">
+                            <div class="card-body">
                                 @csrf
                                 <input name="userGroupId" id="userGroupId" value="{{$userGroup->id}}" type="text"
                                     hidden>
@@ -83,12 +83,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-end mt-2">
-                                    <button type="submit"
-                                        class="btn btn-primary">บันทึก</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

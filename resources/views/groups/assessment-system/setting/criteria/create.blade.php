@@ -27,8 +27,8 @@
                         <div class="card-header">
                             <h4 class="card-title">เพิ่มเกณฑ์การประเมิน</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('groups.assessment-system.setting.criteria.store')}}" method="POST">
+                        <form action="{{route('groups.assessment-system.setting.criteria.store')}}" method="POST">
+                            <div class="card-body">
                                 @csrf
                                 <div class="row gy-2">
 
@@ -46,12 +46,12 @@
                                                 name="description" rows="10"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-12 text-end">
-                                        <button class="btn btn-primary mt-2">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

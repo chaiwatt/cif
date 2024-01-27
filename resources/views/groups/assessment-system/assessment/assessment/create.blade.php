@@ -27,9 +27,9 @@
                         <div class="card-header">
                             <h4 class="card-title">การประเมิน</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('groups.assessment-system.assessment.assessment.store')}}"
-                                method="POST">
+                        <form action="{{route('groups.assessment-system.assessment.assessment.store')}}"
+                            method="POST">
+                            <div class="card-body">
                                 @csrf
                                 <div class="row">
 
@@ -54,12 +54,12 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 text-end">
-                                        <button class="btn btn-primary mt-2">บันทึก</button>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="card-footer card-create">
+                                <button class="btn btn-primary mt-2">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

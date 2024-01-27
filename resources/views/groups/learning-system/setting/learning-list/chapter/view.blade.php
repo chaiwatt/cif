@@ -25,12 +25,12 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
 
-                        <div class="card-body">
+                        <!-- Display validation errors -->
+                        <form
+                            action="{{route('groups.learning-system.setting.learning-list.chapter.update',['id' => $chapter->id])}}"
+                            method="POST">
+                            <div class="card-body">
 
-                            <!-- Display validation errors -->
-                            <form
-                                action="{{route('groups.learning-system.setting.learning-list.chapter.update',['id' => $chapter->id])}}"
-                                method="POST">
                                 @method('PUT')
                                 @csrf
                                 <div class="row">
@@ -43,18 +43,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 text-end mt-2">
-                                        @if ($permission->update)
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                        @endif
+                                
+                            </div>
+                            <div class="cif-modal-footer">
+                                @if ($permission->update)
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                                @endif
 
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

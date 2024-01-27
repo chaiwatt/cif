@@ -25,11 +25,11 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
 
-                        <div class="card-body">
+                        <!-- Display validation errors -->
+                        <form action="{{route('groups.time-recording-system.setting.employee-group.store')}}"
+                            method="POST">
+                            <div class="card-body">
 
-                            <!-- Display validation errors -->
-                            <form action="{{route('groups.time-recording-system.setting.employee-group.store')}}"
-                                method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -40,16 +40,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="d-flex justify-content-end mt-2">
-                                        @if ($permission->create)
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                        @endif
+                                
+                            </div>
+                            <div class="cif-modal-footer">
+                                @if ($permission->create)
+                                <button type="submit"
+                                    class="btn btn-primary">บันทึก</button>
+                                @endif
 
-                                    </div>
+                            </div>
                             </form>
-
-                        </div>
                     </div>
                 </div>
             </div>

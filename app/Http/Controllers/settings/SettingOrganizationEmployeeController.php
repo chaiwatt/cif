@@ -363,6 +363,8 @@ class SettingOrganizationEmployeeController extends Controller
             $file = $request->file('avatar');
             $filename = 'avatar' . '-' . time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('avatar', $filename);
+        } else {
+            $filename = $user->avatar;
         }
 
         $user->update([
@@ -511,7 +513,7 @@ class SettingOrganizationEmployeeController extends Controller
                 'zip'=> 'required',
                 'city'=> 'required',
                 'country'=> 'required',
-                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:3072'
+                'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:3072'
             ]);
         return $validator;
     }
