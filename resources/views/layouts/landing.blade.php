@@ -34,10 +34,10 @@
                       <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end align-items-lg-center flex-grow-1 gap-3 gap-lg-5">
                             <li class="nav-item">
-                                <a href="{{ url('/announcement') }}" class="nav-link offcanva">ข่าวประกาศ</a>
+                                <a href="{{ route('announcement') }}" class="nav-link offcanva">ข่าวประกาศ</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/application') }}" class="nav-link offcanva">รับสมัครงาน</a>
+                                <a href="{{ route('application') }}" class="nav-link offcanva">รับสมัครงาน</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('/home') }}" class="nav-link offcanva">ติดต่อเรา</a>
