@@ -8,7 +8,7 @@ class ImageController extends Controller
 {
     //
     public function announce_thumbnail_view($image) {
-        $path = storage_path('app/announcement/thumbnail/' . $image);
+        $path = storage_path('app/announcement/thumbnails/' . $image);
         $file = \File::get($path);
         $type = \File::mimeType($path);
         $response = \Response::make($file, 200);

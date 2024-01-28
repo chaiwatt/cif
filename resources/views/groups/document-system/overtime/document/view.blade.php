@@ -71,7 +71,7 @@
                                     </div>
                                     <hr>
                                     <div class="col-12">
-                                        <div class="card-body p-0">
+                                        <div>
                                             <table class="table table-sm">
                                                 <thead>
                                                     <tr>

@@ -33,7 +33,7 @@
                                 เพิ่มสายอนุมัติ
                             </a>
                         </div>
-                        <div class="card-body py-0">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive" id="table_container">

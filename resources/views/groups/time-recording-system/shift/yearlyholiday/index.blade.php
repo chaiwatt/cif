@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-header">
                             <h4 class="card-title">วันหยุดประจำปี</h4>
                             <div class="d-flex gap-2">
                                 @if ($permission->create)
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                        <div class="table-responsive" id="table_container">
                             <table class="table table-borderless text-nowrap">
                                 <thead class="border-bottom">
                                     <tr>

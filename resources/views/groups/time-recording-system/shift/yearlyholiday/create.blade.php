@@ -27,9 +27,9 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดวันหยุดประจำปี</h4>
                         </div>
-                        <div class="card-body">
-                            <form action="{{route('groups.time-recording-system.shift.yearlyholiday.store')}}"
-                                method="POST">
+                        <form action="{{route('groups.time-recording-system.shift.yearlyholiday.store')}}"
+                            method="POST">
+                            <div class="card-body">
                                 @csrf
                                 <!-- Display validation errors -->
                                 <div class="row">
@@ -57,11 +57,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-2 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">บันทึก</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="cif-modal-footer">
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

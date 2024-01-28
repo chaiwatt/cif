@@ -27,7 +27,7 @@
                             <h4 class="card-title">ตารางทำงาน</h4>
                         </div>
 
-                        <div class="card-body pt-0">
+                        <div>
                             <form
                                 action="{{route('groups.time-recording-system.setting.work-schedule-visibility.store')}}"
                                 method="POST">
@@ -40,7 +40,7 @@
                                                     <th style="width: 120px">
                                                         <div class="icheck-primary d-inline">
                                                             <input type="checkbox" id="select_all" checked>
-                                                            <label for="select_all">เลือก</label>
+                                                            <label for="select_all"></label>
                                                         </div>
                                                     </th>
                                                     <th>ชื่อตารางทำงาน</th>

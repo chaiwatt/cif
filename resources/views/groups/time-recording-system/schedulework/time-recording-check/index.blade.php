@@ -69,7 +69,7 @@
                             <h4 class="card-title">ตารางทำงาน</h4>
 
                         </div>
-                        <div class="card-body table-responsive p-0" id="table_container">
+                        <div class="table-responsive" id="table_container">
                             <table class="table table-borderless text-nowrap">
                                 <thead class="border-bottom">
                                     <tr>

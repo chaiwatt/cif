@@ -53,7 +53,7 @@
 
                                 </div>
                             </div>
-                            <div class="card-footer card-create">
+                            <div class="cif-modal-footer">
                                 <button type="submit" class="btn btn-primary">บันทึก</button>
                             </div>
                         </form>

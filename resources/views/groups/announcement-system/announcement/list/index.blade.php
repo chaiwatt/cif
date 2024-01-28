@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-header">
                             <h4 class="card-title">รายการข่าวประกาศ</h3>
                             <a class="btn btn-header" href="{{route('groups.announcement-system.announcement.list.create')}}">
                                 <i class="fas fa-plus">
@@ -55,10 +55,10 @@
                             @endif --}}
 
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table ttable-borderless text-nowrap dataTable dtr-inline">
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                         <thead class="border-bottom">
                                             <tr>
                                                 <th>ข่าวประกาศ</th>

@@ -34,7 +34,7 @@
                         <div class="card-header">
                             <h4 class="card-title">ตารางทำงาน</h4>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="row">
                                 <div class="col-sm-12 table-responsive" id="table_container">
                                     <table class="table table-borderless text-nowrap dataTable dtr-inline">
@@ -43,7 +43,7 @@
                                                 <th>
                                                     <div class="icheck-primary d-inline">
                                                         <input type="checkbox" id="select_all">
-                                                        <label for="select_all">เลือก</label>
+                                                        <label for="select_all"></label>
                                                     </div>
                                                 </th>
                                                 <th>รหัสพนักงาน</th>

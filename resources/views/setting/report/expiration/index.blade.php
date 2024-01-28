@@ -55,7 +55,7 @@
                         <div class="card-header">
                             <h4 class="card-title">รายชื่อพนักงาน</h4>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive" id="table_container">

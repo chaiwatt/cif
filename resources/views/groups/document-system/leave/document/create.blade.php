@@ -87,11 +87,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 text-end">
-                                    <button class="btn btn-primary" id="leave_check">ตรวจสอบ</button>
-                                </div>
                             </div>
-
+                            
+                        </div>
+                        <div class="cif-modal-footer">
+                            <button class="btn btn-primary" id="leave_check">ตรวจสอบ</button>
                         </div>
                     </div>
                 </div>

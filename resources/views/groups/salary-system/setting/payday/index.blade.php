@@ -32,19 +32,21 @@
                                 </a>
                                 @endif
                                 <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <select name="year" id="year"
-                                            class="form-control @error('year') is-invalid @enderror" style="width: 100%;">
+                                    <select name="year" id="year"
+                                        class="form-control select2 @error('year') is-invalid @enderror" style="width: 100%;">
+                                        @if (count($years) >= 1)
                                             @foreach ($years as $year)
                                             <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
                                             </option>
                                             @endforeach
-                                        </select>
-                                    </div>
+                                        @else
+                                            <option selected disabled>ปี</option>
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body table-responsive px-3 py-0" id="table_container">
+                        <div class="table-responsive" id="table_container">
                             <table class="table text-nowrap table-borderless">
                                 <thead class="border-bottom">
                                     <tr>
@@ -103,6 +105,7 @@
 <script type="module" src="{{asset('assets/js/helpers/salary-system/setting/payday/index.js?v=1')}}"></script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
+    $('.select2').select2();
     window.params = {
         searchRoute: '{{ route('groups.salary-system.setting.payday.search') }}',        
         url: '{{ url('/') }}',

@@ -76,7 +76,7 @@
                         <div class="card-header">
                             <h4 class="card-title">รายการพนักงานใน {{$approver->name}}</h4>
                         </div>
-                        <div class="card-body py-0">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive">

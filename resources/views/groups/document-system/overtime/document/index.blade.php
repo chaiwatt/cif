@@ -42,14 +42,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>ตั้งแต่วันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
-                                        <input type="text" name="startDate" id="startDate" value="{{old('startDate')}}"
+                                        <input type="text" name="startDate" id="startDate" value="{{old('startDate')}}" placeholder="กรอกวันที่"
                                             class="form-control input-date-format @error('startDate') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>ถึงวันที่ (วดป. คศ)<span class="small text-danger">*</span></label>
-                                        <input type="text" name="endDate" id="endDate" value="{{old('endDate')}}"
+                                        <input type="text" name="endDate" id="endDate" value="{{old('endDate')}}" placeholder="กรอกวันที่"
                                             class="form-control input-date-format @error('endDate') is-invalid @enderror">
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                             </ul> --}}
                         </div>
 
-                        <div class="card-body">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive" id="table_container">

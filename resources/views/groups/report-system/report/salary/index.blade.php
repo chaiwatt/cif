@@ -156,7 +156,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-tabs-three-tabContent">
                                 @foreach ($paydays->where('type',1) as $key => $payday)
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
@@ -249,7 +249,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-info card-outline card-tabs">
+                    <div class="card ccard-tabs">
                         <div class="card-header p-0 pt-1 border-bottom-0">
                             <ul class="nav nav-tabs" id="custom-arttendance-tabs-three-tab" role="tablist">
                                 @foreach ($paydays->where('type',1) as $key => $payday)
@@ -263,7 +263,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-arttendance-tabs-three-tabContent">
                                 @foreach ($paydays->where('type',1) as $key => $payday)
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
@@ -271,12 +271,12 @@
                                     aria-labelledby="custom-arttendance-tabs-{{$payday->id}}-tab">
                                     <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                         <thead class="border-bottom">
-                                            <td>
+                                            <tr>
                                                 <th>เดือน</th>
                                                 <th class="text-center">ขาดงาน</th>
                                                 <th class="text-center">ลางาน</th>
                                                 <th class="text-end" style="width: 150px">เพิ่มเติม</th>
-                                            </td>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($payday->paydayDetails as $paydayDetail)

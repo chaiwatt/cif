@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body table-responsive py-0 px-3" id="table_container">
+                        <div class="table-responsive" id="table_container">
                             <table class="table table-borderless text-nowrap">
                                 <thead class="border-bottom">
                                     <tr>

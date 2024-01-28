@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card border-0 rounded-4">
-                        <div class="py-3 px-4">
+                        <div class="card-header border-0">
                             <h4 class="m-0">ข้อมูลส่วนบุคคล</h4>
                         </div>
                             <form action="{{route('setting.organization.employee.update', ['id' => $user->id])}}" method="POST" enctype="multipart/form-data">
@@ -47,7 +47,7 @@
                                             </div>
                                             <input type="file" name="avatar" id="avatar-input" accept="image/png, image/jpg, image/jpeg, image/gif" class="form-control" hidden>
                                             <label for="avatar-input">
-                                                <div class="d-flex flex-column rounded-4 overflow-hidden position-absolute bottom-0 end-0" style="width: 124px; height: 124px;">
+                                                <div class="d-flex flex-column rounded-4 overflow-hidden position-absolute bottom-0" style="width: 124px; height: 124px; right: .8rem;">
                                                     <div class="d-flex justify-content-center align-items-center " style="background: #667085; flex: 1;">
                                                         @if (!is_null($user->avatar))
                                                             <img src="{{ route('storage.avatar', ['image'=>$user->avatar])}}" alt="avatar-preview" id="avatar-preview" style="width: 100%; height: 100%; object-fit: cover;">

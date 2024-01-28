@@ -56,7 +56,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-tabs-three-tabContent">
                                 @foreach ($paydays->where('type',2) as $key => $payday)
                                 <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}"

@@ -24,13 +24,14 @@
         <div class="container-fluid">
             <div class="card card-success">
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row gy-2">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>แผนก</label>
                                 <select name="companyDepartment" id="companyDepartment"
                                     class="form-control select2 @error('companyDepartment') is-invalid @enderror"
                                     style="width: 100%;" multiple>
+                                    <option disabled>เลือกแผนก</option>
                                     @foreach ($companyDepartments as $companyDepartment)
                                     <option value="{{ $companyDepartment->id }}" {{
                                         old('companyDepartment')==$companyDepartment->id
@@ -89,7 +90,7 @@
                         <div class="card-header">
                             <h3 class="card-title">รายชื่อพนักงาน</h3>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive" id="table_container">
@@ -154,6 +155,12 @@
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     $('.select2').select2();
+    $('#companyDepartment').select2({
+        placeholder: "เลือก แผนก"
+    });
+    $('#employeeType').select2({
+        placeholder: "เลือก ประเภทพนักงาน"
+    });
     window.params = {
         searchRoute: '{{ route('setting.report.user.search') }}',
         exportRoute: '{{ route('setting.report.user.export') }}',

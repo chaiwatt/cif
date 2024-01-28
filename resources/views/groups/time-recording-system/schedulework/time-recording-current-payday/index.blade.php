@@ -42,7 +42,7 @@
                         <div class="card-header">
                             <h4 class="card-title">พนักงาน</h4>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
                                     <table class="table table-borderless text-nowrap dataTable dtr-inline">

@@ -70,7 +70,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 text-end">
+                                    <div class="cif-modal-footer">
                                         <button class="btn btn-primary mt-2">บันทึก</button>
                                     </div>
                                 </div>

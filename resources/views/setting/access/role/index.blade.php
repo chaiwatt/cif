@@ -32,15 +32,15 @@
                                     </i>
                                     เพิ่มบทบาท
                                 </a>
-                                <div class="card-tools">
+                                {{-- <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <div id="searchWrapper" class="d-flex"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
-                        <div class="card-body">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive">
@@ -108,9 +108,9 @@
             </div>
         </div>
         <div class="modal fade" id="modal-users">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-body">
+                    <div class="cif-modal-body">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -122,8 +122,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">ปิด</button>
+                    <div class="cif-modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ปิด</button>
                         <button type="button" class="btn btn-primary" id="bntAssignUsersToRole">บันทึก</button>
                     </div>
                 </div>

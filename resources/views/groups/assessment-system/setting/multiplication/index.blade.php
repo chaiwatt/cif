@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-header">
                             <h4 class="card-title">ตัวคูณคะแนนเกณฑ์การประเมิน</h4>
                             <a class="btn btn-header" id="btn-show-modal-income-deduct-assignment"
                                 href="{{route('groups.assessment-system.setting.multiplication.create')}}">
@@ -37,7 +37,7 @@
                                 เพิ่มตัวคูณคะแนนเกณฑ์การประเมิน
                             </a>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="row">
                                 <div class="col-sm-12 table-responsive" id="table_container">
                                     <table class="table table-borderless text-nowrap dataTable dtr-inline">

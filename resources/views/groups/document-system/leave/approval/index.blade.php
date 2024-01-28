@@ -106,7 +106,7 @@
                                 </div>
                             </div> --}}
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive" id="table_container">

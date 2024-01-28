@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header d-flex align-items-center justify-content-between">
+                        <div class="card-header card-sm">
                             <h4 class="card-title">พนักงาน</h3>
                                 @if ($permission->create)
                                 <a class="btn btn-header"
@@ -35,7 +35,7 @@
                                 </a>
                                 @endif
                         </div>
-                        <div class="card-body py-0">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive" id="table_container">

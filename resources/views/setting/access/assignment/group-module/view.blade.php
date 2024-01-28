@@ -33,11 +33,11 @@
                                     </i>
                                     เพิ่มกลุ่มทำงาน
                                 </a>
-                                <div class="card-tools">
+                                {{-- <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <div id="searchWrapper" class="d-flex"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                            </div>
                         </div>
                         <div class="card-body">

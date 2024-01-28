@@ -65,6 +65,52 @@ body[data-page="dashboard"].slider {
 body {
     background-color: #F2F4F7;
 }
+/* card */
+.card-header.card-sm {
+    flex-direction: row;
+}
+.card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
+}
+.card-header > div {
+    flex-wrap: wrap;
+}
+.card-header > div > .card-tools.search {
+    flex: 1 0 100%;
+}
+/* Search */
+.card-tools.search {
+    position: relative;
+}
+.card-tools.search input {
+    width: 100%;
+    transition: .4s;
+}
+.card-tools.search > label {
+    font-size: 22px;
+    position: absolute;
+    color: #475467;
+    top: 50%;
+    right: 1.5rem;
+    transform: translate(50%, -50%);
+}
+.table-borderless.text-nowrap tr th:first-child, 
+.table-borderless.text-nowrap tr td:first-child {
+    padding-left: 1.8rem !important;
+}
+.table-borderless.text-nowrap tr th:last-child,
+.table-borderless.text-nowrap tr td:last-child {
+    padding-right: 1.8rem !important;
+}
+.table-borderless.text-nowrap tr td:first-child {
+    padding-left: 1.8rem !important;
+}
+.table-borderless.text-nowrap tr td:last-child {
+    padding-right: 1.2rem !important;
+}
 
 /* Modal */
 .cif-modal-body > label.h5 {
@@ -356,9 +402,39 @@ body {
     .slidebar-dashboard.slide-active {
         flex: 0 0 250px;
     }
+    .card-header > div > .card-tools.search {
+        flex: 1 0 auto;
+    }
+    .card-header {
+        flex-direction: row;
+        align-items: center;
+    }
+    .card-tools.search input {
+        width: 50px;
+    }
+    .card-tools.search input:focus,
+    .card-tools.search input:focus::placeholder {
+        width: calc(320px / 2);
+        color: #98A2B3;
+    }
+    .card-tools.search input::placeholder {
+        color: transparent;
+    }
 }
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+    .card-tools.search input:focus,
+    .card-tools.search input:focus::placeholder {
+        width: 320px;
+        color: #98A2B3;
+    }
+}
 @media (min-width: 1200px) {
+    .card-tools.search input {
+        width: 320px;
+    }
+    .card-tools.search input::placeholder {
+        color: #98A2B3;
+    }
     body[data-page="dashboard"] {
         background-color: #EAECF0;
     }

@@ -100,7 +100,7 @@
                         <div class="card-header">
                             <h3 class="card-title">รายการล่วงเวลาล่าสุด</h3>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 table-responsive" id="table_container">

@@ -47,7 +47,7 @@
                             @endif --}}
 
                         </div>
-                        <div class="card-body py-0">
+                        <div>
                             <div class="row">
                                 <div class="col-sm-12 table-responsive" id="table_container">
                                     <table class="table table-borderless text-nowrap dataTable dtr-inline">
@@ -64,7 +64,7 @@
                                             @foreach ($applicationNews as $applicationNew)
                                             <tr>
                                                 <td>{{$applicationNew->title}}</td>
-                                                <td>{{$applicationNew->description}}</td>
+                                                <td>{{$applicationNew->amount_apply}}</td>
                                                 <td>{{ \Jenssegers\Date\Date::parse($applicationNew->start_date)->format('d M Y') }} - {{ \Jenssegers\Date\Date::parse($applicationNew->end_date)->format('d M Y') }}</td>
                                                 <td>
                                                     @if ($applicationNew->status == 1)

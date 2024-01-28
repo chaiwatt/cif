@@ -46,14 +46,15 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-tabs-three-tabContent">
                                 <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel"
                                     aria-labelledby="custom-tabs-three-home-tab">
                                     <div class="row">
                                         <div class="col-sm-12 table-responsive">
-
-                                            <label for="">Attendance</label>
+                                            <div class="card-header border-0">
+                                                <label for="">Attendance</label>
+                                            </div>
                                             <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                                 <thead class="border-bottom">
                                                     <tr>
@@ -87,7 +88,9 @@
 
                                         <div class="col-12 table-responsive" id="training-container">
 
-                                            <label for="">การฝึกอบรม</label>
+                                            <div class="card-header border-0">
+                                                <label for="">การฝึกอบรม</label>
+                                            </div>
                                             <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                                 <thead class="border-bottom">
                                                     <tr>
@@ -112,7 +115,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12 table-responsive">
-                                            <label for="">ความผิดและโทษ</label>
+                                            <div class="card-header border-0">
+                                                <label for="">ความผิดและโทษ</label>
+                                            </div>
                                             <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                                 <thead class="border-bottom">
                                                     <tr>
@@ -201,7 +206,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="cif-modal-footer p-0">
+                                            <div class="cif-modal-footer">
                                                 <button type="submit" class="btn btn-primary mt-2">บันทึก</button>
                                             </div>
                                         </div>

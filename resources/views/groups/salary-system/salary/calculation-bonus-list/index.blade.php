@@ -27,8 +27,8 @@
             @if ($permission->show)
             <div class="row">
                 <div class="col-12" id="content_wrapper">
-                    <div class="card card-primary card-outline card-tabs">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card card-tabs">
+                        <div class="card-header">
                             <a class="btn btn-header"
                                 href="{{route('groups.salary-system.salary.calculation-bonus-list.create')}}">
                                 <i class="fas fa-plus">
@@ -47,10 +47,10 @@
                                 </div> --}}
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="row">
                                 <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless dataTable dtr-inline">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                         <thead class="border-bottom">
                                             <tr>
                                                 <th style="width: 200px">วันที่</th>
