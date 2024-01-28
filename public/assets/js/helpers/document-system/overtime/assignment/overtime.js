@@ -5,7 +5,7 @@ var Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 3000
+    timer: 3000,
 });
 
 $(document).on('keyup', 'input[name="search_query"]', function () {
@@ -59,7 +59,8 @@ $(document).on('change', '#userGroup', function (e) {
         confirmButtonColor: '##6495ed',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'นำเข้า',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

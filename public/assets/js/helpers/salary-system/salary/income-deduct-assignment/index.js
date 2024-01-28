@@ -108,7 +108,8 @@ $(document).on('click', '.btn-delete', function (e) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var deleteUrl = window.params.deleteRoute;

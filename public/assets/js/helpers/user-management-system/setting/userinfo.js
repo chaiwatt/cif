@@ -50,7 +50,8 @@ $(document).on('click', '#save-add-salary', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกวันที่ให้ถูกต้อง',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return; // Return early if validation fails
     }
@@ -60,7 +61,8 @@ $(document).on('click', '#save-add-salary', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรอกจำนวนไม่ถูกต้อง',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return; // Return early if validation fails
     }
@@ -118,7 +120,8 @@ $(document).on('click', '#save-update-salary', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรอกจำนวนไม่ถูกต้อง',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return; // Return early if validation fails
     }
@@ -145,7 +148,8 @@ $(document).on('click', '.btn-delete-salary', function (e) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var deleteSalaryUrl = window.params.deleteSalaryRoute;
@@ -327,7 +331,8 @@ $(document).on('click', '#save-add-position', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกวันที่ให้ถูกต้อง',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return; // Return early if validation fails
     }
@@ -377,7 +382,8 @@ $(document).on('click', '#save-update-position', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกวันที่ให้ถูกต้อง',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return; // Return early if validation fails
     }
@@ -408,7 +414,8 @@ $(document).on('click', '.btn-delete-position-history', function (e) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var deletePositionUrl = window.params.deletePositionRoute;
@@ -442,7 +449,7 @@ $(document).on('click', '#save-add-education', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-            icon: 'error'
+            icon: 'error',heightAuto: false
         });
 
         return false; // Prevent form submission
@@ -491,7 +498,8 @@ $(document).on('click', '#save-update-education', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
 
         return false; // Prevent form submission
@@ -519,7 +527,8 @@ $(document).on('click', '.btn-delete-education', function (e) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var deleteEducationUrl = window.params.deleteEducationRoute;
@@ -553,7 +562,8 @@ $(document).on('click', '#save-add-training', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
 
         return false; // Prevent form submission
@@ -602,7 +612,8 @@ $(document).on('click', '#save-update-training', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
 
         return false; // Prevent form submission
@@ -630,7 +641,8 @@ $(document).on('click', '.btn-delete-training', function (e) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var deleteTrainingUrl = window.params.deleteTrainingRoute;
@@ -663,7 +675,8 @@ $(document).on('click', '#save-add-punishment', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
 
         return false; // Prevent form submission
@@ -674,7 +687,8 @@ $(document).on('click', '#save-add-punishment', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกวันที่ให้ถูกต้อง',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return; 
     }
@@ -722,7 +736,8 @@ $(document).on('click', '#save-update-punishment', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
 
         return false; // Prevent form submission
@@ -733,7 +748,8 @@ $(document).on('click', '#save-update-punishment', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกวันที่ให้ถูกต้อง',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return;
     }
@@ -761,7 +777,8 @@ $(document).on('click', '.btn-delete-punishment', function (e) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var deletePunishmentUrl = window.params.deletePunishmentRoute;
@@ -823,7 +840,8 @@ $(document).on('click', '#save-add-attachment', function (e) {
         Swal.fire({
             title: 'ข้อผิดพลาด',
             text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
         });
         return false; // Prevent form submission
     }
@@ -833,7 +851,8 @@ $(document).on('click', '#save-add-attachment', function (e) {
             Swal.fire({
                 title: 'ข้อผิดพลาด',
                 text: 'กรุณาเลือกไฟล์แนบ',
-                icon: 'error'
+                icon: 'error',
+                heightAuto: false
             });
             return false; // Prevent form submission
         }
@@ -842,7 +861,8 @@ $(document).on('click', '#save-add-attachment', function (e) {
             Swal.fire({
                 title: 'ข้อผิดพลาด',
                 text: 'กรุณากรอกลิงก์ไฟล์',
-                icon: 'error'
+                icon: 'error',
+                heightAuto: false
             });
             return false; // Prevent form submission
         }
@@ -872,7 +892,8 @@ $(document).on('click', '.btn-delete-user-attachment', function (e) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var deleteAttachmentUrl = window.params.deleteAttachmentRoute;

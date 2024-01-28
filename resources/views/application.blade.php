@@ -23,7 +23,7 @@
                         ร่วมงานกับเราเพื่อเป็นส่วนหนึ่งของ องค์กรที่เป็นหนึ่งในผู้นำในอุตสาหกรรมแปรรูปเนื้อไก่ของประเทศไทย ผลิตภัณฑ์ของบริษัทได้รับการยอมรับจากลูกค้าทั้งในและต่างประเทศ บริษัทมุ่งมั่นพัฒนา คุณภาพผลิตภัณฑ์ และบริการอย่างต่อเนื่อง เพื่อตอบสนองความต้องการของลูกค้าและสร้างความพึงพอใจสูงสุด
                     </p>
                 </div>
-                <div class="px-5 d-flex flex-column gap-3">
+                <div class="px-5 pb-4 d-flex flex-column gap-3">
                     @foreach ($applicationNews->where('status',1) as $applicationNew)
                         <div class="p-5 d-flex flex-column flex-lg-row justify-content-between" style="background: #F2F4F7; gap:56px">
                             <div class="d-flex flex-column justify-content-center align-items-center gap-2">
@@ -45,10 +45,6 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="p-5 text-center">
-                    <a href="#" class="text-primary px-3 py-2">งานทั้งหมด</a>
-                </div>
-
             </div>
         </div>
         {{-- @endif --}}

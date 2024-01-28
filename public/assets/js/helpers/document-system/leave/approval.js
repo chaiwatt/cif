@@ -31,7 +31,8 @@ $(document).on('click', '.approve_leave', function (e) {
         showCancelButton: true,
         confirmButtonText: 'อนุมัติ',
         denyButtonText: 'ไม่อนุมัติ',
-        cancelButtonText: 'ยกเลิก'
+        cancelButtonText: 'ยกเลิก',
+        heightAuto: false
     }).then((result) => {
         if (result.isConfirmed) {
             var data = {
