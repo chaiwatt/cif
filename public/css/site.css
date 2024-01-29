@@ -2,9 +2,6 @@
     --Primary-Gray-50: #F9FAFB;
     --Primary-Gray-900: #101828;
 }
-* {
-    font-family: "Noto Sans Thai" !important;
-}
 html, body {
     height: 100%;
     font-family: "Noto Sans Thai" !important;
