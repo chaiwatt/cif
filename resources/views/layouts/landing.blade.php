@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+Thai">
+    <style>
+        html, body {
+            height: 100%;
+            font-family: "Noto Sans Thai","Nunito", sans-serif !important;
+        }
+    </style>
 </head>
 
 <body>

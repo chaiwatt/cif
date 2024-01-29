@@ -27,7 +27,13 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}"> --}}
 
     @stack('styles')
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+Thai">
+    <style>
+        html, body {
+            height: 100%;
+            font-family: "Noto Sans Thai","Nunito", sans-serif !important;
+        }
+    </style>
 
 <body data-page="dashboard">
     <div class="d-flex flex-grow-1">
