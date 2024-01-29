@@ -1,4 +1,4 @@
-<footer class="main-footer bg-primary py-2 px-3 text-white d-flex justify-content-between">
+<footer class="main-footer">
     @php
     $currentYear = date('Y');
     @endphp

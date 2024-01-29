@@ -77,7 +77,6 @@
                             <a class="btn btn-primary d-flex gap-2 align-items-center" id="export_employee">
                                 <i class="fas fa-file-excel mr-1"></i>ส่งออก
                                 Excel</a>
-                            <button class="btn btn-dark " id="setting_report_field"><i class="fas fa-cog"></i></button>
                         </div>
                     </div>
 

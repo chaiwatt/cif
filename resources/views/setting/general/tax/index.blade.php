@@ -32,7 +32,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <form action="{{ route('setting.general.tax.store') }}" method="POST" class="card">
+                        @csrf
                         <div class="card-header">
                             <h4 class="card-title">ประกันสังคมและภาษี</h4>
                         </div>
@@ -43,6 +44,7 @@
 
                                         <div class="form-group">
                                             <label>เงินเดือนขั้นต่ำประกันสังคม</label>
+                                            <input type="text" value="{{ $taxSetting->id }}" name="tagSettingId" hidden="">
                                             <input type="text" name="social_contribution_salary"
                                                 value="{{$taxSetting->social_contribution_salary}}"
                                                 class="form-control decimal-input">
@@ -86,7 +88,7 @@
                             <button type="submit"
                                 class="btn btn-primary">บันทึก</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

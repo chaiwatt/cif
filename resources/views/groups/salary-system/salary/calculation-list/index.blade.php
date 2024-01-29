@@ -107,6 +107,8 @@
                                                 <td>
                                                     @if (count($paydayDetail->SalarySummary()->get()) != 0)
                                                     <span class="badge rounded-3 text-primary" style="padding: 8px 12px; background: #D1FADF">ปิดงวด</span>
+                                                    @else
+                                                    <span class="badge rounded-3 text-primary bg-warning" style="padding: 8px 12px;">ปกติ</span>
                                                     @endif
                                                 </td>
                                                 <td>

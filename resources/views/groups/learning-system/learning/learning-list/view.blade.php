@@ -26,43 +26,56 @@
         <div class="container-fluid">
 
             @if ($permission->show)
-            <div class="row">
-                <div class="col-md-3">
-                    <div id="accordion">
-                        @foreach ($lesson->chapters as $key => $chapter)
-                        <div class="card card-info card-outline">
-                            <div class="card-header" id="heading{{$key}}">
-                                <h5 class="mb-0">
-                                    <button class="btn" data-toggle="collapse" data-target="#collapse{{$key}}"
-                                        aria-expanded="{{ $key === 0 ? 'true' : 'false' }}"
-                                        aria-controls="collapse{{$key}}">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-3 border-end p-0">
+                        <div id="accordion" style="padding: 8px 12px;">
+                            {{-- $chapter->name --}}
+                            <div class="accordion" id="accordionPanelsStayOpenExample">
+                            @foreach ($lesson->chapters as $key => $chapter)
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header">
+                                    <button class="accordion-button {{ $key == 0 ? "": "collapsed" }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $key }}" aria-expanded="{{ $key == 0 ? "true": "false" }}" aria-controls="collapse-{{ $key }}">
                                         {{$chapter->name}}
                                     </button>
-                                </h5>
-                            </div>
+                                  </h2>
+                                  <div id="collapse-{{ $key }}" class="accordion-collapse collapse {{ $key == 0 ? "show": "" }}">
+                                    <div class="">
+                                        <ul class="nav nav-pills flex-column">
+                                            @foreach ($chapter->topics as $topic)
+                                            <li class="nav-item">
+                                                <a href="" class="nav-link topic-link" data-id="{{$topic->id}}"><i
+                                                        class="fas fa-dot-circle me-2"></i>
+                                                    {{$topic->name}}</a>
+                                            </li>
+                                            @endforeach
 
-                            <div id="collapse{{$key}}" class="collapse {{ $key === 0 ? 'show' : '' }}"
-                                aria-labelledby="heading{{$key}}" data-parent="#accordion">
-                                <div class="card-body">
-                                    <ul class="nav nav-pills flex-column">
-                                        @foreach ($chapter->topics as $topic)
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link topic-link" data-id="{{$topic->id}}"><i
-                                                    class="fas fa-dot-circle me-2"></i>
-                                                {{$topic->name}}</a>
-                                        </li>
-                                        @endforeach
-
-                                    </ul>
+                                        </ul>
+                                    </div>
+                                  </div>
                                 </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
+                                @endforeach
+                              </div>
+                                {{-- <div id="heading{{$key}}">
+                                    <h5 class="mb-0">
+                                        <button class="btn" data-toggle="collapse" data-target="#collapse{{$key}}"
+                                            aria-expanded="{{ $key === 0 ? 'true' : 'false' }}"
+                                            aria-controls="collapse{{$key}}">
+                                           
+                                        </button>
+                                    </h5>
+                                </div>
 
-                </div>
-                <div class="col-md-9">
-                    <div class="card card-primary card-outline">
+                                <div id="collapse{{$key}}" class="collapse {{ $key === 0 ? 'show' : '' }}"
+                                    aria-labelledby="heading{{$key}}" data-parent="#accordion">
+                                    <div class="card-body">
+                                       
+                                    </div>
+                                </div> --}}
+                        </div>
+
+                    </div>
+                    <div class="col-md-9">
                         <div class="card-header">
                             <h3 class="card-title">{{$lesson->name}}</h3>
                         </div>

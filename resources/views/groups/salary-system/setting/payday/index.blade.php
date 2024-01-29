@@ -60,7 +60,7 @@
                                     @foreach ($paydays as $payday)
                                     <tr>
                                         <td>{{$payday->name}}</td>
-                                        <td>{{$payday->users->count()}}</td>
+                                        <td>{{count($payday->users)}}</td>
                                         <td>{{$payday->year}}</td>
                                         <td class="text-end">
                                             <a class="btn btn-action btn-user btn-sm"

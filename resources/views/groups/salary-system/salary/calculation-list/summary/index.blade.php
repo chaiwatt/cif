@@ -74,7 +74,7 @@
                             </div>
 
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="row">
                                 <input type="text" id="paydayDetailId" value="{{$paydayDetail->id}}" hidden>
                                 <div class="col-sm-12 table-responsive" id="table_container">

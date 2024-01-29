@@ -721,6 +721,7 @@ Route::middleware('auth')->group(function () {
             });
             Route::group(['prefix' => 'tax'], function () {
                     Route::get('', [SettingGeneralTaxController::class, 'index'])->name('setting.general.tax');
+                    Route::post('store', [SettingGeneralTaxController::class, 'store'])->name('setting.general.tax.store');
                 });
         });
         Route::group(['prefix' => 'access'], function () {
