@@ -2,9 +2,12 @@
     --Primary-Gray-50: #F9FAFB;
     --Primary-Gray-900: #101828;
 }
-
+* {
+    font-family: "Noto Sans Thai" !important;
+}
 html, body {
     height: 100%;
+    font-family: "Noto Sans Thai" !important;
 }
 .divider-y {
     flex: 0 0 1px;
@@ -97,7 +100,7 @@ body {
     right: 1.5rem;
     transform: translate(50%, -50%);
 }
-.table-borderless.text-nowrap tr th:first-child, 
+.table-borderless.text-nowrap tr th:first-child,
 .table-borderless.text-nowrap tr td:first-child {
     padding-left: 1.8rem !important;
 }
@@ -263,7 +266,7 @@ body {
     transform: rotate(90deg);
 }
 
-.slidebar-dashboard.slide-active .nav-link:hover, 
+.slidebar-dashboard.slide-active .nav-link:hover,
 .slidebar-dashboard.slide-active .nav-link.active,
 .slidebar-dashboard.slide-active .nav-link.current-page {
     color: #FFFFFF;
@@ -505,8 +508,8 @@ body {
     .slidebar-dashboard .nav-link.active .icon-right {
         transform: rotate(90deg);
     }
-    
-    .slidebar-dashboard .nav-link:hover, 
+
+    .slidebar-dashboard .nav-link:hover,
     .slidebar-dashboard .nav-link.active,
     .slidebar-dashboard .nav-link.current-page {
         color: #FFFFFF;
