@@ -137,7 +137,7 @@
                                     </div> --}}
 
                                 </div>
-                                    <div class="d-flex justify-content-end">
+                                    <div class="cif-modal-footer">
                                         @if ($permission->update)
                                         <button type="submit"
                                             class="btn btn-primary">บันทึก</button>
