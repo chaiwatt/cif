@@ -28,14 +28,6 @@
 
     @stack('styles')
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <style>
-        *{
-            font-family: "Noto Sans Thai" !important;
-        }
-        .body{
-            font-family: "Noto Sans Thai" !important;
-        }
-    </style>
 
 <body data-page="dashboard">
     <div class="d-flex flex-grow-1">

@@ -19,11 +19,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-        *{
-            font-family: "Noto Sans Thai" !important;
-        }
-    </style>
 </head>
 <body>
     <div id="app">
