@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-end mt-2">
+                                <div class="cif-modal-footer">
                                     <button type="submit"
                                         class="btn btn-primary">บันทึก</button>
                                     <input type="file" id="file-input" style="display: none;">
