@@ -34,7 +34,7 @@
                         <div class="card-header">
                             <h4 class="card-title">รายละเอียดตารางทำงาน</h4>
                         </div>
-                        <div>
+                        <div class="card-body">
                             <form
                                 action="{{route('groups.time-recording-system.schedulework.schedule.update', ['id' => $workSchedule->id])}}"
                                 method="POST">
