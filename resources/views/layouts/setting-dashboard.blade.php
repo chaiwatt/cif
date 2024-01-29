@@ -27,7 +27,12 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}"> --}}
 
     @stack('styles')
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+Thai">
+    <style>
+        *{
+            font-family: "Noto Sans Thai" !important;
+        }
+    </style>
 <body data-page="dashboard">
     <div class="d-flex flex-grow-1">
         @include('layouts.partial.setting-aside')
