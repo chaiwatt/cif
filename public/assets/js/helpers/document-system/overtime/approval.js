@@ -29,8 +29,7 @@ $(document).on('click', '.approve_overtime', function (e) {
         showCancelButton: true,
         confirmButtonText: 'อนุมัติ',
         denyButtonText: 'ไม่อนุมัติ',
-        cancelButtonText: 'ยกเลิก',
-        heightAuto: false
+        cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
             var data = {

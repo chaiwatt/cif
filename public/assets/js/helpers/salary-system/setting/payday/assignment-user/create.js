@@ -62,8 +62,7 @@ $(document).on('change', '#userGroup', function (e) {
         confirmButtonColor: '##6495ed',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'นำเข้า',
-        cancelButtonText: 'ยกเลิก',
-        heightAuto: false
+        cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

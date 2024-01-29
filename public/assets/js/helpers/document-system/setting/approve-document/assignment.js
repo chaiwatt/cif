@@ -52,8 +52,7 @@ $(document).on('change', '#company_department', function () {
         confirmButtonColor: '##6495ed',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'นำเข้า',
-        cancelButtonText: 'ยกเลิก',
-        heightAuto: false
+        cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
             var data = {
@@ -83,8 +82,7 @@ $(document).on('change', '#employee_type', function () {
         confirmButtonColor: '##6495ed',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'นำเข้า',
-        cancelButtonText: 'ยกเลิก',
-        heightAuto: false
+        cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
             var data = {

@@ -19,8 +19,7 @@ $(document).on('click', 'a[data-confirm]', function (event) {
         confirmButtonColor: '#dc3545',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'ยืนยันลบ',
-        cancelButtonText: 'ยกเลิก',
-        heightAuto: false
+        cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
             RequestApi.deleteRequest(deleteRoute, token).then(response => {
@@ -28,8 +27,7 @@ $(document).on('click', 'a[data-confirm]', function (event) {
                 Swal.fire({
                     title: 'ลบแล้ว',
                     text: message,
-                    icon: 'success',
-                    heightAuto: false
+                    icon: 'success'
                 }).then((result) => {
                     window.location.reload();
                 });
@@ -40,15 +38,13 @@ $(document).on('click', 'a[data-confirm]', function (event) {
                     Swal.fire({
                         title: 'ข้อผิดพลาด',
                         text: errorMessage,
-                        icon: 'error',
-                        heightAuto: false
+                        icon: 'error'
                     });
                 } else {
                     Swal.fire({
                         title: 'ข้อผิดพลาด',
                         text: 'เกิดข้อผิดพลาดขณะลบกลุ่มทำงาน',
-                        icon: 'error',
-                        heightAuto: false
+                        icon: 'error'
                     });
                 }
             })
