@@ -4,7 +4,7 @@
 }
 html, body {
     height: 100%;
-    font-family: "Noto Sans Thai" !important;
+    font-family: "Noto Sans Thai","Nunito", sans-serif !important;
 }
 .divider-y {
     flex: 0 0 1px;
