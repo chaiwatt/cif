@@ -31,6 +31,34 @@ html, body {
     color: var(--Primary-Gray-50);
 }
 
+/* learning */
+.learning-pills {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.learning-item .learning-link.active {
+    background: #F2F4F7;
+}
+.learning-item .learning-link .learning-check  {
+    color: #D0D5DD;
+    font-size: 1rem;
+}
+.learning-item .learning-link.active .learning-check {
+    color: #12B76A;
+}
+.learning-item .learning-link  {
+    text-decoration: none;
+    color: #667085;
+    padding: 16px 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
 /* Select2 */
 .select2-container--default .select2-selection--single {
     padding: 0.625rem 0.875rem;

@@ -19,6 +19,7 @@ $(document).on('change', '#attachment', function (event) {
 });
 $(document).on('click', '.destroy-btn', function () {
     var idx = $(this).data('idx');
+    attachments.delete(idx);
     document.getElementById('file-content-'+idx).remove();
 });
 $(document).on('click', '#btn-update-announcement', function (e) {

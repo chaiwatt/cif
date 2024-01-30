@@ -43,12 +43,12 @@
                                 <label for="">รายละเอียด</label>
                                 <textarea id="summernote" class="form-control"></textarea>
                             </div>
-                            <div class="form-group">
-                                <div class="btn btn-default btn-file">
+                            <div class="d-flex mt-2">
+                                <label for="attachment" class="btn btn-outline-secondary btn-file h-100 me-2">
                                     <i class="fas fa-paperclip"></i> เอกสารแนบ
-                                    <input type="file" name="attachment" id="attachment" multiple>
-                                </div>
-                                <ul id="files_wrapper">
+                                </label>
+                                <input type="file" name="attachment" id="attachment" multiple hidden>
+                                <ul id="files_wrapper" style="width: 300px">
 
                                 </ul>
                             </div>

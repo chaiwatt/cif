@@ -86,11 +86,12 @@ class LearningSystemSettingLearningListChapterTopicController extends Controller
 
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
             foreach($attachments as $attachment){
-                $filePath = $attachment->store('', 'attachments');
+                $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->storeAs('topic-attachments',  $filename);
                 TopicAttachment::create([
                     'name' => $attachment->getClientOriginalName(),
                     'topic_id' => $topic->id,
-                    'file' => $filePath
+                    'file' => $filename
                 ]);
             }
         }
@@ -139,11 +140,12 @@ class LearningSystemSettingLearningListChapterTopicController extends Controller
         
         if (isset($attachments) && (is_array($attachments) || $attachments instanceof Countable)) {
             foreach($attachments as $attachment){
-                $filePath = $attachment->store('', 'attachments');
+                $filename = 'attachment' . '-' . rand() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->storeAs('topic-attachments',  $filename);
                 TopicAttachment::create([
                     'name' => $attachment->getClientOriginalName(),
                     'topic_id' => $topicId,
-                    'file' => $filePath
+                    'file' => $filename
                 ]);
             }
         }
@@ -162,7 +164,7 @@ class LearningSystemSettingLearningListChapterTopicController extends Controller
     {
         $topicAttachmentId = $request->data['topicAttachmentId'];
         $topicAttachment = TopicAttachment::find($topicAttachmentId);
-        Storage::disk('attachments')->delete($topicAttachment->file);
+        Storage::disk('topic-attachments')->delete($topicAttachment->file);
         $topicAttachment->delete();
     }
     public function delete($id)
@@ -170,7 +172,7 @@ class LearningSystemSettingLearningListChapterTopicController extends Controller
         $topicAttachments = TopicAttachment::where('topic_id', $id)->get();
         // Delete records and associated files
         foreach ($topicAttachments as $attachment) {
-            Storage::disk('attachments')->delete($attachment->file);
+            Storage::disk('topic-attachments')->delete($attachment->file);
             $attachment->delete();
         }
         

@@ -108,6 +108,7 @@ Auth::routes();
 // Announcement Picture
 Route::get('/storage/thumbnail/{image}', [ImageController::class, 'announce_thumbnail_view'])->name('storage.announce.thumbnail');
 Route::get('/storage/attachment/{file}', [ImageController::class, 'announce_attachment_view'])->name('storage.announce.attachment');
+Route::get('/storage/attachment/{file}/download', [ImageController::class, 'announce_attachment_download'])->name('storage.announce.attachment.download');
 
 
 Route::get('', [LandingController::class, 'index'])->name('landing');
@@ -136,6 +137,9 @@ Route::group(['prefix' => 'work_schedule'], function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/storage/topic-attachment/{file}', [ImageController::class,'topic_attachment_view'])->name('storage.topic.attachment');
+    Route::get('/storage/topic-attachment/{file}/download', [ImageController::class,'topic_attachment_download'])->name('storage.topic.attachment.download');
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/group/{id}', [GroupController::class, 'index'])->name('group.index');
     Route::get('/storage/avatar/{image}', [ImageController::class, 'avatar_view'])->name('storage.avatar');

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Models\LeaveIncrement;
 use App\Helpers\ActivityLogger;
 use App\Models\PositionHistory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Models\CompanyDepartment;
 use Illuminate\Support\Facades\DB;
@@ -360,6 +361,7 @@ class SettingOrganizationEmployeeController extends Controller
         $filename = "";
         $this->activityLogger->log('อัปเดต', $user);
         if ($request->hasFile('avatar')) {
+            Storage::disk('avatars')->delete($user->thumbnail);
             $file = $request->file('avatar');
             $filename = 'avatar' . '-' . time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('avatar', $filename);
@@ -413,7 +415,7 @@ class SettingOrganizationEmployeeController extends Controller
         $user = User::findOrFail($id);
 
         $this->activityLogger->log('ลบ', $user);
-
+        Storage::disk('avatars')->delete($user->thumbnail);
         $user->delete();
 
         return response()->json(['message' => 'ผู้ใช้งานได้ถูกลบออกเรียบร้อยแล้ว']);

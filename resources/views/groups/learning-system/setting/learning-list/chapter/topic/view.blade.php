@@ -44,45 +44,23 @@
                                 <label for="">รายละเอียด</label>
                                 <textarea id="summernote" class="form-control">{{$topic->body}}</textarea>
                             </div>
-                            <div class="form-group">
-                                <div class="btn btn-default btn-file">
+                            <div class="d-flex mt-2">
+                                <label for="attachment" class="btn btn-outline-secondary btn-file h-100 me-2">
                                     <i class="fas fa-paperclip"></i> เอกสารแนบ
-                                    <input type="file" name="attachment" id="attachment" multiple>
-                                </div>
-                                <ul id="files_wrapper">
-
+                                </label>
+                                <input type="file" name="attachment" id="attachment" multiple hidden>
+                                <ul id="files_wrapper" style="width: 300px">
+                                    @if (count($topicAttachments) != 0)
+                                        @foreach ($topicAttachments as $topicAttachment)
+                                            <li class="file_content" id="attachment-{{$topicAttachment->id}}">
+                                                <a href="{{ route('storage.topic.attachment', ['file'=> $topicAttachment->file]) }}">{{ $topicAttachment->name }}</a>
+                                                <button class="delete-file" data-id="{{$topicAttachment->id}}"><span class="material-symbols-outlined" style="font-size: 1rem">cancel</span></button>
+                                            </li>
+                                        @endforeach
+                                    @endif
                                 </ul>
                             </div>
-                            @if (count($topicAttachments) != 0)
-                            <div class="row">
-                                <div class="col-12">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
-                                            <tr>
-                                                <th>ไฟลน์แนบ</th>
-                                                <th class="text-end" style="width: 200px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($topicAttachments as $topicAttachment)
-                                            <tr>
-                                                <td>{{$topicAttachment->name}}</td>
-                                                <td class="text-end">
-                                                    <a class="btn btn-primary btn-sm"
-                                                        href="{{url('/storage/uploads/attachment') .'/'. $topicAttachment->file}}">
-                                                        <i class="fas fa-download"></i>
-                                                    </a>
-                                                    <a class="btn btn-sm btn-danger delete-file"
-                                                        data-id="{{$topicAttachment->id}}"><i
-                                                            class="fas fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            @endif
+                            
 
 
                         </div>

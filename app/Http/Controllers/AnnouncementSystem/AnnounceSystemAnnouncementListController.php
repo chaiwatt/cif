@@ -141,7 +141,7 @@ class AnnounceSystemAnnouncementListController extends Controller
         $update->end_date= Carbon::parse($end_date);
 
         if ($request->hasFile('announce_thumbnail')) {
-            Storage::disk('thumbnail')->delete($update->thumbnail);
+            Storage::disk('announcement-thumbnail')->delete($update->thumbnail);
             $file = $request->file('announce_thumbnail');
             $filename = 'thumbnail' . '-' . time() . '.' . $file->getClientOriginalExtension();
             
@@ -192,7 +192,7 @@ class AnnounceSystemAnnouncementListController extends Controller
     {
         $announceAttachmentId = $request->data['announceAttachmentId'];
         $announcementAttachment = AnnouncementAttachment::find($announceAttachmentId);
-        Storage::disk('attachments')->delete($announcementAttachment->file);
+        Storage::disk('announcement-attachments')->delete($announcementAttachment->file);
         $announcementAttachment->delete();
     }
     
@@ -201,12 +201,12 @@ class AnnounceSystemAnnouncementListController extends Controller
         $announceAttachments = AnnouncementAttachment::where('announcement_id', $id)->get();
         // Delete records and associated files
         foreach ($announceAttachments as $announceAttachment) {
-            Storage::disk('attachments')->delete($announceAttachment->file);
+            Storage::disk('announcement-attachments')->delete($announceAttachment->file);
             $announceAttachment->delete();
         }
 
         $announcement = Announcement::findOrFail($id);
-        Storage::disk('thumbnail')->delete($announcement->thumbnail);
+        Storage::disk('announcement-thumbnail')->delete($announcement->thumbnail);
         $this->activityLogger->log('ลบ', $announcement);
 
         $announcement->delete();

@@ -11,9 +11,11 @@ $(document).on('click', '.topic-link', function (e) {
     var data = {
         'topicId': topicId
     }
-
+    $('.topic-link').removeClass("active");
     RequestApi.postRequest(data, contentUrl, token).then(response => {
         $('#content_wrapper').html(response);
+        $(this).addClass("active");
+
     }).catch(error => { })
 
 });

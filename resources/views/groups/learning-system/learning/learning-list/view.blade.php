@@ -29,27 +29,26 @@
             <div class="card">
                 <div class="row">
                     <div class="col-md-3 border-end p-0">
-                        <div id="accordion" style="padding: 8px 12px;">
+                        <div id="accordion" style="padding: 8px 0 8px 12px;">
                             {{-- $chapter->name --}}
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                             @foreach ($lesson->chapters as $key => $chapter)
                                 <div class="accordion-item">
                                   <h2 class="accordion-header">
                                     <button class="accordion-button {{ $key == 0 ? "": "collapsed" }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $key }}" aria-expanded="{{ $key == 0 ? "true": "false" }}" aria-controls="collapse-{{ $key }}">
-                                        {{$chapter->name}}
+                                        <h6>{{$chapter->name}}</h6>
                                     </button>
                                   </h2>
                                   <div id="collapse-{{ $key }}" class="accordion-collapse collapse {{ $key == 0 ? "show": "" }}">
-                                    <div class="">
-                                        <ul class="nav nav-pills flex-column">
+                                    <div>
+                                        <ul class="learning-pills">
                                             @foreach ($chapter->topics as $topic)
-                                            <li class="nav-item">
-                                                <a href="" class="nav-link topic-link" data-id="{{$topic->id}}"><i
-                                                        class="fas fa-dot-circle me-2"></i>
+                                            <li class="learning-item">
+                                                <a href="#" class="learning-link topic-link" data-id="{{$topic->id}}">
+                                                    <i class="fas fa-check-circle learning-check"></i>
                                                     {{$topic->name}}</a>
                                             </li>
                                             @endforeach
-
                                         </ul>
                                     </div>
                                   </div>
@@ -75,15 +74,8 @@
                         </div>
 
                     </div>
-                    <div class="col-md-9">
-                        <div class="card-header">
-                            <h3 class="card-title">{{$lesson->name}}</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row" id="content_wrapper">
-
-                            </div>
-                        </div>
+                    <div class="col-md-9 p-0">
+                        <div id="content_wrapper"></div>
                     </div>
                 </div>
             </div>

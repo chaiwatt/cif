@@ -22,8 +22,10 @@
                     <div class="col-12">
                         {!!$announcement->body!!}
                     </div>
-                    @if (count($announcementAttachments) != 0)
-                    <div class="col-12 mt-2 table-responsive">
+                </div>
+            </div>
+            @if (count($announcementAttachments) != 0)
+                    <div class="mt-2 table-responsive">
                         <table class="table table-borderless text-nowrap dataTable dtr-inline">
                             <thead class="border-bottom">
                                 <tr>
@@ -37,7 +39,7 @@
                                     <td>{{$announcementAttachment->name}}</td>
                                     <td class="text-end">
                                         <a class="btn btn-user btn-action btn-sm"
-                                            href="{{url('/storage/uploads/attachment') .'/'. $announcementAttachment->file}}">
+                                            href="{{ route('storage.announce.attachment.download', ['file'=>$announcementAttachment->file])}}">
                                             <i class="fas fa-download"></i>
                                         </a>
 
@@ -49,10 +51,6 @@
                     </div>
 
                     @endif
-                </div>
-
-
-            </div>
         </div>
     </div>
     <!-- /.col-md-6 -->

@@ -55,13 +55,21 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
-        'attachments' => [
+        'announcement-attachments' => [
             'driver' => 'local',
             'root' => storage_path('app/announcement/attachments'),
         ],
-        'thumbnail' => [
+        'avatars' => [
+            'driver' => 'local',
+            'root' => storage_path('app/avatar'),
+        ],
+        'announcement-thumbnail' => [
             'driver' => 'local',
             'root' => storage_path('app/announcement/thumbnails'),
+        ],
+        'topic-attachments' => [
+            'driver' => 'local',
+            'root' => storage_path('app/topic-attachments'),
         ],
 
     ],
