@@ -1,18 +1,18 @@
 @extends('layouts.auth')
 @section('content')
 
-<body class="d-flex flex-column" style="height: 100vh;">
-    <main class="d-flex justify-content-center align-items-center h-100">
+<body class="d-flex flex-column" style="height: 100dvh;">
+    <main class="d-flex justify-content-center align-items-center flex-grow-1">
         <div class="d-flex flex-column align-items-center gap-4">
             <div class="login-logo">
                 <a href="/"><img src="{{ asset('logomark.png') }}" alt="website logo"></a>
             </div>
-            <div class="card border-0">
-                <div class="card-body p-0 rounded-lg" style="width: 440px; ">
+            <div class="card border-0 m-2 login-scale">
+                <div class="card-body p-0 rounded-lg" >
                     <div class="p-4 d-flex justify-content-center align-items-center border-bottom border-1">
                         <h4 class="m-0">เข้าสู่ระบบ</h4>
                     </div>
-                    <form method="POST" action="{{ route('login') }}" class="p-6">
+                    <form method="POST" action="{{ route('login') }}" class="p-lg-5 p-lg-5 p-4">
                         @csrf
                         <div class="mb-2 @error('login') has-validation @enderror input-icon-label">
                             <span class="bg-white icon">

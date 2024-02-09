@@ -1,16 +1,18 @@
-const menuBtn = document.getElementById("menuBtn");
+const menuBtn = document.querySelectorAll("#menuBtn");
 
-menuBtn.addEventListener("click", () => {
-    const slidebar = document.querySelector('.slidebar-dashboard');
-    !slidebar.classList.contains('slide-active') ? slidebar.classList.add('slide-active') : slidebar.classList.remove('slide-active');
-    ! document.body.classList.contains('slider') ?  document.body.classList.add('slider') :  document.body.classList.remove('slider');
-    // slide-active
-    MainSub.forEach(function(sub) {
-        const SubMenu = sub.querySelector('#sub-menu');
-        const menuBtn_click = sub.querySelector('#open-sub-menu');
-        SubMenu.classList.remove('open-menu');
-        menuBtn_click.classList.remove('active');
-    });
+menuBtn.forEach(function(menu) {
+    menu.addEventListener("click", () => {
+        const slidebar = document.querySelector('.slidebar-dashboard');
+        !slidebar.classList.contains('slide-active') ? slidebar.classList.add('slide-active') : slidebar.classList.remove('slide-active');
+        ! document.body.classList.contains('slider') ?  document.body.classList.add('slider') :  document.body.classList.remove('slider');
+        // slide-active
+        MainSub.forEach(function(sub) {
+            const SubMenu = sub.querySelector('#sub-menu');
+            const menuBtn_click = sub.querySelector('#open-sub-menu');
+            SubMenu.classList.remove('open-menu');
+            menuBtn_click.classList.remove('active');
+        });
+    })
 })
 
 const MainSub = document.querySelectorAll('#main-sub-menu')

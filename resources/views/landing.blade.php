@@ -1,11 +1,11 @@
 @extends('layouts.landing')
 @section('content')
-<div class="row" style="padding: 0 40px">
+<div class="row row-landing">
     <div class="col-lg-12 p-0 mb-4">
         {{-- @if (count($announcements->where('status',1)) != 0) --}}
         <div class="card card-primary card-outline border-0">
             <div class="card-header">
-                <h3 class="card-title m-0 px-4 py-3 d-flex gap-3 align-items-center">
+                <h3 class="card-title m-0 px-lg-4 py-lg-3 d-flex gap-3 align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                         <mask id="mask0_1_3699" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
                           <rect width="48" height="48" fill="#D9D9D9"/>
@@ -16,7 +16,7 @@
                       </svg>
                     ข่าวประกาศ</h3>
             </div>
-            <div class="card-body d-flex p-5 overflow-auto" style="gap: 32px">
+            <div class="card-body d-flex p-2 p-lg-5 overflow-auto" style="gap: 32px">
                 {{-- <div class="d-flex flex-column" style="gap: 20px; flex: 0 0 364px;">
                     <div>
                         <img src="{{ asset('image_test.jpg') }}" class="object-fit-cover rounded" style="width: 100%; height: 180px" alt="annoucement-image">
@@ -69,7 +69,7 @@
         {{-- @if (count($applicationNews->where('status',1)) != 0) --}}
         <div class="card card-success card-outline border-0">
             <div class="card-header">
-                <h3 class="card-title m-0 px-4 py-3 d-flex gap-3 align-items-center">
+                <h3 class="card-title m-0 px-lg-4 py-lg-3 d-flex gap-3 align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                         <mask id="mask0_1_3710" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
                           <rect width="48" height="48" fill="#D9D9D9"/>
@@ -81,7 +81,7 @@
                     ข่าวรับสมัครงาน</h3>
             </div>
             <div class="card-body p-0">
-                <div class="p-5">
+                <div class="p-lg-5 p-3">
                     <p class="text-muted m-0">
                         ร่วมงานกับเราเพื่อเป็นส่วนหนึ่งของ องค์กรที่เป็นหนึ่งในผู้นำในอุตสาหกรรมแปรรูปเนื้อไก่ของประเทศไทย ผลิตภัณฑ์ของบริษัทได้รับการยอมรับจากลูกค้าทั้งในและต่างประเทศ บริษัทมุ่งมั่นพัฒนา คุณภาพผลิตภัณฑ์ และบริการอย่างต่อเนื่อง เพื่อตอบสนองความต้องการของลูกค้าและสร้างความพึงพอใจสูงสุด
                     </p>

@@ -30,6 +30,14 @@ html, body {
     justify-content: space-between;
     color: var(--Primary-Gray-50);
 }
+.main-footer > .text{
+    white-space: nowrap;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
 
 /* learning */
 .learning-pills {
@@ -83,6 +91,9 @@ html, body {
     text-overflow: ellipsis;
 
 }
+.row-landing {
+    padding: 0 1rem;
+}
 .job-intro {
     color: #667085;
     display: -webkit-box;
@@ -104,6 +115,9 @@ body[data-page="dashboard"].slider {
 }
 body {
     background-color: #F2F4F7;
+}
+.content {
+    margin-bottom: 2rem;
 }
 /* card */
 .card-header.card-sm {
@@ -209,6 +223,9 @@ body {
 }
 
 /* Login */
+.login-scale {
+    width: 100%;
+}
 .input-icon-label {
     position: relative;
 }
@@ -254,7 +271,8 @@ body {
 }
 .slidebar-dashboard {
     position: relative;
-    flex: 0 0 72px;
+    flex: 0 0 0px;
+    overflow: hidden;
     background: var(--Primary-Gray-900);
     transition: .5s ;
 }
@@ -462,10 +480,23 @@ body {
     }
 }
 @media (min-width: 992px) {
+    .slidebar-dashboard {
+        flex: 0 0 72px;
+        overflow: visible;
+    }
     .card-tools.search input:focus,
     .card-tools.search input:focus::placeholder {
         width: 320px;
         color: #98A2B3;
+    }
+    .row-landing {
+        padding: 0 40px;
+    }
+    .w-lg-100 {
+        width: 100%;
+    }
+    .login-scale {
+        flex: 0 0 440px;
     }
 }
 @media (min-width: 1200px) {

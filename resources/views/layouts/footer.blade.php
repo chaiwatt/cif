@@ -2,7 +2,7 @@
     @php
     $currentYear = date('Y');
     @endphp
-    <div>
+    <div class="text">
         Copyright &copy; {{ $currentYear }}-{{ $currentYear + 1 }} CIF
             HRM. All rights reserved.
     </div>
