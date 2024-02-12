@@ -40,7 +40,12 @@
         <div class="d-flex flex-grow-1 flex-column rounded-start-3 overflow-hidden" style="background: #F2F4F7;">
             <nav class="navbar navbar-expand">
                 <ul class="navbar-nav d-flex justify-content-between align-items-center w-100 px-3">
-                    <li class="nav-item">
+                    <li class="nav-item d-flex align-items-center gap-3">
+                        <a href="#" id="menuBtn" class="menuBtn text-primary p-0 d-lg-none" >
+                            <span class="material-symbols-outlined" style="font-size: 2rem;">
+                                menu
+                            </span>
+                        </a>
                         <a href="{{ route('home') }}" class="d-flex text-decoration-none" style="color: #101828;">
                             <span class="material-symbols-outlined" style="font-size: 28px">
                                 home
