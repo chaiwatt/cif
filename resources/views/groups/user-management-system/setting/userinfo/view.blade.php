@@ -88,18 +88,18 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-tabs-one-tabContent">
-                                <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
+                                <div class="card-body tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-home-tab">
                                     <div class="row gy-3">
                                         <div class="col-12 position-relative mt-6">
-                                            <div class="form-group" style="width: 327px;">
+                                            <div class="form-group" style="width: 300px;">
                                                 <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
                                                 <input type="text" name="employee_no" value="{{old('employee_code') ?? $user->employee_no}}" class="form-control numericInputInt @error('employee_no') is-invalid @enderror" disabled>
                                             </div>
                                             <label for="avatar-input">
-                                                <div class="d-flex flex-column rounded-4 overflow-hidden position-absolute bottom-0" style="width: 124px; height: 124px; right: .8rem;">
+                                                <div class="d-flex flex-column rounded-4 overflow-hidden position-absolute bottom-0 end-0" style="width: 124px; height: 124px;">
                                                     <div class="d-flex justify-content-center align-items-center " style="background: #667085; flex: 1;">
                                                         <img src="{{ Auth::user()->avatar ? route('storage.avatar', ['image'=> Auth::user()->avatar]) : asset('icon _user_.png') }}" alt="avatar-preview" style="{{ Auth::user()->avatar ? "width: 100%; height: 100%; object-fit: cover;" : "" }}">
                                                     </div>
@@ -481,9 +481,9 @@
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-workschedule" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-workschedule-tab">
-                                    <div class="col-12">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th>รายการ</th>
                                                     <th>รายละเอียด</th>
@@ -648,16 +648,17 @@
                                 <div class="tab-pane fade" id="custom-tabs-one-leave" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-leave-tab">
                                     <div class="col-12" id="user-leave-container">
-                                        <label for="" class="py-2 d-flex gap-2 align-items-center">วันลาคงเหลือ <a
+                                        <h5 class="py-2 mx-3 mb-0 d-flex gap-2 align-items-center">วันลาคงเหลือ <a
                                                 class="btn btn-primary btn-sm btn-leave-increment-setting ml-2">
                                                 <i class="fas fa-cog"></i> ตั้งการเพิ่มวันลา
-                                            </a></label>
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                            </a>
+                                        </h5>
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th style="width: 50%">ประเภท</th>
                                                     <th>คงเหลือ</th>
-                                                    <th style="width: 100px" class="text-right">เพิ่มเติม</th>
+                                                    <th style="width: 100px" class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -666,9 +667,9 @@
 
                                                     <td>{{$userLeave->leaveType->name}}</td>
                                                     <td>{{$userLeave->count}}</td>
-                                                    <td class="text-right">
+                                                    <td class="text-end">
 
-                                                        <a class="btn btn-primary btn-sm btn-update-leave"
+                                                        <a class="btn btn-action btn-edit btn-sm btn-update-leave"
                                                             data-id="{{$userLeave->id}}"
                                                             data-count="{{$userLeave->count}}">
                                                             <i class="fas fa-pencil-alt"></i>
@@ -681,10 +682,10 @@
                                         </table>
                                     </div>
 
-                                    <div class="col-12" id="leave-container">
-                                        <label for="">รายการลา</label>
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-12 table-responsive" id="leave-container">
+                                        <h5 class="mx-3 mb-0">รายการลา</h5>
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     <th style="width: 50%">วันที่</th>
                                                     <th>ประเภท</th>
@@ -710,14 +711,14 @@
                                     aria-labelledby="custom-tabs-one-diligence-allowance-tab">
                                     {{-- เบี้ยขยัน --}}
                                     {{-- $userDiligenceAllowances --}}
-                                    <div class="col-12" id="dilegence-allowance-container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline">
-                                            <thead>
+                                    <div class="col-12 table-responsive" id="dilegence-allowance-container">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
                                                 <tr>
                                                     {{-- <th>ระดับ</th> --}}
                                                     <th>รอบจ่ายเงินเดือน</th>
                                                     <th>เบี้ยขยัน</th>
-                                                    <th class="text-right">เพิ่มเติม</th>
+                                                    <th class="text-end">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -737,9 +738,9 @@
                                                     </td>
                                                     <td>{{$userDiligenceAllowance->diligenceAllowanceClassify->cost}}
                                                     </td>
-                                                    <td class="text-right">
+                                                    <td class="text-end">
                                                         @if ($loop->iteration == 2)
-                                                        <a class="btn btn-primary btn-sm btn-update-user-diligence-allowance"
+                                                        <a class="btn btn-action btn-edit btn-sm btn-update-user-diligence-allowance"
                                                             data-id="{{$userDiligenceAllowance->id}}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
@@ -756,22 +757,22 @@
                                     aria-labelledby="custom-tabs-one-education-tab">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="col-12">
-                                                <a class="btn btn-primary mb-2" href="" id="btn-add-education">
-                                                    <i class="fas fa-plus mr-1">
+                                            <div class="col-12 p-3">
+                                                <a class="btn btn-header" href="" id="btn-add-education">
+                                                    <i class="fas fa-plus">
                                                     </i>
                                                     เพิ่มการศึกษา
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="education-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-12 table-responsive" id="education-container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>ระดับ</th>
                                                         <th>สาขาวิชา</th>
                                                         <th>ปีที่จบ</th>
-                                                        <th class="text-right">เพิ่มเติม</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -780,12 +781,12 @@
                                                         <td>{{$education->level}}</td>
                                                         <td>{{$education->branch}}</td>
                                                         <td>{{$education->year}}</td>
-                                                        <td class="text-right">
-                                                            <a class="btn btn-primary btn-sm btn-update-education"
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-edit btn-sm btn-update-education"
                                                                 data-id="{{$education->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
-                                                            <a class="btn btn-danger btn-sm btn-delete-education"
+                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-education"
                                                                 data-id="{{$education->id}}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </a>
@@ -801,22 +802,22 @@
                                     aria-labelledby="custom-tabs-one-trainings-tab">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="col-12">
-                                                <a class="btn btn-primary mb-2" href="" id="btn-add-training">
-                                                    <i class="fas fa-plus mr-1">
+                                            <div class="col-12 p-3">
+                                                <a class="btn btn-header" href="" id="btn-add-training">
+                                                    <i class="fas fa-plus">
                                                     </i>
                                                     เพิ่มการฝึกอบรม
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="training-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-12 table-responsive" id="training-container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>หัวข้อ</th>
                                                         <th>หน่วยงาน</th>
                                                         <th>ปีที่ฝึกอบรม</th>
-                                                        <th class="text-right">เพิ่มเติม</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -825,12 +826,12 @@
                                                         <td>{{$training->course}}</td>
                                                         <td>{{$training->organizer}}</td>
                                                         <td>{{$training->year}}</td>
-                                                        <td class="text-right">
-                                                            <a class="btn btn-primary btn-sm btn-update-training"
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-edit btn-sm btn-update-training"
                                                                 data-id="{{$training->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
-                                                            <a class="btn btn-danger btn-sm btn-delete-training"
+                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-training"
                                                                 data-id="{{$training->id}}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </a>
@@ -846,21 +847,21 @@
                                     aria-labelledby="custom-tabs-one-position-adjustment-tab">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="col-12">
-                                                <a class="btn btn-primary mb-2" href="" id="btn-add-position">
-                                                    <i class="fas fa-plus mr-1">
+                                            <div class="col-12 p-3">
+                                                <a class="btn btn-header" href="" id="btn-add-position">
+                                                    <i class="fas fa-plus">
                                                     </i>
                                                     เพิ่มตำแหน่ง
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="position-histories-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-12 table-responsive" id="position-histories-container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>วันที่ปรับ</th>
                                                         <th>ตำแหน่ง</th>
-                                                        <th class="text-right">เพิ่มเติม</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -875,12 +876,12 @@
                                                             @endif
                                                         </td>
                                                         <td>{{$positionHistory->user_position->name}}</td>
-                                                        <td class="text-right">
-                                                            <a class="btn btn-primary btn-sm btn-update-position-history"
+                                                        <td class="text-end">
+                                                            <a class="btn btn-edit btn-action btn-sm btn-update-position-history"
                                                                 data-id="{{$positionHistory->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
-                                                            <a class="btn btn-danger btn-sm btn-delete-position-history"
+                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-position-history"
                                                                 data-id="{{$positionHistory->id}}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </a>
@@ -897,19 +898,19 @@
                                     aria-labelledby="custom-tabs-one-salary-adjustment-tab">
                                     <div class="row">
                                         <div class="col-12">
-                                            <a class="btn btn-primary mb-2" href="" id="btn-add-salary">
-                                                <i class="fas fa-plus mr-1">
+                                            <a class="btn btn-header p-3" href="" id="btn-add-salary">
+                                                <i class="fas fa-plus">
                                                 </i>
                                                 เพิ่มเงินเดือน
                                             </a>
                                         </div>
-                                        <div class="col-12" id="salary_table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-12 table-responsive" id="salary_table_container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>วันที่ปรับ</th>
                                                         <th>เงินเดือน</th>
-                                                        <th class="text-right">เพิ่มเติม</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -923,12 +924,12 @@
                                                             @endif
                                                         </td>
                                                         <td>{{$salaryRecord->salary}}</td>
-                                                        <td class="text-right">
-                                                            <a class="btn btn-primary btn-sm btn-update-salary"
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-edit btn-sm btn-update-salary"
                                                                 data-id="{{$salaryRecord->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
-                                                            <a class="btn btn-danger btn-sm btn-delete-salary"
+                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-salary"
                                                                 data-id="{{$salaryRecord->id}}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </a>
@@ -945,19 +946,19 @@
                                     aria-labelledby="custom-tabs-one-punishments-tab">
                                     <div class="row">
                                         <div class="col-12">
-                                            <a class="btn btn-primary mb-2" href="" id="btn-add-punishment">
-                                                <i class="fas fa-plus mr-1">
+                                            <a class="btn btn-header p-3" href="" id="btn-add-punishment">
+                                                <i class="fas fa-plus">
                                                 </i>
                                                 เพิ่มความผิดและโทษ
                                             </a>
                                         </div>
-                                        <div class="col-12" id="punishment-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-12 table-responsive" id="punishment-container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>ความผิด / โทษ</th>
                                                         <th>วันที่บันทึก</th>
-                                                        <th class="text-right">เพิ่มเติม</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -972,12 +973,12 @@
 
                                                         </td>
                                                         <td>{{$punishment->punishment}}</td>
-                                                        <td class="text-right">
-                                                            <a class="btn btn-primary btn-sm btn-update-punishment"
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-edit btn-sm btn-update-punishment"
                                                                 data-id="{{$punishment->id}}">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
-                                                            <a class="btn btn-danger btn-sm btn-delete-punishment"
+                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-punishment"
                                                                 data-id="{{$punishment->id}}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </a>
@@ -993,21 +994,21 @@
                                     aria-labelledby="custom-tabs-one-documents-tab">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="col-12">
-                                                <a class="btn btn-primary mb-2" href="" id="btn-add-user-attachment">
-                                                    <i class="fas fa-plus mr-1">
+                                            <div class="col-12 p-3">
+                                                <a class="btn btn-header" href="" id="btn-add-user-attachment">
+                                                    <i class="fas fa-plus">
                                                     </i>
                                                     เพิ่มเอกสารสำคัญ
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="user-attachment-container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
+                                        <div class="col-12 table-responsive" id="user-attachment-container">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
                                                     <tr>
                                                         <th>เอกสาร</th>
                                                         {{-- <th>ไฟล์</th> --}}
-                                                        <th class="text-right">เพิ่มเติม</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1015,7 +1016,7 @@
                                                     <tr>
                                                         <td>{{$user_attachment->name}}</td>
                                                         {{-- <td>{{$user_attachment->file}}</td> --}}
-                                                        <td class="text-right">
+                                                        <td class="text-end">
                                                             @php
                                                             $path = $user_attachment->file;
                                                             if ($user_attachment->type == 1){
@@ -1023,10 +1024,10 @@
                                                             $user_attachment->file;
                                                             }
                                                             @endphp
-                                                            <a class="btn btn-primary btn-sm" href="{{$path}}">
+                                                            <a class="btn btn-edit btn-action btn-sm" href="{{$path}}">
                                                                 <i class="fas fa-download"></i>
                                                             </a>
-                                                            <a class="btn btn-danger btn-sm btn-delete-user-attachment"
+                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-user-attachment"
                                                                 data-id="{{$user_attachment->id}}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </a>
@@ -1049,7 +1050,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-add-salary">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1066,18 +1067,17 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-add-salary">เพิ่ม</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-add-salary">เพิ่ม</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="modal-update-salary">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <input type="text" id="salary-record-id" hidden>
@@ -1096,18 +1096,17 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-update-salary">แก้ไข</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-update-salary">แก้ไข</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="modal-workschedule-month">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">เลือกเดือน</h5>
@@ -1126,13 +1125,14 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                     <button type="button" class="btn btn-primary" id="save-update-workschedule">แก้ไข</button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="modal-add-position">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1168,7 +1168,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-update-position">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row" id="update-position-modal-container">
@@ -1179,7 +1179,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-add-education">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1213,7 +1213,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-update-education">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1248,7 +1248,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-add-training">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1282,7 +1282,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-update-training">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <input type="text" id="trainingId" hidden>
@@ -1317,7 +1317,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-add-punishment">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1345,7 +1345,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-update-punishment">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1375,7 +1375,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-add-attachment">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1429,7 +1429,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-update-user-diligence-allowance">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <input type="text" name="" id="user-diligence-allowance-id" hidden>
@@ -1441,7 +1441,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-update-user-leave">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1464,7 +1464,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-leave-increment-setting">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">

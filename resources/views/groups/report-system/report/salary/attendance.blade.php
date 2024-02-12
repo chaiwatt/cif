@@ -8,7 +8,7 @@
     @include('layouts.partial.loading')
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="row mb-2">
                 <div>
                     <h3 class="m-0">{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}
                     </h3>

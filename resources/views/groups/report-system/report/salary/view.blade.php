@@ -34,8 +34,8 @@
                         </div>
                         <div class="card-body py-0">
                             <div class="row">
-                                <div class="col-sm-12" id="table_container">
-                                    <table class="table table-borderless dataTable dtr-inline">
+                                <div class="col-sm-12 table-responsive" id="table_container">
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                         <thead>
                                             <tr>
                                                 <th>แผนก</th>

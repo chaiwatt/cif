@@ -79,17 +79,17 @@
 
                             </ul>
                         </div>
-                        <div class="card-body">
+                        <div>
                             <div class="tab-content" id="custom-tabs-one-tabContent">
                                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-home-tab">
-                                    <div>
+                                    <div class="card-body">
                                         <div class="pb-4 py-3">
                                             <h4 class="m-0">ข้อมูลส่วนบุคคล</h4>
                                         </div>
                                         <div class="row gy-3">
                                             <div class="col-12 position-relative">
-                                                <div class="form-group" style="width: 327px;">
+                                                <div class="form-group" style="width: 300px;">
                                                     <label>รหัสพนักงาน <span class="fw-bold text-danger">*</span></label>
                                                     <input type="text" name="employee_no" value="{{old('employee_code') ?? $user->employee_no}}" class="form-control numericInputInt @error('employee_no') is-invalid @enderror" disabled>
                                                 </div>
@@ -503,7 +503,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-workschedule" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-workschedule-tab">
-                                    <div class="col-12">
+                                    <div class="col-12 table-responsive">
                                         <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                             <thead class="border-bottom">
                                                 <tr>
@@ -649,7 +649,7 @@
                                 <div class="tab-pane fade" id="custom-tabs-one-leave" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-leave-tab">
                                     <div class="col-12" id="user-leave-container">
-                                        <label for="">วันลาคงเหลือ</label>
+                                        <h5 class="mx-3 mb-0">วันลาคงเหลือ</h5>
                                         <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                             <thead class="border-bottom">
                                                 <tr>
@@ -668,7 +668,7 @@
                                         </table>
                                     </div>
                                     <div class="col-12" id="leave-container">
-                                        <label for="">รายการลา</label>
+                                        <h5 class="p-3 pb-1 m-0 ">รายการลา</h5>
                                         <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                             <thead class="border-bottom">
                                                 <tr>

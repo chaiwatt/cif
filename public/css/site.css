@@ -125,7 +125,9 @@ body {
 }
 .card-header {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    align-items: center;
     gap: 8px;
     justify-content: space-between;
 }

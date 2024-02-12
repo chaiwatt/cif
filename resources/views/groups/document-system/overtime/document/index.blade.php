@@ -67,7 +67,7 @@
 
                 <div class="col-lg-12">
                     <div class="card card-info card-outline">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-header">
                             <h4 class="card-title">รายการล่วงเวลาล่าสุด</h4>
                             <a class="btn btn-header" href="{{route('groups.document-system.overtime.document.create')}}">
                                 <i class="fas fa-plus">

@@ -162,77 +162,79 @@
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
                                     id="custom-tabs-{{$payday->id}}" role="tabpanel"
                                     aria-labelledby="custom-tabs-{{$payday->id}}-tab">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>เดือน</th>
-                                                <th class="text-center">เงินเดือน</th>
-                                                <th class="text-center">ค่าล่วงเวลา</th>
-                                                <th class="text-center">เบี้ยขยัน</th>
-                                                <th class="text-center">รายได้อื่นๆ</th>
-                                                <th class="text-center">หักอื่นๆ</th>
-                                                <th class="text-center">ประกันสังคม</th>
-                                                <th class="text-end" style="width: 150px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($payday->paydayDetails as $paydayDetail)
-                                            <tr>
-                                                <td>{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}</td>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>เดือน</th>
+                                                    <th class="text-center">เงินเดือน</th>
+                                                    <th class="text-center">ค่าล่วงเวลา</th>
+                                                    <th class="text-center">เบี้ยขยัน</th>
+                                                    <th class="text-center">รายได้อื่นๆ</th>
+                                                    <th class="text-center">หักอื่นๆ</th>
+                                                    <th class="text-center">ประกันสังคม</th>
+                                                    <th class="text-end" style="width: 150px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($payday->paydayDetails as $paydayDetail)
+                                                <tr>
+                                                    <td>{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}</td>
 
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_salary') != 0 ?
-                                                    number_format($paydayDetail->salarySummary->sum('sum_salary'),2) :
-                                                    ''}}
-                                                </td>
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_overtime') != 0 ?
-                                                    number_format($paydayDetail->salarySummary->sum('sum_overtime'),2) :
-                                                    ''}}</td>
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_allowance_diligence') != 0
-                                                    ?
-                                                    number_format($paydayDetail->salarySummary->sum('sum_allowance_diligence'),2)
-                                                    :
-                                                    ''}}
-                                                </td>
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_income') != 0
-                                                    ?
-                                                    number_format($paydayDetail->salarySummary->sum('sum_income'),2)
-                                                    :
-                                                    ''}}</td>
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_deduct') != 0
-                                                    ?
-                                                    number_format($paydayDetail->salarySummary->sum('sum_deduct'),2)
-                                                    :
-                                                    ''}}</td>
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_social_security') != 0
-                                                    ?
-                                                    number_format($paydayDetail->salarySummary->sum('sum_social_security'),2)
-                                                    :
-                                                    ''}}</td>
-                                                <td class="text-end">
-                                                    @if ($paydayDetail->salarySummary->sum('employee')
-                                                    != 0)
-                                                    <a class="btn btn-sm btn-user btn-action"
-                                                        href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
-                                                        <i class="fas fa-download"></i>
-                                                    </a>
-                                                    <a class="btn btn-sm btn-links btn-action"
-                                                        href="{{route('groups.report-system.report.salary.view',['id' => $paydayDetail->id ])}}">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    @endif
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_salary') != 0 ?
+                                                        number_format($paydayDetail->salarySummary->sum('sum_salary'),2) :
+                                                        ''}}
+                                                    </td>
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_overtime') != 0 ?
+                                                        number_format($paydayDetail->salarySummary->sum('sum_overtime'),2) :
+                                                        ''}}</td>
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_allowance_diligence') != 0
+                                                        ?
+                                                        number_format($paydayDetail->salarySummary->sum('sum_allowance_diligence'),2)
+                                                        :
+                                                        ''}}
+                                                    </td>
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_income') != 0
+                                                        ?
+                                                        number_format($paydayDetail->salarySummary->sum('sum_income'),2)
+                                                        :
+                                                        ''}}</td>
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_deduct') != 0
+                                                        ?
+                                                        number_format($paydayDetail->salarySummary->sum('sum_deduct'),2)
+                                                        :
+                                                        ''}}</td>
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_social_security') != 0
+                                                        ?
+                                                        number_format($paydayDetail->salarySummary->sum('sum_social_security'),2)
+                                                        :
+                                                        ''}}</td>
+                                                    <td class="text-end">
+                                                        @if ($paydayDetail->salarySummary->sum('employee')
+                                                        != 0)
+                                                        <a class="btn btn-sm btn-user btn-action"
+                                                            href="{{route('groups.salary-system.salary.calculation-list.summary.download-report',['payday_detail_id' => $paydayDetail->id])}}">
+                                                            <i class="fas fa-download"></i>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-links btn-action"
+                                                            href="{{route('groups.report-system.report.salary.view',['id' => $paydayDetail->id ])}}">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                        @endif
 
-                                                </td>
+                                                    </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 @endforeach
                             </div>
@@ -269,46 +271,48 @@
                                 <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}"
                                     id="custom-arttendance-tabs-{{$payday->id}}" role="tabpanel"
                                     aria-labelledby="custom-arttendance-tabs-{{$payday->id}}-tab">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>เดือน</th>
-                                                <th class="text-center">ขาดงาน</th>
-                                                <th class="text-center">ลางาน</th>
-                                                <th class="text-end" style="width: 150px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($payday->paydayDetails as $paydayDetail)
-                                            <tr>
-                                                <td>{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}</td>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>เดือน</th>
+                                                    <th class="text-center">ขาดงาน</th>
+                                                    <th class="text-center">ลางาน</th>
+                                                    <th class="text-end" style="width: 150px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($payday->paydayDetails as $paydayDetail)
+                                                <tr>
+                                                    <td>{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}</td>
 
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_leave') != 0 ?
-                                                    $paydayDetail->salarySummary->sum('sum_leave') :
-                                                    ''}}
-                                                </td>
-                                                <td class="text-center">{{
-                                                    $paydayDetail->salarySummary->sum('sum_absence') != 0 ?
-                                                    $paydayDetail->salarySummary->sum('sum_absence') :
-                                                    ''}}</td>
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_leave') != 0 ?
+                                                        $paydayDetail->salarySummary->sum('sum_leave') :
+                                                        ''}}
+                                                    </td>
+                                                    <td class="text-center">{{
+                                                        $paydayDetail->salarySummary->sum('sum_absence') != 0 ?
+                                                        $paydayDetail->salarySummary->sum('sum_absence') :
+                                                        ''}}</td>
 
 
-                                                <td class="text-end">
-                                                    @if ($paydayDetail->salarySummary->sum('sum_leave')
-                                                    != 0 || $paydayDetail->salarySummary->sum('sum_absence')
-                                                    != 0)
-                                                    <a class="btn btn-sm btn-edit btn-action"
-                                                        href="{{route('groups.report-system.report.salary.attendance',['id' => $paydayDetail->id ])}}"><i
-                                                            class="fas fa-eye"></i></a>
-                                                    @endif
+                                                    <td class="text-end">
+                                                        @if ($paydayDetail->salarySummary->sum('sum_leave')
+                                                        != 0 || $paydayDetail->salarySummary->sum('sum_absence')
+                                                        != 0)
+                                                        <a class="btn btn-sm btn-edit btn-action"
+                                                            href="{{route('groups.report-system.report.salary.attendance',['id' => $paydayDetail->id ])}}"><i
+                                                                class="fas fa-eye"></i></a>
+                                                        @endif
 
-                                                </td>
+                                                    </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 @endforeach
                             </div>
