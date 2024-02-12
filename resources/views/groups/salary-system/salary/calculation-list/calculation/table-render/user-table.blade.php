@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
@@ -38,7 +38,7 @@
             <td class="text-center">{{$userSummary['overTime']}}</td>
             </td>
             <td class="text-end">
-                <a class="btn btn-sm btn-primary btn-user" data-id="{{$user->id}}"
+                <a class="btn btn-sm btn-action btn-user" data-id="{{$user->id}}"
                     data-startDate="{{$paydayDetail->start_date}}" data-endDate="{{$paydayDetail->end_date}}"
                     href="{{route('groups.salary-system.salary.calculation-extra-list.calculation.information',['start_date' => $paydayDetail->start_date,'end_date' => $paydayDetail->end_date,'user_id' => $user->id,'payday_detail_id' => $paydayDetail->id] )}}"><i
                         class="far fa-list-alt"></i></a>

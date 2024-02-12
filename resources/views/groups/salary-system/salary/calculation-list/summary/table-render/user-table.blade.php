@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th style="width: 8%">รหัสพนักงาน</th>
             <th style="width: 14%">ชื่อ-สกุล</th>
@@ -78,7 +78,7 @@
             </td>
             <td class="text-end">
                 <a href="{{route('groups.salary-system.salary.calculation-list.summary.download-single',['user_id' => $user->id,'payday_detail_id' => $paydayDetail->id])}}"
-                    class="btn btn-sm btn-primary"><i class="fas fa-download"></i></a>
+                    class="btn btn-sm btn-action btn-links"><i class="fas fa-download"></i></a>
             </td>
         </tr>
         @endforeach

@@ -26,8 +26,8 @@
             @foreach ($paydays->where('type',1) as $key => $payday)
             <div class="tab-pane fade show {{ $key === 0 ? 'active' : '' }}" id="custom-tabs-{{$payday->id}}"
                 role="tabpanel" aria-labelledby="custom-tabs-{{$payday->id}}-tab">
-                <table class="table table-striped">
-                    <thead>
+                <table class="table table-borderless text-nowrap">
+                    <thead class="border-bottom">
                         <tr>
                             <th>ต้นงวด</th>
                             <th>ปลายงวด</th>
@@ -70,9 +70,9 @@
                             </td>
                             <td>
                                 <a href="{{route('groups.salary-system.salary.calculation-list.calculation',['id' => $paydayDetail->id])}}"
-                                    class="btn btn-sm btn-info"><i class="fas fa-calculator"></i></a>
+                                    class="btn btn-sm btn-calculator btn-action"><i class="fas fa-calculator"></i></a>
                                 <a href="{{route('groups.salary-system.salary.calculation-list.summary',['id' => $paydayDetail->id])}}"
-                                    class="btn btn-sm btn-success"><i class="fas fa-chart-bar"></i></a>
+                                    class="btn btn-sm btn-action btn-edit"><i class="fas fa-chart-bar"></i></a>
                             </td>
                             </tr>
                             @endif

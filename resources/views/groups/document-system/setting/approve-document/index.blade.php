@@ -7,7 +7,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">สายอนุมัติ</h3>
                 </div>

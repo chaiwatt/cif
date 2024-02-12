@@ -8,12 +8,12 @@
     @include('layouts.partial.loading')
     <div class="content-header">
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">รอบเงินเดือนงวดพิเศษ</h3>
                 </div>
                 <div aria-label="breadcrumb">
-                    <ol class="breadcrumb mt-0">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a>
                         </li>
                         <li class="breadcrumb-item active">รอบเงินเดือนงวดพิเศษ</li>

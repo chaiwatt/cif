@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th>พนักงาน</th>
             <th>แผนก</th>
@@ -20,7 +20,7 @@
             </td>
             @if ($bonus->status == 0)
             <td class="text-end">
-                <a class="btn btn-danger btn-sm delete" href="" data-id="{{$bonusUser->id}}">
+                <a class="btn btn-action btn-delete btn-sm delete" href="" data-id="{{$bonusUser->id}}">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>

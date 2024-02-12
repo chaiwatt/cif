@@ -3,7 +3,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">รอบคำนวนเงินเดือน</h3>
                 </div>
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-header">
                             <h4 class="card-title">รอบคำนวนเงินเดือน</h4>
                             <div class="d-flex gap-2">
                                 @if ($permission->create)

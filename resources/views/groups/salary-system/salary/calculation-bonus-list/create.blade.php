@@ -4,12 +4,12 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">เพิ่มรายการโบนัส</h3>
                 </div>
                 <div aria-label="breadcrumb">
-                    <ol class="breadcrumb float-sm-right">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.salary-system.salary.calculation-bonus-list')}}">รายการโบนัส</a>
                         </li>

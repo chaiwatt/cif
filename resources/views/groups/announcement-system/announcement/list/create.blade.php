@@ -17,9 +17,9 @@
                 </div>
             @endif
             <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center my-4 px-4">
+                <div class="title-header">
                     <div>
-                        <h3 class="m-0">สร้างข่าวประกาศ</h1>
+                        <h3 class="m-0">สร้างข่าวประกาศ</h3>
                             {{-- {{ route('groups.announcement-system.announcement.list.store') }} --}}
                     </div>
                     <div aria-label="breadcrumb">

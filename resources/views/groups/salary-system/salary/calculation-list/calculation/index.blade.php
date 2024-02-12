@@ -8,7 +8,7 @@
     @include('layouts.partial.loading')
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">รายการบันทึกเวลางวดปกติ</h3>
                     <ul class="mt-2">

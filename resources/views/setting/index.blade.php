@@ -5,7 +5,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">แดชบอร์ด</h3>
                 </div>
@@ -73,28 +73,30 @@
                                         style="min-height: 370px; height: 370px; max-height: 370px; max-width: 100%;"></canvas>
                                 </div>
                                 <div class="col-lg-6 dashboard-chart-table px-4">
-                                    <table class="table table-borderless border-bottom">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>แผนก</th>
-                                                <th class="text-center">จำนวนพนักงาน</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless border-bottom">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>แผนก</th>
+                                                    <th class="text-center">จำนวนพนักงาน</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                            @foreach ($companyDepartments as $index => $companyDepartment)
-                                            <tr>
-                                                <td>{{ $index + 1 + ($companyDepartments->perPage() *
-                                                    ($companyDepartments->currentPage() - 1))}}</td>
-                                                <td>{{ $companyDepartment->name }}</td>
-                                                <td class="text-center">{{$companyDepartment->UsersCount}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
+                                                @foreach ($companyDepartments as $index => $companyDepartment)
+                                                <tr>
+                                                    <td>{{ $index + 1 + ($companyDepartments->perPage() *
+                                                        ($companyDepartments->currentPage() - 1))}}</td>
+                                                    <td>{{ $companyDepartment->name }}</td>
+                                                    <td class="text-center">{{$companyDepartment->UsersCount}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
 
-                                    </table>
-                                    {{$companyDepartments->links('pagination::bootstrap-4')}}
+                                        </table>
+                                        {{$companyDepartments->links('pagination::bootstrap-4')}}
+                                    </div>
                                 </div>
                             </div>
                            
@@ -113,33 +115,35 @@
                                         style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                                 </div>
                                 <div class="col-lg-6 dashboard-chart-table px-4">
-                                    <table class="table table-borderless border-bottom">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>บทบาท</th>
-                                                <th>กลุ่มทำงาน</th>
-                                                <th class="text-center">จำนวนมอบหมาย</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($roles as $role)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $role->name }}</td>
-                                                <td>
-                                                    <ul>
-                                                        @foreach ($role->role_group_jsons as $item)
-                                                        <li style="padding: 5px;">{{$item->group->name}}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </td>
-                                                <td class="text-center">{{ $role->users->count() }}</td>
-                                            </tr>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless border-bottom">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>บทบาท</th>
+                                                    <th>กลุ่มทำงาน</th>
+                                                    <th class="text-center">จำนวนมอบหมาย</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($roles as $role)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $role->name }}</td>
+                                                    <td>
+                                                        <ul>
+                                                            @foreach ($role->role_group_jsons as $item)
+                                                            <li style="padding: 5px;">{{$item->group->name}}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </td>
+                                                    <td class="text-center">{{ $role->users->count() }}</td>
+                                                </tr>
 
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

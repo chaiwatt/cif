@@ -29,8 +29,8 @@
             @foreach ($paydays->where('type',2) as $key => $payday)
             <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}" id="custom-tabs-{{$payday->id}}"
                 role="tabpanel" aria-labelledby="custom-tabs-{{$payday->id}}-tab">
-                <table class="table table-striped">
-                    <thead>
+                <table class="table table-borderless text-nowrap">
+                    <thead class="border-bottom">
                         <tr>
                             <th>ต้นงวด</th>
                             <th>ปลายงวด</th>

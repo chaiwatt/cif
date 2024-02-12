@@ -6,12 +6,12 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">ประวัติใช้งาน (Log)</h3>
                 </div>
                 <div aria-label="breadcrumb">
-                    <ol class="breadcrumb float-sm-right">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                         <li class="breadcrumb-item active">ประวัติใช้งาน (Log)</li>
                     </ol>
@@ -40,34 +40,36 @@
                         <div class="card-body">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive" id="table_container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline"
-                                            id="userTable">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>วันที่</th>
-                                                    <th>ชื่อ-สกุล</th>
-                                                    <th>แอคชั่น</th>
-                                                    <th>โมเดล</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($logActivities as $key => $logActivity)
-                                                <tr>
-                                                    <td>{{($key + 1 + $logActivities->perPage() *
-                                                        ($logActivities->currentPage() - 1))}}
-                                                    </td>
-                                                    <td>{{ $logActivity->created_at->format('d-m-Y H:i') }}</td>
-                                                    <td>{{$logActivity->user->name}} {{$logActivity->user->lastname}}
-                                                    </td>
-                                                    <td>{{$logActivity->action}}</td>
-                                                    <td>{{$logActivity->model}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{ $logActivities->links() }}
+                                    <div class="col-sm-12" id="table_container">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline"
+                                                id="userTable">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>วันที่</th>
+                                                        <th>ชื่อ-สกุล</th>
+                                                        <th>แอคชั่น</th>
+                                                        <th>โมเดล</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($logActivities as $key => $logActivity)
+                                                    <tr>
+                                                        <td>{{($key + 1 + $logActivities->perPage() *
+                                                            ($logActivities->currentPage() - 1))}}
+                                                        </td>
+                                                        <td>{{ $logActivity->created_at->format('d-m-Y H:i') }}</td>
+                                                        <td>{{$logActivity->user->name}} {{$logActivity->user->lastname}}
+                                                        </td>
+                                                        <td>{{$logActivity->action}}</td>
+                                                        <td>{{$logActivity->model}}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            {{ $logActivities->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

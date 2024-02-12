@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
@@ -23,7 +23,7 @@
                     method="POST">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger btn-sm" type="submit"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-delete btn-action btn-sm" type="submit"><i class="fas fa-trash"></i></button>
                 </form>
                 @endif
             </td>

@@ -4,7 +4,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">สายอนุมัติ</h1>
                 </div>
@@ -102,11 +102,9 @@
                                         </div>
                                     </div> --}}
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 text-end mt-2">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
+                                <div class="cif-modal-footer">
+                                    <button type="submit"
+                                        class="btn btn-primary">บันทึก</button>
                                 </div>
                             </form>
                         </div>

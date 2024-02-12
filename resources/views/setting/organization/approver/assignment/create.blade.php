@@ -6,7 +6,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">นำเข้าพนักงาน {{$approver->name}}</h3>
                 </div>
@@ -40,47 +40,47 @@
                                 <input name="approverId" id="approverId" value="{{$approver->id}}" type="text" hidden>
                                 <div class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
-                                        <div class="col-sm-12 table-responsive" id="table_container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>เลือก</th>
-                                                        <th>รหัสพนักงาน</th>
-                                                        <th>ชื่อ-สกุล</th>
-                                                        <th>แผนก</th>
-                                                        <th>ตำแหน่ง</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="employee_tbody">
-                                                    @foreach ($users as $user)
-                                                    <tr>
-                                                        <td>
-                                                            <div class="icheck-primary d-inline">
-                                                                <input name="users[]" type="checkbox"
-                                                                    id="checkboxPrimary{{$user->id}}"
-                                                                    value="{{$user->id}}">
-                                                                <label for="checkboxPrimary{{$user->id}}">
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>{{$user->employee_no}}</td>
-                                                        <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
-                                                        </td>
-                                                        <td>{{$user->company_department->name}}</td>
-                                                        <td>{{$user->user_position->name}}</td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                            {{ $users->links() }}
+                                        <div class="col-sm-12 t" id="table_container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>เลือก</th>
+                                                            <th>รหัสพนักงาน</th>
+                                                            <th>ชื่อ-สกุล</th>
+                                                            <th>แผนก</th>
+                                                            <th>ตำแหน่ง</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="employee_tbody">
+                                                        @foreach ($users as $user)
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-primary d-inline">
+                                                                    <input name="users[]" type="checkbox"
+                                                                        id="checkboxPrimary{{$user->id}}"
+                                                                        value="{{$user->id}}">
+                                                                    <label for="checkboxPrimary{{$user->id}}">
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td>{{$user->employee_no}}</td>
+                                                            <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
+                                                            </td>
+                                                            <td>{{$user->company_department->name}}</td>
+                                                            <td>{{$user->user_position->name}}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                {{ $users->links() }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 text-end mt-2">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
+                                <div class="cif-modal-footer">
+                                    <button type="submit"
+                                        class="btn btn-primary">บันทึก</button>
                                 </div>
                             </form>
 

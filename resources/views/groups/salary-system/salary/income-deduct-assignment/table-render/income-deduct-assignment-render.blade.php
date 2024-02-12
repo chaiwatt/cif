@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline" id="userTable">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline" id="userTable">
+    <thead class="border-bottom">
         <tr>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ-สกุล</th>
@@ -33,7 +33,7 @@
             </td>
             <td>{{$incomeDeductUser->user->company_department->name}}</td>
             <td class="text-end">
-                <a class="btn btn-danger btn-sm btn-delete" href="" data-id="{{$incomeDeductUser->user->id}}">
+                <a class="btn btn-action btn-sm btn-delete" href="" data-id="{{$incomeDeductUser->user->id}}">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>

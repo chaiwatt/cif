@@ -8,7 +8,7 @@
     @include('layouts.partial.loading')
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">รายการเงินเดือนงวดปกติ @if (count($salarySummaries) != 0)
                         <span class="text-danger">(ปิดงวด)</span>
@@ -43,7 +43,7 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <div class="card-header d-flex align-items-center justify-content-between">
+                        <div class="card-header">
                             <h4 class="card-title">พนักงาน</h4>
                             <div class="d-flex gap-2">
                                     <a class="btn btn-header"
@@ -158,7 +158,7 @@
                                                 </td>
                                                 <td class="text-end">
                                                     <a href="{{route('groups.salary-system.salary.calculation-list.summary.download-single',['user_id' => $user->id,'payday_detail_id' => $paydayDetail->id])}}"
-                                                        class="btn btn-sm btn-primary"><i
+                                                        class="btn btn-sm btn-action btn-links"><i
                                                             class="fas fa-download"></i></a>
                                                 </td>
                                             </tr>

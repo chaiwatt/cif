@@ -119,6 +119,13 @@ body {
 .content {
     margin-bottom: 2rem;
 }
+.title-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1.5rem;
+}
 /* card */
 .card-header.card-sm {
     flex-direction: row;

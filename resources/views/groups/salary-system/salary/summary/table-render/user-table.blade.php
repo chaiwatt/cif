@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th style="width: 8%">รหัสพนักงาน</th>
             <th style="width: 15%">ชื่อ-สกุล</th>

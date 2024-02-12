@@ -1,5 +1,5 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             {{-- <th class="text-center" style="width: 150px">ตรวจสอบเวลา</th> --}}
 
@@ -56,7 +56,7 @@
             <td class="text-center">{{$userSummary['deligenceAllowance']}}</td>
             <td class="text-end">
 
-                <a class="btn btn-sm btn-primary btn-user" data-id="{{$user->id}}"
+                <a class="btn btn-sm btn-action btn-user" data-id="{{$user->id}}"
                     data-startDate="{{$paydayDetailWithToday->start_date}}"
                     data-endDate="{{$paydayDetailWithToday->end_date}}"
                     href="{{route('groups.salary-system.salary.calculation.information',['start_date' => $paydayDetailWithToday->start_date,'end_date' => $paydayDetailWithToday->end_date,'user_id' => $user->id] )}}"><i

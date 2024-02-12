@@ -6,7 +6,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">พนักงาน</h3>
                 </div>
@@ -92,34 +92,36 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive" id="table_container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline"
-                                            id="userTable">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>รหัสพนักงาน</th>
-                                                    <th>ชื่อ-สกุล</th>
-                                                    <th>แผนก</th>
-                                                    <th>ตำแหน่ง</th>
-                                                    <th>ประเภท</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="employee_tbody">
-                                                @foreach ($users as $key => $user)
-                                                <tr>
-                                                    <td>{{($key + 1 + $users->perPage() * ($users->currentPage() - 1))}}
-                                                    </td>
-                                                    <td>{{$user->employee_no}}</td>
-                                                    <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
-                                                    <td>{{$user->company_department->name}}</td>
-                                                    <td>{{$user->user_position->name}}</td>
-                                                    <td>{{$user->employee_type->name}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{ $users->links() }}
+                                    <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline"
+                                                id="userTable">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>รหัสพนักงาน</th>
+                                                        <th>ชื่อ-สกุล</th>
+                                                        <th>แผนก</th>
+                                                        <th>ตำแหน่ง</th>
+                                                        <th>ประเภท</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="employee_tbody">
+                                                    @foreach ($users as $key => $user)
+                                                    <tr>
+                                                        <td>{{($key + 1 + $users->perPage() * ($users->currentPage() - 1))}}
+                                                        </td>
+                                                        <td>{{$user->employee_no}}</td>
+                                                        <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
+                                                        <td>{{$user->company_department->name}}</td>
+                                                        <td>{{$user->user_position->name}}</td>
+                                                        <td>{{$user->employee_type->name}}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            {{ $users->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -8,7 +8,7 @@
     @include('layouts.partial.loading')
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">รายการเงินเดือน</h3>
                     <ul class="mt-2">
@@ -54,8 +54,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
+                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                        <thead class="border-bottom">
                                             <tr>
                                                 <th style="width: 8%">รหัสพนักงาน</th>
                                                 <th style="width: 15%">ชื่อ-สกุล</th>

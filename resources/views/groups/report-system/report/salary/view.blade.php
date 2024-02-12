@@ -8,7 +8,7 @@
     @include('layouts.partial.loading')
     <div>
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">{{$paydayDetail->month->name}} {{$paydayDetail->payday->year}}</h3>
                 </div>

@@ -4,11 +4,11 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
+            <div class="title-header">
+                <div>
                     <h3 class="m-0">เพิ่มสายอนุมัติ</h3>
                 </div>
-                <div class="col-sm-6">
+                <div>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('setting.organization.approver.index')}}">สายอนุมัติ</a></li>
@@ -103,11 +103,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 text-end">
-                                        <button type="submit"
-                                            class="btn btn-primary">บันทึก</button>
-                                    </div>
+                                <div class="cif-modal-footer">
+                                    <button type="submit"
+                                        class="btn btn-primary">บันทึก</button>
                                 </div>
                             </form>
                         </div>

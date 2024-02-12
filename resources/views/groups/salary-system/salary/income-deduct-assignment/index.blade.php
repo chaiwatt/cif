@@ -4,7 +4,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center my-4 px-4">
+            <div class="table-borderless text-nowrap">
                 <div>
                     <h3 class="m-0">รายการพนักงาน</h3>
                 </div>
@@ -20,8 +20,8 @@
     <div class="content">
         <div class="container-fluid">
             @if ($permission->show)
-            <a class="btn btn-primary mb-2" href="" id="btn-show-modal-income-deduct-assignment">
-                <i class="fas fa-plus me-1">
+            <a class="btn btn-header" href="" id="btn-show-modal-income-deduct-assignment">
+                <i class="fas fa-plus">
                 </i>
                 เพิ่มรายการเงินได้เงินหัก
             </a>
@@ -41,57 +41,59 @@
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12" id="table_container">
-                                        <table class="table table-bordered table-striped dataTable dtr-inline"
-                                            id="userTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>รหัสพนักงาน</th>
-                                                    <th>ชื่อ-สกุล</th>
-                                                    <th>รอบเงินเดือน</th>
-                                                    <th>เงินได้ / เงินหัก</th>
-                                                    {{-- <th>ประเภท</th> --}}
-                                                    {{-- <th>จำนวน</th> --}}
-                                                    <th>แผนก</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="employee_tbody">
-                                                @foreach ($incomeDeductUsers as $key => $incomeDeductUser)
-                                                <tr>
-                                                    @php
-                                                    $incomeDeductByUsers =
-                                                    $incomeDeductUser->user->getIncomeDeductByUsers()
-                                                    @endphp
-                                                    <td>{{$incomeDeductUser->user->employee_no}}</td>
-                                                    <td>{{$incomeDeductUser->user->prefix->name}}{{$incomeDeductUser->user->name}}
-                                                        {{$incomeDeductUser->user->lastname}}</td>
-                                                    <td>{{$incomeDeductUser->user->getPaydayWithToday()->name}}</td>
-                                                    {{-- <td>{{$incomeDeductByUsers}}</td> --}}
-                                                    <td>
-                                                        @if (count($incomeDeductByUsers) != 0)
-                                                        <ul class="mb-0">
-                                                            @foreach ($incomeDeductByUsers as $incomeDeductByUser)
-                                                            <li>{{$incomeDeductByUser->incomeDeduct->name}}
-                                                                {{$incomeDeductByUser->value}}
-                                                                {{$incomeDeductByUser->incomeDeduct->unit->name}}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                        @endif
-                                                    </td>
-                                                    <td>{{$incomeDeductUser->user->company_department->name}}</td>
-                                                    {{-- <td></td> --}}
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline"
+                                                id="userTable">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>รหัสพนักงาน</th>
+                                                        <th>ชื่อ-สกุล</th>
+                                                        <th>รอบเงินเดือน</th>
+                                                        <th>เงินได้ / เงินหัก</th>
+                                                        {{-- <th>ประเภท</th> --}}
+                                                        {{-- <th>จำนวน</th> --}}
+                                                        <th>แผนก</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="employee_tbody">
+                                                    @foreach ($incomeDeductUsers as $key => $incomeDeductUser)
+                                                    <tr>
+                                                        @php
+                                                        $incomeDeductByUsers =
+                                                        $incomeDeductUser->user->getIncomeDeductByUsers()
+                                                        @endphp
+                                                        <td>{{$incomeDeductUser->user->employee_no}}</td>
+                                                        <td>{{$incomeDeductUser->user->prefix->name}}{{$incomeDeductUser->user->name}}
+                                                            {{$incomeDeductUser->user->lastname}}</td>
+                                                        <td>{{$incomeDeductUser->user->getPaydayWithToday()->name}}</td>
+                                                        {{-- <td>{{$incomeDeductByUsers}}</td> --}}
+                                                        <td>
+                                                            @if (count($incomeDeductByUsers) != 0)
+                                                            <ul class="mb-0">
+                                                                @foreach ($incomeDeductByUsers as $incomeDeductByUser)
+                                                                <li>{{$incomeDeductByUser->incomeDeduct->name}}
+                                                                    {{$incomeDeductByUser->value}}
+                                                                    {{$incomeDeductByUser->incomeDeduct->unit->name}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                            @endif
+                                                        </td>
+                                                        <td>{{$incomeDeductUser->user->company_department->name}}</td>
+                                                        {{-- <td></td> --}}
 
-                                                    <td class="text-end">
-                                                        <a class="btn btn-danger btn-sm btn-delete" href=""
-                                                            data-id="{{$incomeDeductUser->user->id}}">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{ $incomeDeductUsers->links() }}
+                                                        <td class="text-end">
+                                                            <a class="btn btn-danger btn-sm btn-delete" href=""
+                                                                data-id="{{$incomeDeductUser->user->id}}">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            {{ $incomeDeductUsers->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

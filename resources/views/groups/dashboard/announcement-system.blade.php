@@ -1,11 +1,11 @@
-<div class="content-header">
+<div>
     <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">แดชบอร์ดระบบข่าวประกาศ</h1>
+        <div class="title-header">
+            <div>
+                <h3 class="m-0">แดชบอร์ดระบบข่าวประกาศ</h3>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
+            <div>
+                <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="{{route('home')}}">หน้าหลัก</a></li>
                     <li class="breadcrumb-item active">ระบบข่าวประกาศ</li>
                 </ol>
