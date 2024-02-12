@@ -20,8 +20,7 @@
     </div>
 </div>
 
-<div class="col-12">
-    <div class="form-group text-end">
+<div class="cif-modal-footer">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
         <button type="button" class="btn btn-primary" id="save-update-position">แก้ไข</button>
-    </div>
 </div>

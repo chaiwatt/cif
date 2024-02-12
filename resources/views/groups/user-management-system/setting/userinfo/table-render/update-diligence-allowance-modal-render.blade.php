@@ -11,8 +11,7 @@
     </div>
 </div>
 
-<div class="col-12">
-    <div class="form-group text-end">
+<div class="cif-modal-footer m-0">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
         <button type="button" class="btn btn-primary" id="save-update-user-diligence-allowance">แก้ไข</button>
-    </div>
 </div>

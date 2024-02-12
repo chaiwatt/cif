@@ -1134,7 +1134,7 @@
     </div>
 
     <div class="modal fade" id="modal-add-position">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
@@ -1157,12 +1157,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-add-position">เพิ่ม</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-add-position">เพิ่ม</button>
                 </div>
             </div>
         </div>
@@ -1202,12 +1201,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-add-education">เพิ่ม</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-add-education">เพิ่ม</button>
                 </div>
             </div>
         </div>
@@ -1237,12 +1235,12 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-primary" id="save-update-education">แก้ไข</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-update-education">แก้ไข</button>
                 </div>
             </div>
         </div>
@@ -1271,12 +1269,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-add-training">เพิ่ม</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-add-training">เพิ่ม</button>
                 </div>
             </div>
         </div>
@@ -1306,12 +1303,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-update-training">แก้ไข</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-update-training">แก้ไข</button>
                 </div>
             </div>
         </div>
@@ -1334,12 +1330,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-add-punishment">เพิ่ม</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-add-punishment">เพิ่ม</button>
                 </div>
             </div>
         </div>
@@ -1364,12 +1359,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-update-punishment">แก้ไข</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-update-punishment">แก้ไข</button>
                 </div>
             </div>
         </div>
@@ -1404,8 +1398,8 @@
                         </div>
                         <div class="col-md-12" id="file_wrapper">
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary" id="btn-add-attachment">เพิ่มไฟล์แนบ <span
-                                        id="attachment-file" class="text-dark"></span></button>
+                                <button type="button" class="btn btn-header" id="btn-add-attachment"><i class="fas fa-file"></i>เพิ่มไฟล์แนบ 
+                                    <span id="attachment-file" class="text-dark"></span></button>
                                 <div class="form-group">
                                     <input type="file" accept="" id="file-input" style="display: none;">
                                 </div>
@@ -1418,12 +1412,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-add-attachment">เพิ่ม</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-add-attachment">เพิ่ม</button>
                 </div>
             </div>
         </div>
@@ -1453,12 +1446,11 @@
                                 <input type="text" class="form-control numericInputInt" id="update-user-leave">
                             </div>
                         </div>
-                        <div class="col-12 mt-2">
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="save-update-user-leave">แก้ไข</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" id="save-update-user-leave">แก้ไข</button>
                 </div>
             </div>
         </div>
@@ -1468,9 +1460,9 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12">
-                            <table id="module_modal_table" class="table">
-                                <thead>
+                        <div class="col-12 table-responsive">
+                            <table id="module_modal_table" class="table table-borderless text-nowrap">
+                                <thead class="border-bottom">
                                     <tr>
                                         <th style="width:220px">การลา</th>
                                         <th>ประเภท</th>
@@ -1528,15 +1520,15 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="col-12">
-                                <div class="form-group text-end">
-                                    <button type="button" class="btn btn-primary"
-                                        id="save-update-leave-increment">บันทึก</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="cif-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                        <button type="button" class="btn btn-primary"
+                            id="save-update-leave-increment">บันทึก</button>
+                </div>
+                
             </div>
         </div>
     </div>
