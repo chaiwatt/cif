@@ -39,7 +39,8 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
                                     <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                         <thead class="border-bottom">
                                             <tr>
@@ -69,6 +70,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                </div>
                                 </div>
                             </div>
                         </div>

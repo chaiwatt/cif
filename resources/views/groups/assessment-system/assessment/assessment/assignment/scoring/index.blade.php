@@ -51,96 +51,102 @@
                                 <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel"
                                     aria-labelledby="custom-tabs-three-home-tab">
                                     <div class="row">
-                                        <div class="col-sm-12 table-responsive">
+                                        <div class="col-sm-12">
                                             <div class="card-header border-0">
                                                 <label for="">Attendance</label>
                                             </div>
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>รอบเงินเดือน</th>
-                                                        <th>ชั่วโมงทำงาน</th>
-                                                        <th>จำนวนขาด</th>
-                                                        <th>จำนวนลา</th>
-                                                        <th>จำนวนมาสาย</th>
-                                                        <th>จำนวนกลับก่อน</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($datas as $data)
-                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                        $data['paydayDetail']->start_date)->format('d/m/Y') }} -
-                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                        $data['paydayDetail']->end_date)->format('d/m/Y') }}</td>
-                                                    <td>{{$data['workHours']}}</td>
-                                                    <td>{{$data['absentCounts']}}</td>
-                                                    <td>{{$data['leaveCounts']}}</td>
-                                                    <td>{{$data['lateHours']}}</td>
-                                                    <td>{{$data['earlyHours']}}</td>
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>รอบเงินเดือน</th>
+                                                            <th>ชั่วโมงทำงาน</th>
+                                                            <th>จำนวนขาด</th>
+                                                            <th>จำนวนลา</th>
+                                                            <th>จำนวนมาสาย</th>
+                                                            <th>จำนวนกลับก่อน</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($datas as $data)
+                                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                            $data['paydayDetail']->start_date)->format('d/m/Y') }} -
+                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                            $data['paydayDetail']->end_date)->format('d/m/Y') }}</td>
+                                                        <td>{{$data['workHours']}}</td>
+                                                        <td>{{$data['absentCounts']}}</td>
+                                                        <td>{{$data['leaveCounts']}}</td>
+                                                        <td>{{$data['lateHours']}}</td>
+                                                        <td>{{$data['earlyHours']}}</td>
 
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
 
-                                        <div class="col-12 table-responsive" id="training-container">
+                                        <div class="col-12" id="training-container">
 
                                             <div class="card-header border-0">
                                                 <label for="">การฝึกอบรม</label>
                                             </div>
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th style="width: 40%">หัวข้อ</th>
-                                                        <th>หน่วยงาน</th>
-                                                        <th>ปีที่ฝึกอบรม</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->trainings->sortBy('year') as $key =>$training)
-                                                    <tr>
-                                                        <td>{{$training->course}}</td>
-                                                        <td>{{$training->organizer}}</td>
-                                                        <td>{{$training->year}}</td>
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th style="width: 40%">หัวข้อ</th>
+                                                            <th>หน่วยงาน</th>
+                                                            <th>ปีที่ฝึกอบรม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->trainings->sortBy('year') as $key =>$training)
+                                                        <tr>
+                                                            <td>{{$training->course}}</td>
+                                                            <td>{{$training->organizer}}</td>
+                                                            <td>{{$training->year}}</td>
 
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 table-responsive">
+                                        <div class="col-12">
                                             <div class="card-header border-0">
                                                 <label for="">ความผิดและโทษ</label>
                                             </div>
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th style="width: 40%">ความผิด / โทษ</th>
-                                                        <th>วันที่บันทึก</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->punishments as $key => $punishment)
-                                                    <tr>
-                                                        <td>
-                                                            @if ($punishment->record_date != null)
-                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                            $punishment->record_date)->format('d/m/Y') }}
-                                                            @endif
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th style="width: 40%">ความผิด / โทษ</th>
+                                                            <th>วันที่บันทึก</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->punishments as $key => $punishment)
+                                                        <tr>
+                                                            <td>
+                                                                @if ($punishment->record_date != null)
+                                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                                $punishment->record_date)->format('d/m/Y') }}
+                                                                @endif
 
 
-                                                        </td>
-                                                        <td>{{$punishment->punishment}}</td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                            </td>
+                                                            <td>{{$punishment->punishment}}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -154,57 +160,59 @@
                                             <input type="text" value="{{$assessmentGroup->id}}" id="assessmentGroupId"
                                                 name="assessmentGroupId" hidden>
                                             <input type="text" value="{{$user->id}}" name="userId" hidden>
-                                            <div class="col-sm-12 table-responsive" id="table_container">
-                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                    <thead class="border-bottom">
-                                                        <tr>
-                                                            <th style="width: 50%">เกณฑ์การประเมิน</th>
-                                                            <th style="width: 25%">ตัวคูณคะแนน</th>
-                                                            <th style="width: 25%">คะแนน</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                            <div class="col-sm-12" id="table_container">
+                                                <div class="table-responsive">
+                                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                        <thead class="border-bottom">
+                                                            <tr>
+                                                                <th style="width: 50%">เกณฑ์การประเมิน</th>
+                                                                <th style="width: 25%">ตัวคูณคะแนน</th>
+                                                                <th style="width: 25%">คะแนน</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
 
-                                                        @foreach (
-                                                        $assessmentGroupUserCriterias as $assessmentGroupUserCriteria)
-                                                        <td>{{$assessmentGroupUserCriteria->assessmentCriteria->name}}
-                                                            <input type="text"
-                                                                value="{{$assessmentGroupUserCriteria->id}}"
-                                                                name="assessmentGroupUserCriteriaId[]"
-                                                                class="form-control" hidden>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text"
-                                                                value="{{
-                                                                                                                                                                $assessmentGroupUserCriteria->getMultiplicationScore($assessmentGroupUserCriteria->assessmentCriteria->id,$assessmentGroup->id)
-                                                                                                                                                                }}"
-                                                                name="assessmentScoreMultiplication[]"
-                                                                class="form-control" readonly>
-                                                        </td>
-                                                        <td>
-                                                            <div class="form-group mb-0">
-                                                                <select name="assessmentScore[]"
-                                                                    class="form-control select2 @error('assessmentScore') is-invalid @enderror"
-                                                                    style="width: 100%;">
-                                                                    @foreach ($assessmentScores as $assessmentScore)
-                                                                    <option value="{{ $assessmentScore->id }}"
-                                                                        @if($assessmentScore->score ==
-                                                                        $assessmentGroupUserCriteria->score)
-                                                                        selected
-                                                                        @endif>
-                                                                        {{$assessmentScore->score}}
-                                                                    </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </td>
+                                                            @foreach (
+                                                            $assessmentGroupUserCriterias as $assessmentGroupUserCriteria)
+                                                            <td>{{$assessmentGroupUserCriteria->assessmentCriteria->name}}
+                                                                <input type="text"
+                                                                    value="{{$assessmentGroupUserCriteria->id}}"
+                                                                    name="assessmentGroupUserCriteriaId[]"
+                                                                    class="form-control" hidden>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"
+                                                                    value="{{
+                                                                                                                                                                    $assessmentGroupUserCriteria->getMultiplicationScore($assessmentGroupUserCriteria->assessmentCriteria->id,$assessmentGroup->id)
+                                                                                                                                                                    }}"
+                                                                    name="assessmentScoreMultiplication[]"
+                                                                    class="form-control" readonly>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group mb-0">
+                                                                    <select name="assessmentScore[]"
+                                                                        class="form-control select2 @error('assessmentScore') is-invalid @enderror"
+                                                                        style="width: 100%;">
+                                                                        @foreach ($assessmentScores as $assessmentScore)
+                                                                        <option value="{{ $assessmentScore->id }}"
+                                                                            @if($assessmentScore->score ==
+                                                                            $assessmentGroupUserCriteria->score)
+                                                                            selected
+                                                                            @endif>
+                                                                            {{$assessmentScore->score}}
+                                                                        </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </td>
 
-                                                        </tr>
-                                                        @endforeach
+                                                            </tr>
+                                                            @endforeach
 
 
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                             <div class="cif-modal-footer">
                                                 <button type="submit" class="btn btn-primary mt-2">บันทึก</button>

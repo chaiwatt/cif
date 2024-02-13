@@ -63,55 +63,57 @@
                                     <div class="row">
                                         <input type="text" value="{{$assessmentGroup->id}}" name="assessmentGroupId"
                                             hidden>
-                                        <div class="col-sm-12 table-responsive" id="table_container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th style="width: 120px">
-                                                            <div class="icheck-primary d-inline">
-                                                                <input type="checkbox" id="select_all">
-                                                                <label for="select_all"></label>
-                                                            </div>
-                                                        </th>
-                                                        <th>เกณฑ์การประเมิน</th>
-                                                        <th>ตัวคูณคะแนน</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($assessmentCriterias as $assessmentCriteria)
-                                                    <tr>
-                                                        <td>
-                                                            <div class="icheck-primary d-inline">
-                                                                <input name="criterias[]" type="checkbox"
-                                                                    class="criteria-checkbox"
-                                                                    id="checkboxPrimary{{$assessmentCriteria->id}}"
-                                                                    value="{{$assessmentCriteria->id}}">
-                                                                <label
-                                                                    for="checkboxPrimary{{$assessmentCriteria->id}}"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>{{$assessmentCriteria->name}}</td>
-                                                        <td>
-                                                            <div class="form-group mb-0">
-                                                                <select name="assessmentScoreMultiplication[]"
-                                                                    class="form-control select2 @error('assessmentScoreMultiplication') is-invalid @enderror"
-                                                                    style="width: 100%;">
-                                                                    @foreach ($assessmentScoreMultiplications
-                                                                    as $assessmentScoreMultiplication)
-                                                                    <option
-                                                                        value="{{ $assessmentScoreMultiplication->id }}">
-                                                                        {{
-                                                                        $assessmentScoreMultiplication->multiplication
-                                                                        }}
-                                                                    </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="col-sm-12" id="table_container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th style="width: 120px">
+                                                                <div class="icheck-primary d-inline">
+                                                                    <input type="checkbox" id="select_all">
+                                                                    <label for="select_all"></label>
+                                                                </div>
+                                                            </th>
+                                                            <th>เกณฑ์การประเมิน</th>
+                                                            <th>ตัวคูณคะแนน</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($assessmentCriterias as $assessmentCriteria)
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-primary d-inline">
+                                                                    <input name="criterias[]" type="checkbox"
+                                                                        class="criteria-checkbox"
+                                                                        id="checkboxPrimary{{$assessmentCriteria->id}}"
+                                                                        value="{{$assessmentCriteria->id}}">
+                                                                    <label
+                                                                        for="checkboxPrimary{{$assessmentCriteria->id}}"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>{{$assessmentCriteria->name}}</td>
+                                                            <td>
+                                                                <div class="form-group mb-0">
+                                                                    <select name="assessmentScoreMultiplication[]"
+                                                                        class="form-control select2 @error('assessmentScoreMultiplication') is-invalid @enderror"
+                                                                        style="width: 100%;">
+                                                                        @foreach ($assessmentScoreMultiplications
+                                                                        as $assessmentScoreMultiplication)
+                                                                        <option
+                                                                            value="{{ $assessmentScoreMultiplication->id }}">
+                                                                            {{
+                                                                            $assessmentScoreMultiplication->multiplication
+                                                                            }}
+                                                                        </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

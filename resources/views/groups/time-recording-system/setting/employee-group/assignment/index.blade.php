@@ -38,40 +38,42 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive" id="table_container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>รหัสพนักงาน</th>
-                                                    <th>ชื่อ-สกุล</th>
-                                                    <th>แผนก</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="employee_tbody">
-                                                @foreach ($users as $key => $user)
-                                                <tr>
-                                                    <td>{{$key +1}}</td>
-                                                    <td>{{$user->employee_no}}</td>
-                                                    <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
-                                                    </td>
-                                                    <td>{{$user->company_department->name}}</td>
-                                                    <td class="text-end">
-                                                        <form
-                                                            action="{{ route('groups.time-recording-system.setting.employee-group.assignment.delete', ['user_group_id' => $userGroup->id, 'user_id' => $user->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-action btn-delete btn-sm" type="submit"><i
-                                                                    class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{ $users->links() }}
+                                    <div class="col-sm-12" id="table_container">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>รหัสพนักงาน</th>
+                                                        <th>ชื่อ-สกุล</th>
+                                                        <th>แผนก</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="employee_tbody">
+                                                    @foreach ($users as $key => $user)
+                                                    <tr>
+                                                        <td>{{$key +1}}</td>
+                                                        <td>{{$user->employee_no}}</td>
+                                                        <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
+                                                        </td>
+                                                        <td>{{$user->company_department->name}}</td>
+                                                        <td class="text-end">
+                                                            <form
+                                                                action="{{ route('groups.time-recording-system.setting.employee-group.assignment.delete', ['user_group_id' => $userGroup->id, 'user_id' => $user->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-action btn-delete btn-sm" type="submit"><i
+                                                                        class="fas fa-trash"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            {{ $users->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

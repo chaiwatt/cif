@@ -49,44 +49,46 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>รายละเอียดการเรียนรู้</th>
-                                                {{-- <th>วันที่เพิ่ม</th> --}}
-                                                <th class="text-end" style="width: 110px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($chapter->topics as $topic)
-                                            <tr>
-                                                <td>{{$topic->name}}</td>
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>รายละเอียดการเรียนรู้</th>
+                                                    {{-- <th>วันที่เพิ่ม</th> --}}
+                                                    <th class="text-end" style="width: 110px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($chapter->topics as $topic)
+                                                <tr>
+                                                    <td>{{$topic->name}}</td>
 
-                                                <td class="text-end">
-                                                    <a class="btn btn-action btn-sm btn-edit"
-                                                        href="{{route('groups.learning-system.setting.learning-list.chapter.topic.view',['id' => $topic->id ])}}"><i
-                                                            class="fas fa-pencil-alt"></i></a>
-                                                    @if ($permission->delete == true)
-                                                    <a class="btn btn-action btn-delete btn-sm"
-                                                        data-confirm='ลบรายละเอียดการเรียนรู้ "{{$topic->name}}" หรือไม่?'
-                                                        href="#" data-id="{{$topic->id}}"
-                                                        data-delete-route="{{ route('groups.learning-system.setting.learning-list.chapter.topic.delete', ['id' => '__id__']) }}"
-                                                        data-message="รายละเอียดการเรียนรู้">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                    @endif
-                                                    {{-- <a class="btn btn-sm btn-primary "
-                                                        href="{{route('groups.learning-system.setting.learning-list.chapter.topic',['id' => $chapter->id])}}"><i
-                                                            class="fas fa-link"></i></a>
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-sm btn-edit"
+                                                            href="{{route('groups.learning-system.setting.learning-list.chapter.topic.view',['id' => $topic->id ])}}"><i
+                                                                class="fas fa-pencil-alt"></i></a>
+                                                        @if ($permission->delete == true)
+                                                        <a class="btn btn-action btn-delete btn-sm"
+                                                            data-confirm='ลบรายละเอียดการเรียนรู้ "{{$topic->name}}" หรือไม่?'
+                                                            href="#" data-id="{{$topic->id}}"
+                                                            data-delete-route="{{ route('groups.learning-system.setting.learning-list.chapter.topic.delete', ['id' => '__id__']) }}"
+                                                            data-message="รายละเอียดการเรียนรู้">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        @endif
+                                                        {{-- <a class="btn btn-sm btn-primary "
+                                                            href="{{route('groups.learning-system.setting.learning-list.chapter.topic',['id' => $chapter->id])}}"><i
+                                                                class="fas fa-link"></i></a>
 
-                                                    --}}
-                                                </td>
+                                                        --}}
+                                                    </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

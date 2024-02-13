@@ -50,96 +50,100 @@
                                     aria-labelledby="time-tab-tab">
                                     <div class="row">
                                         <div class="col-sm-12" id="table_container">
-                                            <table class="table table-bordered table-striped dataTable dtr-inline">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center" style="width: 10%">วันที่</th>
-                                                        <th class="text-center" style="width: 10%">เวลารูดบัตร</th>
-                                                        <th class="text-center" style="width: 10%">ชม.งาน</th>
-                                                        <th class="text-center" style="width: 10%">มาสาย</th>
-                                                        <th class="text-center" style="width: 10%">กลับก่อน</th>
-                                                        <th class="text-center" style="width: 10%">ลา</th>
-                                                        <th class="text-center" style="width: 10%">ขาดงาน</th>
-                                                        <th class="text-center" style="width: 10%">ล่วงเวลา</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($workScheduleAssignmentUsers as $key =>
-                                                    $workScheduleAssignmentUser)
-                                                    @php
-                                                    $paydayDetailWithToday =
-                                                    $workScheduleAssignmentUser->user->getPaydayDetailWithToday();
-                                                    $getWorkHour =
-                                                    $workScheduleAssignmentUser->getWorkHour();
-                                                    @endphp
-                                                    <tr>
-                                                        <td class="text-center">{{
-                                                            \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                            $workScheduleAssignmentUser->date_in)->format('d/m/Y')
-                                                            }}
-                                                        </td>
-                                                        <td class="text-center">
-                                                            @if($workScheduleAssignmentUser->time_in &&
-                                                            $workScheduleAssignmentUser->time_out)
-                                                            {{ \Carbon\Carbon::createFromFormat('H:i:s',
-                                                            $workScheduleAssignmentUser->time_in)->format('H:i')
-                                                            }} -
-                                                            {{ \Carbon\Carbon::createFromFormat('H:i:s',
-                                                            $workScheduleAssignmentUser->time_out)->format('H:i')
-                                                            }}
-                                                            @endif</td>
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th class="text-center" style="width: 10%">วันที่</th>
+                                                            <th class="text-center" style="width: 10%">เวลารูดบัตร</th>
+                                                            <th class="text-center" style="width: 10%">ชม.งาน</th>
+                                                            <th class="text-center" style="width: 10%">มาสาย</th>
+                                                            <th class="text-center" style="width: 10%">กลับก่อน</th>
+                                                            <th class="text-center" style="width: 10%">ลา</th>
+                                                            <th class="text-center" style="width: 10%">ขาดงาน</th>
+                                                            <th class="text-center" style="width: 10%">ล่วงเวลา</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($workScheduleAssignmentUsers as $key =>
+                                                        $workScheduleAssignmentUser)
+                                                        @php
+                                                        $paydayDetailWithToday =
+                                                        $workScheduleAssignmentUser->user->getPaydayDetailWithToday();
+                                                        $getWorkHour =
+                                                        $workScheduleAssignmentUser->getWorkHour();
+                                                        @endphp
+                                                        <tr>
+                                                            <td class="text-center">{{
+                                                                \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                                $workScheduleAssignmentUser->date_in)->format('d/m/Y')
+                                                                }}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if($workScheduleAssignmentUser->time_in &&
+                                                                $workScheduleAssignmentUser->time_out)
+                                                                {{ \Carbon\Carbon::createFromFormat('H:i:s',
+                                                                $workScheduleAssignmentUser->time_in)->format('H:i')
+                                                                }} -
+                                                                {{ \Carbon\Carbon::createFromFormat('H:i:s',
+                                                                $workScheduleAssignmentUser->time_out)->format('H:i')
+                                                                }}
+                                                                @endif</td>
 
-                                                        <td class="text-center">{{$getWorkHour['workHour']}}</td>
-                                                        <td class="text-center">{{$getWorkHour['lateHour']}}</td>
-                                                        <td class="text-center">{{$getWorkHour['earlyHour']}}</td>
-                                                        <td class="text-center">
-                                                            @if($getWorkHour['leaveCount'] !== null)
-                                                            {{$getWorkHour['leaveCount']['count']}}
-                                                            ({{$getWorkHour['leaveCount']['leaveName']}})
-                                                            @endif
-                                                        </td>
-                                                        <td class="text-center">{{$getWorkHour['absentCount']}}</td>
-                                                        <td class="text-center">
+                                                            <td class="text-center">{{$getWorkHour['workHour']}}</td>
+                                                            <td class="text-center">{{$getWorkHour['lateHour']}}</td>
+                                                            <td class="text-center">{{$getWorkHour['earlyHour']}}</td>
+                                                            <td class="text-center">
+                                                                @if($getWorkHour['leaveCount'] !== null)
+                                                                {{$getWorkHour['leaveCount']['count']}}
+                                                                ({{$getWorkHour['leaveCount']['leaveName']}})
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-center">{{$getWorkHour['absentCount']}}</td>
+                                                            <td class="text-center">
 
-                                                            @if ($getWorkHour['overTime'] != null)
-                                                            {{$getWorkHour['overTime']['hourDifference']}}
-                                                            @if ($getWorkHour['overTime']['isHoliday'] == true)
-                                                            (ล่วงเวลา3.0)
-                                                            @else
-                                                            (ล่วงเวลา1.5)
-                                                            @endif
-                                                            @endif
-                                                        </td>
+                                                                @if ($getWorkHour['overTime'] != null)
+                                                                {{$getWorkHour['overTime']['hourDifference']}}
+                                                                @if ($getWorkHour['overTime']['isHoliday'] == true)
+                                                                (ล่วงเวลา3.0)
+                                                                @else
+                                                                (ล่วงเวลา1.5)
+                                                                @endif
+                                                                @endif
+                                                            </td>
 
 
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="income-deducy-tab" role="tabpanel"
                                     aria-labelledby="income-deducy-tab-tab">
-                                    <table class="table table-bordered table-striped dataTable dtr-inline">
-                                        <thead>
-                                            <tr>
-                                                <th>เงินเพิ่ม / เงินหัก</th>
-                                                <th>จำนวน</th>
-                                                <th>หน่วย</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($user->getIncomeDeductByUsers() as $incomeDeductByUser)
-                                            <tr>
-                                                <td>{{$incomeDeductByUser->incomeDeduct->name}}
-                                                </td>
-                                                <td>{{$incomeDeductByUser->value}}</td>
-                                                <td>{{$incomeDeductByUser->incomeDeduct->unit->name}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>เงินเพิ่ม / เงินหัก</th>
+                                                    <th>จำนวน</th>
+                                                    <th>หน่วย</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($user->getIncomeDeductByUsers() as $incomeDeductByUser)
+                                                <tr>
+                                                    <td>{{$incomeDeductByUser->incomeDeduct->name}}
+                                                    </td>
+                                                    <td>{{$incomeDeductByUser->value}}</td>
+                                                    <td>{{$incomeDeductByUser->incomeDeduct->unit->name}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -158,14 +162,14 @@
     </div>
 
 </div>
-<div class="modal-footer justify-content-between">
+{{-- <div class="cif-modal-footer justify-content-between">
     {{-- <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button> --}}
     <button type="button" class="btn btn-primary" id="bntUpdateReportField">ต่อไป</button>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div> --}}
 @push('scripts')
 
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>

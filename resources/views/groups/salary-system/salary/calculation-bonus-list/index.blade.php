@@ -49,57 +49,59 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th style="width: 200px">วันที่</th>
-                                                <th>ชื่อรายการ</th>
-                                                <th style="width: 200px">สถานะ</th>
-                                                <th class="text-end" style="width: 200px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($bonuses as $key=> $bonus)
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th style="width: 200px">วันที่</th>
+                                                    <th>ชื่อรายการ</th>
+                                                    <th style="width: 200px">สถานะ</th>
+                                                    <th class="text-end" style="width: 200px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($bonuses as $key=> $bonus)
 
-                                            <tr>
-                                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                    $bonus->issued)->format('d/m/Y') }}</td>
-                                                <td>{{$bonus->name}}</td>
-                                                <td>@if($bonus->status == 0)
-                                                    <span class="badge bg-success rounded-3" style="padding: 8px 12px">ใช้งาน</span>
-                                                    @elseif($bonus->status == 1)
-                                                    <span class="badge bg-gray rounded-3" style="padding: 8px 12px; background: #D1FADF">ปิดงวด</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-end">
-                                                    <a class="btn btn-action btn-user btn-sm"
-                                                        href="{{route('groups.salary-system.salary.calculation-bonus-list.download-pdf',['id' => $bonus->id])}}">
-                                                        <i class="fas fa-download"></i>
-                                                    </a>
-                                                    <a class="btn btn-action btn-links btn-sm"
-                                                        href="{{route('groups.salary-system.salary.calculation-bonus-list.assignment',['id' =>$bonus->id])}}">
-                                                        <i class="fas fa-link"></i>
-                                                    </a>
-                                                    <a class="btn btn-action btn-edit btn-sm"
-                                                        href="{{route('groups.salary-system.salary.calculation-bonus-list.view',['id' => $bonus->id])}}">
-                                                        <i class="fas fa-pencil-alt"></i>
-                                                    </a>
-                                                    @if ($bonus->status == 0)
-                                                    <a class="btn btn-action btn-delete btn-sm"
-                                                        data-confirm='ลบรายโบนัส "{{$bonus->name}}" หรือไม่?' href="#"
-                                                        data-id="{{$bonus->id}}"
-                                                        data-delete-route="{{ route('groups.salary-system.salary.calculation-bonus-list.delete', ['id' => '__id__']) }}"
-                                                        data-message="รายโบนัส">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                    @endif
+                                                <tr>
+                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                        $bonus->issued)->format('d/m/Y') }}</td>
+                                                    <td>{{$bonus->name}}</td>
+                                                    <td>@if($bonus->status == 0)
+                                                        <span class="badge bg-success rounded-3" style="padding: 8px 12px">ใช้งาน</span>
+                                                        @elseif($bonus->status == 1)
+                                                        <span class="badge bg-gray rounded-3" style="padding: 8px 12px; background: #D1FADF">ปิดงวด</span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-user btn-sm"
+                                                            href="{{route('groups.salary-system.salary.calculation-bonus-list.download-pdf',['id' => $bonus->id])}}">
+                                                            <i class="fas fa-download"></i>
+                                                        </a>
+                                                        <a class="btn btn-action btn-links btn-sm"
+                                                            href="{{route('groups.salary-system.salary.calculation-bonus-list.assignment',['id' =>$bonus->id])}}">
+                                                            <i class="fas fa-link"></i>
+                                                        </a>
+                                                        <a class="btn btn-action btn-edit btn-sm"
+                                                            href="{{route('groups.salary-system.salary.calculation-bonus-list.view',['id' => $bonus->id])}}">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+                                                        @if ($bonus->status == 0)
+                                                        <a class="btn btn-action btn-delete btn-sm"
+                                                            data-confirm='ลบรายโบนัส "{{$bonus->name}}" หรือไม่?' href="#"
+                                                            data-id="{{$bonus->id}}"
+                                                            data-delete-route="{{ route('groups.salary-system.salary.calculation-bonus-list.delete', ['id' => '__id__']) }}"
+                                                            data-message="รายโบนัส">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        @endif
 
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

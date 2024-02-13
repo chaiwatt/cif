@@ -47,7 +47,7 @@
                             <div class="tab-content" id="custom-content-below-tabContent">
                                 <div class="tab-pane fade active show" id="custom-content-below-home" role="tabpanel"
                                     aria-labelledby="custom-content-below-home-tab">
-                                    <form action="{{route('setting.general.searchfield.user.update')}}" method="POST">
+                                    <form action="{{route('setting.general.searchfield.user.update')}}" method="POST" class="table-responsive">
                                         @csrf
                                         <table class="table table-borderless text-nowrap">
                                             <thead class="border-bottom">

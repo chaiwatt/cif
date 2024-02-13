@@ -1,3 +1,4 @@
+<div class="table-responsive">
 <table class="table table-borderless text-nowrap dataTable dtr-inline" id="userTable">
     <thead class="border-bottom">
         <tr>
@@ -36,3 +37,4 @@
     </tbody>
 </table>
 {{ $users->links() }}
+</div>

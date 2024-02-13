@@ -80,41 +80,43 @@
                                 <div class="row">
                                     <input name="paydayId" id="paydayId" value="{{$payday->id}}" type="text" hidden>
                                     <div class="col-sm-12" id="table_container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>รหัสพนักงาน</th>
-                                                    <th>ชื่อ-สกุล</th>
-                                                    <th>ประเภท</th>
-                                                    <th>แผนก</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($users as $key => $user)
-                                                <tr>
-                                                    <td>{{$user->employee_no}}</td>
-                                                    <td>{{$user->name}}
-                                                        {{$user->lastname}}</td>
-                                                    <td>{{$user->company_department->name}}</td>
-                                                    <td>{{$user->employee_type->name}}</td>
-                                                    <td class="text-end">
-                                                        @if ($permission->delete)
-                                                        <form
-                                                            action="{{ route('groups.salary-system.setting.payday.assignment-user.delete', ['payday_id' => $payday->id, 'user_id' => $user->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-action btn-delete btn-sm" type="submit">
-                                                                <i class="fas fa-trash"></i></button>
-                                                        </form>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{$users->links()}}
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>รหัสพนักงาน</th>
+                                                        <th>ชื่อ-สกุล</th>
+                                                        <th>ประเภท</th>
+                                                        <th>แผนก</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($users as $key => $user)
+                                                    <tr>
+                                                        <td>{{$user->employee_no}}</td>
+                                                        <td>{{$user->name}}
+                                                            {{$user->lastname}}</td>
+                                                        <td>{{$user->company_department->name}}</td>
+                                                        <td>{{$user->employee_type->name}}</td>
+                                                        <td class="text-end">
+                                                            @if ($permission->delete)
+                                                            <form
+                                                                action="{{ route('groups.salary-system.setting.payday.assignment-user.delete', ['payday_id' => $payday->id, 'user_id' => $user->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-action btn-delete btn-sm" type="submit">
+                                                                    <i class="fas fa-trash"></i></button>
+                                                            </form>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            {{$users->links()}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

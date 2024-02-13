@@ -34,60 +34,62 @@
                         </div>
                         <div class="card-body py-0">
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead>
-                                            <tr>
-                                                <th>แผนก</th>
-                                                {{-- <th class="text-center">พนักงาน</th> --}}
-                                                <th class="text-center">เงินเดือน</th>
-                                                <th class="text-center">ค่าล่วงเวลา</th>
-                                                <th class="text-center">เบี้ยขยัน</th>
-                                                <th class="text-center">รายได้อื่นๆ</th>
-                                                <th class="text-center">หักอื่นๆ</th>
-                                                <th class="text-center">ประกันสังคม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($companyDepartments as $companyDepartment)
-                                            @php
-                                            $salarySummary = $companyDepartment->salarySummary($paydayDetail->id);
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>แผนก</th>
+                                                    {{-- <th class="text-center">พนักงาน</th> --}}
+                                                    <th class="text-center">เงินเดือน</th>
+                                                    <th class="text-center">ค่าล่วงเวลา</th>
+                                                    <th class="text-center">เบี้ยขยัน</th>
+                                                    <th class="text-center">รายได้อื่นๆ</th>
+                                                    <th class="text-center">หักอื่นๆ</th>
+                                                    <th class="text-center">ประกันสังคม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($companyDepartments as $companyDepartment)
+                                                @php
+                                                $salarySummary = $companyDepartment->salarySummary($paydayDetail->id);
 
-                                            if ($salarySummary) {
-                                            $sum_salary = $salarySummary->sum_salary == 0 ? '' :
-                                            number_format($salarySummary->sum_salary,2);
+                                                if ($salarySummary) {
+                                                $sum_salary = $salarySummary->sum_salary == 0 ? '' :
+                                                number_format($salarySummary->sum_salary,2);
 
-                                            $sum_overtime = $salarySummary->sum_overtime == 0 ? '' :
-                                            number_format($salarySummary->sum_overtime,2);
+                                                $sum_overtime = $salarySummary->sum_overtime == 0 ? '' :
+                                                number_format($salarySummary->sum_overtime,2);
 
-                                            $sum_allowance_diligence = $salarySummary->sum_allowance_diligence == 0 ? ''
-                                            :
-                                            number_format($salarySummary->sum_allowance_diligence,2);
+                                                $sum_allowance_diligence = $salarySummary->sum_allowance_diligence == 0 ? ''
+                                                :
+                                                number_format($salarySummary->sum_allowance_diligence,2);
 
-                                            $sum_income = $salarySummary->sum_income == 0 ? '' :
-                                            number_format($salarySummary->sum_income,2);
+                                                $sum_income = $salarySummary->sum_income == 0 ? '' :
+                                                number_format($salarySummary->sum_income,2);
 
-                                            $sum_deduct = $salarySummary->sum_deduct == 0 ? '' :
-                                            number_format($salarySummary->sum_deduct,2);
+                                                $sum_deduct = $salarySummary->sum_deduct == 0 ? '' :
+                                                number_format($salarySummary->sum_deduct,2);
 
-                                            $sum_social_security = $salarySummary->sum_social_security == 0 ? '' :
-                                            number_format($salarySummary->sum_social_security,2);
-                                            }
+                                                $sum_social_security = $salarySummary->sum_social_security == 0 ? '' :
+                                                number_format($salarySummary->sum_social_security,2);
+                                                }
 
-                                            @endphp
-                                            <tr>
-                                                <td>{{$companyDepartment->name}}</td>
-                                                {{-- <td class="text-center">{{$employee}}</td> --}}
-                                                <td class="text-center">{{@$sum_salary}}</td>
-                                                <td class="text-center">{{@$sum_overtime}}</td>
-                                                <td class="text-center">{{@$sum_allowance_diligence}}</td>
-                                                <td class="text-center">{{@$sum_income}}</td>
-                                                <td class="text-center">{{@$sum_deduct}}</td>
-                                                <td class="text-center">{{@$sum_social_security}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                @endphp
+                                                <tr>
+                                                    <td>{{$companyDepartment->name}}</td>
+                                                    {{-- <td class="text-center">{{$employee}}</td> --}}
+                                                    <td class="text-center">{{@$sum_salary}}</td>
+                                                    <td class="text-center">{{@$sum_overtime}}</td>
+                                                    <td class="text-center">{{@$sum_allowance_diligence}}</td>
+                                                    <td class="text-center">{{@$sum_income}}</td>
+                                                    <td class="text-center">{{@$sum_deduct}}</td>
+                                                    <td class="text-center">{{@$sum_social_security}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -38,36 +38,38 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>เกณฑ์การประเมิน</th>
-                                                <th>ตัวคูณคะแนน</th>
-                                                <th class="text-end" style="width: 100px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($assessmentGroupCriterias as $key => $assessmentGroupCriteria)
-                                            <tr>
-                                                <td>{{$key +1}}</td>
-                                                <td>{{$assessmentGroupCriteria->assessmentCriteria->name}}</td>
-                                                <td>{{$assessmentGroupCriteria->assessmentScoreMultiplication->multiplication}}
-                                                </td>
-                                                <td class="text-end">
-                                                    <a class="btn btn-action btn-delete btn-sm"
-                                                        data-confirm='ลบเกณฑ์การประเมิน "{{$assessmentGroupCriteria->name}}" หรือไม่?'
-                                                        href="#" data-id="{{$assessmentGroupCriteria->id}}"
-                                                        data-delete-route="{{ route('groups.assessment-system.setting.assessment-group.assignment.delete', ['id' => '__id__']) }}"
-                                                        data-message="เกณฑ์การประเมิน">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>เกณฑ์การประเมิน</th>
+                                                    <th>ตัวคูณคะแนน</th>
+                                                    <th class="text-end" style="width: 100px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($assessmentGroupCriterias as $key => $assessmentGroupCriteria)
+                                                <tr>
+                                                    <td>{{$key +1}}</td>
+                                                    <td>{{$assessmentGroupCriteria->assessmentCriteria->name}}</td>
+                                                    <td>{{$assessmentGroupCriteria->assessmentScoreMultiplication->multiplication}}
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-delete btn-sm"
+                                                            data-confirm='ลบเกณฑ์การประเมิน "{{$assessmentGroupCriteria->name}}" หรือไม่?'
+                                                            href="#" data-id="{{$assessmentGroupCriteria->id}}"
+                                                            data-delete-route="{{ route('groups.assessment-system.setting.assessment-group.assignment.delete', ['id' => '__id__']) }}"
+                                                            data-message="เกณฑ์การประเมิน">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -43,62 +43,64 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>บทบาท</th>
-                                                    <th>ผู้ใช้บทบาท</th>
-                                                    <th class="text-center">กลุ่มงานมอบหมาย</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($roles as $role)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{$role->name}}</td>
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>บทบาท</th>
+                                                        <th>ผู้ใช้บทบาท</th>
+                                                        <th class="text-center">กลุ่มงานมอบหมาย</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($roles as $role)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{$role->name}}</td>
 
-                                                    <td>
-                                                        <ul class="mb-0">
-                                                            @foreach ($role->users as $user)
-                                                            <li style="padding: 5px;">{{$user->name}} {{$user->lastname}}<a
-                                                                    class="text-danger ms-2 text-decoration-none"
-                                                                    href="{{ route('setting.access.assignment.role.delete', ['roleId' => $role->id, 'userId' =>$user->id])}}">
-                                                                    <i class="fas fa-times"
-                                                                        style="font-size: smaller;"></i>
-                                                                </a>
-                                                            </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </td>
-                                                    <td class="text-center">{{$role->role_group_jsons->count()}}</td>
-                                                    <td class="text-end">
-                                                        <a class="btn btn-action btn-user btn-sm" id="un_assignment_role_button"
-                                                            data-role="{{$role->id}}">
-                                                            <i class="fas fa-users"></i>
-                                                        </a>
-                                                        <a class="btn btn-action btn-links btn-sm"
-                                                            href="{{ route('setting.access.assignment.group-module.view', ['id' => $role->id]) }}">
-                                                            <i class="fas fa-link"></i>
-                                                        </a>
-                                                        <a class="btn btn-action btn-edit btn-sm"
-                                                            href="{{ route('setting.access.role.view', ['id' => $role->id]) }}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a class="btn btn-action btn-delete btn-sm"
-                                                            data-confirm='ลบบทบาท "{{$role->name}}" หรือไม่?' href="#"
-                                                            data-id="{{$role->id}}"
-                                                            data-delete-route="{{ route('setting.access.role.delete', ['id' => '__id__']) }}"
-                                                            data-message="บทบาท">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                        <td>
+                                                            <ul class="mb-0">
+                                                                @foreach ($role->users as $user)
+                                                                <li style="padding: 5px;">{{$user->name}} {{$user->lastname}}<a
+                                                                        class="text-danger ms-2 text-decoration-none"
+                                                                        href="{{ route('setting.access.assignment.role.delete', ['roleId' => $role->id, 'userId' =>$user->id])}}">
+                                                                        <i class="fas fa-times"
+                                                                            style="font-size: smaller;"></i>
+                                                                    </a>
+                                                                </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </td>
+                                                        <td class="text-center">{{$role->role_group_jsons->count()}}</td>
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-user btn-sm" id="un_assignment_role_button"
+                                                                data-role="{{$role->id}}">
+                                                                <i class="fas fa-users"></i>
+                                                            </a>
+                                                            <a class="btn btn-action btn-links btn-sm"
+                                                                href="{{ route('setting.access.assignment.group-module.view', ['id' => $role->id]) }}">
+                                                                <i class="fas fa-link"></i>
+                                                            </a>
+                                                            <a class="btn btn-action btn-edit btn-sm"
+                                                                href="{{ route('setting.access.role.view', ['id' => $role->id]) }}">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-action btn-delete btn-sm"
+                                                                data-confirm='ลบบทบาท "{{$role->name}}" หรือไม่?' href="#"
+                                                                data-id="{{$role->id}}"
+                                                                data-delete-route="{{ route('setting.access.role.delete', ['id' => '__id__']) }}"
+                                                                data-message="บทบาท">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

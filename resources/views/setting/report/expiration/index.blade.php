@@ -58,7 +58,7 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive" id="table_container">
+                                    <div class="col-sm-12" id="table_container">
                                     <div class="table-responsive">
                                             <table class="table table-borderless text-nowrap dataTable dtr-inline"
                                                 id="userTable">

@@ -103,21 +103,23 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive" id="table_container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>รายการล่วงเวลา</th>
-                                                    <th>วันที่</th>
-                                                    <th>ผู้อนุมัติเอกสาร</th>
-                                                    <th>สถานะ</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                    <div class="col-sm-12" id="table_container">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>รายการล่วงเวลา</th>
+                                                        <th>วันที่</th>
+                                                        <th>ผู้อนุมัติเอกสาร</th>
+                                                        <th>สถานะ</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

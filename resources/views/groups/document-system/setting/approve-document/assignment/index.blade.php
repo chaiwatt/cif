@@ -79,38 +79,40 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>รหัสพนักงาน</th>
-                                                    <th>ชื่อ-สกุล</th>
-                                                    <th>แผนก</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($approver->users as $key => $user)
-                                                <tr>
-                                                    <td>{{$key+1}}</td>
-                                                    <td>{{$user->employee_no}}</td>
-                                                    <td>{{$user->name}} {{$user->lastname}}</td>
-                                                    <td>{{$user->company_department->name}}</td>
-                                                    <td class="text-end">
-                                                        <form
-                                                            action="{{ route('groups.document-system.setting.approve-document.assignment.delete', ['approver_id' => $approver->id, 'user_id' => $user->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-action btn-delete btn-sm" type="submit"><i
-                                                                    class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>รหัสพนักงาน</th>
+                                                        <th>ชื่อ-สกุล</th>
+                                                        <th>แผนก</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($approver->users as $key => $user)
+                                                    <tr>
+                                                        <td>{{$key+1}}</td>
+                                                        <td>{{$user->employee_no}}</td>
+                                                        <td>{{$user->name}} {{$user->lastname}}</td>
+                                                        <td>{{$user->company_department->name}}</td>
+                                                        <td class="text-end">
+                                                            <form
+                                                                action="{{ route('groups.document-system.setting.approve-document.assignment.delete', ['approver_id' => $approver->id, 'user_id' => $user->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-action btn-delete btn-sm" type="submit"><i
+                                                                        class="fas fa-trash"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -49,49 +49,51 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>ตำแหน่ง</th>
-                                                <th>จำนวน</th>
-                                                <th>ระยะเวลาการรับสมัคร</th>
-                                                <th>สถานะเปิดรับสมัคร</th>
-                                                <th style="width: 120px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($applicationNews as $applicationNew)
-                                            <tr>
-                                                <td>{{$applicationNew->title}}</td>
-                                                <td>{{$applicationNew->amount_apply}}</td>
-                                                <td>{{ \Jenssegers\Date\Date::parse($applicationNew->start_date)->format('d M Y') }} - {{ \Jenssegers\Date\Date::parse($applicationNew->end_date)->format('d M Y') }}</td>
-                                                <td>
-                                                    @if ($applicationNew->status == 1)
-                                                    แสดง
-                                                    @elseif($applicationNew->status == 2)
-                                                    ไม่แสดง
-                                                    @endif
-                                                </td>
-                                                <td class="text-end">
-                                                    <a href="#" data-bs-target="#preview-{{ $applicationNew->id }}" data-bs-toggle="modal" class="text-primary">Preview</a>
-                                                    <a class="btn btn-action btn-sm btn-edit"
-                                                        href="{{route('groups.job-application-system.job-application.list.view',['id' => $applicationNew->id ])}}"><i
-                                                            class="fas fa-pencil-alt"></i></a>
-                                                    @if ($permission->delete == true)
-                                                    <a class="btn btn-action btn-delete btn-sm"
-                                                        data-confirm='ลบข่าวสมัครงาน"{{$applicationNew->name}}" หรือไม่?'
-                                                        href="#" data-id="{{$applicationNew->id}}"
-                                                        data-delete-route="{{ route('groups.job-application-system.job-application.list.delete', ['id' => '__id__']) }}"
-                                                        data-message="ข่าวสมัครงาน">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>ตำแหน่ง</th>
+                                                    <th>จำนวน</th>
+                                                    <th>ระยะเวลาการรับสมัคร</th>
+                                                    <th>สถานะเปิดรับสมัคร</th>
+                                                    <th style="width: 120px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($applicationNews as $applicationNew)
+                                                <tr>
+                                                    <td>{{$applicationNew->title}}</td>
+                                                    <td>{{$applicationNew->amount_apply}}</td>
+                                                    <td>{{ \Jenssegers\Date\Date::parse($applicationNew->start_date)->format('d M Y') }} - {{ \Jenssegers\Date\Date::parse($applicationNew->end_date)->format('d M Y') }}</td>
+                                                    <td>
+                                                        @if ($applicationNew->status == 1)
+                                                        แสดง
+                                                        @elseif($applicationNew->status == 2)
+                                                        ไม่แสดง
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <a href="#" data-bs-target="#preview-{{ $applicationNew->id }}" data-bs-toggle="modal" class="text-primary">Preview</a>
+                                                        <a class="btn btn-action btn-sm btn-edit"
+                                                            href="{{route('groups.job-application-system.job-application.list.view',['id' => $applicationNew->id ])}}"><i
+                                                                class="fas fa-pencil-alt"></i></a>
+                                                        @if ($permission->delete == true)
+                                                        <a class="btn btn-action btn-delete btn-sm"
+                                                            data-confirm='ลบข่าวสมัครงาน"{{$applicationNew->name}}" หรือไม่?'
+                                                            href="#" data-id="{{$applicationNew->id}}"
+                                                            data-delete-route="{{ route('groups.job-application-system.job-application.list.delete', ['id' => '__id__']) }}"
+                                                            data-message="ข่าวสมัครงาน">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

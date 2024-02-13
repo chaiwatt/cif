@@ -61,22 +61,24 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th class="text-center" style="width: 150px">ตรวจสอบ</th>
-                                                <th style="width: 200px">วันที่ผิดพลาด</th>
-                                                <th style="width: 200px">รหัสพนักงาน</th>
-                                                <th>ชื่อ-สกุล</th>
-                                                <th>แผนก</th>
-                                                <th class="text-end" style="width: 120px">แก้ไข</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th class="text-center" style="width: 150px">ตรวจสอบ</th>
+                                                    <th style="width: 200px">วันที่ผิดพลาด</th>
+                                                    <th style="width: 200px">รหัสพนักงาน</th>
+                                                    <th>ชื่อ-สกุล</th>
+                                                    <th>แผนก</th>
+                                                    <th class="text-end" style="width: 120px">แก้ไข</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

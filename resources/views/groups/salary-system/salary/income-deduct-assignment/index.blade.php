@@ -4,7 +4,7 @@
 <div>
     <div>
         <div class="container-fluid">
-            <div class="table-borderless text-nowrap">
+            <div class="title-header">
                 <div>
                     <h3 class="m-0">รายการพนักงาน</h3>
                 </div>

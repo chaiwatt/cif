@@ -33,39 +33,41 @@
                                 method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive" id="table_container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th style="width: 120px">
-                                                        <div class="icheck-primary d-inline">
-                                                            <input type="checkbox" id="select_all" checked>
-                                                            <label for="select_all"></label>
-                                                        </div>
-                                                    </th>
-                                                    <th>ชื่อตารางทำงาน</th>
-                                                    <th>ปีตารางทำงาน</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($workSchedules as $workSchedule)
-                                                <tr>
-                                                    <td>
-                                                        <div class="icheck-primary d-inline">
-                                                            <input name="workSchedules[]" type="checkbox"
-                                                                class="work-schedule-checkbox"
-                                                                id="checkboxPrimary{{$workSchedule->id}}"
-                                                                value="{{$workSchedule->id}}" {{
-                                                                $workSchedule->shouldUncheck() ? '' : 'checked' }}>
-                                                            <label for="checkboxPrimary{{$workSchedule->id}}"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{$workSchedule->name}}</td>
-                                                    <td>{{$workSchedule->year}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    <div class="col-sm-12" id="table_container">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th style="width: 120px">
+                                                            <div class="icheck-primary d-inline">
+                                                                <input type="checkbox" id="select_all" checked>
+                                                                <label for="select_all"></label>
+                                                            </div>
+                                                        </th>
+                                                        <th>ชื่อตารางทำงาน</th>
+                                                        <th>ปีตารางทำงาน</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($workSchedules as $workSchedule)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="icheck-primary d-inline">
+                                                                <input name="workSchedules[]" type="checkbox"
+                                                                    class="work-schedule-checkbox"
+                                                                    id="checkboxPrimary{{$workSchedule->id}}"
+                                                                    value="{{$workSchedule->id}}" {{
+                                                                    $workSchedule->shouldUncheck() ? '' : 'checked' }}>
+                                                                <label for="checkboxPrimary{{$workSchedule->id}}"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{$workSchedule->name}}</td>
+                                                        <td>{{$workSchedule->year}}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 

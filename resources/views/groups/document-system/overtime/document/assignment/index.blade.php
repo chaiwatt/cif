@@ -68,45 +68,47 @@
                                 <div class="row">
                                     <input name="overtimeId" id="overtimeId" value="{{$overtime->id}}" type="text"
                                         hidden>
-                                    <div class="col-sm-12 table-responsive">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>รหัสพนักงาน</th>
-                                                    <th>ชื่อ-สกุล</th>
-                                                    <th>แผนก</th>
-                                                    <th style="width: 250px">จำนวนชั่วโมง</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($users as $key => $user)
-                                                <tr>
-                                                    <td>{{$user->employee_no}}</td>
-                                                    <td>{{$user->name}}
-                                                        {{$user->lastname}}</td>
-                                                    <td>{{$user->company_department->name}}</td>
-                                                    <td>
-                                                        <div class="form-group mb-0">
-                                                            <input type="text" name="hour" id="hour"
-                                                                value="{{$user->getOvertimeHour($overtime->id)}}"
-                                                                class="form-control integer" data-user="{{$user->id}}">
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <form
-                                                            action="{{ route('groups.document-system.overtime.approval.assignment.delete', ['overtime_id' => $overtime->id, 'user_id' => $user->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-action btn-delete btn-sm" type="submit"><i
-                                                                    class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>รหัสพนักงาน</th>
+                                                        <th>ชื่อ-สกุล</th>
+                                                        <th>แผนก</th>
+                                                        <th style="width: 250px">จำนวนชั่วโมง</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($users as $key => $user)
+                                                    <tr>
+                                                        <td>{{$user->employee_no}}</td>
+                                                        <td>{{$user->name}}
+                                                            {{$user->lastname}}</td>
+                                                        <td>{{$user->company_department->name}}</td>
+                                                        <td>
+                                                            <div class="form-group mb-0">
+                                                                <input type="text" name="hour" id="hour"
+                                                                    value="{{$user->getOvertimeHour($overtime->id)}}"
+                                                                    class="form-control integer" data-user="{{$user->id}}">
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <form
+                                                                action="{{ route('groups.document-system.overtime.approval.assignment.delete', ['overtime_id' => $overtime->id, 'user_id' => $user->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-action btn-delete btn-sm" type="submit"><i
+                                                                        class="fas fa-trash"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

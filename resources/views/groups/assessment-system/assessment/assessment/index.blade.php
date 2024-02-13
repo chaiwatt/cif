@@ -40,30 +40,32 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>การประเมิน</th>
-                                                <th>จุดประสงค์</th>
-                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($assessmentGroups as $assessmentGroup)
-                                            <td>{{$assessmentGroup->name}}</td>
-                                            <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
-                                            <td class="text-end">
-                                                <a class="btn btn-user btn-action btn-sm"
-                                                    href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">
-                                                    <i class="fas fa-users"></i>
-                                                </a>
-                                            </td>
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>การประเมิน</th>
+                                                    <th>จุดประสงค์</th>
+                                                    <th class="text-end" style="width: 120px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($assessmentGroups as $assessmentGroup)
+                                                <td>{{$assessmentGroup->name}}</td>
+                                                <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
+                                                <td class="text-end">
+                                                    <a class="btn btn-user btn-action btn-sm"
+                                                        href="{{route('groups.assessment-system.assessment.assessment.assignment',['id' => $assessmentGroup->id])}}">
+                                                        <i class="fas fa-users"></i>
+                                                    </a>
+                                                </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

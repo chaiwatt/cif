@@ -35,43 +35,45 @@
                                 เพิ่มกลุ่มการประเมิน
                             </a>
                         </div>
-                        <div
+                        <div>
                             <div class="row">
                                 <div class="col-sm-12" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>กลุ่มการประเมิน</th>
-                                                <th>จุดประสงค์</th>
-                                                <th class="text-end" style="width: 150px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($assessmentGroups as $assessmentGroup)
-                                            <td>{{$assessmentGroup->name}}</td>
-                                            <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
-                                            <td class="text-end">
-                                                <a class="btn btn-action btn-links btn-sm"
-                                                    href="{{route('groups.assessment-system.setting.assessment-group.assignment',['id' => $assessmentGroup->id])}}">
-                                                    <i class="fas fa-link"></i>
-                                                </a>
-                                                <a class="btn btn-action btn-edit btn-sm"
-                                                    href="{{route('groups.assessment-system.setting.assessment-group.view',['id' => $assessmentGroup->id])}}">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <a class="btn btn-action btn-delete btn-sm"
-                                                    data-confirm='ลบกลุ่มการประเมิน "{{$assessmentGroup->name}}" หรือไม่?'
-                                                    href="#" data-id="{{$assessmentGroup->id}}"
-                                                    data-delete-route="{{ route('groups.assessment-system.setting.assessment-group.delete', ['id' => '__id__']) }}"
-                                                    data-message="กลุ่มการประเมิน">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>กลุ่มการประเมิน</th>
+                                                    <th>จุดประสงค์</th>
+                                                    <th class="text-end" style="width: 150px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($assessmentGroups as $assessmentGroup)
+                                                <td>{{$assessmentGroup->name}}</td>
+                                                <td>{{$assessmentGroup->assessmentPurpose->name}}</td>
+                                                <td class="text-end">
+                                                    <a class="btn btn-action btn-links btn-sm"
+                                                        href="{{route('groups.assessment-system.setting.assessment-group.assignment',['id' => $assessmentGroup->id])}}">
+                                                        <i class="fas fa-link"></i>
+                                                    </a>
+                                                    <a class="btn btn-action btn-edit btn-sm"
+                                                        href="{{route('groups.assessment-system.setting.assessment-group.view',['id' => $assessmentGroup->id])}}">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <a class="btn btn-action btn-delete btn-sm"
+                                                        data-confirm='ลบกลุ่มการประเมิน "{{$assessmentGroup->name}}" หรือไม่?'
+                                                        href="#" data-id="{{$assessmentGroup->id}}"
+                                                        data-delete-route="{{ route('groups.assessment-system.setting.assessment-group.delete', ['id' => '__id__']) }}"
+                                                        data-message="กลุ่มการประเมิน">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

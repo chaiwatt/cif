@@ -43,39 +43,41 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>ชื่อกลุ่มทำงาน</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($groups as $item)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{$item->group->name}}</td>
-                                                    <td class="text-end">
-                                                        <a class="btn btn-action btn-links btn-sm"
-                                                            id="un_assignment_module_button"
-                                                            data-id="{{$item->group->id}}" data-role="{{$role->id}}">
-                                                            <i class="fas fa-link"></i>
-                                                        </a>
-                                                        <a class="btn btn-action btn-delete btn-sm"
-                                                            data-confirm='ลบกลุ่มทำงาน "{{$item->group->name}}" หรือไม่?'
-                                                            href="#" data-id="{{$item->group->id}}"
-                                                            data-role="{{$role->id}}"
-                                                            data-delete-route="{{ route('setting.access.assignment.group-module.delete', ['roleId' => '__roleId__', 'groupId' =>'__groupId__'])}}"
-                                                            data-message="กลุ่มทำงาน">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>ชื่อกลุ่มทำงาน</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($groups as $item)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{$item->group->name}}</td>
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-links btn-sm"
+                                                                id="un_assignment_module_button"
+                                                                data-id="{{$item->group->id}}" data-role="{{$role->id}}">
+                                                                <i class="fas fa-link"></i>
+                                                            </a>
+                                                            <a class="btn btn-action btn-delete btn-sm"
+                                                                data-confirm='ลบกลุ่มทำงาน "{{$item->group->name}}" หรือไม่?'
+                                                                href="#" data-id="{{$item->group->id}}"
+                                                                data-role="{{$role->id}}"
+                                                                data-delete-route="{{ route('setting.access.assignment.group-module.delete', ['roleId' => '__roleId__', 'groupId' =>'__groupId__'])}}"
+                                                                data-message="กลุ่มทำงาน">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

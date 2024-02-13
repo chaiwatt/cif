@@ -9,7 +9,7 @@
                     <h3 class="m-0">เพิ่มรายการล่วงเวลา</h3>
                 </div>
                 <div aria-label="breadcrumb">
-                    <ol class="breadcrumb float-sm-right">
+                    <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a
                                 href="{{route('groups.document-system.overtime.document')}}">ล่วงเวลา</a>
                         </li>

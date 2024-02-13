@@ -1,12 +1,12 @@
-<table class="table table-bordered table-striped dataTable dtr-inline">
-    <thead>
+<table class="table table-borderless text-nowrap dataTable dtr-inline">
+    <thead class="border-bottom">
         <tr>
             <th style="width:70px">เลือก</th>
             <th>วันที่</th>
             <th>รายการล่วงเวลา</th>
             <th>แผนก</th>
             <th class="text-center">มอบหมาย</th>
-            <th class="text-right">เพิ่มเติม</th>
+            <th class="text-end">เพิ่มเติม</th>
         </tr>
     </thead>
     <tbody>
@@ -36,17 +36,17 @@
             <td class="text-center">
                 {{count($overtime->overtimeDetails()->with('user')->get()->pluck('user')->unique())}}
             </td>
-            <td class="text-right">
-                <a class="btn btn-info btn-sm"
+            <td class="text-end">
+                <a class="btn btn-action btn-links btn-sm"
                     href="{{route('groups.document-system.overtime.approval.assignment.download',['id' => $overtime->id])}}">
                     <i class="fas fa-download"></i>
                 </a>
-                <a class="btn btn-primary btn-sm"
+                <a class="btn btn-user btn-action btn-sm"
                     href="{{ route('groups.document-system.overtime.approval.assignment', ['id' => $overtime->id]) }}">
                     <i class="fas fa-link"></i>
                 </a>
                 @if ($overtime->status == 0)
-                <a class="btn btn-danger btn-sm" data-confirm='ลบรายการล่วงเวลา "{{$overtime->name}}" หรือไม่?' href="#"
+                <a class="btn btn-delete btn-action btn-sm" data-confirm='ลบรายการล่วงเวลา "{{$overtime->name}}" หรือไม่?' href="#"
                     data-id="{{$overtime->id}}"
                     data-delete-route="{{ route('groups.document-system.overtime.document.delete', ['id' => '__id__']) }}"
                     data-message="รายการล่วงเวลา">

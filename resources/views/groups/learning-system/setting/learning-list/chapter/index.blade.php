@@ -49,42 +49,44 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>หัวข้อการเรียนรู้</th>
-                                                {{-- <th>วันที่เพิ่ม</th> --}}
-                                                <th class="text-end" style="width: 200px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($lesson->chapters as $chapter)
-                                            <tr>
-                                                <td>{{$chapter->name}}</td>
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>หัวข้อการเรียนรู้</th>
+                                                    {{-- <th>วันที่เพิ่ม</th> --}}
+                                                    <th class="text-end" style="width: 200px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($lesson->chapters as $chapter)
+                                                <tr>
+                                                    <td>{{$chapter->name}}</td>
 
-                                                <td class="text-end">
-                                                    <a class="btn btn-action btn-sm btn-links "
-                                                        href="{{route('groups.learning-system.setting.learning-list.chapter.topic',['id' => $chapter->id])}}"><i
-                                                            class="fas fa-link"></i></a>
-                                                    <a class="btn btn-action btn-sm btn-edit "
-                                                        href="{{route('groups.learning-system.setting.learning-list.chapter.view',['id' => $lesson->id ])}}"><i
-                                                            class="fas fa-pencil-alt"></i></a>
-                                                    @if ($permission->delete == true)
-                                                    <a class="btn btn-action btn-delete btn-sm"
-                                                        data-confirm='ลบหัวข้อการเรียนรู้ "{{$chapter->name}}" หรือไม่?'
-                                                        href="#" data-id="{{$chapter->id}}"
-                                                        data-delete-route="{{ route('groups.learning-system.setting.learning-list.chapter.delete', ['id' => '__id__']) }}"
-                                                        data-message="หัวข้อการเรียนรู้">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                    @endif
-                                                </td>
+                                                    <td class="text-end">
+                                                        <a class="btn btn-action btn-sm btn-links "
+                                                            href="{{route('groups.learning-system.setting.learning-list.chapter.topic',['id' => $chapter->id])}}"><i
+                                                                class="fas fa-link"></i></a>
+                                                        <a class="btn btn-action btn-sm btn-edit "
+                                                            href="{{route('groups.learning-system.setting.learning-list.chapter.view',['id' => $lesson->id ])}}"><i
+                                                                class="fas fa-pencil-alt"></i></a>
+                                                        @if ($permission->delete == true)
+                                                        <a class="btn btn-action btn-delete btn-sm"
+                                                            data-confirm='ลบหัวข้อการเรียนรู้ "{{$chapter->name}}" หรือไม่?'
+                                                            href="#" data-id="{{$chapter->id}}"
+                                                            data-delete-route="{{ route('groups.learning-system.setting.learning-list.chapter.delete', ['id' => '__id__']) }}"
+                                                            data-message="หัวข้อการเรียนรู้">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        @endif
+                                                    </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

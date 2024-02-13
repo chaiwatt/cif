@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="income-deducy-tab" role="tabpanel"
                                     aria-labelledby="income-deducy-tab-tab">
-                                    <div class=" table-responsive">
+                                    <div class="table-responsive">
                                         <table class="table table-borderless text-nowrap dataTable dtr-inline">
                                             @php
                                             $paymentDate = \Carbon\Carbon::parse($paydayDetail->payment_date);

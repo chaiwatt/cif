@@ -71,68 +71,70 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>รหัสพนักงาน</th>
-                                                <th>ชื่อ-สกุล</th>
-                                                <th>แผนก</th>
-                                                <th class="text-center">ชม.งาน</th>
-                                                <th class="text-center">มาสาย(ชม.)</th>
-                                                <th class="text-center">กลับก่อน(ชม.)</th>
-                                                <th class="text-center">วันลา</th>
-                                                <th class="text-center">ขาดงาน</th>
-                                                <th class="text-center">OT(ชม.)</th>
-                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- {{$paydayDetail->id}} --}}
-                                            @foreach ($users as $user)
-                                            @php
-                                            $userSummary = $user->salarySummary($paydayDetail->id);
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>รหัสพนักงาน</th>
+                                                    <th>ชื่อ-สกุล</th>
+                                                    <th>แผนก</th>
+                                                    <th class="text-center">ชม.งาน</th>
+                                                    <th class="text-center">มาสาย(ชม.)</th>
+                                                    <th class="text-center">กลับก่อน(ชม.)</th>
+                                                    <th class="text-center">วันลา</th>
+                                                    <th class="text-center">ขาดงาน</th>
+                                                    <th class="text-center">OT(ชม.)</th>
+                                                    <th class="text-end" style="width: 120px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{-- {{$paydayDetail->id}} --}}
+                                                @foreach ($users as $user)
+                                                @php
+                                                $userSummary = $user->salarySummary($paydayDetail->id);
 
-                                            @endphp
-                                            <tr>
-                                                <td>
-                                                    @if (count($user->getMissingDate($paydayDetail->id)) > 0)
-                                                    <i class="fas fa-times-circle text-danger"></i>
-                                                    @else
-                                                    <i class="fas fa-check-circle text-success"></i>
-                                                    @endif
-                                                    {{ $user->employee_no }}
+                                                @endphp
+                                                <tr>
+                                                    <td>
+                                                        @if (count($user->getMissingDate($paydayDetail->id)) > 0)
+                                                        <i class="fas fa-times-circle text-danger"></i>
+                                                        @else
+                                                        <i class="fas fa-check-circle text-success"></i>
+                                                        @endif
+                                                        {{ $user->employee_no }}
 
-                                                </td>
-                                                <td>{{ $user->prefix->name }}{{
-                                                    $user->name }} {{
-                                                    $user->lastname }} </td>
-                                                <td>{{$user->company_department->name}}</td>
-                                                <td class="text-center">{{$userSummary['workHour']}}</td>
-                                                <td class="text-center">{{$userSummary['lateHour']}}</td>
-                                                <td class="text-center">{{$userSummary['earlyHour']}}</td>
-                                                <td class="text-center">{{$userSummary['leaveCountSum']}}</td>
-                                                <td class="text-center">{{$userSummary['absentCountSum']}}</td>
-                                                <td class="text-center">{{$userSummary['overTime']}}
+                                                    </td>
+                                                    <td>{{ $user->prefix->name }}{{
+                                                        $user->name }} {{
+                                                        $user->lastname }} </td>
+                                                    <td>{{$user->company_department->name}}</td>
+                                                    <td class="text-center">{{$userSummary['workHour']}}</td>
+                                                    <td class="text-center">{{$userSummary['lateHour']}}</td>
+                                                    <td class="text-center">{{$userSummary['earlyHour']}}</td>
+                                                    <td class="text-center">{{$userSummary['leaveCountSum']}}</td>
+                                                    <td class="text-center">{{$userSummary['absentCountSum']}}</td>
+                                                    <td class="text-center">{{$userSummary['overTime']}}
 
-                                                    @if ($userSummary['exceedOvertime'] > 0)
-                                                    (ส่วนเกิน {{$userSummary['exceedOvertime']}})
-                                                    @endif
-                                                </td>
-                                                </td>
-                                                <td class="text-end">
-                                                    <a class="btn btn-sm btn-primary btn-user" data-id="{{$user->id}}"
-                                                        data-startDate="{{$paydayDetail->start_date}}"
-                                                        data-endDate="{{$paydayDetail->end_date}}"
-                                                        href="{{route('groups.salary-system.salary.calculation-extra-list.calculation.information',['start_date' => $paydayDetail->start_date,'end_date' => $paydayDetail->end_date,'user_id' => $user->id,'payday_detail_id' => $paydayDetail->id] )}}"><i
-                                                            class="far fa-list-alt"></i></a>
-                                                </td>
+                                                        @if ($userSummary['exceedOvertime'] > 0)
+                                                        (ส่วนเกิน {{$userSummary['exceedOvertime']}})
+                                                        @endif
+                                                    </td>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <a class="btn btn-sm btn-primary btn-user" data-id="{{$user->id}}"
+                                                            data-startDate="{{$paydayDetail->start_date}}"
+                                                            data-endDate="{{$paydayDetail->end_date}}"
+                                                            href="{{route('groups.salary-system.salary.calculation-extra-list.calculation.information',['start_date' => $paydayDetail->start_date,'end_date' => $paydayDetail->end_date,'user_id' => $user->id,'payday_detail_id' => $paydayDetail->id] )}}"><i
+                                                                class="far fa-list-alt"></i></a>
+                                                    </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    {{$users->links()}}
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        {{$users->links()}}
+                                    </div>
                                 </div>
                             </div>
                         </div>

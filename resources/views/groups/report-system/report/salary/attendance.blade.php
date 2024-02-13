@@ -35,40 +35,43 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>แผนก</th>
-                                                {{-- <th class="text-center">พนักงาน</th> --}}
-                                                <th class="text-center">ขาดงาน</th>
-                                                <th class="text-center">ลางาน</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($companyDepartments as $companyDepartment)
-                                            @php
-                                            $salarySummary = $companyDepartment->salarySummary($paydayDetail->id);
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>แผนก</th>
+                                                    {{-- <th class="text-center">พนักงาน</th> --}}
+                                                    <th class="text-center">ขาดงาน</th>
+                                                    <th class="text-center">ลางาน</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($companyDepartments as $companyDepartment)
+                                                @php
+                                                $salarySummary = $companyDepartment->salarySummary($paydayDetail->id);
 
-                                            if ($salarySummary) {
-                                            $sum_leave = $salarySummary->sum_leave == 0 ? '' :
-                                            $salarySummary->sum_leave;
+                                                if ($salarySummary) {
+                                                $sum_leave = $salarySummary->sum_leave == 0 ? '' :
+                                                $salarySummary->sum_leave;
 
-                                            $sum_absence = $salarySummary->sum_absence == 0 ? '' :
-                                            $salarySummary->sum_absence;
+                                                $sum_absence = $salarySummary->sum_absence == 0 ? '' :
+                                                $salarySummary->sum_absence;
 
-                                            }
+                                                }
 
-                                            @endphp
-                                            <tr>
-                                                <td>{{$companyDepartment->name}}</td>
-                                                {{-- <td class="text-center">{{$employee}}</td> --}}
-                                                <td class="text-center">{{@$sum_leave}}</td>
-                                                <td class="text-center">{{@$sum_absence}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                @endphp
+                                                <tr>
+                                                    <td>{{$companyDepartment->name}}</td>
+                                                    {{-- <td class="text-center">{{$employee}}</td> --}}
+                                                    <td class="text-center">{{@$sum_leave}}</td>
+                                                    <td class="text-center">{{@$sum_absence}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>

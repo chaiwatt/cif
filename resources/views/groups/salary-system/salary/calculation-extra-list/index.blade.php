@@ -62,58 +62,60 @@
                                 <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}"
                                     id="custom-tabs-{{$payday->id}}" role="tabpanel"
                                     aria-labelledby="custom-tabs-{{$payday->id}}-tab">
-                                    <table class="table table-borderless text-nowrap">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>ต้นงวด</th>
-                                                <th>ปลายงวด</th>
-                                                <th>การคำนวน</th>
-                                                <th style="width: 100px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($payday->paydayDetails as $key => $paydayDetail)
-                                            @php
-                                            $startDate = \Carbon\Carbon::parse($paydayDetail->start_date);
-                                            $endDate = \Carbon\Carbon::parse($paydayDetail->end_date);
-                                            $currentMonth = \Carbon\Carbon::now()->month;
-                                            $paymentDate = \Carbon\Carbon::parse($paydayDetail->payment_date);
-                                            $currentDate = \Carbon\Carbon::now();
-                                            @endphp
-
-                                            @if ($startDate->month <= $currentMonth) <tr>
-                                                <td>{{ $startDate->format('d/m/Y') }}
-                                                    @if ($paymentDate->gte($currentDate) &&
-                                                    $currentDate->gte($endDate))
-                                                    <i class="fas fa-fire-alt text-danger"></i>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $endDate->format('d/m/Y') }}</td>
-                                                <td>
-                                                    @if ($currentDate->gte($paymentDate))
-                                                    <span class="badge bg-gray rouned-3" style="padding: 8px 12px">หมดเวลา</span>
-                                                    @elseif($paymentDate->gte($currentDate) &&
-                                                    $currentDate->gte($endDate))
-                                                    <span class="badge bg-success rouned-3" style="padding: 8px 12px">อยู่ในช่วงทำรายการ</span>
-                                                    @else
-                                                    <span class="badge bg-warning rouned-3" style="padding: 8px 12px">รอบต่อไป</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <a href="{{route('groups.salary-system.salary.calculation-extra-list.calculation',['id' => $paydayDetail->id])}}"
-                                                        class="btn btn-action btn-calculator">
-                                                        <i class="fas fa-calculator"></i>
-                                                    </a>
-                                                    <a href="{{route('groups.salary-system.salary.calculation-extra-list.summary',['id' => $paydayDetail->id])}}"
-                                                        class="btn btn-action btn-edit">
-                                                        <i class="fas fa-chart-bar"></i>
-                                                    </a>
-                                                </td>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>ต้นงวด</th>
+                                                    <th>ปลายงวด</th>
+                                                    <th>การคำนวน</th>
+                                                    <th style="width: 100px">เพิ่มเติม</th>
                                                 </tr>
-                                                @endif
-                                                @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($payday->paydayDetails as $key => $paydayDetail)
+                                                @php
+                                                $startDate = \Carbon\Carbon::parse($paydayDetail->start_date);
+                                                $endDate = \Carbon\Carbon::parse($paydayDetail->end_date);
+                                                $currentMonth = \Carbon\Carbon::now()->month;
+                                                $paymentDate = \Carbon\Carbon::parse($paydayDetail->payment_date);
+                                                $currentDate = \Carbon\Carbon::now();
+                                                @endphp
+
+                                                @if ($startDate->month <= $currentMonth) <tr>
+                                                    <td>{{ $startDate->format('d/m/Y') }}
+                                                        @if ($paymentDate->gte($currentDate) &&
+                                                        $currentDate->gte($endDate))
+                                                        <i class="fas fa-fire-alt text-danger"></i>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $endDate->format('d/m/Y') }}</td>
+                                                    <td>
+                                                        @if ($currentDate->gte($paymentDate))
+                                                        <span class="badge bg-gray rouned-3" style="padding: 8px 12px">หมดเวลา</span>
+                                                        @elseif($paymentDate->gte($currentDate) &&
+                                                        $currentDate->gte($endDate))
+                                                        <span class="badge bg-success rouned-3" style="padding: 8px 12px">อยู่ในช่วงทำรายการ</span>
+                                                        @else
+                                                        <span class="badge bg-warning rouned-3" style="padding: 8px 12px">รอบต่อไป</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('groups.salary-system.salary.calculation-extra-list.calculation',['id' => $paydayDetail->id])}}"
+                                                            class="btn btn-action btn-calculator">
+                                                            <i class="fas fa-calculator"></i>
+                                                        </a>
+                                                        <a href="{{route('groups.salary-system.salary.calculation-extra-list.summary',['id' => $paydayDetail->id])}}"
+                                                            class="btn btn-action btn-edit">
+                                                            <i class="fas fa-chart-bar"></i>
+                                                        </a>
+                                                    </td>
+                                                    </tr>
+                                                    @endif
+                                                    @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 @endforeach
                             </div>

@@ -36,54 +36,56 @@
                         <div>
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 table-responsive" id="table_container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>รหัส</th>
-                                                    <th>สายอนุมัติ</th>
-                                                    <th>แผนก</th>
-                                                    <th>ประเภทเอกสาร</th>
-                                                    <th>ผู้จัดการ</th>
-                                                    <th>หัวหน้างาน</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($approvers as $key=> $approver)
-                                                <tr>
-                                                    <td>{{$approver->code}}</td>
-                                                    <td>{{$approver->name}}</td>
-                                                    <td>{{$approver->company_department->name}}</td>
-                                                    <td>{{$approver->document_type->name}}</td>
-                                                    <td>{{$approver->user->name}} {{$approver->user->lastname}}</td>
-                                                    <td>
-                                                        @foreach ($approver->authorizedUsers as $user)
-                                                        {{$user->name}} {{$user->lastname}} <br>
-                                                        @endforeach
-                                                    </td>
-                                                    <td class="text-end">
+                                    <div class="col-sm-12" id="table_container">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>รหัส</th>
+                                                        <th>สายอนุมัติ</th>
+                                                        <th>แผนก</th>
+                                                        <th>ประเภทเอกสาร</th>
+                                                        <th>ผู้จัดการ</th>
+                                                        <th>หัวหน้างาน</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($approvers as $key=> $approver)
+                                                    <tr>
+                                                        <td>{{$approver->code}}</td>
+                                                        <td>{{$approver->name}}</td>
+                                                        <td>{{$approver->company_department->name}}</td>
+                                                        <td>{{$approver->document_type->name}}</td>
+                                                        <td>{{$approver->user->name}} {{$approver->user->lastname}}</td>
+                                                        <td>
+                                                            @foreach ($approver->authorizedUsers as $user)
+                                                            {{$user->name}} {{$user->lastname}} <br>
+                                                            @endforeach
+                                                        </td>
+                                                        <td class="text-end">
 
-                                                        <a class="btn btn-action btn-links btn-sm"
-                                                            href="{{route('groups.document-system.setting.approve-document.assignment.index',['id' => $approver->id])}}">
-                                                            <i class="fas fa-link"></i>
-                                                        </a>
-                                                        <a class="btn btn-action btn-edit btn-sm"
-                                                            href="{{route('groups.document-system.setting.approve-document.view',['id' => $approver->id])}}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a class="btn btn-action btn-delete btn-sm"
-                                                            data-confirm='ลบสายอนุมัติ "{{$approver->name}} {{$approver->lastname}}" หรือไม่?'
-                                                            href="#" data-id="{{$approver->id}}"
-                                                            data-delete-route="{{ route('groups.document-system.setting.approve-document.delete', ['id' => '__id__']) }}"
-                                                            data-message="สายอนุมัติ">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                            <a class="btn btn-action btn-links btn-sm"
+                                                                href="{{route('groups.document-system.setting.approve-document.assignment.index',['id' => $approver->id])}}">
+                                                                <i class="fas fa-link"></i>
+                                                            </a>
+                                                            <a class="btn btn-action btn-edit btn-sm"
+                                                                href="{{route('groups.document-system.setting.approve-document.view',['id' => $approver->id])}}">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-action btn-delete btn-sm"
+                                                                data-confirm='ลบสายอนุมัติ "{{$approver->name}} {{$approver->lastname}}" หรือไม่?'
+                                                                href="#" data-id="{{$approver->id}}"
+                                                                data-delete-route="{{ route('groups.document-system.setting.approve-document.delete', ['id' => '__id__']) }}"
+                                                                data-message="สายอนุมัติ">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

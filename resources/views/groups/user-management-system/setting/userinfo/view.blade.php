@@ -481,166 +481,168 @@
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-workschedule" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-workschedule-tab">
-                                    <div class="col-12 table-responsive">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th>รายการ</th>
-                                                    <th>รายละเอียด</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>รายการ</th>
+                                                        <th>รายละเอียด</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                                <tr>
-                                                    <td>ตารางการทำงานปัจจุบัน</td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            @php
-                                                            $workScheduleByCurrentMonth =
-                                                            $user->getWorkScheduleByCurrentMonth();
-                                                            $workScheduleId = $workScheduleByCurrentMonth ?
-                                                            $workScheduleByCurrentMonth->id : null;
-                                                            @endphp
+                                                    <tr>
+                                                        <td>ตารางการทำงานปัจจุบัน</td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                @php
+                                                                $workScheduleByCurrentMonth =
+                                                                $user->getWorkScheduleByCurrentMonth();
+                                                                $workScheduleId = $workScheduleByCurrentMonth ?
+                                                                $workScheduleByCurrentMonth->id : null;
+                                                                @endphp
 
-                                                            <select id="workScheduleId" class="form-control select2"
-                                                                style="width: 100%;">
-                                                                <option value="">==ไม่พบรายการ==</option>
-                                                                @foreach ($workSchedules as $workSchedule)
-                                                                <option value="{{ $workSchedule->id }}"
-                                                                    @if($workScheduleId !==null && $workSchedule->id ==
-                                                                    $workScheduleId)
-                                                                    selected @endif>
-                                                                    {{ $workSchedule->name }}
+                                                                <select id="workScheduleId" class="form-control select2"
+                                                                    style="width: 100%;">
+                                                                    <option value="">==ไม่พบรายการ==</option>
+                                                                    @foreach ($workSchedules as $workSchedule)
+                                                                    <option value="{{ $workSchedule->id }}"
+                                                                        @if($workScheduleId !==null && $workSchedule->id ==
+                                                                        $workScheduleId)
+                                                                        selected @endif>
+                                                                        {{ $workSchedule->name }}
+                                                                    </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-links btn-sm" id="update-workschedule">
+                                                                <i class="fas fa-save"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>รอบคำนวนเงินเดือน</td>
+                                                        <td>
+                                                            <select id="payday" class="form-control select2"
+                                                                style="width: 100%;" multiple>
+                                                                @foreach ($paydays as $payday)
+                                                                <option value="{{ $payday->id }}" {{ in_array($payday->id,
+                                                                    $user->paydays->pluck('id')->toArray()) ? 'selected' :
+                                                                    '' }}>
+                                                                    {{ $payday->name }}
                                                                 </option>
                                                                 @endforeach
                                                             </select>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a class="btn btn-action btn-links btn-sm" id="update-workschedule">
-                                                            <i class="fas fa-save"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>รอบคำนวนเงินเดือน</td>
-                                                    <td>
-                                                        <select id="payday" class="form-control select2"
-                                                            style="width: 100%;" multiple>
-                                                            @foreach ($paydays as $payday)
-                                                            <option value="{{ $payday->id }}" {{ in_array($payday->id,
-                                                                $user->paydays->pluck('id')->toArray()) ? 'selected' :
-                                                                '' }}>
-                                                                {{ $payday->name }}
-                                                            </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a class="btn btn-action btn-links btn-sm" id="update-payday">
-                                                            <i class="fas fa-save"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>ผู้อนุมัติล่วงเวลา</td>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                @php
-                                                                $selectedApproverId = null;
-                                                                $matchingApprover =
-                                                                $user->approvers->where('document_type_id', 2)->first();
-                                                                if ($matchingApprover) {
-                                                                $selectedApproverId = $matchingApprover->id;
-                                                                }
-                                                                @endphp
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-links btn-sm" id="update-payday">
+                                                                <i class="fas fa-save"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ผู้อนุมัติล่วงเวลา</td>
+                                                        <td>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    @php
+                                                                    $selectedApproverId = null;
+                                                                    $matchingApprover =
+                                                                    $user->approvers->where('document_type_id', 2)->first();
+                                                                    if ($matchingApprover) {
+                                                                    $selectedApproverId = $matchingApprover->id;
+                                                                    }
+                                                                    @endphp
 
-                                                                <select id="overtime-approver"
-                                                                    class="form-control select2" style="width: 100%;">
-                                                                    <option value="">==ไม่พบรายการ==</option>
-                                                                    @foreach ($approvers->where('document_type_id', 2)
-                                                                    as $approver)
-                                                                    <option value="{{ $approver->id }}"
-                                                                        @if($selectedApproverId !==null &&
-                                                                        $selectedApproverId==$approver->id)
-                                                                        selected
-                                                                        @endif >
-                                                                        {{ $approver->name }}
-                                                                    </option>
-                                                                    @endforeach
-                                                                </select>
+                                                                    <select id="overtime-approver"
+                                                                        class="form-control select2" style="width: 100%;">
+                                                                        <option value="">==ไม่พบรายการ==</option>
+                                                                        @foreach ($approvers->where('document_type_id', 2)
+                                                                        as $approver)
+                                                                        <option value="{{ $approver->id }}"
+                                                                            @if($selectedApproverId !==null &&
+                                                                            $selectedApproverId==$approver->id)
+                                                                            selected
+                                                                            @endif >
+                                                                            {{ $approver->name }}
+                                                                        </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <label class="mt-2" for="">ผู้อนุมัติ</label>
+                                                                    <ul id="overtime_authorized_container">
+                                                                        @foreach ($user->getAuthorizedUsers(2)
+                                                                        as $authoUser)
+                                                                        <li>{{$authoUser->name}} {{$authoUser->lastname}}
+                                                                        </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-12">
-                                                                <label class="mt-2" for="">ผู้อนุมัติ</label>
-                                                                <ul id="overtime_authorized_container">
-                                                                    @foreach ($user->getAuthorizedUsers(2)
-                                                                    as $authoUser)
-                                                                    <li>{{$authoUser->name}} {{$authoUser->lastname}}
-                                                                    </li>
-                                                                    @endforeach
-                                                                </ul>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-links btn-sm" id="update-overtime-approver">
+                                                                <i class="fas fa-save"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>เอกสารอนุมัติการลา</td>
+                                                        <td>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    @php
+                                                                    $selectedApproverId = null;
+                                                                    $matchingApprover =
+                                                                    $user->approvers->where('document_type_id', 1)->first();
+                                                                    if ($matchingApprover) {
+                                                                    $selectedApproverId = $matchingApprover->id;
+                                                                    }
+                                                                    @endphp
+
+                                                                    <select id="leave-approver" class="form-control select2"
+                                                                        style="width: 100%;">
+                                                                        <option value="">==ไม่พบรายการ==</option>
+                                                                        @foreach ($approvers->where('document_type_id', 1)
+                                                                        as $approver)
+                                                                        <option value="{{ $approver->id }}"
+                                                                            @if($selectedApproverId !==null &&
+                                                                            $selectedApproverId==$approver->id) selected
+                                                                            @endif >
+                                                                            {{ $approver->name }}
+                                                                        </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <label class="mt-2" for="">ผู้อนุมัติ</label>
+                                                                    <ul id="leave_authorized_container">
+                                                                        @foreach ($user->getAuthorizedUsers(1)
+                                                                        as $authoUser)
+                                                                        <li>{{$authoUser->name}} {{$authoUser->lastname}}
+                                                                        </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a class="btn btn-action btn-links btn-sm" id="update-overtime-approver">
-                                                            <i class="fas fa-save"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>เอกสารอนุมัติการลา</td>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                @php
-                                                                $selectedApproverId = null;
-                                                                $matchingApprover =
-                                                                $user->approvers->where('document_type_id', 1)->first();
-                                                                if ($matchingApprover) {
-                                                                $selectedApproverId = $matchingApprover->id;
-                                                                }
-                                                                @endphp
-
-                                                                <select id="leave-approver" class="form-control select2"
-                                                                    style="width: 100%;">
-                                                                    <option value="">==ไม่พบรายการ==</option>
-                                                                    @foreach ($approvers->where('document_type_id', 1)
-                                                                    as $approver)
-                                                                    <option value="{{ $approver->id }}"
-                                                                        @if($selectedApproverId !==null &&
-                                                                        $selectedApproverId==$approver->id) selected
-                                                                        @endif >
-                                                                        {{ $approver->name }}
-                                                                    </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label class="mt-2" for="">ผู้อนุมัติ</label>
-                                                                <ul id="leave_authorized_container">
-                                                                    @foreach ($user->getAuthorizedUsers(1)
-                                                                    as $authoUser)
-                                                                    <li>{{$authoUser->name}} {{$authoUser->lastname}}
-                                                                    </li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            </div>
-                                                        </div>
 
 
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a class="btn btn-action btn-links btn-sm" id="update-leave-approver">
-                                                            <i class="fas fa-save"></i>
-                                                        </a>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <a class="btn btn-action btn-links btn-sm" id="update-leave-approver">
+                                                                <i class="fas fa-save"></i>
+                                                            </a>
 
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -653,104 +655,111 @@
                                                 <i class="fas fa-cog"></i> ตั้งการเพิ่มวันลา
                                             </a>
                                         </h5>
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th style="width: 50%">ประเภท</th>
-                                                    <th>คงเหลือ</th>
-                                                    <th style="width: 100px" class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($userLeaves as $key =>$userLeave)
-                                                <tr>
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th style="width: 50%">ประเภท</th>
+                                                        <th>คงเหลือ</th>
+                                                        <th style="width: 100px" class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($userLeaves as $key =>$userLeave)
+                                                    <tr>
 
-                                                    <td>{{$userLeave->leaveType->name}}</td>
-                                                    <td>{{$userLeave->count}}</td>
-                                                    <td class="text-end">
+                                                        <td>{{$userLeave->leaveType->name}}</td>
+                                                        <td>{{$userLeave->count}}</td>
+                                                        <td class="text-end">
 
-                                                        <a class="btn btn-action btn-edit btn-sm btn-update-leave"
-                                                            data-id="{{$userLeave->id}}"
-                                                            data-count="{{$userLeave->count}}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
+                                                            <a class="btn btn-action btn-edit btn-sm btn-update-leave"
+                                                                data-id="{{$userLeave->id}}"
+                                                                data-count="{{$userLeave->count}}">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
 
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+
+                                        </div>
                                     </div>
 
-                                    <div class="col-12 table-responsive" id="leave-container">
+                                    <div class="col-12" id="leave-container">
                                         <h5 class="mx-3 mb-0">รายการลา</h5>
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    <th style="width: 50%">วันที่</th>
-                                                    <th>ประเภท</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($leaves as $key =>$leave)
-                                                <tr>
-                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
-                                                        $leave->from_date)->format('d/m/Y H:i')
-                                                        }} -
-                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
-                                                        $leave->to_date)->format('d/m/Y H:i')
-                                                        }}</td>
-                                                    <td>{{$leave->leaveType->name}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th style="width: 50%">วันที่</th>
+                                                        <th>ประเภท</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($leaves as $key =>$leave)
+                                                    <tr>
+                                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
+                                                            $leave->from_date)->format('d/m/Y H:i')
+                                                            }} -
+                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
+                                                            $leave->to_date)->format('d/m/Y H:i')
+                                                            }}</td>
+                                                        <td>{{$leave->leaveType->name}}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-diligence-allowance" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-diligence-allowance-tab">
                                     {{-- เบี้ยขยัน --}}
                                     {{-- $userDiligenceAllowances --}}
-                                    <div class="col-12 table-responsive" id="dilegence-allowance-container">
-                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                            <thead class="border-bottom">
-                                                <tr>
-                                                    {{-- <th>ระดับ</th> --}}
-                                                    <th>รอบจ่ายเงินเดือน</th>
-                                                    <th>เบี้ยขยัน</th>
-                                                    <th class="text-end">เพิ่มเติม</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($userDiligenceAllowances as $key
-                                                =>$userDiligenceAllowance)
-                                                <tr>
-                                                    <td>
-                                                        @if ($userDiligenceAllowance->paydayDetail->start_date != null
-                                                        && $userDiligenceAllowance->paydayDetail->end_date != null)
-                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                        $userDiligenceAllowance->paydayDetail->start_date)->format('d/m/Y')
-                                                        }} -
-                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                        $userDiligenceAllowance->paydayDetail->end_date)->format('d/m/Y')
-                                                        }}
-                                                        @endif
-                                                    </td>
-                                                    <td>{{$userDiligenceAllowance->diligenceAllowanceClassify->cost}}
-                                                    </td>
-                                                    <td class="text-end">
-                                                        @if ($loop->iteration == 2)
-                                                        <a class="btn btn-action btn-edit btn-sm btn-update-user-diligence-allowance"
-                                                            data-id="{{$userDiligenceAllowance->id}}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        @endif
+                                    <div class="col-12" id="dilegence-allowance-container">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        {{-- <th>ระดับ</th> --}}
+                                                        <th>รอบจ่ายเงินเดือน</th>
+                                                        <th>เบี้ยขยัน</th>
+                                                        <th class="text-end">เพิ่มเติม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($userDiligenceAllowances as $key
+                                                    =>$userDiligenceAllowance)
+                                                    <tr>
+                                                        <td>
+                                                            @if ($userDiligenceAllowance->paydayDetail->start_date != null
+                                                            && $userDiligenceAllowance->paydayDetail->end_date != null)
+                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                            $userDiligenceAllowance->paydayDetail->start_date)->format('d/m/Y')
+                                                            }} -
+                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                            $userDiligenceAllowance->paydayDetail->end_date)->format('d/m/Y')
+                                                            }}
+                                                            @endif
+                                                        </td>
+                                                        <td>{{$userDiligenceAllowance->diligenceAllowanceClassify->cost}}
+                                                        </td>
+                                                        <td class="text-end">
+                                                            @if ($loop->iteration == 2)
+                                                            <a class="btn btn-action btn-edit btn-sm btn-update-user-diligence-allowance"
+                                                                data-id="{{$userDiligenceAllowance->id}}">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            @endif
 
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-one-education" role="tabpanel"
@@ -765,36 +774,38 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12 table-responsive" id="education-container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>ระดับ</th>
-                                                        <th>สาขาวิชา</th>
-                                                        <th>ปีที่จบ</th>
-                                                        <th class="text-end">เพิ่มเติม</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->educations->sortBy('year') as $key =>$education)
-                                                    <tr>
-                                                        <td>{{$education->level}}</td>
-                                                        <td>{{$education->branch}}</td>
-                                                        <td>{{$education->year}}</td>
-                                                        <td class="text-end">
-                                                            <a class="btn btn-action btn-edit btn-sm btn-update-education"
-                                                                data-id="{{$education->id}}">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-education"
-                                                                data-id="{{$education->id}}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="col-12" id="education-container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>ระดับ</th>
+                                                            <th>สาขาวิชา</th>
+                                                            <th>ปีที่จบ</th>
+                                                            <th class="text-end">เพิ่มเติม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->educations->sortBy('year') as $key =>$education)
+                                                        <tr>
+                                                            <td>{{$education->level}}</td>
+                                                            <td>{{$education->branch}}</td>
+                                                            <td>{{$education->year}}</td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-action btn-edit btn-sm btn-update-education"
+                                                                    data-id="{{$education->id}}">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                                <a class="btn btn-action btn-delete btn-sm btn-delete-education"
+                                                                    data-id="{{$education->id}}">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -810,36 +821,38 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12 table-responsive" id="training-container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>หัวข้อ</th>
-                                                        <th>หน่วยงาน</th>
-                                                        <th>ปีที่ฝึกอบรม</th>
-                                                        <th class="text-end">เพิ่มเติม</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->trainings->sortBy('year') as $key =>$training)
-                                                    <tr>
-                                                        <td>{{$training->course}}</td>
-                                                        <td>{{$training->organizer}}</td>
-                                                        <td>{{$training->year}}</td>
-                                                        <td class="text-end">
-                                                            <a class="btn btn-action btn-edit btn-sm btn-update-training"
-                                                                data-id="{{$training->id}}">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-training"
-                                                                data-id="{{$training->id}}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="col-12" id="training-container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>หัวข้อ</th>
+                                                            <th>หน่วยงาน</th>
+                                                            <th>ปีที่ฝึกอบรม</th>
+                                                            <th class="text-end">เพิ่มเติม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->trainings->sortBy('year') as $key =>$training)
+                                                        <tr>
+                                                            <td>{{$training->course}}</td>
+                                                            <td>{{$training->organizer}}</td>
+                                                            <td>{{$training->year}}</td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-action btn-edit btn-sm btn-update-training"
+                                                                    data-id="{{$training->id}}">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                                <a class="btn btn-action btn-delete btn-sm btn-delete-training"
+                                                                    data-id="{{$training->id}}">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -855,41 +868,43 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12 table-responsive" id="position-histories-container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>วันที่ปรับ</th>
-                                                        <th>ตำแหน่ง</th>
-                                                        <th class="text-end">เพิ่มเติม</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->positionHistories->sortBy('adjust_date') as $key =>
-                                                    $positionHistory)
-                                                    <tr>
-                                                        <td>
-                                                            @if ($positionHistory->adjust_date != null)
-                                                            {{
-                                                            \Carbon\Carbon::createFromFormat('Y-m-d',$positionHistory->adjust_date)->format('d/m/Y')
-                                                            }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{$positionHistory->user_position->name}}</td>
-                                                        <td class="text-end">
-                                                            <a class="btn btn-edit btn-action btn-sm btn-update-position-history"
-                                                                data-id="{{$positionHistory->id}}">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-position-history"
-                                                                data-id="{{$positionHistory->id}}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="col-12" id="position-histories-container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>วันที่ปรับ</th>
+                                                            <th>ตำแหน่ง</th>
+                                                            <th class="text-end">เพิ่มเติม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->positionHistories->sortBy('adjust_date') as $key =>
+                                                        $positionHistory)
+                                                        <tr>
+                                                            <td>
+                                                                @if ($positionHistory->adjust_date != null)
+                                                                {{
+                                                                \Carbon\Carbon::createFromFormat('Y-m-d',$positionHistory->adjust_date)->format('d/m/Y')
+                                                                }}
+                                                                @endif
+                                                            </td>
+                                                            <td>{{$positionHistory->user_position->name}}</td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-edit btn-action btn-sm btn-update-position-history"
+                                                                    data-id="{{$positionHistory->id}}">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                                <a class="btn btn-action btn-delete btn-sm btn-delete-position-history"
+                                                                    data-id="{{$positionHistory->id}}">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -904,40 +919,42 @@
                                                 เพิ่มเงินเดือน
                                             </a>
                                         </div>
-                                        <div class="col-12 table-responsive" id="salary_table_container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>วันที่ปรับ</th>
-                                                        <th>เงินเดือน</th>
-                                                        <th class="text-end">เพิ่มเติม</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->salaryRecords->sortBy('record_date') as $key =>
-                                                    $salaryRecord)
-                                                    <tr>
-                                                        <td>
-                                                            @if ($salaryRecord->record_date != null)
-                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                            $salaryRecord->record_date)->format('d/m/Y') }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{$salaryRecord->salary}}</td>
-                                                        <td class="text-end">
-                                                            <a class="btn btn-action btn-edit btn-sm btn-update-salary"
-                                                                data-id="{{$salaryRecord->id}}">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-salary"
-                                                                data-id="{{$salaryRecord->id}}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="col-12" id="salary_table_container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>วันที่ปรับ</th>
+                                                            <th>เงินเดือน</th>
+                                                            <th class="text-end">เพิ่มเติม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->salaryRecords->sortBy('record_date') as $key =>
+                                                        $salaryRecord)
+                                                        <tr>
+                                                            <td>
+                                                                @if ($salaryRecord->record_date != null)
+                                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                                $salaryRecord->record_date)->format('d/m/Y') }}
+                                                                @endif
+                                                            </td>
+                                                            <td>{{$salaryRecord->salary}}</td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-action btn-edit btn-sm btn-update-salary"
+                                                                    data-id="{{$salaryRecord->id}}">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                                <a class="btn btn-action btn-delete btn-sm btn-delete-salary"
+                                                                    data-id="{{$salaryRecord->id}}">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -952,41 +969,43 @@
                                                 เพิ่มความผิดและโทษ
                                             </a>
                                         </div>
-                                        <div class="col-12 table-responsive" id="punishment-container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>ความผิด / โทษ</th>
-                                                        <th>วันที่บันทึก</th>
-                                                        <th class="text-end">เพิ่มเติม</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->punishments as $key => $punishment)
-                                                    <tr>
-                                                        <td>
-                                                            @if ($punishment->record_date != null)
-                                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d',
-                                                            $punishment->record_date)->format('d/m/Y') }}
-                                                            @endif
+                                        <div class="col-12" id="punishment-container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>ความผิด / โทษ</th>
+                                                            <th>วันที่บันทึก</th>
+                                                            <th class="text-end">เพิ่มเติม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->punishments as $key => $punishment)
+                                                        <tr>
+                                                            <td>
+                                                                @if ($punishment->record_date != null)
+                                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                                                $punishment->record_date)->format('d/m/Y') }}
+                                                                @endif
 
 
-                                                        </td>
-                                                        <td>{{$punishment->punishment}}</td>
-                                                        <td class="text-end">
-                                                            <a class="btn btn-action btn-edit btn-sm btn-update-punishment"
-                                                                data-id="{{$punishment->id}}">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-punishment"
-                                                                data-id="{{$punishment->id}}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                            </td>
+                                                            <td>{{$punishment->punishment}}</td>
+                                                            <td class="text-end">
+                                                                <a class="btn btn-action btn-edit btn-sm btn-update-punishment"
+                                                                    data-id="{{$punishment->id}}">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                                <a class="btn btn-action btn-delete btn-sm btn-delete-punishment"
+                                                                    data-id="{{$punishment->id}}">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1002,40 +1021,42 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-12 table-responsive" id="user-attachment-container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th>เอกสาร</th>
-                                                        {{-- <th>ไฟล์</th> --}}
-                                                        <th class="text-end">เพิ่มเติม</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user->user_attachments as $key =>$user_attachment)
-                                                    <tr>
-                                                        <td>{{$user_attachment->name}}</td>
-                                                        {{-- <td>{{$user_attachment->file}}</td> --}}
-                                                        <td class="text-end">
-                                                            @php
-                                                            $path = $user_attachment->file;
-                                                            if ($user_attachment->type == 1){
-                                                            $path = url('/storage/uploads/attachment') .'/'.
-                                                            $user_attachment->file;
-                                                            }
-                                                            @endphp
-                                                            <a class="btn btn-edit btn-action btn-sm" href="{{$path}}">
-                                                                <i class="fas fa-download"></i>
-                                                            </a>
-                                                            <a class="btn btn-action btn-delete btn-sm btn-delete-user-attachment"
-                                                                data-id="{{$user_attachment->id}}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="col-12" id="user-attachment-container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th>เอกสาร</th>
+                                                            {{-- <th>ไฟล์</th> --}}
+                                                            <th class="text-end">เพิ่มเติม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user->user_attachments as $key =>$user_attachment)
+                                                        <tr>
+                                                            <td>{{$user_attachment->name}}</td>
+                                                            {{-- <td>{{$user_attachment->file}}</td> --}}
+                                                            <td class="text-end">
+                                                                @php
+                                                                $path = $user_attachment->file;
+                                                                if ($user_attachment->type == 1){
+                                                                $path = url('/storage/uploads/attachment') .'/'.
+                                                                $user_attachment->file;
+                                                                }
+                                                                @endphp
+                                                                <a class="btn btn-edit btn-action btn-sm" href="{{$path}}">
+                                                                    <i class="fas fa-download"></i>
+                                                                </a>
+                                                                <a class="btn btn-action btn-delete btn-sm btn-delete-user-attachment"
+                                                                    data-id="{{$user_attachment->id}}">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

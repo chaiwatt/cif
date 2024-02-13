@@ -78,7 +78,7 @@
                                                         <th>ผู้อนุมัติเอกสาร <a href="" class="btn btn-sm btn-primary"
                                                                 id="get_authorized_user"><i class="fas fa-plus"></i></a>
                                                         </th>
-                                                        <th style="width:100px" class="text-right">ลบ</th>
+                                                        <th style="width:100px" class="text-end">ลบ</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="sortableRows">
@@ -86,7 +86,7 @@
                                                     <tr>
                                                         <td>{{$user->name}} {{$user->lastname}}<input type="text"
                                                                 name="userId[]" value="{{$user->id}}" hidden></td>
-                                                        <td class="text-right"><a href=""
+                                                        <td class="text-end"><a href=""
                                                                 class="btn btn-sm btn-danger delete-row"><i
                                                                     class="fas fa-trash"></i></a></td>
                                                     </tr>
@@ -96,8 +96,8 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-12 text-end">
-                                        <button class="btn btn-success mt-2">บันทึก</button>
+                                    <div class="cif-modal-footer p-0 mt-2">
+                                        <button class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
                             </form>

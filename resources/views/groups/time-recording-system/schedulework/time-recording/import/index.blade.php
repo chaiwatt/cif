@@ -36,40 +36,43 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="checkbox" id="select_all">
-                                                        <label for="select_all"></label>
-                                                    </div>
-                                                </th>
-                                                <th>รหัสพนักงาน</th>
-                                                <th>ชื่อ-สกุล</th>
-                                                <th>แผนก</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($users as $user)
-                                            <tr>
-                                                <td>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input name="users[]" type="checkbox" class="user-checkbox"
-                                                            id="checkboxPrimary{{$user->id}}" value="{{$user->id}}">
-                                                        <label for="checkboxPrimary{{$user->id}}"></label>
-                                                    </div>
-                                                </td>
-                                                <td>{{$user->employee_no}}</td>
-                                                <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
-                                                </td>
-                                                <td>{{$user->company_department->name}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    {{ $users->links() }}
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>
+                                                        <div class="icheck-primary d-inline">
+                                                            <input type="checkbox" id="select_all">
+                                                            <label for="select_all"></label>
+                                                        </div>
+                                                    </th>
+                                                    <th>รหัสพนักงาน</th>
+                                                    <th>ชื่อ-สกุล</th>
+                                                    <th>แผนก</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($users as $user)
+                                                <tr>
+                                                    <td>
+                                                        <div class="icheck-primary d-inline">
+                                                            <input name="users[]" type="checkbox" class="user-checkbox"
+                                                                id="checkboxPrimary{{$user->id}}" value="{{$user->id}}">
+                                                            <label for="checkboxPrimary{{$user->id}}"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{$user->employee_no}}</td>
+                                                    <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}
+                                                    </td>
+                                                    <td>{{$user->company_department->name}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        {{ $users->links() }}
+
+                                    </div>
                                 </div>
                             </div>
 

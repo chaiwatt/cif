@@ -40,54 +40,56 @@
                                         <input type="text" value="{{$assessmentGroup->id}}" id="assessmentGroupId"
                                             name="assessmentGroupId" hidden>
                                         <input type="text" value="{{$user->id}}" name="userId" hidden>
-                                        <div class="col-sm-12 table-responsive" id="table_container">
-                                            <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                                <thead class="border-bottom">
-                                                    <tr>
-                                                        <th style="width: 40%">เกณฑ์การประเมิน</th>
-                                                        <th style="width: 20%">ตัวคูณคะแนน</th>
-                                                        <th style="width: 20%">คะแนนที่ได้</th>
-                                                        <th style="width: 20%">คะแนนรวม</th>
+                                        <div class="col-sm-12" id="table_container">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                                    <thead class="border-bottom">
+                                                        <tr>
+                                                            <th style="width: 40%">เกณฑ์การประเมิน</th>
+                                                            <th style="width: 20%">ตัวคูณคะแนน</th>
+                                                            <th style="width: 20%">คะแนนที่ได้</th>
+                                                            <th style="width: 20%">คะแนนรวม</th>
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php
-                                                        $totalScore = 0;
-                                                        $maxScore = 0;
-                                                    @endphp
-                                                    @foreach (
-                                                        $assessmentGroupUserCriterias as $assessmentGroupUserCriteria)
-                                                    @php
-                                                        $multiplication =
-                                                        $assessmentGroupUserCriteria->getMultiplicationScore($assessmentGroupUserCriteria->assessmentCriteria->id,$assessmentGroup->id);
-                                                        $totalScore += $multiplication *$assessmentGroupUserCriteria->score;
-                                                        $maxScore += $multiplication *$maxAssessmentScore;
-                                                    @endphp
-                                                    <td>{{$assessmentGroupUserCriteria->assessmentCriteria->name}}
-                                                        <input type="text" value="{{$assessmentGroupUserCriteria->id}}"
-                                                            name="assessmentGroupUserCriteriaId[]" class="form-control"
-                                                            hidden>
-                                                    </td>
-                                                    <td>{{$multiplication}}</td>
-                                                    <td>{{$assessmentGroupUserCriteria->score}}</td>
-                                                    <td>{{$multiplication*$assessmentGroupUserCriteria->score}}</td>
-                                                    </tr>
-                                                    @if ($loop->last)
-                                                    <tr>
-                                                        <td colspan="3" style="text-align: right;">
-                                                            <strong>Total:</strong>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                            $totalScore = 0;
+                                                            $maxScore = 0;
+                                                        @endphp
+                                                        @foreach (
+                                                            $assessmentGroupUserCriterias as $assessmentGroupUserCriteria)
+                                                        @php
+                                                            $multiplication =
+                                                            $assessmentGroupUserCriteria->getMultiplicationScore($assessmentGroupUserCriteria->assessmentCriteria->id,$assessmentGroup->id);
+                                                            $totalScore += $multiplication *$assessmentGroupUserCriteria->score;
+                                                            $maxScore += $multiplication *$maxAssessmentScore;
+                                                        @endphp
+                                                        <td>{{$assessmentGroupUserCriteria->assessmentCriteria->name}}
+                                                            <input type="text" value="{{$assessmentGroupUserCriteria->id}}"
+                                                                name="assessmentGroupUserCriteriaId[]" class="form-control"
+                                                                hidden>
                                                         </td>
-                                                        <td>{{$totalScore}} / {{$maxScore}} =
-                                                            {{number_format($totalScore / $maxScore
-                                                            *100, 2)}} %</td>
-                                                    </tr>
-                                                    @endif
-                                                    @endforeach
+                                                        <td>{{$multiplication}}</td>
+                                                        <td>{{$assessmentGroupUserCriteria->score}}</td>
+                                                        <td>{{$multiplication*$assessmentGroupUserCriteria->score}}</td>
+                                                        </tr>
+                                                        @if ($loop->last)
+                                                        <tr>
+                                                            <td colspan="3" style="text-align: right;">
+                                                                <strong>Total:</strong>
+                                                            </td>
+                                                            <td>{{$totalScore}} / {{$maxScore}} =
+                                                                {{number_format($totalScore / $maxScore
+                                                                *100, 2)}} %</td>
+                                                        </tr>
+                                                        @endif
+                                                        @endforeach
 
 
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

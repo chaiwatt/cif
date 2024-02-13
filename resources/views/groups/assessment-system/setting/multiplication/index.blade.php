@@ -39,35 +39,37 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th>ตัวคูณคะแนนเกณฑ์การประเมิน</th>
-                                                <th class="text-end" style="width: 120px">เพิ่มเติม</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($assessmentScoreMultiplications as $assessmentScoreMultiplication)
-                                            <td>{{$assessmentScoreMultiplication->multiplication}}</td>
-                                            <td class="text-end">
-                                                <a class="btn btn-action btn-edit btn-sm"
-                                                    href="{{route('groups.assessment-system.setting.multiplication.view',['id' => $assessmentScoreMultiplication->id])}}">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <a class="btn btn-action btn-delete btn-sm"
-                                                    data-confirm='ลบคะแนนตัวคูณคะแนนเกณฑ์การประเมิน "{{$assessmentScoreMultiplication->multiplication}}" หรือไม่?'
-                                                    href="#" data-id="{{$assessmentScoreMultiplication->id}}"
-                                                    data-delete-route="{{ route('groups.assessment-system.setting.multiplication.delete', ['id' => '__id__']) }}"
-                                                    data-message="ตัวคูณคะแนนเกณฑ์การประเมิน">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>ตัวคูณคะแนนเกณฑ์การประเมิน</th>
+                                                    <th class="text-end" style="width: 120px">เพิ่มเติม</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($assessmentScoreMultiplications as $assessmentScoreMultiplication)
+                                                <td>{{$assessmentScoreMultiplication->multiplication}}</td>
+                                                <td class="text-end">
+                                                    <a class="btn btn-action btn-edit btn-sm"
+                                                        href="{{route('groups.assessment-system.setting.multiplication.view',['id' => $assessmentScoreMultiplication->id])}}">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <a class="btn btn-action btn-delete btn-sm"
+                                                        data-confirm='ลบคะแนนตัวคูณคะแนนเกณฑ์การประเมิน "{{$assessmentScoreMultiplication->multiplication}}" หรือไม่?'
+                                                        href="#" data-id="{{$assessmentScoreMultiplication->id}}"
+                                                        data-delete-route="{{ route('groups.assessment-system.setting.multiplication.delete', ['id' => '__id__']) }}"
+                                                        data-message="ตัวคูณคะแนนเกณฑ์การประเมิน">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
 
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

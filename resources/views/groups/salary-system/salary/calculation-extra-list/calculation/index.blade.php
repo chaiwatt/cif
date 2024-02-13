@@ -51,57 +51,59 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12 table-responsive" id="table_container">
-                                    <table class="table table-borderless text-nowrap dataTable dtr-inline">
-                                        <thead class="border-bottom">
-                                            <tr>
-                                                <th style="width: 10%">รหัสพนักงาน</th>
-                                                <th style="width: 20%">ชื่อ-สกุล</th>
-                                                <th class="text-center" style="width: 20%">OT ส่วนเกิน (ชม.)</th>
-                                                <th class="text-center" style="width: 20%">OT วันหยุดประจำสัปดาห์ (ชม.)
-                                                </th>
-                                                <th class="text-center" style="width: 20%">OT วันหยุดประจำปี (ชม.)</th>
-                                                <th class="text-center" style="width: 10%">รวม (ชม.)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($users as $user)
-                                            @php
-                                            $userSummary = $user->getExtraOvertime($paydayDetail->id);
+                                <div class="col-sm-12" id="table_container">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-nowrap dataTable dtr-inline">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th style="width: 10%">รหัสพนักงาน</th>
+                                                    <th style="width: 20%">ชื่อ-สกุล</th>
+                                                    <th class="text-center" style="width: 20%">OT ส่วนเกิน (ชม.)</th>
+                                                    <th class="text-center" style="width: 20%">OT วันหยุดประจำสัปดาห์ (ชม.)
+                                                    </th>
+                                                    <th class="text-center" style="width: 20%">OT วันหยุดประจำปี (ชม.)</th>
+                                                    <th class="text-center" style="width: 10%">รวม (ชม.)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($users as $user)
+                                                @php
+                                                $userSummary = $user->getExtraOvertime($paydayDetail->id);
 
-                                            @endphp
-                                            @if ($userSummary != null)
-                                            @php
-                                            $exceedOvertime = $userSummary['exceedOvertime'];
-                                            $holidayOvertime = $userSummary['holidayOvertime'];
-                                            $traditionalHolidayOvertime = $userSummary['traditionalHolidayOvertime'];
-                                            @endphp
-                                            @if (floatval($exceedOvertime) != 0 || floatval($holidayOvertime) != 0 ||
-                                            floatval($traditionalHolidayOvertime) != 0)
-                                            <tr>
-                                                <td>
-                                                    {{ $user->employee_no }}
+                                                @endphp
+                                                @if ($userSummary != null)
+                                                @php
+                                                $exceedOvertime = $userSummary['exceedOvertime'];
+                                                $holidayOvertime = $userSummary['holidayOvertime'];
+                                                $traditionalHolidayOvertime = $userSummary['traditionalHolidayOvertime'];
+                                                @endphp
+                                                @if (floatval($exceedOvertime) != 0 || floatval($holidayOvertime) != 0 ||
+                                                floatval($traditionalHolidayOvertime) != 0)
+                                                <tr>
+                                                    <td>
+                                                        {{ $user->employee_no }}
 
-                                                </td>
-                                                <td>{{ $user->prefix->name }}{{
-                                                    $user->name }} {{
-                                                    $user->lastname }}</td>
-                                                <td class="text-center">{{$exceedOvertime}}</td>
-                                                <td class="text-center">{{$holidayOvertime}}</td>
-                                                <td class="text-center">{{$traditionalHolidayOvertime}}</td>
-                                                <td class="text-center">{{$exceedOvertime + $holidayOvertime +
-                                                    $traditionalHolidayOvertime}}
-                                                </td>
+                                                    </td>
+                                                    <td>{{ $user->prefix->name }}{{
+                                                        $user->name }} {{
+                                                        $user->lastname }}</td>
+                                                    <td class="text-center">{{$exceedOvertime}}</td>
+                                                    <td class="text-center">{{$holidayOvertime}}</td>
+                                                    <td class="text-center">{{$traditionalHolidayOvertime}}</td>
+                                                    <td class="text-center">{{$exceedOvertime + $holidayOvertime +
+                                                        $traditionalHolidayOvertime}}
+                                                    </td>
 
-                                            </tr>
-                                            @endif
-                                            @endif
+                                                </tr>
+                                                @endif
+                                                @endif
 
 
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    {{$users->links()}}
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        {{$users->links()}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
