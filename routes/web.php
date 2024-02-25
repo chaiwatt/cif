@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\MPDFController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
@@ -106,6 +107,7 @@ Auth::routes();
 //     return view('landing');
 // });
 // Announcement Picture
+Route::get('/pdf1', [MPDFController::class, 'generate']);
 Route::get('/storage/thumbnail/{image}', [ImageController::class, 'announce_thumbnail_view'])->name('storage.announce.thumbnail');
 Route::get('/storage/attachment/{file}', [ImageController::class, 'announce_attachment_view'])->name('storage.announce.attachment');
 Route::get('/storage/attachment/{file}/download', [ImageController::class, 'announce_attachment_download'])->name('storage.announce.attachment.download');
