@@ -649,8 +649,8 @@
 
                                 <div class="tab-pane fade" id="custom-tabs-one-leave" role="tabpanel"
                                     aria-labelledby="custom-tabs-one-leave-tab">
-                                    <div class="col-12" id="user-leave-container">
-                                        <h5 class="py-2 mx-3 mb-0 d-flex gap-2 align-items-center">วันลาคงเหลือ <a
+                                    <div class="col-12 my-2" id="user-leave-container">
+                                        <h5 class="py-2 px-3 d-flex justify-content-between align-items-center">วันลาคงเหลือ <a
                                                 class="btn btn-primary btn-sm btn-leave-increment-setting ml-2">
                                                 <i class="fas fa-cog"></i> ตั้งการเพิ่มวันลา
                                             </a>
@@ -1531,8 +1531,8 @@
                                         </td>
                                         @endforeach
                                         <td style="padding-bottom:0px; margin-bottom:0px">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control sm integer"
+                                            <div class="form-group" >
+                                                <input type="text" class="form-control sm integer" style="width: 70px"
                                                     id="val_{{$leaveIncrement->leaveType->id}}"
                                                     value="{{$leaveIncrement->quantity}}">
                                             </div>

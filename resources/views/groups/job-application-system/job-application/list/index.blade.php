@@ -58,7 +58,7 @@
                                                     <th>จำนวน</th>
                                                     <th>ระยะเวลาการรับสมัคร</th>
                                                     <th>สถานะเปิดรับสมัคร</th>
-                                                    <th style="width: 120px">เพิ่มเติม</th>
+                                                    <th style="width: 120px; text-align: center">เพิ่มเติม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -114,17 +114,19 @@
         <div class="modal-dialog modal-dialog-centered" style="max-width: 980px;">
           <div class="modal-content cif-content">
             <div class="modal-header">
-                <div class="d-flex align-items-center" style="gap: 32px">
+                <div class="d-flex flex-column flex-md-row align-items-center w-100" style="gap: 32px">
                     <img src="{{ asset('logomark.png') }}" alt="logomark" width="60" height="60">
                     <h3 class="modal-title" id="preview-{{ $item->id }}-Label">{{ $item->title }}</h3>
+                    <div class="d-flex justify-content-center justify-content-md-end flex-grow-1">
+                        <a href="{{ $item->application_form }}" target="_blank" class="btn btn-primary btn-lg" style="width: 160px">สมัครงาน</a>
+                    </div>
                 </div>
-                <a href="{{ $item->application_form }}" target="_blank" class="btn btn-primary btn-lg" style="width: 160px">สมัครงาน</a>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="padding: 48px 124px 0 124px">
+            <div class="modal-body overflow-auto body-job">
                 {!! $item->body !!}
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer p-2">
             </div>
           </div>
         </div>
