@@ -107,6 +107,16 @@ Auth::routes();
 //     return view('landing');
 // });
 // Announcement Picture
+Route::group(['prefix' => 'pdfReport'], function(){
+    Route::group(['prefix' => 'revenue'], function(){
+        Route::get('/bis50/{id}', [MPDFController::class, 'bis50'])->name('bis50');
+    });
+    Route::group(['prefix' => 'sso'], function(){
+        Route::get('/ssoPayment/{id}', [MPDFController::class, 'ssoPayment'])->name('ssoPayment');
+        Route::get('/ssoPaymentMonth/{id}', [MPDFController::class, 'ssoPaymentMonth'])->name('ssoPaymonth');
+    });
+});
+
 Route::get('/pdf1', [MPDFController::class, 'generate']);
 Route::get('/storage/thumbnail/{image}', [ImageController::class, 'announce_thumbnail_view'])->name('storage.announce.thumbnail');
 Route::get('/storage/attachment/{file}', [ImageController::class, 'announce_attachment_view'])->name('storage.announce.attachment');

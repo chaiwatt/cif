@@ -35,4 +35,19 @@ class MPDFController extends Controller
         $mpdf->Output();
         return $mpdf->Output();
     }
+
+    public function bis50($id)
+    {
+        return view('report.bis50');
+    }
+
+    public function ssoPayment($id)
+    {
+        return view('report.sso1');
+    }
+
+    public function ssoPaymentMonth($id)
+    {
+        return view('report.sso2');
+    }
 }
