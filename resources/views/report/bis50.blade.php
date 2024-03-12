@@ -33,7 +33,7 @@
         ob_start();
     @endphp
 
-    <div class="container">
+    <div  id="pdfContent" class="container" {{-- style="display: none;" --}}>
         <div class="wrap-table" style="width: 100%; height: fit-content; border: 1px solid #000;">
             <div class="header" style="width: 100%; text-align: center;">
                 <div style="font-size: 20px;">หนังสือรับรองการหักภาษี ณ ที่จ่าย</div>
@@ -67,7 +67,7 @@
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุ ชื่ออาคาร/หมู่บ้าน ห้องเลขที่ ชั้นที่ เลขที่ ตรอก/ซอย หมู่ที่ ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด)</span>
                     </div>
                 </div>
-                <div class="section" style="width: 100%; padding: 10px; border: 1px solid #000; border-radius: 10px; margin-bottom: 5px;">
+                <div class="section" style="width: 100%; padding: 10px; border: 1px solid #000; border-radius: 10px; margin-bottom: 5px; height: 180px;">
                     <div style="float: left; width: 50%;">
                         <div style="font-size: 17px; font-weight: 500; color: #000;">ผู้ถูกหักภาษี ณ ที่จ่าย :</div>
                         <span style="font-size: 16px; color: #000;">ชื่อ      </span>
@@ -319,19 +319,54 @@
     </div>
 
     @php
-        $html=ob_get_contents();
+       /*  $html=ob_get_contents();
         $stylesheet = file_get_contents('css/report/bis50.css');
         $mpdf->WriteHTML($stylesheet, 1);
         $mpdf->WriteHTML($html,2);
-        $mpdf->Output("report_1.pdf");
-        ob_end_flush();
+        $mpdf->Output("report_1.pdf", 'I');
+        ob_end_flush(); */
+
+        $html = ob_get_contents();
+        $stylesheet = file_get_contents('css/report/bis50.css');
+        $mpdf->WriteHTML($stylesheet, 1);
+        $mpdf->WriteHTML($html,2);
+        $pdfFilePath = "report_1.pdf";
+        $mpdf->Output($pdfFilePath, 'F');
+        ob_end_clean();
+
+        /* $pdfFilePath = 'report_1.pdf';
+        $maxAttempts = 3;
+        $attempt = 0;
+
+        do {
+            $handle = @fopen($pdfFilePath, 'rb');
+            if ($handle === false) {
+                $error = error_get_last();
+                echo "Error: " . $error['message'] . "\n";
+                usleep(500000); // 0.5 seconds
+            } else {
+                fclose($handle);
+                break;
+            }
+            $attempt++;
+        } while ($attempt < $maxAttempts);
+
+        if ($attempt >= $maxAttempts) {
+            echo "Failed to open PDF after $maxAttempts attempts.";
+        } */
     @endphp
 
     <div class="container" style="display: block; width: 100%;">
-        <a href="report_1.pdf" target="_blank">
-            <button>View PDF</button>
+        <a href="../../../report_1.pdf" target="_blank">
+            <button id="viewPdfButton ">View PDF ภงด 50</button>
         </a>
     </div>
-
+    <script>
+       document.getElementById("viewPdfButton").addEventListener("click", function() {
+        var pdfFilePath = "<?= $pdfFilePath ?>";
+        window.open(pdfFilePath, "_blank");
+        document.getElementById("pdfContent").style.display = "block";
+    });
+    </script>
 
 @endsection
