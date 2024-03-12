@@ -43,11 +43,11 @@ class MPDFController extends Controller
 
     public function ssoPayment($id)
     {
-        return view('report.sso1');
+        return view('report.sso1', compact('id'));
     }
 
     public function ssoPaymentMonth($id)
     {
-        return view('report.sso2');
+        return view('report.sso2', compact('id'));
     }
 }

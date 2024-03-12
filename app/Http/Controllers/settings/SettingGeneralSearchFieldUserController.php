@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\settings;
+namespace App\Http\Controllers\Settings;
 
 use App\Models\SearchField;
 use Illuminate\Http\Request;

@@ -30,7 +30,7 @@
         ob_start();
     @endphp
 
-    <div class="container">
+    <div id="pdfContent" class="container">
         <div class="wrapper" style="padding: 10px;">
             <div class="wrap-header" style="width: 100%; display: table; clear: both;">
                 <div class="logo" style="width: 10%; float: left;">
@@ -75,7 +75,7 @@
                 <table style="width: 90%; border: 1px solid #000">
                     <tbody>
                         <tr style="border: 1px solid #000;">
-                            <td colspan="2" style="font-size: 18px;">การนำส่งเงินสมทบสำหรับค่าจ้างเดือน    ธันวาคม พ.ศ. 2023</td>
+                            <td colspan="2" style="font-size: 16px;">การนำส่งเงินสมทบสำหรับค่าจ้างเดือน    ธันวาคม พ.ศ. 2023</td>
                         </tr>
                         <tr style="border: 1px solid #000;">
                             <td style="text-align: center; border: 1px solid #000;">รายการ</td>
@@ -231,14 +231,24 @@
         $stylesheet = file_get_contents('css/report/sso1.css');
         $mpdf->WriteHTML($stylesheet, 1);
         $mpdf->WriteHTML($html,2);
-        $mpdf->Output("report_2.pdf");
-        ob_end_flush();
+        /* $mpdf->Output("sso1-".$id.".pdf"); */
+        $pdfFilePath = "sso1-".$id.".pdf";
+        $mpdf->Output($pdfFilePath, 'F');
+        ob_end_clean();
     @endphp
 
     <div class="container" style="margin-top: 5rem;">
-        <a href="report_2.pdf" target="_blank">
-            <button>View PDF</button>
+        <a href="../../../{{ $pdfFilePath }}" target="_blank">
+            <button id="viewPdfButton ">View PDF แบบแสดงรายการแสดงการส่งเงินสมทบ</button>
         </a>
     </div>
+    <script>
+        document.getElementById("viewPdfButton").addEventListener("click", function() {
+         var pdfFilePath = "<?= $pdfFilePath ?>";
+         window.open(pdfFilePath, "_blank");
+         document.getElementById("pdfContent").style.display = "block";
+     });
+     </script>
+
 
 @endsection

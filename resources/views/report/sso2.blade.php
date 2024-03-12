@@ -30,7 +30,7 @@
         ob_start();
     @endphp
 
-    <div class="container" style="padding: 10px;">
+    <div id="pdfContent" class="container" style="padding: 10px;">
         <div class="wrap-header">
             <div class="wrap-title" style="width: 50%; float: left; font-size: 20px;">แบบรายการแสดงการส่งเงินสมทบ (สปส.1-10)(ตามแนวตั้ง)</div>
             <div class="wrap-number" style="width: 10%; float: right; text-align-last: right;">สปส.1-10 (ส่วนที่2)</div>
@@ -88,16 +88,22 @@
         $stylesheet = file_get_contents('css/report/sso2.css');
         $mpdf->WriteHTML($stylesheet, 1);
         $mpdf->WriteHTML($html,2);
-        $mpdf->Output("report_3.pdf");
-        ob_end_flush();
+        $pdfFilePath = "sso2-".$id.".pdf";
+        $mpdf->Output($pdfFilePath, 'F');
+        ob_end_clean();
     @endphp
 
     <div class="container" style="margin-top: 5rem;">
-        <a href="report_3.pdf" target="_blank">
-            <button>
-                View PDF
-            </button>
+        <a href="../../../{{ $pdfFilePath }}" target="_blank">
+            <button id="viewPdfButton ">View PDF แบบแสดงรายการแสดงการส่งเงินสมทบ</button>
         </a>
     </div>
+    <script>
+        document.getElementById("viewPdfButton").addEventListener("click", function() {
+         var pdfFilePath = "<?= $pdfFilePath ?>";
+         window.open(pdfFilePath, "_blank");
+         document.getElementById("pdfContent").style.display = "block";
+     });
+     </script>
 
 @endsection

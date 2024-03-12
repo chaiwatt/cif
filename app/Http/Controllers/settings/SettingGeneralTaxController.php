@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\settings;
+namespace App\Http\Controllers\Settings;
 
 use App\Models\TaxSetting;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class SettingGeneralTaxController extends Controller
             'social_contribution_salary' => $socialContributionSalary,
             'social_contribution_percent' => $socialContributionPercent,
             'social_contribution_max' => $socialContributionMax,
-            'bonus_tax_percent'=> $bonusTaxPercent, 
+            'bonus_tax_percent'=> $bonusTaxPercent,
         ]);
 
         return redirect()->route('setting.general.tax')->with('เพิ่มสำเร็จ','');

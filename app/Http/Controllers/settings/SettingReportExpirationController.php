@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\settings;
+namespace App\Http\Controllers\Settings;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -29,10 +29,10 @@ class SettingReportExpirationController extends Controller
 
     public function search(Request $request)
     {
-        
+
         $numOfMonth = $request->data;
         $currentDate = Carbon::now();
-        
+
         $users = User::whereNotNull('visa_expiry_date')
             ->whereNotNull('permit_expiry_date')
             ->where(function ($query) use ($currentDate, $numOfMonth) {

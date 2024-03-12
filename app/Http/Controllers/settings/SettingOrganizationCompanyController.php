@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\settings;
+namespace App\Http\Controllers\Settings;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -26,11 +26,11 @@ class SettingOrganizationCompanyController extends Controller
         }
         $companyId = $request->id;
         $name = $request->name;
-        $address = $request->address; 
-        $phone = $request->phone; 
-        $fax = $request->fax; 
-        $tax = $request->tax; 
-       
+        $address = $request->address;
+        $phone = $request->phone;
+        $fax = $request->fax;
+        $tax = $request->tax;
+
         Company::find($companyId)->update([
             'name' => $name,
             'address' => $address,

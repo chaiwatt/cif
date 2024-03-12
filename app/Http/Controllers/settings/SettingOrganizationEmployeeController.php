@@ -68,7 +68,7 @@ class SettingOrganizationEmployeeController extends Controller
         $employeeTypes = EmployeeType::all();  // เรียกข้อมูลประเภทพนักงานทั้งหมดจากตาราง employee_types
         $userPositions = UserPosition::all();  // เรียกข้อมูลตำแหน่งงานทั้งหมดจากตาราง user_positions
         $companyDepartments = CompanyDepartment::all();  // เรียกข้อมูลแผนกบริษัททั้งหมดจากตาราง company_departments
-        
+
         return view('setting.organization.employee.create',[
             'prefixes' => $prefixes,  // ส่งข้อมูลคำนำหน้าชื่อไปยังหน้าจอสร้างพนักงาน
             'nationalities' => $nationalities,  // ส่งข้อมูลสัญชาติไปยังหน้าจอสร้างพนักงาน
@@ -107,7 +107,7 @@ class SettingOrganizationEmployeeController extends Controller
         $companyDepartment = $request->companyDepartment;  // แผนกบริษัท
         $startWorkDate = Carbon::createFromFormat('m/d/Y', $request->startWorkDate)->format('Y-m-d');  // วันที่เริ่มทำงาน
         $visaExpireDate = !is_null($request->visaExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->visaExpireDate)->format('Y-m-d') : null;  // วันหมดอายุวีซ่า
-        $workPermitExpireDate = !is_null($request->workPermitExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->workPermitExpireDate)->format('Y-m-d') : null;  // วันหมดอายุใบอนุญาตทำงาน   
+        $workPermitExpireDate = !is_null($request->workPermitExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->workPermitExpireDate)->format('Y-m-d') : null;  // วันหมดอายุใบอนุญาตทำงาน
         $bank = $request->bank;  // ธนาคาร
         $bankAccount = $request->bankAccount;  // เลขที่บัญชีธนาคาร
         $passport = $request->passport ?? null;  // พาสพอร์ต
@@ -115,7 +115,7 @@ class SettingOrganizationEmployeeController extends Controller
         $tax = $request->tax ?? null;  // เลขประจำตัวผู้เสียภาษีอากร
         $socialSecurityNumber = $request->social_security_number ?? null;  // เลขที่ประกันสังคม
         $timeRecordRequire = $request->timeRecordRequire;
-        
+
         // New Field
         $education = $request->education;
         $edu_department = $request->edu_department;
@@ -158,12 +158,12 @@ class SettingOrganizationEmployeeController extends Controller
         // $user->email = $employeeNo . '@cif.com';  // กำหนดค่าอีเมลให้กับคอลัมน์ email (รหัสพนักงาน@cif.com)
         $user->email = $email;  // กำหนดค่าอีเมลให้กับคอลัมน์ email
         $user->password = bcrypt('11111111');  // กำหนดค่ารหัสผ่านให้กับคอลัมน์ password (เข้ารหัสแบบ bcrypt)
-        $user->passport = $passport;  
-        $user->work_permit = $workPermit;  
-        $user->tax = $tax;  
-        $user->social_security_number = $socialSecurityNumber;  
-        $user->time_record_require = $timeRecordRequire; 
-        
+        $user->passport = $passport;
+        $user->work_permit = $workPermit;
+        $user->tax = $tax;
+        $user->social_security_number = $socialSecurityNumber;
+        $user->time_record_require = $timeRecordRequire;
+
         // New Field Add
         $user->education = $education;
         $user->edu_department = $edu_department;
@@ -174,7 +174,7 @@ class SettingOrganizationEmployeeController extends Controller
         $user->city = $city;
         $user->country = $country;
         $user->is_foreigner = $is_foreigner;
-        
+
         $user->save();  // บันทึกข้อมูลในฐานข้อมูล
 
         // UserDiligenceAllowance::create([
@@ -194,7 +194,7 @@ class SettingOrganizationEmployeeController extends Controller
                 'salary' => 1500,
                 'record_date' => Carbon::today(),
             ]);
-        $leaveTypes = LeaveType::all();    
+        $leaveTypes = LeaveType::all();
         foreach($leaveTypes as $leaveType)
         {
             UserLeave::create([
@@ -202,8 +202,8 @@ class SettingOrganizationEmployeeController extends Controller
                 'leave_type_id' => $leaveType->id,
                 'count' => rand(3, 10)
             ]);
-        } 
-        
+        }
+
         $leaveIncrements = LeaveIncrement::where('user_id',$user->id)->get();
             if($leaveIncrements->count() == 0){
                 $this->createLeaveTypesForUser($user);
@@ -315,12 +315,12 @@ class SettingOrganizationEmployeeController extends Controller
     public function update(Request $request, $id)
     {
         $validator = $this->validateFormData($request);
-        
+
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $prefix = $request->prefix;  // คำนำหน้าชื่อ
         $name = $request->name;  // ชื่อ
         $lastname = $request->lastname;  // นามสกุล
@@ -338,7 +338,7 @@ class SettingOrganizationEmployeeController extends Controller
         $companyDepartment = $request->companyDepartment;  // แผนกบริษัท
         $startWorkDate = Carbon::createFromFormat('m/d/Y', $request->startWorkDate)->format('Y-m-d');  // วันที่เริ่มทำงาน
         $visaExpireDate = !is_null($request->visaExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->visaExpireDate)->format('Y-m-d') : null;  // วันหมดอายุวีซ่า
-        $workPermitExpireDate = !is_null($request->workPermitExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->workPermitExpireDate)->format('Y-m-d') : null;  // วันหมดอายุใบอนุญาตทำงาน   
+        $workPermitExpireDate = !is_null($request->workPermitExpireDate) ? Carbon::createFromFormat('m/d/Y', $request->workPermitExpireDate)->format('Y-m-d') : null;  // วันหมดอายุใบอนุญาตทำงาน
         $bank = $request->bank;  // ธนาคาร
         $bankAccount = $request->bankAccount;  // เลขที่บัญชีธนาคาร
         $passport = $request->passport ?? null;  // พาสพอร์ต
@@ -356,7 +356,7 @@ class SettingOrganizationEmployeeController extends Controller
         $city = $request->city;
         $country = $request->country;
         $is_foreigner = !is_null($request->is_foreigner) ? true : false;
-        
+
         $user = User::findOrFail($id);
         $filename = "";
         $this->activityLogger->log('อัปเดต', $user);
@@ -424,15 +424,15 @@ class SettingOrganizationEmployeeController extends Controller
     public function search(Request $request)
     {
         $queryInput = $request->data;
-             
+
         $searchFields = SearchField::where('table','users')->where('status',1)->get();
 
         $query = User::query();
-        
+
         foreach ($searchFields as $field) {
             $fieldName = $field['field'];
             $fieldType = $field['type'];
-            
+
             if ($fieldType === 'foreign') {
                 $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
                     $query->where('name', 'like', "%{$queryInput}%");

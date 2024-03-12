@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\settings;
+namespace App\Http\Controllers\Settings;
 
 use App\Models\User;
 use App\Models\Approver;
@@ -38,7 +38,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
         $users = User::whereDoesntHave('approvers', function ($query) use ($id) {
             $query->where('approver_id', $id);
         })->paginate(50);
-        
+
         return view('setting.organization.approver.assignment.create', [
             'users' => $users,
             'approver' => $approver
@@ -89,7 +89,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
     {
         $queryInput = $request->data['searchInput'];
         $approverId = $request->data['approverId'];
-        
+
         $searchFields = SearchField::where('table', 'users')->where('status', 1)->get();
 
         $query = User::query();

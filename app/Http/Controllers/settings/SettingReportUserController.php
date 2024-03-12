@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\settings;
+namespace App\Http\Controllers\Settings;
 
 use PDF;
 use App\Models\User;
@@ -51,15 +51,15 @@ class SettingReportUserController extends Controller
     public function search(Request $request)
     {
         $queryInput = $request->searchInput;
-             
+
         $searchFields = SearchField::where('table','users')->where('status',1)->get();
 
         $query = User::query();
-        
+
         foreach ($searchFields as $field) {
             $fieldName = $field['field'];
             $fieldType = $field['type'];
-            
+
             if ($fieldType === 'foreign') {
                 $query->orWhereHas($fieldName, function ($query) use ($fieldName, $queryInput) {
                     $query->where('name', 'like', "%{$queryInput}%");

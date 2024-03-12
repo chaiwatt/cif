@@ -33,7 +33,7 @@
         ob_start();
     @endphp
 
-    <div  id="pdfContent" class="container" {{-- style="display: none;" --}}>
+    <div id="pdfContent" class="container">
         <div class="wrap-table" style="width: 100%; height: fit-content; border: 1px solid #000;">
             <div class="header" style="width: 100%; text-align: center;">
                 <div style="font-size: 20px;">หนังสือรับรองการหักภาษี ณ ที่จ่าย</div>
@@ -319,12 +319,7 @@
     </div>
 
     @php
-       /*  $html=ob_get_contents();
-        $stylesheet = file_get_contents('css/report/bis50.css');
-        $mpdf->WriteHTML($stylesheet, 1);
-        $mpdf->WriteHTML($html,2);
-        $mpdf->Output("report_1.pdf", 'I');
-        ob_end_flush(); */
+
 
         $html = ob_get_contents();
         $stylesheet = file_get_contents('css/report/bis50.css');
@@ -334,30 +329,11 @@
         $mpdf->Output($pdfFilePath, 'F');
         ob_end_clean();
 
-        /* $pdfFilePath = 'report_1.pdf';
-        $maxAttempts = 3;
-        $attempt = 0;
 
-        do {
-            $handle = @fopen($pdfFilePath, 'rb');
-            if ($handle === false) {
-                $error = error_get_last();
-                echo "Error: " . $error['message'] . "\n";
-                usleep(500000); // 0.5 seconds
-            } else {
-                fclose($handle);
-                break;
-            }
-            $attempt++;
-        } while ($attempt < $maxAttempts);
-
-        if ($attempt >= $maxAttempts) {
-            echo "Failed to open PDF after $maxAttempts attempts.";
-        } */
     @endphp
 
     <div class="container" style="display: block; width: 100%;">
-        <a href="../../../report_1.pdf" target="_blank">
+        <a href="../../../{{ $pdfFilePath }}" target="_blank">
             <button id="viewPdfButton ">View PDF ภงด 50</button>
         </a>
     </div>
