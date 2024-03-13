@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exports\CustomPndExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Excel as ExcelType;
+
+use App\Models\User;
 
 class MPDFController extends Controller
 {
@@ -39,6 +44,21 @@ class MPDFController extends Controller
     public function bis50($id)
     {
         return view('report.bis50');
+    }
+
+    public function pnd($id)
+    {
+        $data = User::all();
+
+        $filePath = public_path($id.'pnd');
+        $file = fopen($filePath, 'w');
+        foreach ($data as $item) {
+            $line = implode('|', $item->toArray());
+            fwrite($file, $line . PHP_EOL);
+        }
+
+        fclose($file);
+        return response()->download($filePath)->deleteFileAfterSend(true);
     }
 
     public function ssoPayment($id)
