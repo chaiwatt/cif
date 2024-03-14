@@ -17,7 +17,7 @@ class GroupModuleJobsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    { 
+    {
         // Group
         $timeRecordGroup = Group::where('code','TIME-RECORD')->first();
         $salaryManagementgroup = Group::where('code','SALARY-MANAGEMENT')->first();
@@ -29,6 +29,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $learningGroup = Group::where('code','LEARNING')->first();
         $reportGroup = Group::where('code','REPORT')->first();
         $employeeGroup = Group::where('code','EMPLOYEE')->first();
+        $reportSystemGroup = Group::where('code','REPORT-SYSTEM')->first();
         // Module
         $shiftModule = Module::where('code','SHIFT')->first();
         $workScheduleModule = Module::where('code','WORK-SCHEDULE')->first();
@@ -48,7 +49,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $learningModule = Module::where('code','LEARNING')->first();
         $dashboardReportModule = Module::where('code','DASHBOARD-REPORT')->first();
         $employeeManagementModule = Module::where('code','EMPLOYEE-MANAGE')->first();
-        
+        $reportSystemModule = Module::where('code','REPORT-MODULE-SYSTEM')->first();
         // Job
         $shiftManagementJob = Job::where('code','SHIFT-MANAGEMENT')->first();
         $yearlyHolidayJob = Job::where('code','YEARLY-HOLIDAY')->first();
@@ -84,6 +85,7 @@ class GroupModuleJobsTableSeeder extends Seeder
         $learningSetting = Job::where('code','LEARNING-SETTING')->first();
         $learning = Job::where('code','LEARNING-LIST')->first();
         $salaryReport = Job::where('code','SALARY-REPORT')->first();
+        $reportSystemReport = Job::where('code','REPORT')->first();
 
         $employeeInfo = Job::where('code','EMPLOYEE-INFO')->first();
         $employeeLeave = Job::where('code','EMPLOYEE-LEAVE')->first();
@@ -274,6 +276,11 @@ class GroupModuleJobsTableSeeder extends Seeder
             'group_id' => $reportGroup->id,
             'module_id' => $dashboardReportModule->id,
             'job_id' => $salaryReport->id,
+        ]);
+        GroupModuleJob::create([
+            'group_id' => $reportSystemGroup->id,
+            'module_id' => $reportSystemModule->id,
+            'job_id' => $reportSystemReport->id,
         ]);
     }
 }
