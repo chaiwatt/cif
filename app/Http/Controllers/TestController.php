@@ -29,5 +29,5 @@ use App\Models\WorkScheduleAssignmentUser;
 
 class TestController extends Controller
 {
-    
+
 }
