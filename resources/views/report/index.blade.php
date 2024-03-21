@@ -48,6 +48,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('bis50', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -57,6 +58,7 @@
                             <h2 class="m-0">ภ.ง.ด.1</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
@@ -70,6 +72,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('bis50', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -79,8 +82,10 @@
                             <h2 class="m-0">ภ.ง.ด.1</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('bis50', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -90,8 +95,10 @@
                             <h2 class="m-0">ภ.ง.ด.1</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('pnd', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -101,8 +108,10 @@
                             <h2 class="m-0">PND</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('pnd', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -112,6 +121,7 @@
                             <h2 class="m-0">PND</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
             <hr>
@@ -127,6 +137,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('ssoPayment', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -136,8 +147,10 @@
                             <h2 class="m-0">สปส 1-10</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('ssoPaymonth', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -147,8 +160,10 @@
                             <h2 class="m-0">สปส 1-10</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('ssoPayment', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -158,8 +173,10 @@
                             <h2 class="m-0">สปส 1-10</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('ssoPaymonth', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -169,8 +186,10 @@
                             <h2 class="m-0">สปส 1-10</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('ssoPayment', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -180,8 +199,10 @@
                             <h2 class="m-0">สปส 1-10</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('ssoPaymonth', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -191,6 +212,7 @@
                             <h2 class="m-0">สปส 1-10</h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
