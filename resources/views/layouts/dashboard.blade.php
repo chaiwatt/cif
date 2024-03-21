@@ -37,7 +37,7 @@
 
 <body data-page="dashboard">
     <div class="d-flex flex-grow-1">
-        @include('layouts.partial.dashborad-aside', ['groupUrl' => $groupUrl])
+        @include('layouts.partial.dashborad-aside', ['groupUrl' => isset($groupUrl) ? $groupUrl:''])
         <div class="d-flex flex-grow-1 flex-column rounded-start-3 overflow-hidden" style="background: #F2F4F7;">
             <nav class="navbar navbar-expand">
                 <ul class="navbar-nav d-flex justify-content-between align-items-center w-100 px-3">

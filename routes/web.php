@@ -108,6 +108,7 @@ Auth::routes();
 // });
 // Announcement Picture
 Route::group(['prefix' => 'pdfReport'], function(){
+    Route::get('/', [MPDFController::class, 'index'])->name('report.index');
     Route::group(['prefix' => 'revenue'], function(){
         Route::get('/bis50/{id}', [MPDFController::class, 'bis50'])->name('bis50');
         Route::get('/pnd/{id}', [MPDFController::class, 'pnd'])->name('pnd');
@@ -116,6 +117,9 @@ Route::group(['prefix' => 'pdfReport'], function(){
         Route::get('/ssoPayment/{id}', [MPDFController::class, 'ssoPayment'])->name('ssoPayment');
         Route::get('/ssoPaymentMonth/{id}', [MPDFController::class, 'ssoPaymentMonth'])->name('ssoPaymonth');
     });
+
+    Route::get('/cashBank/{id}', [MPDFController::class, 'cashBank'])->name('cashBank');
+    Route::get('/ipay/{id}', [MPDFController::class, 'ipay'])->name('ipay');
 });
 
 Route::get('/pdf1', [MPDFController::class, 'generate']);
