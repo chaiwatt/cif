@@ -55,72 +55,52 @@
             right: 0; /* Align to the right */
             margin-left: 20px !important; /* Add margin to the left (with !important) */
         }
+        tr{
+            padding: 5px;
+        }
 
     </style>
 </head>
 <body>
-    <div class="header" style="margin-left: 20px;">
-        <h3>บริษัท ฉวีวรรณ อินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด</h3>
-        <h3 class="bold">รายงานโอนเงินเข้าทุกธนาคารพร้อมชื่อย่อธนาคาร</h3>
-        <div class="date-range" >
-            <span>สำรับงวดวันที่ 09/10/2567 ถึง 09/10/2567</span>
-            <span class="page-number" style="margin-left: 20px;">หน้าที่ 1 / 10</span>
+    <div class="wrap-table" style="float: right;">
+        <div class="header" style="float:right; width:100%">
+            <h3>บริษัท ฉวีวรรณ อินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด</h3>
+            <h3 class="bold">รายงานโอนเงินเข้าทุกธนาคารพร้อมชื่อย่อธนาคาร</h3>
+           {{--  <div class="date-range" style="position: absolute;">
+                <div style="text-align: left;">สำรับงวดวันที่ 09/10/2567 ถึง 09/10/2567</div>
+                <div class="page-number" style="text-align: right;">หน้าที่ 1 / 10</div>
+            </div> --}}
+            <div class="date-range" style="position: absolute; display: flex; justify-content: space-between;">
+                <div style="text-align: left;">สำรับงวดวันที่ 09/10/2567 ถึง 09/10/2567</div>
+                <div style="text-align: right;">หน้าที่ 1 / 10</div>
+            </div>
+
         </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ลำดับ</th>
+                    <th>ชื่อย่อธนาคาร</th>
+                    <th>เลขที่บัญชี</th>
+                    <th>รหัสพนักงาน</th>
+                    <th>ชื่อ-นามสกุล</th>
+                    <th>ยอดเงิน</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($data as $key => $item)
+                    <tr>
+                        <td>{{ $key }}</td>
+                        <td>{{ (isset($item->bank) ? $item->bank:'-') }}</td>
+                        <td>{{ (isset($item->bank_account) ? $item->bank_account:'-') }}</td>
+                        <td>{{ $item->employee_no }}</td>
+                        <td>{{ $item->prefix->name.' '.$item->name.'   '.$item->lastname }}</td>
+                        <td>{{ number_format(rand(10000,20000),2) }}</td>
+                    </tr>
+                @endforeach
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
     </div>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>ลำดับ</th>
-                <th>ชื่อย่อธนาคาร</th>
-                <th>เลขที่บัญชี</th>
-                <th>รหัสพนักงาน</th>
-                <th>ชื่อ-นามสกุล</th>
-                <th>ยอดเงิน</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>ktb</td>
-                <td>208-0-18946-8</td>
-                <td>401741</td>
-                <td>น.ส.มลฤดี บุญลอย</td>
-                <td>503.00</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>ktb</td>
-                <td>208-0-18946-8</td>
-                <td>401741</td>
-                <td>น.ส.มลฤดี บุญลอย</td>
-                <td>503.00</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>ktb</td>
-                <td>208-0-18946-8</td>
-                <td>401741</td>
-                <td>น.ส.มลฤดี บุญลอย</td>
-                <td>503.00</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>ktb</td>
-                <td>208-0-18946-8</td>
-                <td>401741</td>
-                <td>น.ส.มลฤดี บุญลอย</td>
-                <td>503.00</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>ktb</td>
-                <td>208-0-18946-8</td>
-                <td>401741</td>
-                <td>น.ส.มลฤดี บุญลอย</td>
-                <td>503.00</td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
-    </table>
 </body>
 </html>

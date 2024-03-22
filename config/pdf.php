@@ -24,10 +24,10 @@ return [
 	'custom_font_dir'      => base_path('public/assets/fonts/kanit/'),
 	'custom_font_data' 	   =>  [
                 'kanit' => [
-                    'R'  => 'Kanit-Light.ttf',    
-                    'B'  => 'Kanit-Bold.ttf',       
-                    'I'  => 'Kanit-Italic.ttf',    
-                    'BI' => 'Kanit-BoldItalic.ttf' 
+                    'R'  => 'Kanit-Light.ttf',
+                    'B'  => 'Kanit-Bold.ttf',
+                    'I'  => 'Kanit-Italic.ttf',
+                    'BI' => 'Kanit-BoldItalic.ttf'
                 ]
             ],
 	'auto_language_detection'  => false,
@@ -35,4 +35,5 @@ return [
 	'pdfa' 			=> false,
 	'pdfaauto' 		=> false,
 	'justifyB4br' 	=> false,
+    'DOMPDF_ENABLE_CSS_FLOAT' => true,
 ];

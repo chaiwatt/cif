@@ -48,20 +48,20 @@
                     <div style="float: left; width: 50%;">
                         <div style="font-size: 17px; font-weight: 500; color: #000;">ผู้มีหน้าที่หักภาษี ณ ที่จ่าย :</div>
                         <span style="font-size: 16px; color: #000;">ชื่อ      </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">บริษัท ทดสอบ ทดสอบ จำกัด</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">บริษัท ฉวีวรรณ อินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุว่าเป็น บุคคล นิติบุคคล บริษัท สมาคม หรือ คณะบุคคุล)</span>
                     </div>
                     <div style="float: right; width: 50%;">
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร(13หลัก)      </span>
-                        <span style="font-size: 15px; min-width: 50mm; color: #000; border-bottom: 1px dotted #000;">     0299999999999     </span>
+                        <span style="font-size: 15px; min-width: 50mm; color: #000; border-bottom: 1px dotted #000;">     0205538000999     </span>
                         <br>
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร                 </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">     033011133333     </span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">     3032922364     </span>
                     </div>
                     <div style="display: block; width: 100%;">
                         <span style="font-size: 16px; color: #000;">ที่อยู่    </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">83/5 ม.10 ตรอก/ซอย โปรดกรอกข้อมูลตามใบ ภพ.20 ถนน - แขวงตำบล หนองขาม</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000; display: inline-block; width: 100%;">83/5 ม.10 ตรอก/ซอย โปรดกรอกข้อมูลตามใบ ภพ.20 ถนน - แขวงตำบล หนองขาม เขต/อำเภอ ศรีราชา จังหวัด ชลบุรี</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุ ชื่ออาคาร/หมู่บ้าน ห้องเลขที่ ชั้นที่ เลขที่ ตรอก/ซอย หมู่ที่ ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด)</span>
                     </div>
@@ -70,20 +70,20 @@
                     <div style="float: left; width: 50%;">
                         <div style="font-size: 17px; font-weight: 500; color: #000;">ผู้ถูกหักภาษี ณ ที่จ่าย :</div>
                         <span style="font-size: 16px; color: #000;">ชื่อ      </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">MR.DAVID RAYMUNDO SANTOS</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{ (isset($data->name) ? $data->name:'').'  '.(isset($data->lastname) ? $data->lastname:'') }}</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุว่าเป็น บุคคล นิติบุคคล บริษัท สมาคม หรือ คณะบุคคุล)</span>
                     </div>
                     <div style="float: right; width: 50%;">
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร(13หลัก)      </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">0991006333888</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{ $data->hid }}</span>
                         <br>
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร                 </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">1016322131</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{-- 1016322131 --}}</span>
                     </div>
                     <div style="display: block; width: 100%;">
                         <span style="font-size: 16px; color: #000;">ที่อยู่    </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">86/170 รามอินทรา ซ.3 บางเขน กทม.</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{ $data->address }}</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุ ชื่ออาคาร/หมู่บ้าน ห้องเลขที่ ชั้นที่ เลขที่ ตรอก/ซอย หมู่ที่ ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด)</span>
                     </div>
@@ -93,7 +93,7 @@
                         </div>
                         <div style="display: block; width: 95%; float: right;">
                             <div style="display: block; width: 20%; float: left;">
-                                <span style="border: 1px solid #000; padding: 10px;">   999   </span>
+                                <span style="border: 1px solid #000; padding: 10px;">   {{ 1 }}   </span>
                                 <span style="font-size: 16px; color: #000;">  ในแบบ</span>
                                 <br>
                                 <div style="font-size: 12px; color: #575757; text-align: center;">
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <div style="display: block; width: 20%; float: left;">
-                                <input type="checkbox">    <label>(1) ภ.ง.ด.1ก</label>
+                                <input type="checkbox" checked>    <label>(1) ภ.ง.ด.1ก</label>
                                 <br>
                                 <input type="checkbox">    <label>(5) ภ.ง.ด.2ก</label>
                             </div>
@@ -306,7 +306,7 @@
                             <div style="margin: 8px 0px 0px 0px;">
                                 (...........................................................................)
                             </div>
-                            <span>29/12/2566</span>
+                            <span>{{  now()->format('d/m/yy') }}</span>
                             <div style="display: block; width: 20%; float: right; font-size: 12px; color: rgb(141, 0, 0);">
                                 ประทับตรา<br>นิติบุคคล (ถ้ามี)
                             </div>

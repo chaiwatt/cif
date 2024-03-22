@@ -2,29 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\User;
+use App\Exports\BankDataExport;
+use App\Exports\CustomPndExport;
+use App\Exports\EmployeeSsoExport;
+use App\Helpers\ActivityLogger;
+use App\Helpers\AddDefaultWorkScheduleAssignment;
+use App\Http\Controllers\Controller;
+use App\Models\CompanyDepartment;
+use App\Models\Job;
+use App\Models\Module;
 use App\Models\Month;
 use App\Models\Payday;
 use App\Models\PaydayDetail;
-use Illuminate\Http\Request;
+use App\Models\RoleGroupJson;
 use App\Models\SalarySummary;
-use App\Helpers\ActivityLogger;
-use App\Exports\CustomPndExport;
-use App\Models\CompanyDepartment;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\View;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Response;
-use App\Exports\BankDataExport;
+use App\Models\User;
 
-use Maatwebsite\Excel\Excel as ExcelType;
-use App\Helpers\AddDefaultWorkScheduleAssignment;
 use App\Services\UpdatedRoleGroupCollectionService;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Excel as ExcelType;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MPDFController extends Controller
 {
-
     public function index()
     {
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
@@ -91,7 +96,32 @@ class MPDFController extends Controller
         $mpdf->Output();
         return $mpdf->Output();
     }
-
+    public function bis50list()
+    {
+        $action = 'show';
+        $groupUrl = strval(session('groupUrl'));
+        $permission = (object)[
+            'show' => true,
+            'create' => true,
+            'update' => true,
+            'delete' => true,
+        ];
+        /* 'groups.employee-system.employee' */
+        /* $updatedRoleGroupCollection = [
+            'module_prefix' => 'groups.employee-system.employee',
+            'code' => 'EMPLOYEE-MANAGE',
+            'name' => 'จัดการ',
+            'module_icon' => 'fa-user',
+        ]; */
+        $viewName = 'report.bis50index';
+        $users = User::paginate(50);
+        return view($viewName, [
+            'groupUrl' => $groupUrl,
+            /* 'modules' => $updatedRoleGroupCollection, */
+            'permission' => $permission,
+            'users' => $users,
+        ]);
+    }
     public function bis50($id)
     {
         include '../vendor/autoload.php';
@@ -123,77 +153,31 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
+        $data = DB::table('users')->whereId($id)->first();
+        if(isset($data) && $data){
+            $html = view('report.bis50-2', compact('data'))->render();
 
-        // Render HTML content
-        $html = view('report.bis50-2')->render();
+            $stylesheet = file_get_contents(public_path('css/report/bis50.css'));
+            $mpdf->WriteHTML($stylesheet, 1);
+            $mpdf->WriteHTML($html, 2);
 
-        // Load CSS stylesheet
-        $stylesheet = file_get_contents(public_path('css/report/bis50.css'));
+            /* $pdfFilePath = "report_1.pdf";
+            $pdfFile = file_get_contents($pdfFilePath); */
+            $mpdf->Output("report_1.pdf", 'F');
+            ob_end_clean();
 
-        // Write HTML content and CSS to PDF
-        $mpdf->WriteHTML($stylesheet, 1);
-        $mpdf->WriteHTML($html, 2);
 
-        // Save PDF to file
-        $pdfFilePath = "report_1.pdf";
-        $pdfFile = file_get_contents($pdfFilePath);
-        $mpdf->Output($pdfFilePath, 'F');
-        ob_end_clean();
+            $pdfFilePath = "report_1.pdf";
+            $pdfFile = file_get_contents($pdfFilePath);
 
-        return Response::make($pdfFile, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="report_1.pdf"'
-        ]);
-        /* include '../vendor/autoload.php';
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
+            return Response::make($pdfFile, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="report_1.pdf"'
+            ]);
+        }else{
+            echo 'not found data';
+        }
 
-        $mpdf = new \Mpdf\Mpdf([
-            'fontDir' => array_merge($fontDirs, [
-                storage_path('fonts/'),
-            ]),
-            'debug' => true,
-            'fontdata' => $fontData + [
-                'sarabun' => [
-                    'R' => 'THSarabunNew.ttf',
-                    'I' => 'THSarabunNew Italic.ttf',
-                    'B' => 'THSarabunNew Bold.ttf',
-                ]
-            ],
-            'default_font' => 'sarabun',
-            'mode' => 'utf-8',
-            'format' => 'A4',
-            'margin_left' => 0,
-            'margin_right' => 0,
-            'margin_top' => 0,
-            'margin_bottom' => 0,
-            'margin_header' => 0,
-            'margin_footer' => 0
-        ]);
-
-        ob_start();
-
-        // Render HTML content
-        $html = View::make('report.bis50-2')->render();
-
-        // Load CSS stylesheet
-        $stylesheet = file_get_contents(public_path('css/report/bis50.css'));
-
-        // Create MPDF instance
-        $mpdf = new \Mpdf\Mpdf();
-
-        // Write HTML content and CSS to PDF
-        $mpdf->WriteHTML($stylesheet, 1);
-        $mpdf->WriteHTML($html, 2);
-
-        // Output the PDF as a response
-        $pdfFile = $mpdf->Output('', 'S'); // Output as a string
-        return Response::make($pdfFile, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="report_1.pdf"'
-        ]); */
     }
 
     public function pnd($id)
@@ -260,7 +244,8 @@ class MPDFController extends Controller
             'margin_header' => 0,
             'margin_footer' => 3
         ]);
-        $html = View::make('report.cashbank')->render();
+        $data = User::all();
+        $html = View::make('report.cashbank', compact('data'))->render();
 
         // Create an instance of mPDF
 
@@ -287,5 +272,10 @@ class MPDFController extends Controller
     public function ipay($id)
     {
         return Excel::download(new BankDataExport, 'bank_data.xlsx');
+    }
+
+    public function ssofile($id)
+    {
+        return Excel::download(new EmployeeSsoExport, 'sso.xlsx');
     }
 }

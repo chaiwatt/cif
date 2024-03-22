@@ -2,12 +2,13 @@
 
 @section('content')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
-<style>
-    a{
-        text-decoration: none;
-    }
-</style>
+    <link rel="stylesheet" href="{{ asset('assets/css/loading.css?v=1.0') }}">
+    <style>
+        a{
+            text-decoration: none;
+            color: #1d1d34;
+        }
+    </style>
 @endpush
 <div>
     @include('layouts.partial.loading')
@@ -35,92 +36,94 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('bis50', 1) }}">
-                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
-                        </span>
-                        <div class="d-flex flex-column justify-content-between">
-                            <span>หนังสือรับรองการหักภาษี ณ ที่จ่าย</span>
-                            <h2 class="m-0">ทวิ 50</h2>
+                    <a href="{{ route('bis50.list') }}">
+                        <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
+                                bar_chart
+                            </span>
+                            <div class="d-flex flex-column justify-content-between">
+                                <span>หนังสือรับรองการหักภาษี ณ ที่จ่าย</span>
+                                <h2 class="m-0">ทวิ 50</h2>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('rd1', 1) }}">
+                        <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
+                                calendar_month
+                            </span>
+                            <div class="d-flex flex-column justify-content-between">
+                                <span>รายชื่อพนักงานผู้เสียภาษีเงินได้</span>
+                                <h5 class="m-0">ภ.ง.ด.1 (สรุปรายเดือน)</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('rd2', 1) }}">
+                        <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
+                                calendar_today
+                            </span>
+                            <div class="d-flex flex-column justify-content-between">
+                                <span>รายชื่อพนักงานผู้เสียภาษีเงินได้ </span>
+                                <h5 class="m-0">ภ.ง.ด.1 (สรุปรายปี)</h5>
+                            </div>
+                        </div>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('bis50', 1) }}">
-                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
-                        </span>
-                        <div class="d-flex flex-column justify-content-between">
-                            <span>รายชื่อพนักงานผู้เสียภาษีเงินได้ (สรุปรายเดือน)</span>
-                            <h2 class="m-0">ภ.ง.ด.1</h2>
+                        <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
+                                calendar_month
+                            </span>
+                            <div class="d-flex flex-column justify-content-between">
+                                <span>ใบปะแบบยื่นรายการภาษีเงินได้ </span>
+                                <h5 class="m-0">ภ.ง.ด.1 (รายเดือน)</h5>
+                            </div>
                         </div>
-                    </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
-                        </span>
-                        <div class="d-flex flex-column justify-content-between">
-                            <span>รายชื่อพนักงานผู้เสียภาษีเงินได้ (สรุปรายปี)</span>
-                            <h2 class="m-0">ภ.ง.ด.1</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('bis50', 1) }}">
-                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
-                        </span>
-                        <div class="d-flex flex-column justify-content-between">
-                            <span>ใบปะแบบยื่นรายการภาษีเงินได้ (รายเดือน)</span>
-                            <h2 class="m-0">ภ.ง.ด.1</h2>
-                        </div>
-                    </div>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('bis50', 1) }}">
-                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
-                        </span>
-                        <div class="d-flex flex-column justify-content-between">
-                            <span>ใบปะแบบยื่นรายการภาษีเงินได้ (รายปี)</span>
-                            <h2 class="m-0">ภ.ง.ด.1</h2>
+                        <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
+                                calendar_today
+                            </span>
+                            <div class="d-flex flex-column justify-content-between">
+                                <span>ใบปะแบบยื่นรายการภาษีเงินได้ </span>
+                                <h5 class="m-0">ภ.ง.ด.1 (รายปี)</h5>
+                            </div>
                         </div>
-                    </div>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('pnd', 1) }}">
-                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
-                        </span>
-                        <div class="d-flex flex-column justify-content-between">
-                            <span>ไฟล์แนบการยื่นภาษีสรรพกร (รายเดือน)</span>
-                            <h2 class="m-0">PND</h2>
+                        <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
+                                description
+                            </span>
+                            <div class="d-flex flex-column justify-content-between">
+                                <span>ไฟล์แนบการยื่นภาษีสรรพกร </span>
+                                <h5 class="m-0">PND (รายเดือน)</h5>
+                            </div>
                         </div>
-                    </div>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('pnd', 1) }}">
-                    <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
-                        </span>
-                        <div class="d-flex flex-column justify-content-between">
-                            <span>ไฟล์แนบการยื่นภาษีสรรพกร (รายปี)</span>
-                            <h2 class="m-0">PND</h2>
+                        <div class="d-flex gap-4 p-4 bg-white rounded-4">
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
+                                description
+                            </span>
+                            <div class="d-flex flex-column justify-content-between">
+                                <span>ไฟล์แนบการยื่นภาษีสรรพกร </span>
+                                <h5 class="m-0">PND (รายปี)</h5>
+                            </div>
                         </div>
-                    </div>
                     </a>
                 </div>
             </div>
@@ -139,12 +142,12 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('ssoPayment', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
+                            admin_panel_settings
                         </span>
                         <div class="d-flex flex-column justify-content-between">
-                            <span>แบบรายการแสดงการส่งเงินสมทบ (รายวัน)</span>
-                            <h2 class="m-0">สปส 1-10</h2>
+                            <span>แบบรายการแสดงการส่งเงินสมทบ </span>
+                            <h5 class="m-0">สปส 1-10 (รายวัน)</h5>
                         </div>
                     </div>
                     </a>
@@ -152,12 +155,12 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('ssoPaymonth', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
+                            shield_person
                         </span>
                         <div class="d-flex flex-column justify-content-between">
-                            <span>แบบรายการแสดงการส่งเงินสมทบ (รายเดือน)</span>
-                            <h2 class="m-0">สปส 1-10</h2>
+                            <span>แบบรายการแสดงการส่งเงินสมทบ </span>
+                            <h5 class="m-0">สปส 1-10 (รายเดือน)</h5>
                         </div>
                     </div>
                     </a>
@@ -165,12 +168,12 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('ssoPayment', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
+                            supervised_user_circle
                         </span>
                         <div class="d-flex flex-column justify-content-between">
-                            <span>แบบรายการแสดงการส่งเงินสมทบ (ใบรวม)</span>
-                            <h2 class="m-0">สปส 1-10</h2>
+                            <span>แบบรายการแสดงการส่งเงินสมทบ </span>
+                            <h5 class="m-0">สปส 1-10 (ใบรวม)</h5>
                         </div>
                     </div>
                     </a>
@@ -178,12 +181,12 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('ssoPaymonth', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
+                            admin_panel_settings
                         </span>
                         <div class="d-flex flex-column justify-content-between">
-                            <span>รายชื่อพนักงานแสดงการส่งเงินสมทบ (รายวัน)</span>
-                            <h2 class="m-0">สปส 1-10</h2>
+                            <span>รายชื่อพนักงานแสดงการส่งเงินสมทบ </span>
+                            <h5 class="m-0">สปส 1-10 (รายวัน)</h5>
                         </div>
                     </div>
                     </a>
@@ -191,12 +194,12 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('ssoPayment', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
+                            shield_person
                         </span>
                         <div class="d-flex flex-column justify-content-between">
-                            <span>รายชื่อพนักงานแสดงการส่งเงินสมทบ (รายเดือน)</span>
-                            <h2 class="m-0">สปส 1-10</h2>
+                            <span>รายชื่อพนักงานแสดงการส่งเงินสมทบ </span>
+                            <h5 class="m-0">สปส 1-10 (รายเดือน)</h5>
                         </div>
                     </div>
                     </a>
@@ -204,26 +207,28 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('ssoPaymonth', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                            bar_chart
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
+                            supervised_user_circle
                         </span>
                         <div class="d-flex flex-column justify-content-between">
-                            <span>รายชื่อพนักงานแสดงการส่งเงินสมทบ (ใบรวม)</span>
-                            <h2 class="m-0">สปส 1-10</h2>
+                            <span>รายชื่อพนักงานแสดงการส่งเงินสมทบ </span>
+                            <h5 class="m-0">สปส 1-10 (ใบรวม)</h5>
                         </div>
                     </div>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
+                    <a href="{{ route('ssofile', 1) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
+                        <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
                         </span>
                         <div class="d-flex flex-column justify-content-between">
                             <span>ไฟล์นำส่งข้อมูลเงินสมทบพนักงาน</span>
-                            <h2 class="m-0">DAT FILE (CSV)</h2>
+                            <h5 class="m-0">DAT FILE (CSV)</h5>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
             <hr>
@@ -231,9 +236,11 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('ipay', 1) }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                                bar_chart
-                            </span>
+
+                            <img src="https://play-lh.googleusercontent.com/gnZXRi9diY-yjEo424IBqPsPYtne9pF6ho6cniBKNWAYCQDVU4LkFjbbKxXvn69PzF4" style=" width: 4rem; height: 4rem; font-size: 36px;">
+                            {{-- <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #ffc73a; width: 4rem; height: 4rem; font-size: 36px;">
+
+                            </span> --}}
                             <div class="d-flex flex-column justify-content-between">
                                 <span></span>
                                 <h2 class="m-0">IPAY</h2>
@@ -244,8 +251,8 @@
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
                     <a href="{{ route('cashBank', 1) }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
-                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #3538CD; width: 4rem; height: 4rem; font-size: 36px;">
-                                bar_chart
+                            <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #56d5ff; width: 4rem; height: 4rem; font-size: 36px;">
+                                account_balance
                             </span>
                             <div class="d-flex flex-column justify-content-between">
                                 <span>รายงานโอนเงินเข้าธนาคาร</span>
