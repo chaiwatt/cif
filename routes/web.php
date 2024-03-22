@@ -111,6 +111,8 @@ Route::group(['prefix' => 'pdfReport'], function(){
     Route::group(['prefix' => 'revenue'], function(){
         Route::get('/bis50/{id}', [MPDFController::class, 'bis50'])->name('bis50');
         Route::get('/pnd/{id}', [MPDFController::class, 'pnd'])->name('pnd');
+        Route::get('/rd1/{id}', [MPDFController::class, 'rd1'])->name('rd1');
+        Route::get('/rd2/{id}', [MPDFController::class, 'rd2'])->name('rd2');
     });
     Route::group(['prefix' => 'sso'], function(){
         Route::get('/ssoPayment/{id}', [MPDFController::class, 'ssoPayment'])->name('ssoPayment');
