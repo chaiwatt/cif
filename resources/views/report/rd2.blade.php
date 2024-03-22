@@ -325,7 +325,7 @@
         $stylesheet = file_get_contents('css/report/bis50.css');
         $mpdf->WriteHTML($stylesheet, 1);
         $mpdf->WriteHTML($html,2);
-        $pdfFilePath = "report_1-{{ $id }}.pdf";
+        $pdfFilePath = "report_1.pdf";
         $mpdf->Output($pdfFilePath, 'F');
         ob_end_clean();
 

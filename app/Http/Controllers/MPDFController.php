@@ -221,6 +221,16 @@ class MPDFController extends Controller
         return view('report.sso2', compact('id'));
     }
 
+    public function rd1($id)
+    {
+        return view('report.rd1', compact('id'));
+    }
+
+    public function rd2($id)
+    {
+        return view('report.rd2', compact('id'));
+    }
+
     public function cashBank($id)
     {
         include '../vendor/autoload.php';
