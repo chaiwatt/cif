@@ -1,38 +1,37 @@
-@extends('layouts.app')
-
-@section('content')
-    {{-- Css --}}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include your CSS files -->
     <link href="{{ asset('/css/report-1.css?v=2') }}" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    {{-- <link href="{{ asset('/bootstrap-5.3.2-dist/css/bootstrap.min.css?v=2') }}" rel="stylesheet"> --}}
-
+</head>
+<body>
     @php
-        include '../vendor/autoload.php';
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
+    include '../vendor/autoload.php';
+    $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+    $fontDirs = $defaultConfig['fontDir'];
+    $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+    $fontData = $defaultFontConfig['fontdata'];
 
-        $mpdf = new \Mpdf\Mpdf([
-            'fontDir' => array_merge($fontDirs, [
-                // __DIR__ . '/tmp',
-                storage_path('fonts/'),
-            ]),
-            'fontdata' => $fontData + [
-                'sarabun' => [
-                    'R' => 'THSarabunNew.ttf',
-                    'I' => 'THSarabunNew Italic.ttf',
-                    'B' => 'THSarabunNew Bold.ttf',
-                ]
-            ],
-            'default_font' => 'sarabun',
-            'mode' => 'utf-8','format' => 'A4','margin_left' => 0,'margin_right' => 0,'margin_top' => 0,'margin_bottom' => 0,'margin_header' => 0,'margin_footer' => 0
-        ]);
+    $mpdf = new \Mpdf\Mpdf([
+        'fontDir' => array_merge($fontDirs, [
+            // __DIR__ . '/tmp',
+            storage_path('fonts/'),
+        ]),
+        'debug' => true,
+        'fontdata' => $fontData + [
+            'sarabun' => [
+                'R' => 'THSarabunNew.ttf',
+                'I' => 'THSarabunNew Italic.ttf',
+                'B' => 'THSarabunNew Bold.ttf',
+            ]
+        ],
+        'default_font' => 'sarabun',
+        'mode' => 'utf-8','format' => 'A4','margin_left' => 0,'margin_right' => 0,'margin_top' => 0,'margin_bottom' => 0,'margin_header' => 0,'margin_footer' => 0
+    ]);
 
-        ob_start();
-    @endphp
-
+@endphp
     <div id="pdfContent" class="container">
         <div class="wrap-table" style="width: 100%; height: fit-content; border: 1px solid #000;">
             <div class="header" style="width: 100%; text-align: center;">
@@ -49,20 +48,20 @@
                     <div style="float: left; width: 50%;">
                         <div style="font-size: 17px; font-weight: 500; color: #000;">ผู้มีหน้าที่หักภาษี ณ ที่จ่าย :</div>
                         <span style="font-size: 16px; color: #000;">ชื่อ      </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">บริษัท ทดสอบ ทดสอบ จำกัด</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">บริษัท ฉวีวรรณ อินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุว่าเป็น บุคคล นิติบุคคล บริษัท สมาคม หรือ คณะบุคคุล)</span>
                     </div>
                     <div style="float: right; width: 50%;">
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร(13หลัก)      </span>
-                        <span style="font-size: 15px; min-width: 50mm; color: #000; border-bottom: 1px dotted #000;">     0299999999999     </span>
+                        <span style="font-size: 15px; min-width: 50mm; color: #000; border-bottom: 1px dotted #000;">     0205538000999     </span>
                         <br>
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร                 </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">     033011133333     </span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">     3032922364     </span>
                     </div>
                     <div style="display: block; width: 100%;">
                         <span style="font-size: 16px; color: #000;">ที่อยู่    </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">83/5 ม.10 ตรอก/ซอย โปรดกรอกข้อมูลตามใบ ภพ.20 ถนน - แขวงตำบล หนองขาม</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000; display: inline-block; width: 100%;">83/5 ม.10 ตรอก/ซอย โปรดกรอกข้อมูลตามใบ ภพ.20 ถนน - แขวงตำบล หนองขาม เขต/อำเภอ ศรีราชา จังหวัด ชลบุรี</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุ ชื่ออาคาร/หมู่บ้าน ห้องเลขที่ ชั้นที่ เลขที่ ตรอก/ซอย หมู่ที่ ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด)</span>
                     </div>
@@ -71,20 +70,20 @@
                     <div style="float: left; width: 50%;">
                         <div style="font-size: 17px; font-weight: 500; color: #000;">ผู้ถูกหักภาษี ณ ที่จ่าย :</div>
                         <span style="font-size: 16px; color: #000;">ชื่อ      </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">MR.DAVID RAYMUNDO SANTOS</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{ (isset($data->name) ? $data->name:'').'  '.(isset($data->lastname) ? $data->lastname:'') }}</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุว่าเป็น บุคคล นิติบุคคล บริษัท สมาคม หรือ คณะบุคคุล)</span>
                     </div>
                     <div style="float: right; width: 50%;">
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร(13หลัก)      </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">0991006333888</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{ $data->hid }}</span>
                         <br>
                         <span style="font-size: 16px; color: #000;">เลขประจำตัวผู้เสียภาษีอากร                 </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">1016322131</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{-- 1016322131 --}}</span>
                     </div>
                     <div style="display: block; width: 100%;">
                         <span style="font-size: 16px; color: #000;">ที่อยู่    </span>
-                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">86/170 รามอินทรา ซ.3 บางเขน กทม.</span>
+                        <span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">{{ $data->address }}</span>
                         <br>
                         <span style="font-size: 12px; color: #575757;">              (ให้ระบุ ชื่ออาคาร/หมู่บ้าน ห้องเลขที่ ชั้นที่ เลขที่ ตรอก/ซอย หมู่ที่ ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด)</span>
                     </div>
@@ -94,7 +93,7 @@
                         </div>
                         <div style="display: block; width: 95%; float: right;">
                             <div style="display: block; width: 20%; float: left;">
-                                <span style="border: 1px solid #000; padding: 10px;">   999   </span>
+                                <span style="border: 1px solid #000; padding: 10px;">   {{ 1 }}   </span>
                                 <span style="font-size: 16px; color: #000;">  ในแบบ</span>
                                 <br>
                                 <div style="font-size: 12px; color: #575757; text-align: center;">
@@ -102,7 +101,7 @@
                                 </div>
                             </div>
                             <div style="display: block; width: 20%; float: left;">
-                                <input type="checkbox">    <label>(1) ภ.ง.ด.1ก</label>
+                                <input type="checkbox" checked>    <label>(1) ภ.ง.ด.1ก</label>
                                 <br>
                                 <input type="checkbox">    <label>(5) ภ.ง.ด.2ก</label>
                             </div>
@@ -307,7 +306,7 @@
                             <div style="margin: 8px 0px 0px 0px;">
                                 (...........................................................................)
                             </div>
-                            <span>29/12/2566</span>
+                            <span>{{  now()->format('d/m/yy') }}</span>
                             <div style="display: block; width: 20%; float: right; font-size: 12px; color: rgb(141, 0, 0);">
                                 ประทับตรา<br>นิติบุคคล (ถ้ามี)
                             </div>
@@ -317,32 +316,5 @@
             </div>
         </div>
     </div>
-
-    @php
-
-
-        $html = ob_get_contents();
-        $stylesheet = file_get_contents('css/report/bis50.css');
-        $mpdf->WriteHTML($stylesheet, 1);
-        $mpdf->WriteHTML($html,2);
-        $pdfFilePath = "report_1-{{ $id }}.pdf";
-        $mpdf->Output($pdfFilePath, 'F');
-        ob_end_clean();
-
-
-    @endphp
-
-    <div class="container" style="display: block; width: 100%;">
-        <a href="../../../{{ $pdfFilePath }}" target="_blank">
-            <button id="viewPdfButton ">View PDF ภงด 50</button>
-        </a>
-    </div>
-    <script>
-       document.getElementById("viewPdfButton").addEventListener("click", function() {
-        var pdfFilePath = "<?= $pdfFilePath ?>";
-        window.open(pdfFilePath, "_blank");
-        document.getElementById("pdfContent").style.display = "block";
-    });
-    </script>
-
-@endsection
+</body>
+</html>

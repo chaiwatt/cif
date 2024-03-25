@@ -95,5 +95,13 @@ class GroupsTableSeeder extends Seeder
             'dashboard' => 'groups.dashboard.report-system',
             'default_route' => 'groups.report-system.report.salary'
         ]);
+        Group::create([
+            'code' => 'REPORT-SYSTEM',
+            'name' => 'ระบบรายงานทั่วไป',
+            'description' => 'รายละเอียดระบบรายงานพนักงาน',
+            'icon' => '<span class="material-symbols-outlined" style="color: #3500E6; font-size: 36px;">lab_profile</span>',
+            'dashboard' => 'groups.dashboard.report-system',
+            'default_route' => 'report.index'
+        ]);
     }
 }

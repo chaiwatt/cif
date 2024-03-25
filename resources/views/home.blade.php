@@ -13,7 +13,7 @@
         {{ session('error') }}
     </div>
     @endif
-    
+
     <div class="row">
         @foreach ($groups as $group)
         <div class="col-sm-6 col-lg-4 px-2 mb-3">
