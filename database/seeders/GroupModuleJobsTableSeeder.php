@@ -277,11 +277,11 @@ class GroupModuleJobsTableSeeder extends Seeder
             'module_id' => $dashboardReportModule->id,
             'job_id' => $salaryReport->id,
         ]);
-        GroupModuleJob::create([
+        /* GroupModuleJob::create([
             'group_id' => $reportSystemGroup->id,
             'module_id' => $reportSystemModule->id,
             'job_id' => $reportSystemReport->id,
-        ]);
+        ]); */
     }
 }
 
